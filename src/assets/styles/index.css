@@ -7,3 +7,11 @@ html {
    background: #dce3e6;
    font-family: "Josefin Sans", monospace;
 }
+
+body > div > div > input {
+   font-family: "Josefin Sans", monospace;
+   width: 260px;
+   height: 20px;
+   border: black 1px solid;
+   border-radius: 5px;
+}

@@ -15,7 +15,7 @@ let config = {
    },
    output: {
       filename: "bundle.js",
-      path: __dirname + "/public",
+      path: path.join(__dirname, "/public"),
    },
 };
 
