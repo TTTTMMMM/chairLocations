@@ -8,7 +8,7 @@
             "function": "api"
          },
          {
-            "source": "/aaa{,/**}",
+            "source": "/users{,/**}",
             "function": "api"
          }
       ]

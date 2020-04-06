@@ -1,79 +1,129 @@
-import React, { Component } from "react";
-import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
-import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
-import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
-import readDataRowsOfFile from "./helpers/readDataRowsOfFile";
-import getTableHeadersFromCSVFile from "./helpers/getTableHeadersFromCSVFile";
+// *****
+// important: disable typescript checking of this file in tsconfig.json
+// *****
+// Client-side code follows:
 
-class App extends Component<{}, { value: string }> {
-   private myPanel = React.createRef<JqxPanel>();
-   private fileInput: any;
+import React, { Component } from "react";
+import "../styles/index.css";
+import HeaderComponent from "./components/HeaderComponent";
+import BodyComponent from "./components/BodyComponent";
+import getLoggedinUser from "./fetches/getLoggedinUser";
+
+// Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
+class App extends Component<
+   {},
+   { isSignedIn: boolean; googleToken: any; userObjFmServer: any }
+> {
+   auth2!: gapi.auth2.GoogleAuth;
+   loggedInPhotoURL: string | undefined;
+   emailAddress: string | undefined;
+   id_token: any | undefined;
    constructor(props: {}) {
       super(props);
 
-      this.fileInput = React.createRef();
-      this.handleChange = this.handleChange.bind(this);
-
       this.state = {
-         value: "",
+         isSignedIn: false,
+         googleToken: "dummyValue",
+         userObjFmServer: undefined,
       };
+      this.logout = this.logout.bind(this);
+      this.onSuccess = this.onSuccess.bind(this);
    }
 
-   render() {
-      return (
-         <div>
-            <input
-               ref={this.fileInput}
-               type="file"
-               accept=".csv"
-               multiple
-               onChange={this.handleChange}
-               value={this.state.value}
-            ></input>
-            <JqxPanel
-               ref={this.myPanel}
-               width={"30%"}
-               height={150}
-               theme={"fresh"}
-            />
-         </div>
-      );
-   }
-
-   private handleChange(event: any) {
-      this.setState({ value: event.target.value });
-      let filesListObject = this.fileInput.current.files;
-      let tableHeaders = new Array();
-      let aFile = filesListObject[0]; // pull headers for all files from the first file
-      getTableHeadersFromCSVFile(aFile).then((result: any) => {
-         tableHeaders = result;
-         tableHeaders.push("fname");
-         Object.keys(filesListObject).forEach((fileIndex: any) => {
-            // get data from all files, including the first file from which the headers were pulled
-            let aFile = filesListObject[fileIndex];
-            readDataRowsOfFile(aFile)
-               .then((dataRows: any) => {
-                  this.myPanel.current!.append(`${aFile.name}, `);
-                  this.myPanel.current!.append(`${dataRows.length} rows<br/>`);
-                  let rowNum = 0;
-                  console.log(`${aFile.name}`);
-                  dataRows.forEach((aRow: any) => {
-                     let a = aRow.split(",");
-                     a.push(aFile.name);
-                     let out1 = a.map((obj: any, index: any) => {
-                        let myObj = {};
-                        myObj[tableHeaders[index]] = obj;
-                        return myObj;
-                     });
-                     console.log(rowNum, out1);
-                     rowNum++;
-                  });
-               })
-               .catch((err: any) => {
-                  console.error(`C0001: ${err}`);
-               });
+   componentDidMount() {
+      window.gapi.load("auth2", () => {
+         this.auth2 = gapi.auth2.init({
+            client_id:
+               "702445664854-l75e1o6sni99dcadjbqeqa7pa9lld78p.apps.googleusercontent.com",
+         });
+         this.auth2.then(() => {
+            this.setState({
+               isSignedIn: this.auth2!.isSignedIn.get(),
+            });
          });
       });
+
+      window.gapi.load("signin2", () => {
+         var opts = {
+            width: 100,
+            height: 30,
+            onsuccess: this.onSuccess,
+            theme: "dark",
+         };
+         gapi.signin2.render("loginButton", opts);
+      });
+   }
+
+   onSuccess(googleUser: any) {
+      this.id_token = googleUser.getAuthResponse(true).id_token;
+      this.setState({ googleToken: this.id_token });
+      this.loggedInPhotoURL = this.auth2.currentUser
+         .get()
+         .getBasicProfile()
+         .getImageUrl();
+      this.emailAddress = this.auth2.currentUser
+         .get()
+         .getBasicProfile()
+         .getEmail();
+      getLoggedinUser(this.auth2, this.id_token).then((result: any) => {
+         if (result)
+            this.setState({
+               isSignedIn: true,
+            });
+         this.setState({ userObjFmServer: result });
+      });
+   }
+
+   onLoginFailed() {
+      this.setState({
+         isSignedIn: false,
+      });
+   }
+
+   logout(e: any) {
+      e.preventDefault();
+      this.auth2!.signOut()
+         .then(() => {
+            this.setState({
+               isSignedIn: this.auth2!.isSignedIn.get(),
+               googleToken: "dummyValue",
+            });
+         })
+         .then(() => {
+            window.gapi.load("signin2", () => {
+               var opts = {
+                  width: 100,
+                  height: 30,
+                  onsuccess: this.onSuccess,
+                  theme: "dark",
+               };
+               gapi.signin2.render("loginButton", opts);
+            });
+         })
+         .catch((err: any) => {
+            console.error(`C0016: ${err}`);
+         });
+   }
+
+   public render() {
+      return (
+         <div>
+            <HeaderComponent
+               isSignedIn={this.state.isSignedIn}
+               logout={this.logout}
+               photoURL={this.loggedInPhotoURL}
+               auth2={this.auth2}
+               googleToken={this.state.googleToken}
+               userObject={this.state.userObjFmServer}
+            ></HeaderComponent>
+            <BodyComponent
+               auth2={this.auth2}
+               loggedInWithGoogle={this.state.isSignedIn}
+               googleToken={this.state.googleToken}
+               emailAddress={this.emailAddress}
+            ></BodyComponent>
+         </div>
+      );
    }
 }
 

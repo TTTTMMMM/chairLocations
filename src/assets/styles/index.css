@@ -6,9 +6,445 @@
 html {
    background: #dce3e6;
    font-family: "Josefin Sans", monospace;
+   --headerURL: url("https://images.unsplash.com/photo-1526344966-89049886b28d?ixlib=rb-1.2.1&dpr=1&auto=format&fit=crop&w=416&h=312&q=60");
+   --respHeaderURL: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg");
+   --headerHeight: 100px;
+   --headerHeightP20: 120px;
+   --footerPadding: 10px;
 }
 
-body > div > div > input {
+body {
+   margin: 4px;
+   color: #334;
+   position: relative;
+   padding: 12px;
+}
+
+button:focus {
+   outline: none;
+}
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/* styling in header                                                  */
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+body > div > div > header {
+   font-family: "Josefin Sans", monospace;
+   background: var(--headerURL) no-repeat center center fixed;
+   background-size: cover;
+   display: flex;
+   border: 0 solid #000;
+   color: #000;
+   top: 0;
+   left: 0;
+   right: 0;
+   padding: 10px;
+   border-radius: 10px;
+   box-shadow: 0.3em 0.3em 1em #000;
+   position: fixed;
+   width: 98vw;
+   height: var(--headerHeight);
+   margin-left: 1px;
+   margin-right: 1px;
+   margin-bottom: 55px;
+   z-index: 755; /* any less and the vertical scroll bar tramples over the page header */
+}
+
+/* section that holds the stock input and refresh button  */
+body > div > div > header > section:nth-of-type(1) {
+   display: flex;
+   justify-content: flex-end;
+   width: 30vw;
+}
+
+/* section that holds the notifications  */
+body > div > div > header > section:nth-of-type(2) {
+   display: flex;
+   justify-content: flex-end;
+   width: 25vw;
+}
+/* iex attribution link  */
+body > div > div > header > section:nth-of-type(2) > fieldset > a {
+   font-size: 13px;
+   color: black;
+   transition: all 0.7s;
+}
+/* iex attribution link  */
+body > div > div > header > section:nth-of-type(2) > fieldset > a:hover {
+   font-size: 14px;
+   color: blue;
+}
+
+/* section that holds the admin button for the user who has admin privs and the login/logout button  */
+body > div > div > header > section:nth-of-type(3) {
+   display: flex;
+   justify-content: flex-end;
+   width: 45vw;
+}
+
+/* the stock symbols input field */
+body > div > div > header > section:nth-of-type(1) > input[type="text"] {
+   font-family: "Josefin Sans", monospace;
+   border-radius: 5px;
+   font-size: 13px;
+   line-height: 28px;
+   height: 35px;
+   width: 30vw;
+   outline: none;
+   padding: 0px 5px 0px 5px;
+   margin: 23px 2px 3px 0px;
+   border: 1px solid #dddddd;
+   transition: all 0.3s ease-in-out;
+   box-shadow: inset 0 0 2px rgb(0, 0, 0);
+   text-transform: uppercase;
+   min-width: 180px;
+}
+
+/* the stock symbols input field */
+body > div > div > header > section:nth-of-type(1) > input[type="text"]:focus {
+   box-shadow: inset 0 0 5px rgb(68, 105, 172);
+   font-size: 14.25px;
+}
+
+/* Refresh Button */
+html > body > div > div > header > section:nth-of-type(1) > button {
+   border: 2px solid black;
+   width: 60px;
+   border-radius: 50%;
+   padding: 3px;
+   height: 60px;
+   font-family: "Josefin Sans", monospace;
+   font-size: 14px;
+   color: black;
+   background: white;
+   margin: 13px 2px 0px 0px;
+   transition: all 0.5s ease-in-out;
+}
+
+/* Refresh Button */
+html > body > div > div > header > section:nth-of-type(1) > button:hover {
+   cursor: pointer;
+   background: black;
+   color: white;
+   border: 1px solid white;
+   transition: all 0.5s;
+}
+
+/* div that holds the admin "panel" for the user who has admin privs */
+html > body > div > div > header > section:nth-of-type(3) > div {
+   padding: 3px;
+   margin-top: -3px;
+   border: solid 1px black;
+   border-radius: 4px;
+}
+
+/* Add-Remove User Input text */
+html
+   > body
+   > div:nth-of-type(1)
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > input[type="text"] {
+   font-family: "Josefin Sans", monospace;
+   border-radius: 5px;
+   font-size: 14px;
+   line-height: 18px;
+   height: 25px;
+   width: 150px; /* was 100% */
+   outline: none;
+   padding: 0px 5px 0px 5px;
+   margin: 3px 1px 3px 0px;
+   border: 1px solid #dddddd;
+   transition: all 0.3s ease-in-out;
+   box-shadow: inset 0 0 2px rgb(0, 0, 0);
+   text-transform: lowercase;
+   min-width: 50px;
+}
+
+/* add/remove user input text field */
+html
+   > body
+   > div:nth-of-type(1)
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > input[type="text"]:focus {
+   box-shadow: inset 0 0 5px rgb(68, 105, 172);
+   margin: 5px 1px 3px 0px;
+   font-size: 14.25px;
+}
+
+/* Google Sign-in Button */
+html > body > div > div > header > section:nth-of-type(3) > button {
+   float: right;
+   padding: 0;
+   margin-top: 27px;
+   width: 100px;
+   height: 30px;
+}
+
+/* Google Sign-in button 'Sign In' words*/
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > button
+   > div
+   > div
+   > span
+   > span:nth-of-type(1) {
+   font-family: "Josefin Sans", "Karla", monospace;
+   font-size: 16px;
+   color: black;
+   margin-top: 20px;
+}
+
+/* Google Sign-in button 'Sign In' words on hover*/
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > button
+   > div
+   > div
+   > span
+   > span:nth-of-type(1):hover {
+   font-size: 17.5px;
+   color: yellow;
+   margin-top: 15px;
+   font-family: "Josefin Sans", "Karla", monospace;
+}
+
+.abcRioButtonContents {
+   color: black;
+   font-family: "Josefin Sans", "Karla", monospace;
+}
+
+/* Login photo figure after successful login */
+html > body > div > div > header > section:nth-of-type(3) > figure {
+   float: right;
+   margin-top: 15px;
+}
+
+/* Login photo figure after successful login */
+html > body > div > div > header > section:nth-of-type(3) > figure:hover {
+   cursor: pointer;
+   transform: scale(1);
+   transition: all 0.3s;
+   border: 2px gray solid;
+   padding: 2px;
+}
+
+/* Login photo figure after successful login */
+html > body > div > div > header > section:nth-of-type(3) > figure:not(:hover) {
+   transform: scale(1);
+   transition: all 0.3s;
+}
+
+/* Login photo caption after successful login */
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > figure
+   > figcaption {
+   font-size: 12px;
+   font-family: "Josefin Sans";
+}
+
+/* Login photo image after successful login */
+html > body > div > div > header > section:nth-of-type(3) > figure > img {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+}
+
+/* this div holds the input field, two buttons div, and user management notifications */
+html > body > div > div > header > section:nth-of-type(3) > div {
+   display: block;
+}
+/* div that holds text input and add and remove user buttons */
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div:nth-of-type(1) {
+   display: flex;
+}
+
+/* this div holds the two buttons (add and remove) */
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div:nth-of-type(1)
+   > div {
+   display: flex;
+}
+
+/* Remove user button */
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > div
+   > div:nth-of-type(2) {
+   border: 1px #aaaaaa solid;
+   transition: all 0.3s;
+   padding: 2px;
+}
+
+/* Remove user button */
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > div
+   > div:nth-of-type(2):hover {
+   border: 2px black solid;
+   cursor: pointer;
+}
+
+/* Remove user button */
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > div
+   > div:nth-of-type(2):not(:hover) {
+   border: 1px #aaaaaa solid;
+}
+
+/* words "remove" in remove user button */
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > div
+   > div:nth-of-type(2)
+   > span {
+   font-size: 11px;
+   font-family: "Josefin Sans";
+}
+
+/* words "add" in remove user button */
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > div
+   > div:nth-of-type(4)
+   > span {
+   font-size: 11px;
+   font-family: "Josefin Sans";
+}
+
+/* add user button*/
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > div
+   > div:nth-of-type(4) {
+   border: 1px #aaaaaa solid;
+   transition: all 0.3s;
+   padding: 2px;
+}
+/* "add" button*/
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > div
+   > div:nth-of-type(4):hover {
+   border: 2px black solid;
+   cursor: pointer;
+}
+/* "add" button*/
+html
+   > body
+   > div
+   > div
+   > header
+   > section:nth-of-type(3)
+   > div
+   > div
+   > div
+   > div:nth-of-type(4):not(:hover) {
+   border: 1px #aaaaaa solid;
+}
+
+#container {
+   font-family: "Josefin Sans";
+   border-radius: 4px;
+}
+.jqx-notification-info,
+.jqx-info {
+   background-color: blue;
+}
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/* styling in body                                                  */
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/* cherry blossom image */
+body > div > div > div > img {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: var(--headerHeightP20);
+   border-radius: 15px;
+   width: 650px;
+}
+
+body > div > div > div {
+   margin-top: var(--headerHeightP20);
+}
+
+body > div > div > div > div > input {
    font-family: "Josefin Sans", monospace;
    width: 260px;
    height: 20px;

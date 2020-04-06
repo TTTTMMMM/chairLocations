@@ -1,6 +1,6 @@
 // Client-side code follows:
 
-const readDataRows = (inputFile: any) => {
+const getTableHeadersFromCSVFile = (inputFile: any) => {
    return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.onerror = () => {
@@ -8,15 +8,15 @@ const readDataRows = (inputFile: any) => {
          reject(`Problem parsing ${inputFile.name}.`);
       };
       fileReader.onload = () => {
-         // console.log(`readDataRows(), dataRows:`);
          let allTheText = fileReader.result;
-         let dataRows = allTheText!.split("\n");
-         dataRows.shift(); // shift out the headers row
-         // console.log(dataRows);
-         resolve(dataRows);
+         let eachRow = (allTheText as string)!.split("\n");
+         let theHeadersRow = eachRow[0]; // first line of file has table headers
+         // console.log(theHeadersRow);
+         let theHeadersArray = theHeadersRow.split(",");
+         resolve(theHeadersArray);
       };
       fileReader.readAsText(inputFile);
    });
 };
 
-export default readDataRows;
+export default getTableHeadersFromCSVFile;
