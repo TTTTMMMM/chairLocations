@@ -8,6 +8,10 @@
             "function": "api"
          },
          {
+            "source": "/tableheaders{,/**}",
+            "function": "api"
+         },
+         {
             "source": "/users{,/**}",
             "function": "api"
          }

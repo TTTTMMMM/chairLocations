@@ -11,7 +11,7 @@ const {
 } = require("./public/lib/js/authStuff/verifyGoogleToken");
 const path = require("path");
 
-// const { addChair } = require("./public/lib/js/handlers/addChair");
+const { addTableHeaders } = require("./public/lib/js/handlers/addTableHeaders");
 const { render404 } = require("./public/lib/js/renderings/render404");
 
 // -----------------------------------------------------------------------
@@ -38,10 +38,12 @@ api.get("/users", (req, res) => {
 });
 
 api.post("/chair", (req, res) => {
-   console.log(
-      `In chair route, but addChair handler currently does not exist...`
-   );
+   console.log(`In chair route, but addChair handler is not complete...`);
    addChair(req, res, admin);
+});
+
+api.post("/tableheaders", (req, res) => {
+   addTableHeaders(req, res, admin);
 });
 
 api.get("*", (req, res) => {

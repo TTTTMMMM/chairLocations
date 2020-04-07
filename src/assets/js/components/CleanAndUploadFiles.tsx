@@ -53,11 +53,17 @@ class CleanAndUploadFiles extends Component<
       getTableHeadersFromCSVFile(aFile).then((result: any) => {
          tableHeaders = result;
          tableHeaders.push("fname");
-         storeHeadersOnFirebase(
-            this.props.auth2,
-            this.props.idToken,
-            tableHeaders
-         );
+         tableHeaders.forEach((tableHeader: string) => {
+            const randomTime = Math.floor(Math.random() * 10000);
+            setTimeout(() => {
+               storeHeadersOnFirebase(
+                  this.props.auth2,
+                  this.props.idToken,
+                  tableHeader
+               );
+            }, randomTime);
+         });
+
          Object.keys(filesListObject).forEach((fileIndex: any) => {
             // get data from all files, including the first file from which the headers were pulled
             let aFile = filesListObject[fileIndex];

@@ -4,20 +4,19 @@
 const storeHeadersOnFirebase = (
    auth2: any,
    id_token: any,
-   tableHeaders: Array<string>
+   tableHeader: string
 ) => {
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
    myHeaders.append("Content-Type", "application/json");
-   myHeaders.append("Cache-control", "no-cache, must-revalidate");
    const myInit = {
       method: "POST",
       headers: myHeaders,
-      body: "hi",
+      body: JSON.stringify({ tableHeader: tableHeader, keep: true }),
    };
    return new Promise((resolve) => {
-      fetch(`/users`, myInit).then((res) => {
+      fetch(`/tableheaders`, myInit).then((res) => {
          switch (res.status) {
             case 500:
                auth2.signOut().then(() => {

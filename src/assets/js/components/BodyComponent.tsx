@@ -58,10 +58,6 @@ class BodyComponent extends React.PureComponent<
    }
 
    signInToFirebase(googleUserToken: any) {
-      console.log(
-         `BodyComponent signInToFirebase(), typeof this.props.emailAddress<${typeof this
-            .props.emailAddress}>`
-      );
       if (typeof this.props.emailAddress != "undefined") {
          const fbCred = firebase.auth.GoogleAuthProvider.credential(
             googleUserToken
@@ -131,9 +127,6 @@ class BodyComponent extends React.PureComponent<
    }
 
    public render() {
-      //   console.log(
-      //      `BodyComponent render(), this.props.loggedInWithGoogle<${this.props.loggedInWithGoogle}> this.state.isLoggedInToFirebase<${this.state.isLoggedInToFirebase}>`
-      //   );
       if (!this.props.loggedInWithGoogle && this.state.isLoggedInToFirebase) {
          this.signOutOfFirebase();
       }

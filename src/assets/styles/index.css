@@ -232,6 +232,7 @@ html
 html > body > div > div > header > section:nth-of-type(3) > figure {
    float: right;
    margin-top: 15px;
+   background-color: black;
 }
 
 /* Login photo figure after successful login */
@@ -241,6 +242,7 @@ html > body > div > div > header > section:nth-of-type(3) > figure:hover {
    transition: all 0.3s;
    border: 2px gray solid;
    padding: 2px;
+   background-color: black;
 }
 
 /* Login photo figure after successful login */
@@ -260,6 +262,7 @@ html
    > figcaption {
    font-size: 12px;
    font-family: "Josefin Sans";
+   color: yellow;
 }
 
 /* Login photo image after successful login */
