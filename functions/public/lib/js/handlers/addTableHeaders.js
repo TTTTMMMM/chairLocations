@@ -31,6 +31,7 @@ exports.addTableHeaders = async (req, res, admin) => {
       });
    }
    if (!aTableHeader.exists) {
+      // https://stackoverflow.com/questions/17781472/how-to-get-a-subset-of-a-javascript-objects-properties
       let keepObj = (({ keep }) => ({ keep }))(theTableHeader); // destructure req.body to keep only the "keep" key
       try {
          await admin
@@ -38,7 +39,7 @@ exports.addTableHeaders = async (req, res, admin) => {
             .collection("tableheaders")
             .doc(thTHCapitalized)
             .set(keepObj);
-         retMsg = `Added tableHeader ${thTHCapitalized}`;
+         retMsg = `Added ${thTHCapitalized} to tableheaders collection.`;
       } catch (err) {
          const msg = `0201 Error: ${thTHCapitalized} couldn't be added to tableheaders collection`;
          console.log(msg);
@@ -47,7 +48,7 @@ exports.addTableHeaders = async (req, res, admin) => {
          });
       }
    } else {
-      retMsg = `${thTHCapitalized} already exists, so not added.`;
+      retMsg = `${thTHCapitalized} already exists, so not added to tableheaders collection.`;
    }
    try {
       await firebaseApp.auth().signOut();

@@ -1,4 +1,6 @@
 // Client-side code follows:
+import cleanHeaders from "./cleanHeaders";
+import additionalHeaders from "../../../../configs/additionalTableHeaders";
 
 const getTableHeadersFromCSVFile = (inputFile: any) => {
    return new Promise((resolve, reject) => {
@@ -11,9 +13,11 @@ const getTableHeadersFromCSVFile = (inputFile: any) => {
          let allTheText = fileReader.result;
          let eachRow = (allTheText as string)!.split("\n");
          let theHeadersRow = eachRow[0]; // first line of file has table headers
-         // console.log(theHeadersRow);
-         let theHeadersArray = theHeadersRow.split(",");
-         resolve(theHeadersArray);
+         let cleanedHeaders = cleanHeaders(theHeadersRow);
+         let allHeaders = [...cleanedHeaders, ...additionalHeaders];
+         // console.log(allHeaders);
+         // let theHeadersArray = theHeadersRow.split(",");
+         resolve(allHeaders);
       };
       fileReader.readAsText(inputFile);
    });

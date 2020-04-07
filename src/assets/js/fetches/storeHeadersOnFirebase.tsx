@@ -4,7 +4,8 @@
 const storeHeadersOnFirebase = (
    auth2: any,
    id_token: any,
-   tableHeader: string
+   tableHeader: string,
+   myPanel: any
 ) => {
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
@@ -52,6 +53,7 @@ const storeHeadersOnFirebase = (
                break;
             default:
                res.json().then((data: any) => {
+                  myPanel.current!.append(`${data.message}<br>`);
                   resolve(data);
                });
          }
