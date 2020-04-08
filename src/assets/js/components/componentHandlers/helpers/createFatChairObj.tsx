@@ -1,20 +1,20 @@
 // Client-side code follows:
 import { HeaderMapping } from "../../../misc/chairLocTypes";
 
-const createChairObj = (
+const createFatChairObj = (
    aRow: string,
    headerMappingArray: Array<HeaderMapping>
 ) => {
    return new Promise((resolve, reject) => {
       let dataArray = aRow.split(",");
       let i = 0;
-      let chairObj: any = {};
+      let fatChairObj: any = {};
       dataArray.forEach((x) => {
-         chairObj[headerMappingArray[i++].newHdr] = x;
+         fatChairObj[headerMappingArray[i++].newHdr] = x;
       });
-      //   console.dir(chairObj);
-      resolve(chairObj);
+      //   console.dir(fatChairObj);
+      resolve(fatChairObj);
    });
 };
 
-export default createChairObj;
+export default createFatChairObj;

@@ -6,6 +6,7 @@
       "@types/react": "^16.9.25",
       "@types/react-dom": "^16.9.5",
       "consolidate": "^0.15.1",
+      "crypto-js": "^4.0.0",
       "escape-html": "^1.0.3",
       "firebase": "^7.12.0",
       "jqwidgets-scripts": "^7.0.0",

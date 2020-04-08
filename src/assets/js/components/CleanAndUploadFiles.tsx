@@ -5,9 +5,10 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import readDataRowsOfFile from "./componentHandlers/helpers/readDataRowsOfFile";
 import processTableHeadersFromCSVFile from "./componentHandlers/helpers/headers/processTableHeadersFromCSVFile";
 import { HeaderMapping } from "../misc/chairLocTypes";
-import createChairObject from "../components/componentHandlers/helpers/createChairObj";
+import createFatChairObject from "../components/componentHandlers/helpers/createFatChairObj";
 
 import storeHeadersOnFirebase from "../fetches/storeHeadersOnFirebase";
+import addValuesForAdditionalHeaders from "./componentHandlers/helpers/addValuesForAdditionalHeaders";
 
 class CleanAndUploadFiles extends Component<
    { auth2: any; idToken: any },
@@ -77,32 +78,17 @@ class CleanAndUploadFiles extends Component<
                   this.myPanel.current!.append(`${aFile.name}, `);
                   this.myPanel.current!.append(`${dataRows.length} rows<br/>`);
                   //   let rowNum = 0;
+                  let extendedFat: any = undefined;
                   dataRows.forEach((aRow: string) => {
-                     createChairObject(aRow, headerMappingArray).then(
-                        (chairObj: any) => {
-                           console.dir(chairObj);
+                     createFatChairObject(aRow, headerMappingArray).then(
+                        (fatChairObj: any) => {
+                           extendedFat = addValuesForAdditionalHeaders(
+                              fatChairObj,
+                              aFile.name
+                           );
+                           console.dir(extendedFat);
                         }
                      );
-                     // aRow:  comma separated values -> 0, 31905, 45, 14, 15098573829928, etc.
-                     // key/vals are positionally dependent: 1rstValue corresponds with 1rstHeader, etc.
-                     //      let cellValues = aRow.split(",");
-                     //      cellValues.push(aFile.name);
-                     //  let chairLocObj = cellValues.map(
-                     //     (obj: any, index: any) => {
-                     //        let myObj = {};
-                     //        myObj[tableHeaders[index]] = obj;
-                     //        return myObj;
-                     //     }
-                     //  );
-                     //  let chairLocObj = cellValues.map(
-                     //     (obj: any, index: any) => {
-                     //        let myObj: { [tableHeaders: string]: string } = {};
-                     //        myObj[tableHeaders[index]] = obj;
-                     //        return myObj;
-                     //     }
-                     //  );
-                     //  console.log(rowNum, chairLocObj);
-                     //  rowNum++;
                   });
                })
                .catch((err: any) => {
