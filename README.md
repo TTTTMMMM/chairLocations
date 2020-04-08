@@ -1,4 +1,25 @@
-After you eject, don't forget to put the .babelrc file into the root of the new project!
+-- After you eject, don't forget to copy the .babelrc file into the root of the new project!
+-- Don't forget to go to Google Credentials page and lock down the API keys.
+https://console.cloud.google.com/apis/credentials?project=chairlocations
+-- Don't forget to enable Google Authentication in Firebase console > Authentication > Sign-in method
+https://console.firebase.google.com/u/0/project/chairlocations/authentication/providers
+
+---
+
+let uu = {orgHdr: "assetlabel", newHdr: "AssetLabel"};
+let vv = {orgHdr: "GPS MPH", newHdr: "GPS_MPH"};
+let ww = {orgHdr: "Temp1", newHdr: "Temp1"};
+let headerMappingArray = new Array();
+headerMappingArray.push(uu)
+headerMappingArray.push(vv)
+headerMappingArray.push(ww)
+headerMappingArray
+let c1 = {};
+c1[headerMappingArray[0].newHdr] = "CHAIR088";
+c1[headerMappingArray[1].newHdr] = "5";
+c1[headerMappingArray[2].newHdr] = "72";
+c1;
+{AssetLabel: "CHAIR088", GPS_MPH: "5", Temp1: "72"}
 
 ---
 

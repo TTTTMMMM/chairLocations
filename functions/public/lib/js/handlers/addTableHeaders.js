@@ -32,7 +32,7 @@ exports.addTableHeaders = async (req, res, admin) => {
    }
    if (!aTableHeader.exists) {
       // https://stackoverflow.com/questions/17781472/how-to-get-a-subset-of-a-javascript-objects-properties
-      let keepObj = (({ keep }) => ({ keep }))(theTableHeader); // destructure req.body to keep only the "keep" key
+      let keepObj = (({ keep }) => ({ keep }))(theTableHeader); // destructure req.body to keep only the "keep" property
       try {
          await admin
             .firestore()

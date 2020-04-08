@@ -447,6 +447,7 @@ body > div > div > div {
    margin-top: var(--headerHeightP20);
 }
 
+/* the file input element */
 body > div > div > div > div > input {
    font-family: "Josefin Sans", monospace;
    width: 260px;
