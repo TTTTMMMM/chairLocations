@@ -1,11 +1,13 @@
 -- After you eject, don't forget to copy the .babelrc file into the root of the new project!
 -- Don't forget to go to Google Credentials page and lock down two API keys:
----- API Keys >Browser key (auto created by Firebase) --> apply API restrictions and possiblye Application Restrictions (still need to verify this)
+---- API Keys >Browser key (auto created by Firebase) --> apply API restrictions
 ---- OAuth 2.0 Client Key --> apply authorized JavaScript Origins
 
 https://console.cloud.google.com/apis/credentials?project=chairlocations
 -- Don't forget to enable Google Authentication in Firebase console > Authentication > Sign-in method
 https://console.firebase.google.com/u/0/project/chairlocations/authentication/providers
+
+// https://stackoverflow.com/questions/17781472/how-to-get-a-subset-of-a-javascript-objects-properties
 
 ---
 

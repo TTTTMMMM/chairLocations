@@ -8,15 +8,26 @@ import { HeaderMapping } from "../misc/chairLocTypes";
 import createFatChairObject from "../components/componentHandlers/helpers/createFatChairObj";
 
 import storeHeadersOnFirebase from "../fetches/storeHeadersOnFirebase";
-import addValuesForAdditionalHeaders from "./componentHandlers/helpers/addValuesForAdditionalHeaders";
+import addValuesForAdditionalHeaders from "./componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
+// import ShowTChairHeaders from "./ShowChairHeaders";
 
 class CleanAndUploadFiles extends Component<
-   { auth2: any; idToken: any },
+   {
+      loggedInWithGoogle: boolean;
+      auth2: any;
+      idToken: any;
+      loggedInToFirebase: boolean;
+   },
    { value: string }
 > {
    private myPanel = React.createRef<JqxPanel>();
    private fileInput: any;
-   constructor(props: { auth2: any; idToken: any }) {
+   constructor(props: {
+      loggedInWithGoogle: boolean;
+      auth2: any;
+      idToken: any;
+      loggedInToFirebase: boolean;
+   }) {
       super(props);
 
       this.fileInput = React.createRef();
@@ -47,6 +58,13 @@ class CleanAndUploadFiles extends Component<
          </div>
       );
    }
+
+   //    <ShowTChairHeaders
+   //    loggedInWithGoogle={this.props.loggedInWithGoogle}
+   //    auth2={this.props.auth2}
+   //    idToken={this.props.idToken}
+   //    loggedInToFirebase={this.props.loggedInToFirebase}
+   // ></ShowTChairHeaders>
 
    private handleChange(event: any) {
       this.setState({ value: event.target.value });

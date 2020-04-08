@@ -8,7 +8,7 @@
             "function": "api"
          },
          {
-            "source": "/tableheaders{,/**}",
+            "source": "/chairheaders{,/**}",
             "function": "api"
          },
          {

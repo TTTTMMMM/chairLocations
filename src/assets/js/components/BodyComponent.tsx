@@ -11,8 +11,6 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
-import "./CleanAndUploadFiles";
-
 import "../../styles/index.css";
 import CleanAndUploadFiles from "./CleanAndUploadFiles";
 
@@ -117,8 +115,10 @@ class BodyComponent extends React.PureComponent<
       if (this.state.isLoggedInToFirebase) {
          return (
             <CleanAndUploadFiles
+               loggedInWithGoogle={this.props.loggedInWithGoogle}
                auth2={this.props.auth2}
                idToken={this.props.googleToken}
+               loggedInToFirebase={this.state.isLoggedInToFirebase}
             ></CleanAndUploadFiles>
          );
       } else {

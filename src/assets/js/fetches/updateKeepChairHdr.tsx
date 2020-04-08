@@ -1,23 +1,26 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
 
-const storeHeadersOnFirebase = (
+const updateKeepChairHdr = (
    auth2: any,
    id_token: any,
-   chairHeader: string,
-   myPanel: any
+   theKey: any,
+   ownership: any
 ) => {
+   let ownObject = { ticker: theKey, own: ownership };
+   let jsoo = JSON.stringify(ownObject);
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
    myHeaders.append("Content-Type", "application/json");
+   myHeaders.append("Cache-control", "no-cache, must-revalidate");
    const myInit = {
-      method: "POST",
+      method: "PUT",
       headers: myHeaders,
-      body: JSON.stringify({ chairHeader: chairHeader, keep: true }),
+      body: jsoo,
    };
    return new Promise((resolve) => {
-      fetch(`/chairheaders`, myInit).then((res) => {
+      fetch(`/chairheaders/keep/${theKey}`, myInit).then((res) => {
          switch (res.status) {
             case 500:
                auth2.signOut().then(() => {
@@ -47,18 +50,19 @@ const storeHeadersOnFirebase = (
                });
                break;
             case 400:
-               res.json().then((data: any) => {
-                  resolve(data);
+               auth2.signOut().then(() => {
+                  res.text().then((thePage) => {
+                     document.open();
+                     document.write(thePage);
+                     document.close();
+                  });
                });
                break;
             default:
-               res.json().then((data: any) => {
-                  myPanel.current!.append(`${data.message}<br>`);
-                  resolve(data);
-               });
+               resolve(true);
          }
       });
    });
 };
 
-export default storeHeadersOnFirebase;
+export default updateKeepChairHdr;

@@ -3,52 +3,53 @@ var escapeHTML = require("escape-html");
 var util = require("util");
 
 // eslint-disable-next-line consistent-return
-exports.addTableHeaders = async (req, res, admin) => {
+exports.addChairHeaders = async (req, res, admin) => {
    let theReqKeys = Object.keys(req);
-   const theTableHeader = req.body;
-   // console.log("------ JSON.stringify(theTableHeader)-----");
-   let retMsg = "Return message not set in addTableHeaders handler";
+   const theChairHeader = req.body;
+   // console.log("------ JSON.stringify(theChairHeader)-----");
+   let retMsg = "Return message not set in addChairHeaders handler";
    // ------------------------------------------------------
-   let theTH = theTableHeader.tableHeader
+   let theCH = theChairHeader.chairHeader
       .substring(0, 20)
       .trim()
       .replace(/\s+/g, "_")
       .replace(/\/+/g, "");
-   let thTHCapitalized = theTH.charAt(0).toUpperCase() + theTH.slice(1);
+   let thCHCapitalized = theCH.charAt(0).toUpperCase() + theCH.slice(1);
 
-   let aTableHeader = undefined;
+   let aChairHeader = undefined;
    try {
-      aTableHeader = await admin
+      aChairHeader = await admin
          .firestore()
-         .collection("tableheaders")
-         .doc(thTHCapitalized)
+         .collection("chairheaders")
+         .doc(thCHCapitalized)
          .get();
    } catch (err) {
-      const msg = `0202 Error: Checking for existence of ${thTHCapitalized} in tableheaders collection`;
+      const msg = `0202 Error: Checking for existence of ${thCHCapitalized} in chairheaders collection`;
       console.log(msg);
       res.status(500).json({
          message: `${msg}`,
       });
    }
-   if (!aTableHeader.exists) {
-      // https://stackoverflow.com/questions/17781472/how-to-get-a-subset-of-a-javascript-objects-properties
-      let keepObj = (({ keep }) => ({ keep }))(theTableHeader); // destructure req.body to keep only the "keep" property
+   if (!aChairHeader.exists) {
+      let cHdr = {};
+      cHdr.chairHeader = thCHCapitalized;
+      cHdr.keep = theChairHeader.keep;
       try {
          await admin
             .firestore()
-            .collection("tableheaders")
-            .doc(thTHCapitalized)
-            .set(keepObj);
-         retMsg = `Added ${thTHCapitalized} to tableheaders collection.`;
+            .collection("chairheaders")
+            .doc(thCHCapitalized)
+            .set(cHdr);
+         retMsg = `Added ${thCHCapitalized} to chairheaders collection.`;
       } catch (err) {
-         const msg = `0201 Error: ${thTHCapitalized} couldn't be added to tableheaders collection`;
+         const msg = `0201 Error: ${thCHCapitalized} couldn't be added to chairheaders collection`;
          console.log(msg);
          res.status(500).json({
             message: `${msg} \n${err}`,
          });
       }
    } else {
-      retMsg = `${thTHCapitalized} already exists, so not added to tableheaders collection.`;
+      retMsg = `${thCHCapitalized} already exists, so not added to chairheaders collection.`;
    }
    try {
       await firebaseApp.auth().signOut();
