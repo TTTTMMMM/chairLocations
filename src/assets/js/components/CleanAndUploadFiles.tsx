@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
+import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
+
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import readDataRowsOfFile from "./componentHandlers/helpers/readDataRowsOfFile";
@@ -21,6 +23,7 @@ class CleanAndUploadFiles extends Component<
    { value: string }
 > {
    private myPanel = React.createRef<JqxPanel>();
+   private clearButton = React.createRef<JqxButton>();
    private fileInput: any;
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -32,6 +35,7 @@ class CleanAndUploadFiles extends Component<
 
       this.fileInput = React.createRef();
       this.handleChange = this.handleChange.bind(this);
+      this.clearButtonClicked = this.clearButtonClicked.bind(this);
 
       this.state = {
          value: "",
@@ -41,26 +45,41 @@ class CleanAndUploadFiles extends Component<
    render() {
       return (
          <div>
-            <input
-               ref={this.fileInput}
-               type="file"
-               accept=".csv"
-               multiple
-               onChange={this.handleChange}
-               value={this.state.value}
-            ></input>
-            <JqxPanel
-               ref={this.myPanel}
-               width={"30%"}
-               height={150}
-               theme={"fresh"}
-            />
+            <div>
+               <input
+                  ref={this.fileInput}
+                  type="file"
+                  accept=".csv"
+                  multiple
+                  onChange={this.handleChange}
+                  value={this.state.value}
+               ></input>
+            </div>
             <ShowChairHeaders
                loggedInWithGoogle={this.props.loggedInWithGoogle}
                auth2={this.props.auth2}
                idToken={this.props.idToken}
                loggedInToFirebase={this.props.loggedInToFirebase}
+               myPanel={this.myPanel}
             ></ShowChairHeaders>
+            <div>
+               <JqxPanel
+                  ref={this.myPanel}
+                  width={"30%"}
+                  height={150}
+                  theme={"fresh"}
+               />
+               <JqxButton
+                  ref={this.clearButton}
+                  onClick={this.clearButtonClicked}
+                  width={120}
+                  height={40}
+                  theme={"fresh"}
+                  textPosition={"center"}
+               >
+                  Clear Console
+               </JqxButton>
+            </div>
          </div>
       );
    }
@@ -93,9 +112,11 @@ class CleanAndUploadFiles extends Component<
                .then((dataRows: any) => {
                   // dataRows[] contains each row of a file
                   this.myPanel.current!.append(`${aFile.name}, `);
-                  this.myPanel.current!.append(`${dataRows.length} rows<br/>`);
+                  this.myPanel.current!.append(`${dataRows.length} rows, `);
                   //   let rowNum = 0;
                   let extendedFat: any = undefined;
+                  let numHeaders = 0;
+                  let rowNum = 0;
                   dataRows.forEach((aRow: string) => {
                      createFatChairObject(aRow, headerMappingArray).then(
                         (fatChairObj: any) => {
@@ -103,7 +124,13 @@ class CleanAndUploadFiles extends Component<
                               fatChairObj,
                               aFile.name
                            );
-                           console.dir(Object.keys(extendedFat).length);
+                           numHeaders = Object.keys(extendedFat).length;
+                           if (rowNum++ === 0) {
+                              console.log(`${numHeaders} properties`);
+                              this.myPanel.current!.append(
+                                 `${numHeaders} properties<br>`
+                              );
+                           }
                         }
                      );
                   });
@@ -113,6 +140,10 @@ class CleanAndUploadFiles extends Component<
                });
          });
       });
+   }
+
+   private clearButtonClicked() {
+      this.myPanel.current!.clearcontent();
    }
 }
 

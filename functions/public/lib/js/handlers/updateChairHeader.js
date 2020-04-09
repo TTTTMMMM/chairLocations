@@ -33,7 +33,7 @@ exports.updateChairHeader = async (req, res, admin) => {
          console.log(`Updated keep choice of <${req.params.id}>`);
          res.append("Cache-Control", "no-cache, must-revalidate");
          return res.status(200).json({
-            message: `Successfully updated keep choice of ${req.params.id} to ${keepIt}`,
+            message: `Successfully updated choice for keeping ${req.params.id} to ${keepIt}`,
          });
       })
       .catch((err) => {

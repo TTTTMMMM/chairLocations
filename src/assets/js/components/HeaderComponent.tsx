@@ -40,7 +40,7 @@ class HeaderComponent extends Component<
                <fieldset>
                   <legend>Notifications</legend>
                   <div
-                     id="addStockMsgContainer"
+                     id="clocnotifications"
                      style={{
                         width: "200px",
                         height: "49px",
@@ -62,7 +62,7 @@ class HeaderComponent extends Component<
                      autoClose={true}
                      animationOpenDelay={800}
                      autoCloseDelay={20000}
-                     appendContainer={"#addStockMsgContainer"}
+                     appendContainer={"#clocnotifications"}
                      template={"info"}
                   >
                      <div id="keyup">Please, sign in with Google.</div>

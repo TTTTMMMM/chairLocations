@@ -30,6 +30,7 @@ class ShowChairHeaders extends React.PureComponent<
       auth2: any;
       idToken: any;
       loggedInToFirebase: boolean;
+      myPanel: any;
    },
    MyState
 > {
@@ -50,6 +51,7 @@ class ShowChairHeaders extends React.PureComponent<
       auth2: any;
       idToken: any;
       loggedInToFirebase: boolean;
+      myPanel: any;
    }) {
       super(props);
       this.headerCollection = "";
@@ -316,7 +318,8 @@ class ShowChairHeaders extends React.PureComponent<
          this.props.auth2,
          this.props.idToken,
          this.modifyKey,
-         keeper
+         keeper,
+         this.props.myPanel
       ).then(() => {});
    }
 

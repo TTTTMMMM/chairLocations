@@ -5,7 +5,8 @@ const updateKeepChairHdr = (
    auth2: any,
    id_token: any,
    theKey: any,
-   keepit: any
+   keepit: any,
+   myPanel: any
 ) => {
    let keepObject = { chairhdr: theKey, keep: keepit };
    let jsko = JSON.stringify(keepObject);
@@ -58,6 +59,9 @@ const updateKeepChairHdr = (
                });
                break;
             default:
+               res.json().then((x) => {
+                  myPanel.current!.append(`${x.message}<br/>`);
+               });
                resolve(true);
          }
       });
