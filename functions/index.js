@@ -12,6 +12,10 @@ const {
 const path = require("path");
 
 const { addChairHeaders } = require("./public/lib/js/handlers/addChairHeaders");
+const {
+   updateChairHeader,
+} = require("./public/lib/js/handlers/updateChairHeader");
+
 const { render404 } = require("./public/lib/js/renderings/render404");
 
 // -----------------------------------------------------------------------
@@ -43,6 +47,10 @@ api.post("/chair", (req, res) => {
 
 api.post("/chairheaders", (req, res) => {
    addChairHeaders(req, res, admin);
+});
+
+api.put("/chairheaders/keep/:id", (req, res) => {
+   updateChairHeader(req, res, admin);
 });
 
 api.get("*", (req, res) => {

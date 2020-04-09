@@ -4,7 +4,6 @@ var util = require("util");
 
 // eslint-disable-next-line consistent-return
 exports.addChairHeaders = async (req, res, admin) => {
-   let theReqKeys = Object.keys(req);
    const theChairHeader = req.body;
    // console.log("------ JSON.stringify(theChairHeader)-----");
    let retMsg = "Return message not set in addChairHeaders handler";
@@ -13,8 +12,10 @@ exports.addChairHeaders = async (req, res, admin) => {
       .substring(0, 20)
       .trim()
       .replace(/\s+/g, "_")
-      .replace(/\/+/g, "");
-   let thCHCapitalized = theCH.charAt(0).toUpperCase() + theCH.slice(1);
+      .replace(/\/+/g, "")
+      .toUpperCase();
+   let thCHCapitalized = theCH;
+   // let thCHCapitalized = theCH.charAt(0).toUpperCase() + theCH.slice(1);
 
    let aChairHeader = undefined;
    try {
@@ -40,7 +41,7 @@ exports.addChairHeaders = async (req, res, admin) => {
             .collection("chairheaders")
             .doc(thCHCapitalized)
             .set(cHdr);
-         retMsg = `Added ${thCHCapitalized} to chairheaders collection.`;
+         retMsg = `---> Added ${thCHCapitalized}.`;
       } catch (err) {
          const msg = `0201 Error: ${thCHCapitalized} couldn't be added to chairheaders collection`;
          console.log(msg);
@@ -49,7 +50,7 @@ exports.addChairHeaders = async (req, res, admin) => {
          });
       }
    } else {
-      retMsg = `${thCHCapitalized} already exists, so not added to chairheaders collection.`;
+      retMsg = `${thCHCapitalized} already exists.`;
    }
    try {
       await firebaseApp.auth().signOut();

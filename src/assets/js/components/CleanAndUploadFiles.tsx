@@ -9,7 +9,7 @@ import createFatChairObject from "../components/componentHandlers/helpers/create
 
 import storeHeadersOnFirebase from "../fetches/storeHeadersOnFirebase";
 import addValuesForAdditionalHeaders from "./componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
-// import ShowTChairHeaders from "./ShowChairHeaders";
+import ShowChairHeaders from "./ShowChairHeaders";
 
 class CleanAndUploadFiles extends Component<
    {
@@ -55,16 +55,15 @@ class CleanAndUploadFiles extends Component<
                height={150}
                theme={"fresh"}
             />
+            <ShowChairHeaders
+               loggedInWithGoogle={this.props.loggedInWithGoogle}
+               auth2={this.props.auth2}
+               idToken={this.props.idToken}
+               loggedInToFirebase={this.props.loggedInToFirebase}
+            ></ShowChairHeaders>
          </div>
       );
    }
-
-   //    <ShowTChairHeaders
-   //    loggedInWithGoogle={this.props.loggedInWithGoogle}
-   //    auth2={this.props.auth2}
-   //    idToken={this.props.idToken}
-   //    loggedInToFirebase={this.props.loggedInToFirebase}
-   // ></ShowTChairHeaders>
 
    private handleChange(event: any) {
       this.setState({ value: event.target.value });
@@ -104,13 +103,13 @@ class CleanAndUploadFiles extends Component<
                               fatChairObj,
                               aFile.name
                            );
-                           console.dir(extendedFat);
+                           console.dir(Object.keys(extendedFat).length);
                         }
                      );
                   });
                })
                .catch((err: any) => {
-                  console.error(`C0001: ${err}`);
+                  console.error(`C0002: ${err}`);
                });
          });
       });

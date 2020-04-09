@@ -2,10 +2,11 @@
 -- Don't forget to go to Google Credentials page and lock down two API keys:
 ---- API Keys >Browser key (auto created by Firebase) --> apply API restrictions
 ---- OAuth 2.0 Client Key --> apply authorized JavaScript Origins
-
 https://console.cloud.google.com/apis/credentials?project=chairlocations
 -- Don't forget to enable Google Authentication in Firebase console > Authentication > Sign-in method
 https://console.firebase.google.com/u/0/project/chairlocations/authentication/providers
+-- If you get the following error when trying to subscribe to a collection, test the rules in the database rules playground.
+Uncaught Error in onSnapshot: FirebaseError: Missing or insufficient permissions.
 
 // https://stackoverflow.com/questions/17781472/how-to-get-a-subset-of-a-javascript-objects-properties
 

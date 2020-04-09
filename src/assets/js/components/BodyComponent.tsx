@@ -17,7 +17,7 @@ import CleanAndUploadFiles from "./CleanAndUploadFiles";
 // import { months } from "../misc/months";
 
 interface MyState {
-   isLoggedInToFirebase?: boolean;
+   isLoggedInToFirebase?: boolean | false;
 }
 class BodyComponent extends React.PureComponent<
    {
@@ -56,27 +56,19 @@ class BodyComponent extends React.PureComponent<
    }
 
    signInToFirebase(googleUserToken: any) {
-      if (typeof this.props.emailAddress != "undefined") {
-         const fbCred = firebase.auth.GoogleAuthProvider.credential(
-            googleUserToken
-         );
-         firebase
-            .auth()
-            .signInWithCredential(fbCred)
-            .then(() => {
-               //   this.stocksRef = firebase
-               //      .firestore()
-               //      .collection(this.props.emailAddress);
-               //    this.unsubscribe = this.stocksRef.onSnapshot(
-               //       this.onCollectionUpdate
-               //    );
-               this.setState({ isLoggedInToFirebase: true });
-            })
-            .catch((err) => {
-               const firstLine = "C0001: Error signing into firebase:\n";
-               console.error(`${firstLine} error<${err.message}>`);
-            });
-      }
+      const fbCred = firebase.auth.GoogleAuthProvider.credential(
+         googleUserToken
+      );
+      firebase
+         .auth()
+         .signInWithCredential(fbCred)
+         .then(() => {
+            this.setState({ isLoggedInToFirebase: true });
+         })
+         .catch((err) => {
+            const firstLine = "C0001: Error signing into firebase:\n";
+            console.error(`${firstLine} error<${err.message}>`);
+         });
    }
 
    signOutOfFirebase() {
@@ -112,13 +104,13 @@ class BodyComponent extends React.PureComponent<
    };
 
    getAppBodyContent() {
-      if (this.state.isLoggedInToFirebase) {
+      if (this.props.loggedInWithGoogle) {
          return (
             <CleanAndUploadFiles
                loggedInWithGoogle={this.props.loggedInWithGoogle}
                auth2={this.props.auth2}
                idToken={this.props.googleToken}
-               loggedInToFirebase={this.state.isLoggedInToFirebase}
+               loggedInToFirebase={this.state.isLoggedInToFirebase!}
             ></CleanAndUploadFiles>
          );
       } else {

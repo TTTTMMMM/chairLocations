@@ -8,8 +8,10 @@ const cleanHeaders = (headers: string) => {
          .substring(0, 20)
          .trim()
          .replace(/\s+/g, "_")
-         .replace(/\/+/g, "");
-      cleanedHeadersArray.push(tH.charAt(0).toUpperCase() + tH.slice(1));
+         .replace(/\/+/g, "")
+         .toUpperCase();
+      // cleanedHeadersArray.push(tH.charAt(0).toUpperCase() + tH.slice(1));
+      cleanedHeadersArray.push(tH);
    });
    return cleanedHeadersArray;
 };

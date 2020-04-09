@@ -5,19 +5,18 @@ const updateKeepChairHdr = (
    auth2: any,
    id_token: any,
    theKey: any,
-   ownership: any
+   keepit: any
 ) => {
-   let ownObject = { ticker: theKey, own: ownership };
-   let jsoo = JSON.stringify(ownObject);
+   let keepObject = { chairhdr: theKey, keep: keepit };
+   let jsko = JSON.stringify(keepObject);
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
    myHeaders.append("Content-Type", "application/json");
-   myHeaders.append("Cache-control", "no-cache, must-revalidate");
    const myInit = {
       method: "PUT",
       headers: myHeaders,
-      body: jsoo,
+      body: jsko,
    };
    return new Promise((resolve) => {
       fetch(`/chairheaders/keep/${theKey}`, myInit).then((res) => {

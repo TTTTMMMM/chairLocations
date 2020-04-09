@@ -9,6 +9,12 @@ import JqxDropDownList from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdropdownli
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/firestore";
+import "firebase/auth";
+import "../configs/firebaseInit";
+
 import cellRendererKeep from "../renderers/cellRendererKeep";
 import updateKeepChairHdr from "../fetches/updateKeepChairHdr";
 
@@ -16,8 +22,9 @@ import updateKeepChairHdr from "../fetches/updateKeepChairHdr";
 interface MyState extends IDataTableProps {
    chairHeadersWatch?: any;
    keepEditorRenderer?: any;
+   subscribed?: boolean;
 }
-class ShowTableHeaders extends React.PureComponent<
+class ShowChairHeaders extends React.PureComponent<
    {
       loggedInWithGoogle: boolean;
       auth2: any;
@@ -28,11 +35,12 @@ class ShowTableHeaders extends React.PureComponent<
 > {
    headerCollection: any;
    numUpdates: number | undefined;
-   unsubscribe: any;
+   unsubscribe: any | undefined;
    numRows: number | undefined;
    columns: any[] | undefined;
    dataAdapter: null;
    modifyKey: string | undefined;
+   boundIndex: number | 0;
 
    private myChairHeadersTable = React.createRef<JqxDataTable>();
    private keepDropDownList = React.createRef<JqxDropDownList>();
@@ -49,14 +57,17 @@ class ShowTableHeaders extends React.PureComponent<
       this.columns = [];
       this.modifyKey = "";
       this.numUpdates = 0;
+      this.boundIndex = 0;
 
       this.keepOnSelect = this.keepOnSelect.bind(this);
+      this.onRowSelect = this.onRowSelect.bind(this);
 
       this.state = {
+         subscribed: false,
          chairHeadersWatch: [],
          editSettings: {
             cancelOnEsc: true,
-            editOnDoubleClick: true,
+            editOnDoubleClick: false,
             editOnF2: true,
             editSingleCell: true,
             saveOnBlur: true,
@@ -91,6 +102,23 @@ class ShowTableHeaders extends React.PureComponent<
       };
       this.getChairHeadersContent = this.getChairHeadersContent.bind(this);
    }
+
+   subscribeToChairHeaders() {
+      this.headerCollection = firebase.firestore().collection("chairheaders");
+      this.unsubscribe = this.headerCollection.onSnapshot(
+         this.onCollectionUpdate
+      );
+      this.setState({ subscribed: true });
+   }
+
+   unsubscribeFromChairHeadersTable() {
+      if (typeof this.unsubscribe != "undefined") {
+         this.unsubscribe();
+         this.setState({ subscribed: false });
+         this.numUpdates = 0;
+      }
+   }
+
    componentDidMount() {}
 
    onCollectionUpdate = (querySnapshot: any) => {
@@ -101,15 +129,16 @@ class ShowTableHeaders extends React.PureComponent<
       querySnapshot.forEach(
          (doc: {
             data: () => {
-               keep: boolean;
                chairHeader: any;
+               keep: boolean;
             };
             id: any;
          }) => {
-            const { keep } = doc.data();
+            const { chairHeader, keep } = doc.data();
             chairHeadersWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
+               chairHeader,
                keep,
             });
          }
@@ -119,15 +148,22 @@ class ShowTableHeaders extends React.PureComponent<
       });
       this.numRows++;
       console.log(
-         `%cnumUpdates<${this.numUpdates}>`,
+         `%cChairHeaders<${this.numUpdates}>`,
          "background:white; border: 3px solid green; margin: 2px; padding: 3px; color:green;"
       );
+      setTimeout(() => {
+         this.myChairHeadersTable.current!.ensureRowVisible(this.boundIndex!);
+      }, 150);
    };
 
    getChairHeadersContent() {
       if (this.props.loggedInToFirebase) {
          const source = {
-            datafields: [{ name: "keep", type: "bool" }],
+            datafields: [
+               { name: "chairHeader", type: "string" },
+               { name: "keep", type: "bool" },
+               { name: "key", type: "string" },
+            ],
             id: "key",
             dataType: "json",
             localData: () => {
@@ -137,6 +173,7 @@ class ShowTableHeaders extends React.PureComponent<
                this.state.chairHeadersWatch.forEach((hdr: any) => {
                   data[i++] = {
                      key: hdr.key,
+                     chairHeader: hdr.chairHeader,
                      keep: hdr.keep,
                   };
                   this.numRows!++;
@@ -148,7 +185,11 @@ class ShowTableHeaders extends React.PureComponent<
          // --
          const getEditorDataAdapter = (dataField: any): any => {
             const editorSource = {
-               dataFields: [{ name: "keep", type: "bool" }],
+               dataFields: [
+                  { name: "chairHeader", type: "string" },
+                  { name: "keep", type: "bool" },
+                  { name: "key", type: "string" },
+               ],
                dataType: "array",
                localData: source.localData(),
             };
@@ -158,7 +199,10 @@ class ShowTableHeaders extends React.PureComponent<
             return dataAdapter;
          };
          // --
-         const columnWidths = [["keepWidth", 60]];
+         const columnWidths = [
+            ["keepWidth", 60],
+            ["chairHeaderWidth", 230],
+         ];
          this.columns = [
             {
                text: "Keep",
@@ -219,29 +263,35 @@ class ShowTableHeaders extends React.PureComponent<
                   editor.selectedIndex = selectedIndex;
                },
             },
+            {
+               text: "Property",
+               datafield: "chairHeader",
+               width: columnWidths[1][1],
+               align: "center",
+               editable: false,
+            },
          ];
 
          return (
             <JqxDataTable
                ref={this.myChairHeadersTable}
-               width={200}
+               width={310}
                theme={"fresh"}
                source={this.dataAdapter}
                columns={this.columns}
                filterable={true}
                pageable={true}
-               pagerMode={"advanced"}
                altRows={true}
                autoRowHeight={true}
-               height={300}
+               height={350}
                sortable={true}
+               onRowSelect={this.onRowSelect}
                columnsReorder={true}
                columnsResize={true}
                editable={true}
                key={this.numUpdates} // this forces a re-render of the table!
                editSettings={this.state.editSettings}
-               pageSizeOptions={[5, 10, 20, 30, 40]}
-               pageSize={20}
+               pageSize={100}
             />
          );
       } else {
@@ -249,6 +299,12 @@ class ShowTableHeaders extends React.PureComponent<
       }
    }
    render() {
+      if (this.props.loggedInToFirebase && !this.state.subscribed) {
+         this.subscribeToChairHeaders();
+      }
+      if (!this.props.loggedInToFirebase && this.state.subscribed) {
+         this.unsubscribeFromChairHeadersTable();
+      }
       return <div>{this.getChairHeadersContent()}</div>;
    }
 
@@ -263,6 +319,20 @@ class ShowTableHeaders extends React.PureComponent<
          keeper
       ).then(() => {});
    }
+
+   private onRowSelect(e: any): void {
+      this.myChairHeadersTable.current!.sortBy("chairHeader", "asc");
+      this.myChairHeadersTable.current!.removeFilter("keep");
+      this.myChairHeadersTable.current!.removeFilter("chairHeader");
+      this.boundIndex = e.args.boundIndex;
+      setTimeout(() => {
+         this.myChairHeadersTable.current!.ensureRowVisible(e.args.boundIndex);
+      }, 300);
+      this.myChairHeadersTable.current!.beginCellEdit(
+         e.args.boundIndex,
+         "keep"
+      );
+   }
 }
 
-export default ShowTableHeaders;
+export default ShowChairHeaders;
