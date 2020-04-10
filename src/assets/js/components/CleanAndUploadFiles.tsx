@@ -93,6 +93,7 @@ class CleanAndUploadFiles extends Component<
       processTableHeadersFromCSVFile(aFile).then((headers: any) => {
          // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
          headers.forEach((x: HeaderMapping) => {
+            console.dir(x);
             headerMappingArray.push(x);
             const randomTime = Math.floor(Math.random() * 10000);
             setTimeout(() => {

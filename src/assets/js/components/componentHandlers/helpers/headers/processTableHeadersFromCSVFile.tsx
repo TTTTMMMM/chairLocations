@@ -22,14 +22,15 @@ const processTableHeadersFromCSVFile = (inputFile: any) => {
             headerPositionsArray[i] = { origHdr: x, newHdr: cleanedHeaders[i] };
             i++;
          });
-         let j = 0;
+         // let j = 0;
          additionalHeaders.forEach((x) => {
             headerPositionsArray[i] = {
                origHdr: undefined,
-               newHdr: additionalHeaders[j],
+               // newHdr: additionalHeaders[j],
+               newHdr: x.toUpperCase(),
             };
             i++;
-            j++;
+            // j++;
          });
          // console.log(headerPositionsArray);
          resolve(headerPositionsArray);

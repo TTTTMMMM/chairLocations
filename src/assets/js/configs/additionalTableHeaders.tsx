@@ -7,4 +7,17 @@ const additionalHeaders = [
    "RentalAgent", // rental agent where chair is deployed
 ];
 
+export const mandatoryHeaders = [
+   "AssetLabel",
+   "Beach",
+   "Fname",
+   "ID",
+   "Latitude",
+   "Longitude",
+   "RentalAgent",
+   "State",
+   "UpdateTime",
+   "UploadFBTime",
+];
+
 export default additionalHeaders;

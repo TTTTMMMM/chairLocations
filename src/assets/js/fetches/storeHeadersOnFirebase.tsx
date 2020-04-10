@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
+import { mandatoryHeaders } from "../configs/additionalTableHeaders";
 
 const storeHeadersOnFirebase = (
    auth2: any,
@@ -11,10 +12,21 @@ const storeHeadersOnFirebase = (
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
    myHeaders.append("Content-Type", "application/json");
+   let mandatoryHeadersUpper = [];
+   mandatoryHeadersUpper = mandatoryHeaders.map(function (x) {
+      return x.toUpperCase();
+   });
+   let mandatory =
+      mandatoryHeadersUpper.indexOf(chairHeader) >= 0 ? true : false;
+   let keepit = mandatory ? true : false;
    const myInit = {
       method: "POST",
       headers: myHeaders,
-      body: JSON.stringify({ chairHeader: chairHeader, keep: true }),
+      body: JSON.stringify({
+         chairHeader: chairHeader,
+         keep: keepit,
+         mandatory: mandatory,
+      }),
    };
    return new Promise((resolve) => {
       fetch(`/chairheaders`, myInit).then((res) => {

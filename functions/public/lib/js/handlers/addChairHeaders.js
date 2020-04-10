@@ -15,7 +15,6 @@ exports.addChairHeaders = async (req, res, admin) => {
       .replace(/\/+/g, "")
       .toUpperCase();
    let thCHCapitalized = theCH;
-   // let thCHCapitalized = theCH.charAt(0).toUpperCase() + theCH.slice(1);
 
    let aChairHeader = undefined;
    try {
@@ -35,6 +34,7 @@ exports.addChairHeaders = async (req, res, admin) => {
       let cHdr = {};
       cHdr.chairHeader = thCHCapitalized;
       cHdr.keep = theChairHeader.keep;
+      cHdr.mandatory = theChairHeader.mandatory;
       try {
          await admin
             .firestore()
