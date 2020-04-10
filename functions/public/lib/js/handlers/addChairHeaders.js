@@ -35,6 +35,10 @@ exports.addChairHeaders = async (req, res, admin) => {
       cHdr.chairHeader = thCHCapitalized;
       cHdr.keep = theChairHeader.keep;
       cHdr.mandatory = theChairHeader.mandatory;
+      // validate the input!
+      if (cHdr.mandatory) {
+         cHdr.keep = true;
+      }
       try {
          await admin
             .firestore()

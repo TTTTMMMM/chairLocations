@@ -16,6 +16,7 @@ import "firebase/auth";
 import "../configs/firebaseInit";
 
 import cellRendererKeep from "../renderers/cellRendererKeep";
+import cellRendererMandatory from "../renderers/cellRendererMandatory";
 import updateKeepChairHdr from "../fetches/updateKeepChairHdr";
 
 // class ShowTableHeaders extends Component<{ auth2: any; idToken: any }, {}>
@@ -133,15 +134,17 @@ class ShowChairHeaders extends React.PureComponent<
             data: () => {
                chairHeader: any;
                keep: boolean;
+               mandatory: boolean;
             };
             id: any;
          }) => {
-            const { chairHeader, keep } = doc.data();
+            const { chairHeader, keep, mandatory } = doc.data();
             chairHeadersWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
                chairHeader,
                keep,
+               mandatory,
             });
          }
       );
@@ -165,6 +168,7 @@ class ShowChairHeaders extends React.PureComponent<
                { name: "chairHeader", type: "string" },
                { name: "keep", type: "bool" },
                { name: "key", type: "string" },
+               { name: "mandatory", type: "bool" },
             ],
             id: "key",
             dataType: "json",
@@ -177,6 +181,7 @@ class ShowChairHeaders extends React.PureComponent<
                      key: hdr.key,
                      chairHeader: hdr.chairHeader,
                      keep: hdr.keep,
+                     mandatory: hdr.mandatory,
                   };
                   this.numRows!++;
                });
@@ -190,6 +195,7 @@ class ShowChairHeaders extends React.PureComponent<
                dataFields: [
                   { name: "chairHeader", type: "string" },
                   { name: "keep", type: "bool" },
+                  { name: "mandatory", type: "bool" },
                   { name: "key", type: "string" },
                ],
                dataType: "array",
@@ -203,7 +209,8 @@ class ShowChairHeaders extends React.PureComponent<
          // --
          const columnWidths = [
             ["keepWidth", 60],
-            ["chairHeaderWidth", 230],
+            ["chairHeaderWidth", 170],
+            ["mandatoryWidth", 80],
          ];
          this.columns = [
             {
@@ -272,12 +279,20 @@ class ShowChairHeaders extends React.PureComponent<
                align: "center",
                editable: false,
             },
+            {
+               text: "Mandatory",
+               datafield: "mandatory",
+               width: columnWidths[2][1],
+               align: "center",
+               editable: false,
+               cellsrenderer: cellRendererMandatory,
+            },
          ];
 
          return (
             <JqxDataTable
                ref={this.myChairHeadersTable}
-               width={310}
+               width={325}
                theme={"fresh"}
                source={this.dataAdapter}
                columns={this.columns}
@@ -324,17 +339,25 @@ class ShowChairHeaders extends React.PureComponent<
    }
 
    private onRowSelect(e: any): void {
-      this.myChairHeadersTable.current!.sortBy("chairHeader", "asc");
-      this.myChairHeadersTable.current!.removeFilter("keep");
-      this.myChairHeadersTable.current!.removeFilter("chairHeader");
-      this.boundIndex = e.args.boundIndex;
-      setTimeout(() => {
-         this.myChairHeadersTable.current!.ensureRowVisible(e.args.boundIndex);
-      }, 300);
-      this.myChairHeadersTable.current!.beginCellEdit(
-         e.args.boundIndex,
-         "keep"
-      );
+      if (!e.args.row.mandatory) {
+         this.myChairHeadersTable.current!.sortBy("chairHeader", "asc");
+         this.myChairHeadersTable.current!.removeFilter("keep");
+         this.myChairHeadersTable.current!.removeFilter("chairHeader");
+         this.boundIndex = e.args.boundIndex;
+         setTimeout(() => {
+            this.myChairHeadersTable.current!.ensureRowVisible(
+               e.args.boundIndex
+            );
+         }, 300);
+         this.myChairHeadersTable.current!.beginCellEdit(
+            e.args.boundIndex,
+            "keep"
+         );
+      } else {
+         this.props.myPanel.current!.append(
+            `<p style="color:red;font-size:10px;">${e.args.row.chairHeader} is mandatory; it cannot be edited.</p>`
+         );
+      }
    }
 }
 

@@ -65,7 +65,9 @@ const storeHeadersOnFirebase = (
                break;
             default:
                res.json().then((data: any) => {
-                  myPanel.current!.append(`${data.message}<br>`);
+                  myPanel.current!.append(
+                     `<p style="color:black;font-size:10px;">${data.message}</p>`
+                  );
                   resolve(data);
                });
          }

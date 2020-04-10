@@ -93,7 +93,6 @@ class CleanAndUploadFiles extends Component<
       processTableHeadersFromCSVFile(aFile).then((headers: any) => {
          // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
          headers.forEach((x: HeaderMapping) => {
-            console.dir(x);
             headerMappingArray.push(x);
             const randomTime = Math.floor(Math.random() * 10000);
             setTimeout(() => {
@@ -112,8 +111,8 @@ class CleanAndUploadFiles extends Component<
             readDataRowsOfFile(aFile)
                .then((dataRows: any) => {
                   // dataRows[] contains each row of a file
-                  this.myPanel.current!.append(`${aFile.name}, `);
-                  this.myPanel.current!.append(`${dataRows.length} rows, `);
+                  // this.myPanel.current!.append(`<h5>${aFile.name}, `);
+                  // this.myPanel.current!.append(`${dataRows.length} rows, `);
                   //   let rowNum = 0;
                   let extendedFat: any = undefined;
                   let numHeaders = 0;
@@ -129,7 +128,7 @@ class CleanAndUploadFiles extends Component<
                            if (rowNum++ === 0) {
                               console.log(`${numHeaders} properties`);
                               this.myPanel.current!.append(
-                                 `${numHeaders} properties<br>`
+                                 `<p style="text-decoration: underline; color:black;font-size:11px;">${aFile.name}, ${dataRows.length} rows, ${numHeaders} properties</p>`
                               );
                            }
                         }

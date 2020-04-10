@@ -60,7 +60,9 @@ const updateKeepChairHdr = (
                break;
             default:
                res.json().then((x) => {
-                  myPanel.current!.append(`${x.message}<br/>`);
+                  myPanel.current!.append(
+                     `<p style="color:green;font-size:10px;">${x.message}</p>`
+                  );
                });
                resolve(true);
          }
