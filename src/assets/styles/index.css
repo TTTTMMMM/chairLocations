@@ -455,12 +455,12 @@ body > div > div > div > img {
    width: 650px;
 }
 
-/* Separation between chairHeader table and console panel */
+/* Separation between chairHeader table and 'Set Additional Properties' Button */
 body > div:nth-of-type(1) > div > div > div > div:nth-of-type(3) {
-   margin-top: 7px;
+   margin-top: 1px;
 }
 
-body > div > div > div {
+body > div:nth-of-type(1) > div > div {
    margin-top: var(--headerHeightP20);
 }
 

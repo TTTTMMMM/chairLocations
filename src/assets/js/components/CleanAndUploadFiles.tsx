@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import * as ReactDOM from "react-dom";
+
 import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
+import JqxPopover from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpopover";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
@@ -12,6 +15,7 @@ import createFatChairObject from "../components/componentHandlers/helpers/create
 import storeHeadersOnFirebase from "../fetches/storeHeadersOnFirebase";
 import addValuesForAdditionalHeaders from "./componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
 import ShowChairHeaders from "./ShowChairHeaders";
+import PopoverContents from "./PopoverContents";
 
 class CleanAndUploadFiles extends Component<
    {
@@ -24,6 +28,9 @@ class CleanAndUploadFiles extends Component<
 > {
    private myPanel = React.createRef<JqxPanel>();
    private clearButton = React.createRef<JqxButton>();
+   private addAdditionalButton = React.createRef<JqxButton>();
+   private someDiv = React.createRef<HTMLDivElement>();
+
    private fileInput: any;
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -42,6 +49,15 @@ class CleanAndUploadFiles extends Component<
       };
    }
 
+   componentDidMount() {
+      this.addAdditionalButton.current!.val("Set Additonal Properties");
+      ReactDOM.render(
+         <PopoverContents myPanel={this.myPanel}></PopoverContents>,
+         document.getElementById("popoverContents")
+      );
+      // this.someDiv.current!.innerHTML += "";
+   }
+
    render() {
       return (
          <div>
@@ -55,25 +71,58 @@ class CleanAndUploadFiles extends Component<
                   value={this.state.value}
                ></input>
             </div>
-            <ShowChairHeaders
-               loggedInWithGoogle={this.props.loggedInWithGoogle}
-               auth2={this.props.auth2}
-               idToken={this.props.idToken}
-               loggedInToFirebase={this.props.loggedInToFirebase}
-               myPanel={this.myPanel}
-            ></ShowChairHeaders>
+            <div>
+               <ShowChairHeaders
+                  loggedInWithGoogle={this.props.loggedInWithGoogle}
+                  auth2={this.props.auth2}
+                  idToken={this.props.idToken}
+                  loggedInToFirebase={this.props.loggedInToFirebase}
+                  myPanel={this.myPanel}
+               ></ShowChairHeaders>
+            </div>
+            <div>
+               <JqxPopover
+                  offset={{ left: -4, top: 0 }}
+                  isModal={false}
+                  arrowOffsetValue={0}
+                  position={"right"}
+                  title={"Where is Chair Deployed?"}
+                  showCloseButton={true}
+                  selector={".addPropsButton"}
+                  theme={"fresh"}
+                  height={155}
+                  width={300}
+               >
+                  <div ref={this.someDiv} id={"popoverContents"} />
+               </JqxPopover>
+               <JqxButton
+                  ref={this.addAdditionalButton}
+                  style={{
+                     marginLeft: "0px",
+                     marginBottom: "7px",
+                     position: "relative",
+                     padding: "3px",
+                     paddingTop: "9px",
+                     borderRadius: "2px",
+                  }}
+                  width={318}
+                  height={20}
+                  theme={"fresh"}
+                  className="addPropsButton"
+               ></JqxButton>
+            </div>
             <div>
                <JqxPanel
                   ref={this.myPanel}
-                  width={"30%"}
+                  width={325}
                   height={150}
                   theme={"fresh"}
                />
                <JqxButton
                   ref={this.clearButton}
                   onClick={this.clearButtonClicked}
-                  width={120}
-                  height={40}
+                  width={325}
+                  height={30}
                   theme={"fresh"}
                   textPosition={"center"}
                >
