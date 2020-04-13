@@ -30,6 +30,7 @@ class CleanAndUploadFiles extends Component<
    private clearButton = React.createRef<JqxButton>();
    private addAdditionalButton = React.createRef<JqxButton>();
    private someDiv = React.createRef<HTMLDivElement>();
+   private additionalPropsPopover = React.createRef<JqxPopover>();
 
    private fileInput: any;
    constructor(props: {
@@ -52,7 +53,10 @@ class CleanAndUploadFiles extends Component<
    componentDidMount() {
       this.addAdditionalButton.current!.val("Set Additonal Properties");
       ReactDOM.render(
-         <PopoverContents myPanel={this.myPanel}></PopoverContents>,
+         <PopoverContents
+            myPanel={this.myPanel}
+            additionalPropsPopover={this.additionalPropsPopover}
+         ></PopoverContents>,
          document.getElementById("popoverContents")
       );
       // this.someDiv.current!.innerHTML += "";
@@ -82,8 +86,10 @@ class CleanAndUploadFiles extends Component<
             </div>
             <div>
                <JqxPopover
+                  ref={this.additionalPropsPopover}
                   offset={{ left: -4, top: 0 }}
                   isModal={false}
+                  autoClose={false}
                   arrowOffsetValue={0}
                   position={"right"}
                   title={"Where is Chair Deployed?"}
@@ -91,7 +97,7 @@ class CleanAndUploadFiles extends Component<
                   selector={".addPropsButton"}
                   theme={"fresh"}
                   height={155}
-                  width={300}
+                  width={285}
                >
                   <div ref={this.someDiv} id={"popoverContents"} />
                </JqxPopover>

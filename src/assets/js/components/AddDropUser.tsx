@@ -77,7 +77,7 @@ class AddDropUser extends React.PureComponent<
                   ref={this.myNotification}
                   showCloseButton={false}
                   width={"100%"}
-                  height={45}
+                  height={40}
                   autoClose={true}
                   appendContainer={"#container"}
                   opacity={1}
@@ -91,7 +91,7 @@ class AddDropUser extends React.PureComponent<
                   id="container"
                   style={{
                      width: "244px",
-                     height: "45px",
+                     height: "40px",
                      marginTop: "3px",
                      opacity: 1.0,
                      backgroundColor: "#F2F2F2",

@@ -473,3 +473,6 @@ body > div > div > div > div > div > input {
    border-radius: 5px;
    margin-bottom: 9px;
 }
+
+.popovercontents > div:nth-of-type(1) > input {
+}
