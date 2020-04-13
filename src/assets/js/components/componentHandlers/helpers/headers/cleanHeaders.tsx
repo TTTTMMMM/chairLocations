@@ -10,7 +10,6 @@ const cleanHeaders = (headers: string) => {
          .replace(/\s+/g, "_")
          .replace(/\/+/g, "")
          .toUpperCase();
-      // cleanedHeadersArray.push(tH.charAt(0).toUpperCase() + tH.slice(1));
       cleanedHeadersArray.push(tH);
    });
    return cleanedHeadersArray;

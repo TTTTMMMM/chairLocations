@@ -3,8 +3,8 @@ export interface HeaderMapping {
    newHdr: string;
 }
 
-export interface AdditionalProps {
-   state?: string | undefined;
-   beach?: string | undefined;
-   rentalAgent?: string | undefined;
+export interface AdditionalPropsType {
+   STATE?: string | undefined;
+   BEACH?: string | undefined;
+   RENTALAGENT?: string | undefined;
 }

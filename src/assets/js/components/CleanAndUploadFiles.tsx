@@ -13,9 +13,12 @@ import { HeaderMapping } from "../misc/chairLocTypes";
 import createFatChairObject from "../components/componentHandlers/helpers/createFatChairObj";
 
 import storeHeadersOnFirebase from "../fetches/storeHeadersOnFirebase";
+import getKeptChairHeaders from "../fetches/getKeptChairHeaders";
+
 import addValuesForAdditionalHeaders from "./componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
 import ShowChairHeaders from "./ShowChairHeaders";
 import PopoverContents from "./PopoverContents";
+import { AdditionalPropsType } from "../misc/chairLocTypes";
 
 class CleanAndUploadFiles extends Component<
    {
@@ -24,7 +27,7 @@ class CleanAndUploadFiles extends Component<
       idToken: any;
       loggedInToFirebase: boolean;
    },
-   { value: string }
+   { value: string; additionalPropValues: AdditionalPropsType }
 > {
    private myPanel = React.createRef<JqxPanel>();
    private clearButton = React.createRef<JqxButton>();
@@ -33,6 +36,10 @@ class CleanAndUploadFiles extends Component<
    private additionalPropsPopover = React.createRef<JqxPopover>();
 
    private fileInput: any;
+   private extendedFatArray: Array<any> = [];
+   private extendedExtendedFatArray: Array<any> = [];
+   private tallAndSkinnyArray: Array<any> = [];
+
    constructor(props: {
       loggedInWithGoogle: boolean;
       auth2: any;
@@ -47,8 +54,42 @@ class CleanAndUploadFiles extends Component<
 
       this.state = {
          value: "",
+         additionalPropValues: {},
       };
    }
+
+   myCallBack = (objectFromPopoverContents: AdditionalPropsType) => {
+      this.setState({ additionalPropValues: objectFromPopoverContents });
+      this.extendedFatArray.forEach((x) => {
+         let eEFO = { ...x, ...objectFromPopoverContents };
+         this.extendedExtendedFatArray.push(eEFO);
+      });
+      // console.dir(this.extendedExtendedFatArray);
+      let skinnyObjTemplate: any = {};
+      getKeptChairHeaders(this.props.auth2, this.props.idToken)
+         .then((data: any) => {
+            this.myPanel.current!.append(
+               `<p style="font-style: normal; color:blue; font-size:12px;">${data.length} kept parameters: </p>`
+            );
+            data.forEach((element: any) => {
+               skinnyObjTemplate[element.chairHeader] = "";
+               this.myPanel.current!.append(
+                  `<p style="font-style: italic; color:blue; font-size:12px;">${element.chairHeader}</p>`
+               );
+            });
+            this.extendedExtendedFatArray.forEach((row) => {
+               let skinnyObj: any = {};
+               Object.keys(skinnyObjTemplate).forEach((property) => {
+                  skinnyObj[property] = row[property];
+               });
+               this.tallAndSkinnyArray.push(skinnyObj);
+            });
+            console.dir(this.tallAndSkinnyArray);
+         })
+         .catch((err: any) => {
+            console.error(`C0003: ${err}`);
+         });
+   };
 
    componentDidMount() {
       this.addAdditionalButton.current!.val("Set Additonal Properties");
@@ -56,6 +97,7 @@ class CleanAndUploadFiles extends Component<
          <PopoverContents
             myPanel={this.myPanel}
             additionalPropsPopover={this.additionalPropsPopover}
+            callbackFromCleanAndLoadFiles={this.myCallBack}
          ></PopoverContents>,
          document.getElementById("popoverContents")
       );
@@ -70,7 +112,6 @@ class CleanAndUploadFiles extends Component<
                   ref={this.fileInput}
                   type="file"
                   accept=".csv"
-                  multiple
                   onChange={this.handleChange}
                   value={this.state.value}
                ></input>
@@ -141,6 +182,9 @@ class CleanAndUploadFiles extends Component<
 
    private handleChange(event: any) {
       this.setState({ value: event.target.value });
+      this.extendedFatArray.length = 0;
+      this.extendedExtendedFatArray.length = 0;
+      this.tallAndSkinnyArray.length = 0;
       let filesListObject = this.fileInput.current.files;
       // pull headers for all files from the first line of the first file
       let aFile = filesListObject[0]; // first_file is index [0]
@@ -179,6 +223,7 @@ class CleanAndUploadFiles extends Component<
                               fatChairObj,
                               aFile.name
                            );
+                           this.extendedFatArray.push(extendedFat);
                            numHeaders = Object.keys(extendedFat).length;
                            if (rowNum++ === 0) {
                               console.log(`${numHeaders} properties`);

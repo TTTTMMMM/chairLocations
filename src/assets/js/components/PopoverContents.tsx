@@ -4,7 +4,7 @@ import additionalHeaders from "../configs/additionalTableHeaders";
 import { statesArray } from "../configs/additionalTableHeaders";
 import { beachesArray } from "../configs/additionalTableHeaders";
 import { rentalAgentArray } from "../configs/additionalTableHeaders";
-import { AdditionalProps } from "../misc/chairLocTypes";
+import { AdditionalPropsType } from "../misc/chairLocTypes";
 
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 
@@ -12,7 +12,11 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
 class PopoverContents extends React.PureComponent<
-   { myPanel: any; additionalPropsPopover: any },
+   {
+      myPanel: any;
+      additionalPropsPopover: any;
+      callbackFromCleanAndLoadFiles: any;
+   },
    {
       sourceState: Array<string>;
       sourceBeach: Array<string>;
@@ -24,7 +28,11 @@ class PopoverContents extends React.PureComponent<
    private rentalAgentInput = React.createRef<JqxInput>();
    private enterButton = React.createRef<JqxButton>();
 
-   constructor(props: { myPanel: any; additionalPropsPopover: any }) {
+   constructor(props: {
+      myPanel: any;
+      additionalPropsPopover: any;
+      callbackFromCleanAndLoadFiles: any;
+   }) {
       super(props);
       this.enterButtonClicked = this.enterButtonClicked.bind(this);
       this.state = {
@@ -146,13 +154,14 @@ class PopoverContents extends React.PureComponent<
       ) as HTMLInputElement;
       let rav = rentalAgent.value;
 
-      let additionalPropVals: AdditionalProps = {};
-      additionalPropVals.state = dsv;
-      additionalPropVals.beach = dbv;
-      additionalPropVals.rentalAgent = rav;
+      let additionalPropVals: AdditionalPropsType = {};
+      additionalPropVals.STATE = dsv;
+      additionalPropVals.BEACH = dbv;
+      additionalPropVals.RENTALAGENT = rav;
       this.props.myPanel.current!.append(
-         `<p style="color:black;font-size:11px;"> ${additionalPropVals.state} ${additionalPropVals.beach} ${additionalPropVals.rentalAgent}</p>`
+         `<p style="color:#FF1493; font-size:11px;"> ${additionalPropVals.STATE}, ${additionalPropVals.BEACH}, ${additionalPropVals.RENTALAGENT}</p>`
       );
+      this.props.callbackFromCleanAndLoadFiles(additionalPropVals);
       this.props.additionalPropsPopover.current!.close();
    }
 }

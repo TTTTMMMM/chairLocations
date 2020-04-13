@@ -13,6 +13,10 @@ const path = require("path");
 
 const { addChairHeaders } = require("./public/lib/js/handlers/addChairHeaders");
 const {
+   getKeptChairHeaders,
+} = require("./public/lib/js/handlers/getKeptChairHeaders");
+
+const {
    updateChairHeader,
 } = require("./public/lib/js/handlers/updateChairHeader");
 
@@ -43,6 +47,10 @@ api.get("/users", (req, res) => {
 
 api.post("/chair", (req, res) => {
    addChair(req, res, admin);
+});
+
+api.get("/chairheaders", (req, res) => {
+   getKeptChairHeaders(req, res, admin);
 });
 
 api.post("/chairheaders", (req, res) => {

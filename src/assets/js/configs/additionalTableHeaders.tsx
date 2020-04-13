@@ -118,8 +118,6 @@ export const beachesArray = [
    "Highland Beach",
    "Hollywood Beach",
    "Indian Harbour Beach",
-   "Hollywood Beach",
-   "Indian Harbour Beach",
    "Indian Rocks",
    "Indian Shores",
    "Madeira Beach",
