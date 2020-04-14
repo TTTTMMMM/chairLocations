@@ -4,8 +4,7 @@
 -  API Keys >Browser key (auto created by Firebase) --> apply API restrictions
 -  OAuth 2.0 Client Key --> apply authorized JavaScript Origins
 
-3. Don't forget to enable Google Authentication in Firebase console > Authentication > Sign-in method
-   [Firebase Auth Providers](https://console.firebase.google.com/u/0/project/chairlocations/authentication/providers)
+3. Don't forget to [enable Google Authentication in Firebase console](https://console.firebase.google.com/u/0/project/chairlocations/authentication/providers) > Authentication > Sign-in method
 
 4. If you get the following error when trying to subscribe to a collection, test the rules in the database rules playground: **Uncaught Error in onSnapshot: FirebaseError: Missing or insufficient permissions.**
 
