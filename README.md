@@ -340,7 +340,7 @@ ORGID: "1", …}
 
 <span style="font-family: 'Verdana';">WX_WINDSPEED_MPH: ""
 
-<span style="font-family: 'Verdana';">\*proto\*\*: Object
+<span style="font-family: 'Verdana';">**proto**: Object
 
 <span style="font-family: 'Verdana';">etc.
 
