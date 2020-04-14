@@ -1,4 +1,4 @@
-<title>Stuff</title>
+## Reminders
 
 1. <span style="font-family: 'Verdana';">After you eject, don't forget to copy the .babelrc file into the root of the new project!
 2. <span style="font-family: 'Verdana';">Don't forget to go to [Google Credentials page](https://console.cloud.google.com/apis/credentials?project=chairlocations) and lock down two API keys:
@@ -14,6 +14,8 @@
 
 ---
 
+## Data Cleaning
+
 <span style="font-family: 'Verdana';">The first step in processing the chair location information is to clean the data. That means eliminating columns (aka, parameters) and rows that aren't desired. Eliminating undesired columns makes the data "skinny," and eliminating undesired rows makes the data "shorter."
 
 <span style="font-family: 'Verdana';">Examples of undesired columns are columns that contain no data, or columns that contain the same value for each row, among other reasons. Data is cleansed of undesired columns before cleansing of undesired rows takes place.
@@ -23,6 +25,8 @@
 <span style="font-family: 'Verdana';">All cleaning efforts are done on the client end, with the server performing only data validation and storing into Firebase collections.
 
 ---
+
+### FatChairObject
 
 <span style="font-family: 'Verdana';">The fatChairObj's properties are the cell values from the original file.
 
@@ -60,6 +64,8 @@
 
 ---
 
+### ExtendedFatChairObject
+
 <span style="font-family: 'Verdana';">The extendedFat's properties are spread of the fatChairObj + calculated values for the additionalHeaders.
 
 <span style="font-family: 'Verdana';">console.dir(extendedFat):
@@ -89,6 +95,8 @@
 <span style="font-family: 'Verdana';">**proto**: Object
 
 ---
+
+### extendedExtendedFatChairObject
 
 <span style="font-family: 'Verdana';">The extendedExtendedFat's properties are spread of the fatChairObj + calculated values for the additionalHeaders + the entered values of where the chair is deployed (STATE, BEACH, RENTALAGENT):
 
@@ -121,6 +129,8 @@
 <span style="font-family: 'Verdana';">**proto**: Object
 
 ---
+
+### Extended Fat Chair Object Array
 
 <span style="font-family: 'Verdana';">Therefore, the extendedExtendedFatArray[] is an array of the above, each element corresponding to one row of the original input csv file:
 
@@ -249,6 +259,8 @@ ORGID: "1", …}
 <span style="font-family: 'Verdana';">**proto**: Object
 
 ---
+
+### Tall and Skinny Array
 
 <span style="font-family: 'Verdana';">The tallAndSkinnyArray[] is the kept Chair Headers (or parameters) applied to the extendedExtendedFatArray[]; i.e., it "skinnifies" the fat array in that it reduces the number of columns kept for eventual uploading to Firebase. i.e., (notice that nothing has been [snipped]):
 
