@@ -262,7 +262,7 @@ ORGID: "1", …}
 
 ### Tall and Skinny Array
 
-<span style="font-family: 'Verdana';">The tallAndSkinnyArray[] is the kept Chair Headers (or parameters) applied to the extendedExtendedFatArray[]; i.e., it "skinnifies" the fat array in that it reduces the number of columns kept for eventual uploading to Firebase. i.e., (notice that nothing has been [snipped]):
+<span style="font-family: 'Verdana';">The tallAndSkinnyArray[] is the kept Chair Headers (or parameters) applied to the extendedExtendedFatArray[]; i.e., it "skinnifies" the fat array in that it reduces the number of columns kept for eventual uploading to Firebase. i.e., (notice that no headers have been snipped in each object below, in contrast to every (fat) object logged above):
 
 <span style="font-family: 'Verdana';">console.dir(this.tallAndSkinnyArray);
 
