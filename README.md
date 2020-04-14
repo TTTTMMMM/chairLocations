@@ -1,9 +1,8 @@
 1. After you eject, don't forget to copy the .babelrc file into the root of the new project!
-2. Don't forget to go to Google Credentials page and lock down two API keys:
+2. Don't forget to go to [Google Credentials page](https://console.cloud.google.com/apis/credentials?project=chairlocations) and lock down two API keys:
 
 -  API Keys >Browser key (auto created by Firebase) --> apply API restrictions
 -  OAuth 2.0 Client Key --> apply authorized JavaScript Origins
-   [chairLoc creds](https://console.cloud.google.com/apis/credentials?project=chairlocations)
 
 3. Don't forget to enable Google Authentication in Firebase console > Authentication > Sign-in method
    [Firebase Auth Providers](https://console.firebase.google.com/u/0/project/chairlocations/authentication/providers)
