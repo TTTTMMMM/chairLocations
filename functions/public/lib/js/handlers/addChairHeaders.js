@@ -8,12 +8,14 @@ exports.addChairHeaders = async (req, res, admin) => {
    // console.log("------ JSON.stringify(theChairHeader)-----");
    let retMsg = "Return message not set in addChairHeaders handler";
    // ------------------------------------------------------
-   let theCH = theChairHeader.chairHeader
-      .substring(0, 20)
-      .trim()
-      .replace(/\s+/g, "_")
-      .replace(/\/+/g, "")
-      .toUpperCase();
+   let theCH = escapeHTML(
+      theChairHeader.chairHeader
+         .substring(0, 20)
+         .trim()
+         .replace(/\s+/g, "_")
+         .replace(/\/+/g, "")
+         .toUpperCase()
+   );
    let thCHCapitalized = theCH;
 
    let aChairHeader = undefined;
@@ -24,7 +26,7 @@ exports.addChairHeaders = async (req, res, admin) => {
          .doc(thCHCapitalized)
          .get();
    } catch (err) {
-      const msg = `0202 Error: Checking for existence of ${thCHCapitalized} in chairheaders collection`;
+      const msg = `0202 Error: Checking for existence of [${thCHCapitalized}] in chairheaders collection`;
       console.log(msg);
       res.status(500).json({
          message: `${msg}`,

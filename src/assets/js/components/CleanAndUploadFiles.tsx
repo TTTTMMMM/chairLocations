@@ -27,11 +27,18 @@ class CleanAndUploadFiles extends Component<
       idToken: any;
       loggedInToFirebase: boolean;
    },
-   { value: string; additionalPropValues: AdditionalPropsType }
+   {
+      value: string;
+      additionalPropValues: AdditionalPropsType;
+      disabledSetAdditionalPropertiesButton: boolean;
+      disabledCleanRowsButton: boolean;
+   }
 > {
    private myPanel = React.createRef<JqxPanel>();
-   private clearButton = React.createRef<JqxButton>();
+   private clearConsoleButton = React.createRef<JqxButton>();
    private addAdditionalButton = React.createRef<JqxButton>();
+   private cleanRowsAndUploadlButton = React.createRef<JqxButton>();
+
    private someDiv = React.createRef<HTMLDivElement>();
    private additionalPropsPopover = React.createRef<JqxPopover>();
 
@@ -50,45 +57,66 @@ class CleanAndUploadFiles extends Component<
 
       this.fileInput = React.createRef();
       this.handleChange = this.handleChange.bind(this);
-      this.clearButtonClicked = this.clearButtonClicked.bind(this);
+      this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
+         this
+      );
+      this.cleanRowsAndUploadClicked = this.cleanRowsAndUploadClicked.bind(
+         this
+      );
 
       this.state = {
          value: "",
          additionalPropValues: {},
+         disabledSetAdditionalPropertiesButton: true,
+         disabledCleanRowsButton: true,
       };
    }
 
    myCallBack = (objectFromPopoverContents: AdditionalPropsType) => {
-      this.setState({ additionalPropValues: objectFromPopoverContents });
-      this.extendedFatArray.forEach((x) => {
-         let eEFO = { ...x, ...objectFromPopoverContents };
-         this.extendedExtendedFatArray.push(eEFO);
-      });
-      // console.dir(this.extendedExtendedFatArray);
-      let skinnyObjTemplate: any = {};
-      getKeptChairHeaders(this.props.auth2, this.props.idToken)
-         .then((data: any) => {
-            this.myPanel.current!.append(
-               `<p style="font-style: normal; color:blue; font-size:12px;">${data.length} kept parameters: </p>`
-            );
-            data.forEach((element: any) => {
-               skinnyObjTemplate[element.chairHeader] = "";
-               this.myPanel.current!.append(
-                  `<p style="font-style: italic; color:blue; font-size:12px;">${element.chairHeader}</p>`
-               );
-            });
-            this.extendedExtendedFatArray.forEach((row) => {
-               let skinnyObj: any = {};
-               Object.keys(skinnyObjTemplate).forEach((property) => {
-                  skinnyObj[property] = row[property];
-               });
-               this.tallAndSkinnyArray.push(skinnyObj);
-            });
-            console.dir(this.tallAndSkinnyArray);
-         })
-         .catch((err: any) => {
-            console.error(`C0003: ${err}`);
+      if (
+         // check if additional properties are valid
+         objectFromPopoverContents.BEACH!.length > 3 &&
+         objectFromPopoverContents.RENTALAGENT!.length > 3 &&
+         objectFromPopoverContents.STATE!.length > 3
+      ) {
+         this.setState({ disabledCleanRowsButton: false });
+         this.setState({ additionalPropValues: objectFromPopoverContents });
+         this.extendedFatArray.forEach((x) => {
+            let eEFO = { ...x, ...objectFromPopoverContents };
+            this.extendedExtendedFatArray.push(eEFO);
          });
+         // console.dir(this.extendedExtendedFatArray);
+         let skinnyObjTemplate: any = {};
+         getKeptChairHeaders(this.props.auth2, this.props.idToken)
+            .then((data: any) => {
+               this.myPanel.current!.append(
+                  `<p style="font-style: normal; color:blue; font-size:12px;">${data.length} kept parameters: </p>`
+               );
+               data.forEach((element: any) => {
+                  skinnyObjTemplate[element.chairHeader] = "";
+                  this.myPanel.current!.append(
+                     `<p style="font-style: italic; color:blue; font-size:12px;">${element.chairHeader}</p>`
+                  );
+               });
+               this.extendedExtendedFatArray.forEach((row) => {
+                  let skinnyObj: any = {};
+                  Object.keys(skinnyObjTemplate).forEach((property) => {
+                     skinnyObj[property] = row[property];
+                  });
+                  this.tallAndSkinnyArray.push(skinnyObj);
+               });
+               console.dir(this.tallAndSkinnyArray);
+            })
+            .catch((err: any) => {
+               console.error(`C0003: ${err}`);
+            });
+      } else {
+         this.myPanel.current!.append(
+            `<p style="font-style: normal; color:red; font-size:13.2px;">Invalid inputs for ${Object.keys(
+               objectFromPopoverContents
+            )}!</p>`
+         );
+      }
    };
 
    componentDidMount() {
@@ -146,18 +174,37 @@ class CleanAndUploadFiles extends Component<
                   ref={this.addAdditionalButton}
                   style={{
                      marginLeft: "0px",
-                     marginBottom: "7px",
+                     marginBottom: "2px",
                      position: "relative",
                      padding: "3px",
                      paddingTop: "9px",
                      borderRadius: "2px",
                   }}
+                  disabled={this.state.disabledSetAdditionalPropertiesButton}
                   width={318}
                   height={20}
                   theme={"fresh"}
                   className="addPropsButton"
                ></JqxButton>
             </div>
+            <JqxButton
+               ref={this.cleanRowsAndUploadlButton}
+               style={{
+                  marginLeft: "0px",
+                  marginBottom: "7px",
+                  position: "relative",
+                  padding: "3px",
+                  paddingTop: "9px",
+                  borderRadius: "2px",
+               }}
+               disabled={this.state.disabledCleanRowsButton}
+               onClick={this.cleanRowsAndUploadClicked}
+               width={318}
+               height={20}
+               theme={"fresh"}
+            >
+               Clean Rows and Upload
+            </JqxButton>
             <div>
                <JqxPanel
                   ref={this.myPanel}
@@ -166,8 +213,8 @@ class CleanAndUploadFiles extends Component<
                   theme={"fresh"}
                />
                <JqxButton
-                  ref={this.clearButton}
-                  onClick={this.clearButtonClicked}
+                  ref={this.clearConsoleButton}
+                  onClick={this.clearConsoleButtonClicked}
                   width={325}
                   height={30}
                   theme={"fresh"}
@@ -182,6 +229,8 @@ class CleanAndUploadFiles extends Component<
 
    private handleChange(event: any) {
       this.setState({ value: event.target.value });
+      this.setState({ disabledSetAdditionalPropertiesButton: false });
+      this.setState({ disabledCleanRowsButton: true });
       this.extendedFatArray.length = 0;
       this.extendedExtendedFatArray.length = 0;
       this.tallAndSkinnyArray.length = 0;
@@ -242,8 +291,18 @@ class CleanAndUploadFiles extends Component<
       });
    }
 
-   private clearButtonClicked() {
+   private clearConsoleButtonClicked() {
       this.myPanel.current!.clearcontent();
+   }
+
+   private cleanRowsAndUploadClicked() {
+      if (!this.state.disabledCleanRowsButton) {
+         this.setState({ disabledSetAdditionalPropertiesButton: true });
+         this.setState({ disabledCleanRowsButton: true });
+         this.myPanel.current!.append(
+            `<p style="color:#738108;font-size:11px;">Ready to upload.</p>`
+         );
+      }
    }
 }
 
