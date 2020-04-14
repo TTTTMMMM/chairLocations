@@ -14,9 +14,9 @@
 
 The first step in processing the chair location information is to clean the data. That means eliminating columns (aka, parameters) and rows that aren't desired. Eliminating undesired columns makes the data "skinny," and eliminating undesired rows makes the data "shorter."
 
-Examples of undesired columns are columns that contain no data, or columns that contain the same value for each row, among other examples. Data is ridded of undesired columns before cleansing of undesired rows takes place.
+Examples of undesired columns are columns that contain no data, or columns that contain the same value for each row, among other reasons. Data is cleansed of undesired columns before cleansing of undesired rows takes place.
 
-Examples of undesired rows are rows that contain what look like error values in the columns that were kept: (latitude, longitude) values of (-360, -360). Getting to short-and-skinny is required before uploading chair location data to Firebase.
+Examples of undesired rows are rows that contain error values in the columns that were kept, e.g., (latitude, longitude) values of (-360, -360). Cleansing data of undesired rows is known as making the data "shorter." Getting to short-and-skinny is required before uploading chair location data to Firebase.
 
 All cleaning efforts are done on the client end, with the server performing only data validation and storing into Firebase collections.
 
