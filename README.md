@@ -2,14 +2,15 @@
 2. Don't forget to go to Google Credentials page and lock down two API keys:
 
 -  API Keys >Browser key (auto created by Firebase) --> apply API restrictions
-   ---- OAuth 2.0 Client Key --> apply authorized JavaScript Origins
+-  OAuth 2.0 Client Key --> apply authorized JavaScript Origins
    [chairLoc creds](https://console.cloud.google.com/apis/credentials?project=chairlocations)
--  Don't forget to enable Google Authentication in Firebase console > Authentication > Sign-in method
+
+3. Don't forget to enable Google Authentication in Firebase console > Authentication > Sign-in method
    [Firebase Auth Providers](https://console.firebase.google.com/u/0/project/chairlocations/authentication/providers)
 
-3. If you get the following error when trying to subscribe to a collection, test the rules in the database rules playground: **Uncaught Error in onSnapshot: FirebaseError: Missing or insufficient permissions.**
+4. If you get the following error when trying to subscribe to a collection, test the rules in the database rules playground: **Uncaught Error in onSnapshot: FirebaseError: Missing or insufficient permissions.**
 
-4. [Read this to learn how to style the file input HTML element](https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/)
+5. [Read this to learn how to style the file input HTML element](https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/)
 
 ---
 
