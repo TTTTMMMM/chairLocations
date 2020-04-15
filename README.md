@@ -448,31 +448,31 @@
 
 <span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
 
-<span style="font-family: 'Verdana';">BEACH: "Ocean City, MD"
+<span style="font-family: 'Verdana';">BEACH: "Atlantic City"
 
-<span style="font-family: 'Verdana';">CELLACCURACY: "0"
+<span style="font-family: 'Verdana';">CELLACCURACY: "908"
 
 <span style="font-family: 'Verdana';">DEVICEID: "31905"
 
 <span style="font-family: 'Verdana';">FNAME: "CHAIR088_2020-03-14.csv"
 
-<span style="font-family: 'Verdana';">GPS_MPH: "1"
+<span style="font-family: 'Verdana';">GPS_MPH: "-2147483648"
 
-<span style="font-family: 'Verdana';">ID: "96114d41daf8f7865035e8070fd1fb5291a25007e3b3464140077c34c176c91c"
+<span style="font-family: 'Verdana';">ID: "5f5096843d7fb05f964822bad3d1b692853935e8"
 
 <span style="font-family: 'Verdana';">IMEI: "1.51E+13"
 
-<span style="font-family: 'Verdana';">LATITUDE: "25.79552"
+<span style="font-family: 'Verdana';">LATITUDE: "25.9469009"
 
-<span style="font-family: 'Verdana';">LONGITUDE: "-80.1258"
+<span style="font-family: 'Verdana';">LONGITUDE: "-80.142639"
 
 <span style="font-family: 'Verdana';">RENTALAGENT: "SANDHELPER"
 
-<span style="font-family: 'Verdana';">STATE: "Maryland"
+<span style="font-family: 'Verdana';">STATE: "New Jersey"
 
-<span style="font-family: 'Verdana';">UPDATETIME: "2020-02-11T17:21:53Z"
+<span style="font-family: 'Verdana';">UPDATETIME: "2020-03-11T23:35:20Z"
 
-<span style="font-family: 'Verdana';">UPLOADFBTIME: "2020-04-15T14:01:49.064Z"
+<span style="font-family: 'Verdana';">UPLOADFBTIME: "2020-04-15T18:39:31.042Z"
 
 ### Assumptions
 
