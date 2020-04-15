@@ -496,11 +496,11 @@ Given those assumptions, the number of bytes uploaded and stored per year of ope
 ```
 numBytes = (40 + (14 * (8+20))) * 1000 * 100 = 43,200,000 = 43.2MB/year
 
-Storage Costs: .0392GB * 18 cents/GB/month * 12months ~ 10 cents/yr
+Storage Costs: .0432GB * 18 cents/GB/month * 12months ~ 10 cents/yr
 
-Writing Costs: 39.2MB = 39200000/100000 * 18 cents ~ $77.76 once
+Writing Costs: 43.2MB = 43200000/100000 * 18 cents ~ $77.76 once
 
-Reading Costs: 28MB = 39200000/100000 * 6 cents * 5 reads ~ $129.60
+Reading Costs: 43.2MB = 43200000/100000 * 6 cents * 5 reads ~ $129.60
 ```
 
 Costs appear to be dominated by reads/writes, so estimate $78 + $130 = **\$207** per year, since storage costs are negligible.
