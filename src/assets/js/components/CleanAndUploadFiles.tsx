@@ -107,7 +107,7 @@ class CleanAndUploadFiles extends Component<
                   });
                   this.tallAndSkinnyArray.push(skinnyObj);
                });
-               console.dir(this.tallAndSkinnyArray);
+               // console.dir(this.tallAndSkinnyArray);
             })
             .catch((err: any) => {
                console.error(`C0003: ${err}`);
@@ -278,7 +278,7 @@ class CleanAndUploadFiles extends Component<
                            this.extendedFatArray.push(extendedFat);
                            numHeaders = Object.keys(extendedFat).length;
                            if (rowNum++ === 0) {
-                              console.log(`${numHeaders} properties`);
+                              // console.log(`${numHeaders} properties`);
                               this.myPanel.current!.append(
                                  `<p style="text-decoration: underline; color:black;font-size:11px;">${aFile.name}, ${dataRows.length} rows, ${numHeaders} properties</p>`
                               );

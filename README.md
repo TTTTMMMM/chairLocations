@@ -30,7 +30,7 @@
 
 <span style="font-family: 'Verdana';">The fatChairObj's properties are the cell values from the original file.
 
-<span style="font-family: 'Verdana';">console.dir(fatChairObj):
+`console.dir(fatChairObj):`
 
 **Object**
 
@@ -134,7 +134,7 @@
 
 <span style="font-family: 'Verdana';">Therefore, the extendedExtendedFatArray[] is an array of the above, each element corresponding to one row of the original input csv file:
 
-<span style="font-family: 'Verdana';">console.dir(this.extendedExtendedFatArray);
+`console.dir(this.extendedExtendedFatArray);`
 
 <span style="font-family: 'Verdana';">Array(221)
 
@@ -170,9 +170,9 @@
 
 <span style="font-family: 'Verdana';">PRODUCTID: "45",
 
-<span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">DEVICETYPEID: "14",
+<span style="font-family: 'Verdana';">DEVICETYPEID: "14",
 
-ORGID: "1", …}
+<span style="font-family: 'Verdana';">ORGID: "1", …}
 
 <span style="font-family: 'Verdana';">...[snip]...
 
@@ -264,9 +264,9 @@ ORGID: "1", …}
 
 <span style="font-family: 'Verdana';">The tallAndSkinnyArray[] is the kept Chair Headers (or parameters) applied to the extendedExtendedFatArray[]; i.e., it "skinnifies" the fat array in that it reduces the number of columns kept for eventual uploading to Firebase. (Notice that no headers have been snipped in each object below, in contrast to the snipping I had to do to every (fat) object logged above.):
 
-<span style="font-family: 'Verdana';">console.dir(this.tallAndSkinnyArray);
+`console.dir(this.tallAndSkinnyArray);`
 
-<span style="font-family: 'Verdana';">[0 … 99]
+**_[0 … 99]_**
 
 <span style="font-family: 'Verdana';">**0:**
 
@@ -354,9 +354,9 @@ ORGID: "1", …}
 
 <span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">66 properties
 
-<span style="font-family: 'Verdana';">Array(221) <-- Number of objects in tallAndSkinny[]
+**_Array(221)_** <-- Number of objects in tallAndSkinny[]
 
-<span style="font-family: 'Verdana';">0:
+**_0:_**
 
 <span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
 
@@ -394,11 +394,11 @@ ORGID: "1", …}
 
 <span style="font-family: 'Verdana';">1: {ASSETLABEL: "CHAIR-088", BEACH: "Miami Beach", CELLACCURACY: undefined, DEVICEID: "31905", FNAME: "CHAIR088_2020-03-14_mod.csv", …}
 
-length: 2
+**_length: 2_**
 
-<span style="font-family: 'Verdana';">**proto**: Array(0)
+**proto**: Array(0)
 
-<span style="font-family: 'Verdana';">Array(181) <-- number of objects in shortAndSkinnyArray[]
+**_Array(181)_** <-- number of objects in shortAndSkinnyArray[]
 
 <span style="font-family: 'Verdana';">0:
 
@@ -441,3 +441,46 @@ length: 2
 <span style="font-family: 'Verdana';">**proto**: Array(0)
 
 ---
+
+## Rough Calculations on Size of ChairLoc Database
+
+**Exemplar ChairLoc Record**
+
+<span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
+
+<span style="font-family: 'Verdana';">BEACH: "Ocean City, MD"
+
+<span style="font-family: 'Verdana';">CELLACCURACY: "0"
+
+<span style="font-family: 'Verdana';">DEVICEID: "31905"
+
+<span style="font-family: 'Verdana';">FNAME: "CHAIR088_2020-03-14.csv"
+
+<span style="font-family: 'Verdana';">GPS_MPH: "1"
+
+<span style="font-family: 'Verdana';">ID: "96114d41daf8f7865035e8070fd1fb5291a25007e3b3464140077c34c176c91c"
+
+<span style="font-family: 'Verdana';">IMEI: "1.51E+13"
+
+<span style="font-family: 'Verdana';">LATITUDE: "25.79552"
+
+<span style="font-family: 'Verdana';">LONGITUDE: "-80.1258"
+
+<span style="font-family: 'Verdana';">RENTALAGENT: "SANDHELPER"
+
+<span style="font-family: 'Verdana';">STATE: "Maryland"
+
+<span style="font-family: 'Verdana';">UPDATETIME: "2020-02-11T17:21:53Z"
+
+<span style="font-family: 'Verdana';">UPLOADFBTIME: "2020-04-15T14:01:49.064Z"
+
+### Assumptions
+
+1. Keeping 14 parameters
+2. Average length of each parameter is 12 characters
+3. Number of records per chair per year is 1000
+4. Number of chairs being tracked is 100
+
+Given those assumptions, the number of bytes per year of growth to the chairLoc database can be calculated as:
+
+`numBytes = 14 * 12 * 1000 * 1000 = 168000000 = 168MB/year`

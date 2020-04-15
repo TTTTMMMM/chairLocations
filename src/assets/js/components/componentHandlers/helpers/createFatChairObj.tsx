@@ -1,4 +1,5 @@
 // Client-side code follows:
+var escapeHTML = require("escape-html");
 import { HeaderMapping } from "../../../misc/chairLocTypes";
 
 const createFatChairObj = (
@@ -10,7 +11,9 @@ const createFatChairObj = (
       let i = 0;
       let fatChairObj: any = {};
       dataArray.forEach((x) => {
-         fatChairObj[headerMappingArray[i++].newHdr] = x.trim();
+         fatChairObj[headerMappingArray[i++].newHdr] = escapeHTML(
+            x.trim().substring(0, 64)
+         );
       });
       //   console.dir(fatChairObj);
       resolve(fatChairObj);
