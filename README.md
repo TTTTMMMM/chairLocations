@@ -400,7 +400,7 @@
 
 **Array(181)** <-- number of objects in shortAndSkinnyArray[]
 
-<span style="font-family: 'Verdana';">0:
+**0:**
 
 <span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
 
