@@ -398,6 +398,8 @@
 
 **proto**: Array(0)
 
+---
+
 **Array(181)** <-- number of objects in shortAndSkinnyArray[]
 
 **0:**
