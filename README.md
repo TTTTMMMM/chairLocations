@@ -476,7 +476,7 @@
 
 ### Assumptions
 
-1. Length of key for each record (each record's key is a SHA1 hash): 20 bytes
+1. Length of key for each record (each record's key is a SHA1 hash): 20 bytes => 40 characters when expressed as a string
 2. Keeping 14 parameters
 3. Average length of key (parameter) is 8 characters
 4. Average length of value of each parameter is 20 characters
@@ -494,16 +494,16 @@
 Given those assumptions, the number of bytes per year of growth to the chairLoc database can be calculated as:
 
 ```
-numBytes = 14 * ((8+20) + 20) * 1000 * 100 = 39,200,000 = 39.2MB/year
+numBytes = (40 + (14 * (8+20))) * 1000 * 100 = 39,200,000 = 43.2MB/year
 
-Storage Costs: .0392GB * 18 cents/GB/month * 12months ~ 9 cents/yr
+Storage Costs: .0392GB * 18 cents/GB/month * 12months ~ 10 cents/yr
 
-Writing Costs: 39.2MB = 39200000/100000 * 18 cents ~ $70.56 once
+Writing Costs: 39.2MB = 39200000/100000 * 18 cents ~ $77.76 once
 
-Reading Costs: 28MB = 39200000/100000 * 6 cents * 5 reads ~ $117.60
+Reading Costs: 28MB = 39200000/100000 * 6 cents * 5 reads ~ $129.60
 ```
 
-Costs appear to be dominated by reads/writes, so estimate $71 + $118 = **\$189** per year, since storage costs are negligible.
+Costs appear to be dominated by reads/writes, so estimate $78 + $130 = **\$207** per year, since storage costs are negligible.
 
 This estimate may be high. See [this example](https://firebase.google.com/docs/firestore/billing-example) for better estimate, which include free monthly quotas factored in.
 
