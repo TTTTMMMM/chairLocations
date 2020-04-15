@@ -354,9 +354,9 @@
 
 <span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">66 properties
 
-**_Array(221)_** <-- Number of objects in tallAndSkinny[]
+**Array(221)** <-- Number of objects in tallAndSkinny[]
 
-**_0:_**
+**0:**
 
 <span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
 
@@ -394,11 +394,11 @@
 
 <span style="font-family: 'Verdana';">1: {ASSETLABEL: "CHAIR-088", BEACH: "Miami Beach", CELLACCURACY: undefined, DEVICEID: "31905", FNAME: "CHAIR088_2020-03-14_mod.csv", …}
 
-**_length: 2_**
+**length: 2**
 
 **proto**: Array(0)
 
-**_Array(181)_** <-- number of objects in shortAndSkinnyArray[]
+**Array(181)** <-- number of objects in shortAndSkinnyArray[]
 
 <span style="font-family: 'Verdana';">0:
 
