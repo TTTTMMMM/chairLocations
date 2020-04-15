@@ -1,4 +1,4 @@
-## Reminders When Making the Next Project
+### Reminders When Making the Next Project
 
 1. <span style="font-family: 'Verdana';">After you eject, don't forget to copy the .babelrc file into the root of the new project!
 2. <span style="font-family: 'Verdana';">Don't forget to go to [Google Credentials page](https://console.cloud.google.com/apis/credentials?project=chairlocations) and lock down two API keys:
@@ -14,7 +14,7 @@
 
 ---
 
-## Data Cleaning
+### Data Cleaning
 
 <span style="font-family: 'Verdana';">The first step in processing the chair location information is to clean the data. That means eliminating columns (aka, parameters) and rows that aren't desired. Eliminating undesired columns makes the data "skinny," and eliminating undesired rows makes the data "shorter."
 
