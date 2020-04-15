@@ -476,12 +476,13 @@
 
 ### Assumptions
 
-1. Keeping 14 parameters
-2. Average length of key (parameter) is 8 characters
-3. Average length of value of each parameter is 20 characters
-4. Number of records per chair per year is 1000
-5. Number of chairs being tracked is 100
-6. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing)
+1. Length of key for each record (each record's key is a SHA1 hash): 20 bytes
+2. Keeping 14 parameters
+3. Average length of key (parameter) is 8 characters
+4. Average length of value of each parameter is 20 characters
+5. Number of records per chair per year is 1000
+6. Number of chairs being tracked is 100
+7. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing)
 
 | Cost     | Unit            |
 | -------- | --------------- |
@@ -493,7 +494,7 @@
 Given those assumptions, the number of bytes per year of growth to the chairLoc database can be calculated as:
 
 ```
-numBytes = 14 * (8+20) * 1000 * 100 = 39,200,000 = 39.2MB/year
+numBytes = 14 * ((8+20) + 20) * 1000 * 100 = 39,200,000 = 39.2MB/year
 
 Storage Costs: .0392GB * 18 cents/GB/month * 12months ~ 9 cents/yr
 
