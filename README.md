@@ -482,6 +482,13 @@
 4. Number of chairs being tracked is 100
 5. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing)
 
+| Cost     | Unit            |
+| -------- | --------------- |
+| 6 cents  | 100,000 reads   |
+| 18 cents | 100,000 writes  |
+| 2 cents  | 100,000 deletes |
+| 18 cents | GB per month    |
+
 Given those assumptions, the number of bytes per year of growth to the chairLoc database can be calculated as:
 
 `numBytes = 14 * 20 * 1000 * 100 = 28,000,000 = 28MB/year`
