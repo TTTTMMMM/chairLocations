@@ -444,7 +444,7 @@
 
 ## Rough Calculations on Size of ChairLoc Database
 
-**Exemplar ChairLoc Record**
+**Exemplar ChairLoc Record:**
 
 <span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
 
@@ -477,10 +477,10 @@
 ### Assumptions
 
 1. Keeping 14 parameters
-2. Average length of each parameter is 12 characters
+2. Average length of each parameter is 20 characters
 3. Number of records per chair per year is 1000
 4. Number of chairs being tracked is 100
 
 Given those assumptions, the number of bytes per year of growth to the chairLoc database can be calculated as:
 
-`numBytes = 14 * 12 * 1000 * 1000 = 168000000 = 168MB/year`
+`numBytes = 14 * 20 * 1000 * 1000 = 280000000 = 280MB/year`
