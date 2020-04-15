@@ -504,4 +504,6 @@ Reading Costs: 28MB = 39200000/100000 * 6 cents * 5 reads ~ $117.60
 
 Costs appear to be dominated by reads/writes, so estimate $71 + $118 = **\$189** per year, since storage costs are negligible.
 
+This estimate may be high. See [this example](https://firebase.google.com/docs/firestore/billing-example) for better estimate, which include free monthly quotas factored in.
+
 ---
