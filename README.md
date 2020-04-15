@@ -68,7 +68,7 @@
 
 <span style="font-family: 'Verdana';">The extendedFat's properties are spread of the fatChairObj + calculated values for the additionalHeaders.
 
-<span style="font-family: 'Verdana';">console.dir(extendedFat):
+`console.dir(extendedFat)`
 
 <span style="font-family: 'Verdana';">**Object**
 
