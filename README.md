@@ -482,14 +482,15 @@
 4. Average length of value of each field is 20 characters
 5. Number of documents per chair per year is 1000
 6. Number of chairs being tracked is 100
-7. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing) (Cloud Firestore operations, storage, and network bandwidth are all considered billable usage. The cost esimate below does not factor in network bandwidth.)
+7. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing) (Cloud Firestore operations, storage, and network bandwidth are all considered billable usage. The cost esimate below does not factor in network bandwidth, but first 10GB monthly egress is free.)
 
-| Cost     | # documents     |
-| -------- | --------------- |
-| 6 cents  | 100,000 reads   |
-| 18 cents | 100,000 writes  |
-| 2 cents  | 100,000 deletes |
-| 18 cents | GB per month    |
+| Cost           | # documents     | Caveats         |
+| -------------- | --------------- | --------------- |
+| 6 cents        | 100,000 reads   |                 |
+| 18 cents       | 100,000 writes  |                 |
+| 2 cents        | 100,000 deletes |                 |
+| 18 cents       | GB per month    | first 1GB free  |
+| network egress |                 | first 10GB free |
 
 Given those assumptions, the number of bytes uploaded and stored per year of operation to the chairLoc database can be calculated as:
 
@@ -505,7 +506,7 @@ Reading Costs: 43.2MB = 43200000/100000 * 6 cents * 5 reads ~ $129.60
 
 Costs appear to be dominated by reads/writes, so estimate $78 + $130 = **\$207** per year, since storage costs are negligible.
 
-This estimate may be high. See [this example](https://firebase.google.com/docs/firestore/billing-example) for better estimate, which include free monthly quotas factored in.
+This estimate may be high. See [this example](https://firebase.google.com/docs/firestore/billing-example) for better estimate, which includes free monthly quotas factored in.
 
 ---
 
