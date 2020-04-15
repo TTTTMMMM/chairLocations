@@ -500,3 +500,5 @@ Given those assumptions, the number of bytes per year of growth to the chairLoc 
 `Reading Costs: 28MB = 28000000/100000 * 6 cents * 5 reads ~ $84.00`
 
 `Costs appear to be dominated by reads/writes, so estimate $84 + $50 = $134 per year, since storage costs are negligible.`
+
+---
