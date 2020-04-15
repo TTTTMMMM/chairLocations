@@ -491,10 +491,10 @@
 | 2 cents  | 100,000 deletes |
 | 18 cents | GB per month    |
 
-Given those assumptions, the number of bytes per year of growth to the chairLoc database can be calculated as:
+Given those assumptions, the number of bytes uploaded and stored per year of operation to the chairLoc database can be calculated as:
 
 ```
-numBytes = (40 + (14 * (8+20))) * 1000 * 100 = 39,200,000 = 43.2MB/year
+numBytes = (40 + (14 * (8+20))) * 1000 * 100 = 43,200,000 = 43.2MB/year
 
 Storage Costs: .0392GB * 18 cents/GB/month * 12months ~ 10 cents/yr
 
