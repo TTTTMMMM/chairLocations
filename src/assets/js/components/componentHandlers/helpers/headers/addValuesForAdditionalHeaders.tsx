@@ -9,7 +9,7 @@ const addValuesForAdditionalHeaders = (fatChairObj: any, fname: string) => {
    extendedFat[additionalHeaders[1].toUpperCase()] = fname; // FName
    extendedFat[
       additionalHeaders[2].toUpperCase()
-   ] = new Date().toLocaleString(); // UploadFBTime
+   ] = new Date().toISOString().substring(0, 19); // UploadFBTime
    extendedFat[additionalHeaders[0].toUpperCase()] = SHA256(
       `${fatChairObj.ASSETLABEL}${fatChairObj.UPDATETIME}`
    ).toString(CryptoJS.enc.Hex); // ID

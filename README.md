@@ -347,3 +347,97 @@ ORGID: "1", …}
 <span style="font-family: 'Verdana';">Those are all the columns I'm keeping from the original data. The data has been made skinny, but it is still tall. In other words, there are rows that must be purged, i.e., made "short" - the resulting data will be considered transformed from tallAndSkinny[] to shortAndSkinny[] after row reduction is achieved!
 
 ---
+
+### Short and Skinny Array
+
+<span style="font-family: 'Verdana';">The shortAndSkinnyArray[] is the tallAndSkinny[] minus a few rows that are cleansed (e.g., LATITUTE = "-360"). This reduces the number of objects loaded in Firebase. shortAndSkinny[] is uploaded to Firebase.
+
+<span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">66 properties
+
+<span style="font-family: 'Verdana';">Array(221) <-- Number of objects in tallAndSkinny[]
+
+<span style="font-family: 'Verdana';">0:
+
+<span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
+
+<span style="font-family: 'Verdana';">BEACH: "Miami Beach"
+
+<span style="font-family: 'Verdana';">CELLACCURACY: undefined
+
+<span style="font-family: 'Verdana';">DEVICEID: "31905"
+
+<span style="font-family: 'Verdana';">FNAME: "CHAIR088_2020-03-14_mod.csv"
+
+<span style="font-family: 'Verdana';">GPS_MPH: undefined
+
+<span style="font-family: 'Verdana';">ID: "779ccf2e9cae710e8be2985b0a789f71ab44e60ba3663255b9081fc734c6fdf5"
+
+<span style="font-family: 'Verdana';">IMEI: "1.5058E+13"
+
+<span style="font-family: 'Verdana';">LATITUDE: "25.9469009"
+
+<span style="font-family: 'Verdana';">LONGITUDE: "-80.142639"
+
+<span style="font-family: 'Verdana';">RENTALAGENT: "SANDHELPER"
+
+<span style="font-family: 'Verdana';">STATE: "Florida"
+
+<span style="font-family: 'Verdana';">UPDATETIME: "2020-03-11T23:35:20Z"
+
+<span style="font-family: 'Verdana';">UPLOADFBTIME: "2020-04-15T04:20:23"
+
+<span style="font-family: 'Verdana';">WX_DEWPOINT: undefined
+
+<span style="font-family: 'Verdana';">WX_WINDSPEED_MPH: undefined
+
+<span style="font-family: 'Verdana';">**proto**: Object
+
+<span style="font-family: 'Verdana';">1: {ASSETLABEL: "CHAIR-088", BEACH: "Miami Beach", CELLACCURACY: undefined, DEVICEID: "31905", FNAME: "CHAIR088_2020-03-14_mod.csv", …}
+
+length: 2
+
+<span style="font-family: 'Verdana';">**proto**: Array(0)
+
+<span style="font-family: 'Verdana';">Array(181) <-- number of objects in shortAndSkinnyArray[]
+
+<span style="font-family: 'Verdana';">0:
+
+<span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
+
+<span style="font-family: 'Verdana';">BEACH: "Miami Beach"
+
+<span style="font-family: 'Verdana';">CELLACCURACY: undefined
+
+<span style="font-family: 'Verdana';">DEVICEID: "31905"
+
+<span style="font-family: 'Verdana';">FNAME: "CHAIR088_2020-03-14_mod.csv"
+
+<span style="font-family: 'Verdana';">GPS_MPH: undefined
+
+<span style="font-family: 'Verdana';">ID:"779ccf2e9cae710e8be2985b0a789f71ab44e60ba3663255b9081fc734c6fdf5"
+
+<span style="font-family: 'Verdana';">IMEI: "1.5058E+13"
+
+<span style="font-family: 'Verdana';">LATITUDE: "25.9469009"
+
+<span style="font-family: 'Verdana';">LONGITUDE: "-80.142639"
+
+<span style="font-family: 'Verdana';">RENTALAGENT: "SANDHELPER"
+
+<span style="font-family: 'Verdana';">STATE: "Florida"
+
+<span style="font-family: 'Verdana';">UPDATETIME: "2020-03-11T23:35:20Z"
+
+<span style="font-family: 'Verdana';">UPLOADFBTIME: "2020-04-15T04:20:23"
+
+<span style="font-family: 'Verdana';">WX_DEWPOINT: undefined
+
+<span style="font-family: 'Verdana';">WX_WINDSPEED_MPH: undefined
+
+<span style="font-family: 'Verdana';">**proto**: Object
+
+<span style="font-family: 'Verdana';">length: 1
+
+<span style="font-family: 'Verdana';">**proto**: Array(0)
+
+---

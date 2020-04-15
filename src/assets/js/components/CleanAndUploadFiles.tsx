@@ -14,6 +14,7 @@ import createFatChairObject from "../components/componentHandlers/helpers/create
 
 import storeHeadersOnFirebase from "../fetches/storeHeadersOnFirebase";
 import getKeptChairHeaders from "../fetches/getKeptChairHeaders";
+import storeChairLocsOnFirebase from "../fetches/storeChairLocsOnFirebase";
 
 import addValuesForAdditionalHeaders from "./componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
 import ShowChairHeaders from "./ShowChairHeaders";
@@ -46,6 +47,7 @@ class CleanAndUploadFiles extends Component<
    private extendedFatArray: Array<any> = [];
    private extendedExtendedFatArray: Array<any> = [];
    private tallAndSkinnyArray: Array<any> = [];
+   private shortAndSkinnyArray: Array<any> = [];
 
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -234,6 +236,7 @@ class CleanAndUploadFiles extends Component<
       this.extendedFatArray.length = 0;
       this.extendedExtendedFatArray.length = 0;
       this.tallAndSkinnyArray.length = 0;
+      this.shortAndSkinnyArray.length = 0;
       let filesListObject = this.fileInput.current.files;
       // pull headers for all files from the first line of the first file
       let aFile = filesListObject[0]; // first_file is index [0]
@@ -296,12 +299,31 @@ class CleanAndUploadFiles extends Component<
    }
 
    private cleanRowsAndUploadClicked() {
-      if (!this.state.disabledCleanRowsButton) {
+      if (!this.state.disabledSetAdditionalPropertiesButton) {
          this.setState({ disabledSetAdditionalPropertiesButton: true });
          this.setState({ disabledCleanRowsButton: true });
+         this.tallAndSkinnyArray.forEach((x) => {
+            x.LONGITUDE !== "-360" ? this.shortAndSkinnyArray.push(x) : {};
+         });
+         console.dir(this.shortAndSkinnyArray);
+         let numRowsSurvived = this.shortAndSkinnyArray.length;
+         let numParameters = Object.keys(this.shortAndSkinnyArray[0]).length;
+         let asset = this.shortAndSkinnyArray[0].ASSETLABEL;
          this.myPanel.current!.append(
-            `<p style="color:#738108;font-size:11px;">Ready to upload.</p>`
+            `<p style="color:#738108;font-size:12px;">For ${asset}, uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
          );
+         let lengthOfTimeIn_mSec = numRowsSurvived * 0.15 * 1000;
+         this.shortAndSkinnyArray.forEach((x: any) => {
+            const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
+            setTimeout(() => {
+               storeChairLocsOnFirebase(
+                  this.props.auth2,
+                  this.props.idToken,
+                  x,
+                  this.myPanel
+               );
+            }, randomTime);
+         });
       }
    }
 }

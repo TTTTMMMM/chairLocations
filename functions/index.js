@@ -20,6 +20,8 @@ const {
    updateChairHeader,
 } = require("./public/lib/js/handlers/updateChairHeader");
 
+const { addChairLoc } = require("./public/lib/js/handlers/addChairLoc");
+
 const { render404 } = require("./public/lib/js/renderings/render404");
 
 // -----------------------------------------------------------------------
@@ -45,8 +47,8 @@ api.get("/users", (req, res) => {
    return res.status(200).json(res.locals.loggedInUser);
 });
 
-api.post("/chair", (req, res) => {
-   addChair(req, res, admin);
+api.post("/chairloc", (req, res) => {
+   addChairLoc(req, res, admin);
 });
 
 api.get("/chairheaders", (req, res) => {

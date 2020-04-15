@@ -10,7 +10,7 @@ const createFatChairObj = (
       let i = 0;
       let fatChairObj: any = {};
       dataArray.forEach((x) => {
-         fatChairObj[headerMappingArray[i++].newHdr] = x;
+         fatChairObj[headerMappingArray[i++].newHdr] = x.trim();
       });
       //   console.dir(fatChairObj);
       resolve(fatChairObj);
