@@ -444,7 +444,7 @@
 
 ### Rough Calculations on Size and Cost of ChairLoc Database
 
-**Exemplar ChairLoc Record:**
+**Exemplar ChairLoc Document:**
 
 <span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
 
@@ -476,11 +476,11 @@
 
 ### Assumptions
 
-1. Length of key for each record (each record's key is a SHA1 hash): 20 bytes => 40 characters when expressed as a string
-2. Keeping 14 parameters
-3. Average length of key (parameter) is 8 characters
-4. Average length of value of each parameter is 20 characters
-5. Number of records per chair per year is 1000
+1. Length of document ID (each document's ID is a SHA1 hash): 20 bytes => 40 characters when expressed as a string
+2. Keeping 14 document fields
+3. Average length of field name is 8 characters
+4. Average length of value of each field is 20 characters
+5. Number of documents per chair per year is 1000
 6. Number of chairs being tracked is 100
 7. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing)
 
