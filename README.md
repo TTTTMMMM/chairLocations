@@ -484,6 +484,4 @@
 
 Given those assumptions, the number of bytes per year of growth to the chairLoc database can be calculated as:
 
-````numBytes = 14 * 20 * 1000 * 100 = 28,000,000 = 28MB/year
-   Storage Costs```
-````
+`numBytes = 14 * 20 * 1000 * 100 = 28,000,000 = 28MB/year`
