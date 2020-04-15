@@ -480,7 +480,10 @@
 2. Average length of each parameter is 20 characters
 3. Number of records per chair per year is 1000
 4. Number of chairs being tracked is 100
+5. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing)
 
 Given those assumptions, the number of bytes per year of growth to the chairLoc database can be calculated as:
 
-`numBytes = 14 * 20 * 1000 * 100 = 28,000,000 = 28MB/year`
+````numBytes = 14 * 20 * 1000 * 100 = 28,000,000 = 28MB/year
+   Storage Costs```
+````
