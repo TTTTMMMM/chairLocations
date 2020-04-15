@@ -508,3 +508,7 @@ Costs appear to be dominated by reads/writes, so estimate $78 + $130 = **\$207**
 This estimate may be high. See [this example](https://firebase.google.com/docs/firestore/billing-example) for better estimate, which include free monthly quotas factored in.
 
 ---
+
+### Screenshot of Usage on 4/15/2020
+
+![](/markdownImages/oneDayUsage.png)
