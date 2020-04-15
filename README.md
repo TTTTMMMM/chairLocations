@@ -493,4 +493,8 @@ Given those assumptions, the number of bytes per year of growth to the chairLoc 
 
 `numBytes = 14 * 20 * 1000 * 100 = 28,000,000 = 28MB/year`
 
-`Storage Costs ~ .028GB * 18 cents/GB/month * 12months = 6 cents/yr`
+`Storage Costs: .028GB * 18 cents/GB/month * 12months ~ 6 cents/yr`
+`Writing Costs: 28MB = 28000000/100000 * 18 cents ~ $50.40 once`
+`Reading Costs: 28MB = 28000000/100000 * 6 cents * 5 reads ~ $84.00`
+
+`Costs appear to be dominated by reads/writes, so estimate $84 + $50 = $134 per year, since storage costs are negligible.`
