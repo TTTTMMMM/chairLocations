@@ -482,7 +482,7 @@
 4. Average length of value of each field is 20 characters
 5. Number of documents per chair per year is 1000
 6. Number of chairs being tracked is 100
-7. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing) (Cloud Firestore operations, storage, and network bandwidth are all considered billable usage.) The cost esimate below does not factor in network bandwidth.
+7. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing) Cloud Firestore operations, storage, and network bandwidth are all considered billable usage. The cost esimate below does not factor in network bandwidth.
 
 | Cost     | # documents     |
 | -------- | --------------- |
