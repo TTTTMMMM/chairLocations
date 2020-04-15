@@ -482,7 +482,7 @@
 4. Average length of value of each field is 20 characters
 5. Number of documents per chair per year is 1000
 6. Number of chairs being tracked is 100
-7. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing) (Cloud Firestore operations, storage, and network bandwidth are all considered billable usage. The cost esimate below does not factor in network bandwidth, but first 10GB monthly egress is free.)
+7. [Firebase Cost Structure](https://firebase.google.com/docs/firestore/pricing)
 
 | Cost           | # documents     | Caveats         |
 | -------------- | --------------- | --------------- |
@@ -491,6 +491,8 @@
 | 2 cents        | 100,000 deletes |                 |
 | 18 cents       | GB per month    | first 1GB free  |
 | network egress |                 | first 10GB free |
+
+Cloud Firestore operations, storage, and network bandwidth are all considered billable usage. The cost esimate below does not factor in network bandwidth.
 
 Given those assumptions, the number of bytes uploaded and stored per year of operation to the chairLoc database can be calculated as:
 
