@@ -442,7 +442,7 @@
 
 ---
 
-## Rough Calculations on Size and Cost of ChairLoc Database
+### Rough Calculations on Size and Cost of ChairLoc Database
 
 **Exemplar ChairLoc Record:**
 
