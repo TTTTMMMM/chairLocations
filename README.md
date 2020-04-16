@@ -48,6 +48,16 @@
 
 <span style="font-family: 'Verdana';">The extendedExtendedFat's properties are spread of the fatChairObj + calculated values for the additionalHeaders + the entered values of where the chair is deployed (STATE, BEACH, RENTALAGENT):
 
+```
+         this.extendedFatArray.forEach((x) => {
+            let eEFO = { ...x, ...objectFromPopoverContents };
+            console.dir(eEFO);
+            this.extendedExtendedFatArray.push(eEFO);
+         });
+         console.log(`extendedExtendedFatArray below:`);
+         console.dir(this.extendedExtendedFatArray);
+```
+
 ![](/markdownImages/eEFO.png)
 
 ---
