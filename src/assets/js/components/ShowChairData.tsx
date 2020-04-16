@@ -410,6 +410,9 @@ class ShowChairData extends React.PureComponent<
       }
    }
    render() {
+      console.log(
+         `ShowChairData Component render(), ASSETLABEL: ${this.props.query.ASSETLABEL}`
+      );
       if (this.props.loggedInToFirebase && !this.state.subscribed) {
          this.subscribeToAssetUploadedToday();
       }

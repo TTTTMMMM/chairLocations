@@ -30,35 +30,7 @@
 
 `console.dir(fatChairObj):`
 
-**Object**
-
-<span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">ReportID: "0"
-
-<span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">DeviceID: "31905"
-
-<span style="font-family: 'Verdana';">ProductID: "45"
-
-<span style="font-family: 'Verdana';">DeviceTypeID: "14"
-
-<span style="font-family: 'Verdana';">OrgID: "1"
-
-<span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">IMEI: "1.51E+13"
-
-<span style="font-family: 'Verdana';">ReceivedDate: "2020-02-22T14:08:04Z"
-
-<span style="font-family: 'Verdana';">UpdateTime: "2020-02-22T14:04:30Z"
-
-<span style="font-family: 'Verdana';">MessageCode: "6"
-
-<span style="font-family: 'Verdana';">MessageIndex: "2"
-
-<span style="font-family: 'Verdana';">AssetLabel: "CHAIR-088"
-
-<span style="font-family: 'Verdana';">IsTest: "FALSE"
-
-<span style="font-family: 'Verdana';">...snip...
-
-<span style="font-family: 'Verdana';">**proto**: Object
+![](/markdownImages/fatChairObj.png)
 
 ---
 
@@ -348,7 +320,7 @@
 
 ### Short and Skinny Array
 
-<span style="font-family: 'Verdana';">The shortAndSkinnyArray[] is the tallAndSkinny[] minus a few rows that are cleansed (e.g., LATITUTE = "-360"). This reduces the number of objects loaded in Firebase. shortAndSkinny[] is uploaded to Firebase.
+<span style="font-family: 'Verdana';">The shortAndSkinnyArray[] is the tallAndSkinny[] minus a few rows that are cleansed, such as documents that have LATITUTE = "-360". This reduces the number of documents loaded into Firebase. shortAndSkinny[] is uploaded to Firebase.
 
 `console.dir(this.shortAndSkinnyArray);`
 

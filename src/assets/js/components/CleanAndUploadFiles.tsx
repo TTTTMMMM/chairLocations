@@ -111,6 +111,8 @@ class CleanAndUploadFiles extends Component<
                   Object.keys(skinnyObjTemplate).forEach((property) => {
                      skinnyObj[property] = row[property];
                   });
+                  console.log(`skinnyObj below:`);
+                  console.dir(skinnyObj);
                   this.tallAndSkinnyArray.push(skinnyObj);
                });
                // console.dir(this.tallAndSkinnyArray);
@@ -307,11 +309,12 @@ class CleanAndUploadFiles extends Component<
                   dataRows.forEach((aRow: string) => {
                      createFatChairObject(aRow, headerMappingArray).then(
                         (fatChairObj: any) => {
-                           console.dir(fatChairObj);
                            extendedFat = addValuesForAdditionalHeaders(
                               fatChairObj,
                               aFile.name
                            );
+                           console.log(`extendedFat below:`);
+                           console.dir(extendedFat);
                            this.extendedFatArray.push(extendedFat);
                            numHeaders = Object.keys(extendedFat).length;
                            if (rowNum++ === 0) {
@@ -342,11 +345,14 @@ class CleanAndUploadFiles extends Component<
          this.tallAndSkinnyArray.forEach((x) => {
             x.LONGITUDE !== "-360" ? this.shortAndSkinnyArray.push(x) : {};
          });
-         console.dir(this.shortAndSkinnyArray);
+         // console.dir(this.shortAndSkinnyArray);
          let numRowsSurvived = this.shortAndSkinnyArray.length;
          let numParameters = Object.keys(this.shortAndSkinnyArray[0]).length;
          let asset = this.shortAndSkinnyArray[0].ASSETLABEL;
          this.state.assetLabelQuery.ASSETLABEL = asset;
+         console.log(
+            `this.state.assetLabelQuery.ASSETLABEL: ${this.state.assetLabelQuery.ASSETLABEL}`
+         );
          this.myPanel.current!.append(
             `<p style="color:#738108;font-size:12px;">For ${asset}, uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
          );
