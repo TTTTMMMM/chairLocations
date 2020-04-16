@@ -138,13 +138,24 @@ class CleanAndUploadFiles extends Component<
       return (
          <div>
             <div>
-               <input
-                  ref={this.fileInput}
-                  type="file"
-                  accept=".csv"
-                  onChange={this.handleChange}
-                  value={this.state.value}
-               ></input>
+               <label>
+                  Choose File
+                  <input
+                     ref={this.fileInput}
+                     type="file"
+                     accept=".csv"
+                     onChange={this.handleChange}
+                     value={this.state.value}
+                     style={{
+                        width: "0.1px",
+                        height: "0.1px",
+                        opacity: "0",
+                        overflow: "hidden",
+                        position: "absolute",
+                        zIndex: -1,
+                     }}
+                  ></input>
+               </label>
             </div>
             <div>
                <ShowChairHeaders

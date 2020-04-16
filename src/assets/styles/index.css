@@ -242,13 +242,26 @@ html > body > div > div > header > section:nth-of-type(3) > figure:hover {
    transition: all 0.3s;
    border: 2px gray solid;
    padding: 2px;
-   background-color: black;
+   background: -webkit-linear-gradient(
+      top,
+      #058cf5 0%,
+      #0385f3 19%,
+      #0167e9 72%,
+      #015de6 100%
+   );
 }
 
 /* Login photo figure after successful login */
 html > body > div > div > header > section:nth-of-type(3) > figure:not(:hover) {
    transform: scale(1);
    transition: all 0.3s;
+   background: -webkit-linear-gradient(
+      top,
+      #058cf5 0%,
+      #0385f3 19%,
+      #0167e9 72%,
+      #015de6 100%
+   );
 }
 
 /* Login photo caption after successful login */
@@ -474,5 +487,40 @@ body > div > div > div > div > div > input {
    margin-bottom: 9px;
 }
 
-.popovercontents > div:nth-of-type(1) > input {
+/* .popovercontents > div:nth-of-type(1) > input {
+} */
+
+/* input file styling */
+body > div:nth-of-type(1) > div > div > div > div:nth-of-type(1) > label {
+   cursor: pointer;
+   font-family: "Josefin Sans", monospace;
+   font-size: 0.8em;
+   font-weight: 700;
+   color: black;
+   background: -webkit-linear-gradient(
+      top,
+      #ffffff 0%,
+      #efeff1 1%,
+      #ededf0 4%,
+      #d2d2d8 100%
+   );
+   display: inline-block;
+   width: 326px;
+   height: 22px;
+   border-radius: 3px;
+   text-align: center;
+   padding-top: 16px;
+   border-color: #000000;
+}
+
+/* input file styling */
+body > div:nth-of-type(1) > div > div > div > div:nth-of-type(1) > label:hover {
+   background: -webkit-linear-gradient(
+      top,
+      #058cf5 0%,
+      #0385f3 19%,
+      #0167e9 72%,
+      #015de6 100%
+   );
+   color: white;
 }

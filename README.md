@@ -514,6 +514,8 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ### Screenshot of Usage on 4/15/2020
 
+[Usage on GCP](https://console.cloud.google.com/appengine/quotadetails?project=chairlocations&folder&organizationId)
+
 ![](/markdownImages/oneDayUsage.png)
 
 A better place to see usage data is on the [Firebase console Usage and Billing Page](https://console.firebase.google.com/project/chairlocations/usage).
