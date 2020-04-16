@@ -529,3 +529,13 @@ A better place to see usage data is on the [Firebase console Usage and Billing P
 2. Restructure the HTML so that what is already implemented sits in a `<section></section>` container
 
 3. [Set a listener on the uploaded data using conditional query logic](https://firebase.google.com/docs/firestore/query-data/listen#listen_to_multiple_documents_in_a_collection). Query where ASSETLABEL=_ASSETLABLE_ and new Date(UPLOADFBTIME) > new Date(Today_at_0000).
+
+---
+
+### <ins>TODO Physical World</ins>
+
+1. Repair rototiller
+2. Add Neutra7 to neutralizer tank
+3. Rototill fence garden & lay weedblock
+4. chip and shred branches
+5. mow lawn
