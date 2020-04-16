@@ -91,6 +91,7 @@ class CleanAndUploadFiles extends Component<
          this.setState({ additionalPropValues: objectFromPopoverContents });
          this.extendedFatArray.forEach((x) => {
             let eEFO = { ...x, ...objectFromPopoverContents };
+            console.dir(eEFO);
             this.extendedExtendedFatArray.push(eEFO);
          });
          // console.dir(this.extendedExtendedFatArray);
@@ -313,8 +314,6 @@ class CleanAndUploadFiles extends Component<
                               fatChairObj,
                               aFile.name
                            );
-                           console.log(`extendedFat below:`);
-                           console.dir(extendedFat);
                            this.extendedFatArray.push(extendedFat);
                            numHeaders = Object.keys(extendedFat).length;
                            if (rowNum++ === 0) {
