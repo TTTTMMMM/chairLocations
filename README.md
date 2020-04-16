@@ -514,7 +514,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ### Screenshot of Usage on 4/15/2020
 
-[Usage on GCP](https://console.cloud.google.com/appengine/quotadetails?project=chairlocations&folder&organizationId)
+[ChairLoc Usage as Shown on GCP](https://console.cloud.google.com/appengine/quotadetails?project=chairlocations&folder&organizationId)
 
 ![](/markdownImages/oneDayUsage.png)
 
