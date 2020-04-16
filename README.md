@@ -10,8 +10,6 @@
 
 4. <span style="font-family: 'Verdana';">If you get the following error when trying to subscribe to a collection, test the rules in the database rules playground:</span> <span style="color:red;font-weight:bold">**Uncaught Error in onSnapshot: FirebaseError: Missing or insufficient permissions.**
 
-5. <span style="font-family: 'Verdana';">[Read this to learn how to style the file input HTML element](https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/)
-
 ---
 
 ### Data Cleaning
@@ -523,3 +521,11 @@ A better place to see usage data is on the [Firebase console Usage and Billing P
 ![](/markdownImages/chairLocsUsage.png)
 
 ---
+
+#### TODO:
+
+1. [Stylize the file input](https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/)
+
+2. Restructure the HTML so that what is already implemented sits in a `<section></section>` container
+
+3. [Set a listener on the uploaded data using conditional query logic](https://firebase.google.com/docs/firestore/query-data/listen#listen_to_multiple_documents_in_a_collection). Query where ASSETLABEL=_ASSETLABLE_ and new Date(UPLOADFBTIME) > new Date(Today_at_0000).
