@@ -490,8 +490,45 @@ body > div > div > div > div > div > input {
 /* .popovercontents > div:nth-of-type(1) > input {
 } */
 
-/* input file styling */
-body > div:nth-of-type(1) > div > div > div > div:nth-of-type(1) > label {
+/* overall structure of the body block is two sections running side-by-side */
+body > div:nth-of-type(1) > div > div > div {
+   display: flex;
+   flex-direction: row;
+}
+/* Section that holds the data cleansing block */
+body > div:nth-of-type(1) > div > div > div > section:nth-of-type(1) {
+   margin-right: 2px;
+   padding: 2px;
+}
+
+/* Section that holds the data table and maybe google_maps block */
+body > div:nth-of-type(1) > div > div > div > section:nth-of-type(2) {
+   border: 1px solid black;
+   border-radius: 2px;
+   padding: 2px;
+}
+
+body
+   > div:nth-of-type(1)
+   > div
+   > div
+   > div
+   > section:nth-of-type(1)
+   > fieldset
+   > legend {
+   font-size: 0.7em;
+}
+
+/* input label choose file styling */
+body
+   > div:nth-of-type(1)
+   > div
+   > div
+   > div
+   > section:nth-of-type(1)
+   > fieldset
+   > div:nth-of-type(1)
+   > label {
    cursor: pointer;
    font-family: "Josefin Sans", monospace;
    font-size: 0.8em;
@@ -506,15 +543,24 @@ body > div:nth-of-type(1) > div > div > div > div:nth-of-type(1) > label {
    );
    display: inline-block;
    width: 326px;
-   height: 22px;
+   height: 20px;
    border-radius: 3px;
    text-align: center;
    padding-top: 16px;
    border-color: #000000;
+   margin-bottom: 2px;
 }
 
-/* input file styling */
-body > div:nth-of-type(1) > div > div > div > div:nth-of-type(1) > label:hover {
+/* input label choose file styling */
+body
+   > div:nth-of-type(1)
+   > div
+   > div
+   > div
+   > section:nth-of-type(1)
+   > fieldset
+   > div:nth-of-type(1)
+   > label:hover {
    background: -webkit-linear-gradient(
       top,
       #058cf5 0%,
