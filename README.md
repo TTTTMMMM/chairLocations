@@ -446,37 +446,11 @@
 
 **<ins>Exemplar ChairLoc Document:</ins>**
 
-<span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
-
-<span style="font-family: 'Verdana';">BEACH: "Atlantic City"
-
-<span style="font-family: 'Verdana';">CELLACCURACY: "908"
-
-<span style="font-family: 'Verdana';">DEVICEID: "31905"
-
-<span style="font-family: 'Verdana';">FNAME: "CHAIR088_2020-03-14.csv"
-
-<span style="font-family: 'Verdana';">GPS_MPH: "-2147483648"
-
-<span style="font-family: 'Verdana';">ID: "5f5096843d7fb05f964822bad3d1b692853935e8"
-
-<span style="font-family: 'Verdana';">IMEI: "1.51E+13"
-
-<span style="font-family: 'Verdana';">LATITUDE: "25.9469009"
-
-<span style="font-family: 'Verdana';">LONGITUDE: "-80.142639"
-
-<span style="font-family: 'Verdana';">RENTALAGENT: "SANDHELPER"
-
-<span style="font-family: 'Verdana';">STATE: "New Jersey"
-
-<span style="font-family: 'Verdana';">UPDATETIME: "2020-03-11T23:35:20Z"
-
-<span style="font-family: 'Verdana';">UPLOADFBTIME: "2020-04-15T18:39:31.042Z"
+![](/markdownImages/exampleDocument.png)
 
 ### Assumptions
 
-1. Length of document ID (each document's ID is a SHA1 hash): 20 bytes => 40 characters when expressed as a string
+1. Length of document ID (each document's ID is a SHA1 hash truncated to 10 characters)
 2. Keeping 14 document fields
 3. Average length of field name is 8 characters
 4. Average length of value of each field is 20 characters
@@ -497,16 +471,16 @@ Cloud Firestore operations, storage, and network bandwidth are all considered bi
 Given those assumptions, the number of bytes uploaded and stored per year of operation to the chairLoc database can be calculated as:
 
 ```
-numBytes = (40 + (14 * (8+20))) * 1000 * 100 = 43,200,000 = 43.2MB/year
+numBytes = (10 + (14 * (8+20))) * 1000 * 100 = 40,200,000 = 43.2MB/year
 
-Storage Costs: .0432GB * 18 cents/GB/month * 12months ~ 10 cents/yr
+Storage Costs: .0402GB * 18 cents/GB/month * 12months ~ 10 cents/yr
 
-Writing Costs: 43.2MB = 43200000/100000 * 18 cents ~ $77.76 once
+Writing Costs: 40.2MB = 40200000/100000 * 18 cents ~ $72.36 once
 
-Reading Costs: 43.2MB = 43200000/100000 * 6 cents * 5 reads ~ $129.60
+Reading Costs: 40.2MB = 40200000/100000 * 6 cents * 5 reads ~ $120.60
 ```
 
-Costs appear to be dominated by reads/writes, so estimate $78 + $130 = **\$207** per year, since storage costs are negligible.
+Costs appear to be dominated by reads/writes, so estimate $72 + $120 = **\$193** per year, since storage costs are negligible.
 
 This estimate may be high. See [this example](https://firebase.google.com/docs/firestore/billing-example) for better estimate, which includes free monthly quotas factored in.
 

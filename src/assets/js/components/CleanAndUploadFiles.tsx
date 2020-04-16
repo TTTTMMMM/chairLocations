@@ -18,6 +18,8 @@ import storeChairLocsOnFirebase from "../fetches/storeChairLocsOnFirebase";
 
 import addValuesForAdditionalHeaders from "./componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
 import ShowChairHeaders from "./ShowChairHeaders";
+import ShowChairData from "./ShowChairData";
+
 import PopoverContents from "./PopoverContents";
 import { AdditionalPropsType } from "../misc/chairLocTypes";
 
@@ -244,7 +246,15 @@ class CleanAndUploadFiles extends Component<
                </fieldset>
             </section>
             <section>
-               <label>Hi</label>
+               <div>
+                  <ShowChairData
+                     loggedInWithGoogle={this.props.loggedInWithGoogle}
+                     auth2={this.props.auth2}
+                     idToken={this.props.idToken}
+                     loggedInToFirebase={this.props.loggedInToFirebase}
+                     myPanel={this.myPanel}
+                  ></ShowChairData>
+               </div>
             </section>
          </div>
       );
