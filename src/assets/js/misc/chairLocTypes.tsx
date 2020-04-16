@@ -8,3 +8,7 @@ export interface AdditionalPropsType {
    BEACH?: string | undefined;
    RENTALAGENT?: string | undefined;
 }
+
+export interface AssetLabelQueryType {
+   ASSETLABEL?: string | undefined;
+}

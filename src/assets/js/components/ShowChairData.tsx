@@ -1,10 +1,9 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import JqxDataTable, {
    IDataTableProps,
    jqx,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
-import JqxDropDownList from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdropdownlist";
+// import JqxDropDownList from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdropdownlist";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
@@ -15,14 +14,14 @@ import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
 
-import cellRendererKeep from "../renderers/cellRendererKeep";
-import cellRendererMandatory from "../renderers/cellRendererMandatory";
-import updateKeepChairHdr from "../fetches/updateKeepChairHdr";
+import { AssetLabelQueryType } from "../misc/chairLocTypes";
+
+// import cellRendererKeep from "../renderers/cellRendererKeep";
+// import cellRendererMandatory from "../renderers/cellRendererMandatory";
 
 // class ShowTableHeaders extends Component<{ auth2: any; idToken: any }, {}>
 interface MyState extends IDataTableProps {
    chairDataWatch?: any;
-   keepEditorRenderer?: any;
    subscribed?: boolean;
 }
 class ShowChairData extends React.PureComponent<
@@ -32,7 +31,7 @@ class ShowChairData extends React.PureComponent<
       idToken: any;
       loggedInToFirebase: boolean;
       myPanel: any;
-      assetLabel: string;
+      query: AssetLabelQueryType;
    },
    MyState
 > {
@@ -45,8 +44,8 @@ class ShowChairData extends React.PureComponent<
    modifyKey: string | undefined;
    boundIndex: number | 0;
 
-   private myChairHeadersTable = React.createRef<JqxDataTable>();
-   private keepDropDownList = React.createRef<JqxDropDownList>();
+   private myChairLocTable = React.createRef<JqxDataTable>();
+   // private keepDropDownList = React.createRef<JqxDropDownList>();
 
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -54,7 +53,7 @@ class ShowChairData extends React.PureComponent<
       idToken: any;
       loggedInToFirebase: boolean;
       myPanel: any;
-      assetLabel: string;
+      query: any;
    }) {
       super(props);
       this.assetLabelSpecific = "";
@@ -64,7 +63,6 @@ class ShowChairData extends React.PureComponent<
       this.numUpdates = 0;
       this.boundIndex = 0;
 
-      this.keepOnSelect = this.keepOnSelect.bind(this);
       this.onRowSelect = this.onRowSelect.bind(this);
 
       this.state = {
@@ -80,50 +78,34 @@ class ShowChairData extends React.PureComponent<
             saveOnPageChange: true,
             saveOnSelectionChange: true,
          },
-         keepEditorRenderer: (
-            index: number,
-            label: string,
-            value: any
-         ): string => {
-            let ss: any = "";
-            let img: any = "";
-            const imgYesURL = "./images/checkYes.png";
-            const imgNoURL = "./images/checkNo.png";
-            if (index === 0) {
-               img = '<img height="20" width="20" src="' + imgYesURL + '"/>';
-               ss = `Yes`;
-            } else {
-               img = '<img height="20" width="20" src="' + imgNoURL + '"/>';
-               ss = `No`;
-            }
-            const table =
-               "<table style='width: 60px;'><tr><td style='width: 55px;'>" +
-               img +
-               "</td><td>" +
-               ss +
-               "</td></tr></table>";
-            return table;
-         },
       };
-      this.getChairHeadersContent = this.getChairHeadersContent.bind(this);
+      this.getChairLocContent = this.getChairLocContent.bind(this);
    }
 
-   subscribeToChairHeaders() {
-      this.assetLabelSpecific = firebase.firestore().collection("chairLocs");
-      this.unsubscribe = this.assetLabelSpecific.onSnapshot(
-         this.onCollectionUpdate
-      );
-      this.setState({ subscribed: true });
+   subscribeToAssetUploadedToday() {
+      if (this.props.query.ASSETLABEL!.length > 0) {
+         const beginningOfDay = new Date(
+            new Date().toISOString().substr(0, 10)
+         ).toISOString();
+         this.assetLabelSpecific = firebase
+            .firestore()
+            .collection("chairLocs")
+            .where("ASSETLABEL", "==", this.props.query.ASSETLABEL)
+            .where("UPLOADFBTIME", ">", beginningOfDay);
+         this.unsubscribe = this.assetLabelSpecific.onSnapshot(
+            this.onCollectionUpdate
+         );
+         this.setState({ subscribed: true });
+      }
    }
 
-   unsubscribeFromChairHeadersTable() {
+   unsubscribeFromAssetLabelSpecific() {
       if (typeof this.unsubscribe != "undefined") {
          this.unsubscribe();
          this.setState({ subscribed: false });
          this.numUpdates = 0;
       }
    }
-
    componentDidMount() {}
 
    onCollectionUpdate = (querySnapshot: any) => {
@@ -134,19 +116,56 @@ class ShowChairData extends React.PureComponent<
       querySnapshot.forEach(
          (doc: {
             data: () => {
-               chairHeader: any;
-               keep: boolean;
-               mandatory: boolean;
+               ASSETLABEL: string;
+               BEACH: string;
+               CELLACCURACY: string;
+               DEVICEID: string;
+               FNAME: string;
+               GPS_MPH: string;
+               ID: string;
+               IMEI: string;
+               LATITUDE: string;
+               LONGITUDE: string;
+               RENTALAGENT: string;
+               STATE: string;
+               UPDATETIME: string;
+               UPLOADFBTIME: string;
             };
             id: any;
          }) => {
-            const { chairHeader, keep, mandatory } = doc.data();
+            const {
+               ASSETLABEL,
+               BEACH,
+               CELLACCURACY,
+               DEVICEID,
+               FNAME,
+               GPS_MPH,
+               ID,
+               IMEI,
+               LATITUDE,
+               LONGITUDE,
+               RENTALAGENT,
+               STATE,
+               UPDATETIME,
+               UPLOADFBTIME,
+            } = doc.data();
             chairDataWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
-               chairHeader,
-               keep,
-               mandatory,
+               ASSETLABEL,
+               BEACH,
+               CELLACCURACY,
+               DEVICEID,
+               FNAME,
+               GPS_MPH,
+               ID,
+               IMEI,
+               LATITUDE,
+               LONGITUDE,
+               RENTALAGENT,
+               STATE,
+               UPDATETIME,
+               UPLOADFBTIME,
             });
          }
       );
@@ -155,22 +174,33 @@ class ShowChairData extends React.PureComponent<
       });
       this.numRows++;
       console.log(
-         `%cChairHeaders<${this.numUpdates}>`,
-         "background:white; border: 3px solid green; margin: 2px; padding: 3px; color:green;"
+         `%c ChairDataWatch<${this.numUpdates}>`,
+         "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
       );
       setTimeout(() => {
-         this.myChairHeadersTable.current!.ensureRowVisible(this.boundIndex!);
+         this.myChairLocTable.current!.ensureRowVisible(this.boundIndex!);
       }, 150);
    };
 
-   getChairHeadersContent() {
+   getChairLocContent() {
       if (this.props.loggedInToFirebase) {
          const source = {
             datafields: [
-               { name: "chairHeader", type: "string" },
-               { name: "keep", type: "bool" },
+               { name: "ASSETLABEL", type: "string" },
+               { name: "BEACH", type: "string" },
                { name: "key", type: "string" },
-               { name: "mandatory", type: "bool" },
+               { name: "CELLACCURACY", type: "string" },
+               { name: "DEVICEID", type: "string" },
+               { name: "FNAME", type: "string" },
+               { name: "GPS_MPH", type: "string" },
+               { name: "ID", type: "string" },
+               { name: "IMEI", type: "string" },
+               { name: "LATITUDE", type: "string" },
+               { name: "LONGITUDE", type: "string" },
+               { name: "RENTALAGENT", type: "string" },
+               { name: "STATE", type: "string" },
+               { name: "UPDATETIME", type: "string" },
+               { name: "UPLOADFBTIME", type: "string" },
             ],
             id: "key",
             dataType: "json",
@@ -178,12 +208,23 @@ class ShowChairData extends React.PureComponent<
                let data: any[] = [];
                let i = 0;
 
-               this.state.chairDataWatch.forEach((hdr: any) => {
+               this.state.chairDataWatch.forEach((val: any) => {
                   data[i++] = {
-                     key: hdr.key,
-                     chairHeader: hdr.chairHeader,
-                     keep: hdr.keep,
-                     mandatory: hdr.mandatory,
+                     key: val.key,
+                     ASSETLABEL: val.ASSETLABEL,
+                     BEACH: val.BEACH,
+                     CELLACCURACY: val.CELLACCURACY,
+                     DEVICEID: val.DEVICEID,
+                     FNAME: val.FNAME,
+                     GPS_MPH: val.GPS_MPH,
+                     ID: val.ID,
+                     IMEI: val.IMEI,
+                     LATITUDE: val.LATITUDE,
+                     LONGITUDE: val.LONGITUDE,
+                     RENTALAGENT: val.RENTALAGENT,
+                     STATE: val.STATE,
+                     UPDATETIME: val.UPDATETIME,
+                     UPLOADFBTIME: val.UPLOADFBTIME,
                   };
                   this.numRows!++;
                });
@@ -192,109 +233,160 @@ class ShowChairData extends React.PureComponent<
          };
          this.dataAdapter = new jqx.dataAdapter(source);
          // --
-         const getEditorDataAdapter = (dataField: any): any => {
-            const editorSource = {
-               dataFields: [
-                  { name: "chairHeader", type: "string" },
-                  { name: "keep", type: "bool" },
-                  { name: "mandatory", type: "bool" },
-                  { name: "key", type: "string" },
-               ],
-               dataType: "array",
-               localData: source.localData(),
-            };
-            const dataAdapter = new jqx.dataAdapter(editorSource, {
-               uniqueDataFields: [dataField],
-            });
-            return dataAdapter;
-         };
+         // const getEditorDataAdapter = (dataField: any): any => {
+         //    const editorSource = {
+         //       dataFields: [
+         //          { name: "chairHeader", type: "string" },
+         //          { name: "keep", type: "bool" },
+         //          { name: "mandatory", type: "bool" },
+         //          { name: "key", type: "string" },
+         //       ],
+         //       dataType: "array",
+         //       localData: source.localData(),
+         //    };
+         //    const dataAdapter = new jqx.dataAdapter(editorSource, {
+         //       uniqueDataFields: [dataField],
+         //    });
+         //    return dataAdapter;
+         // };
          // --
          const columnWidths = [
-            ["keepWidth", 60],
-            ["chairHeaderWidth", 170],
-            ["mandatoryWidth", 80],
+            ["ASSETLABEL", 80],
+            ["BEACH", 150],
+            ["CELLACCURACY", 50],
+            ["DEVICEID", 70],
+            ["FNAME", 100],
+            ["ID", 80],
+            ["IMEI", 80],
+            ["LATITUDE", 100],
+            ["LONGITUDE", 100],
+            ["RENTALAGENT", 120],
+            ["STATE", 100],
+            ["UPDATETIME", 170],
+            ["UPLOADFBTIME", 110],
+            ["GPS_MPH", 70],
          ];
          this.columns = [
             {
-               text: "Keep",
+               text: "Chair",
                width: columnWidths[0][1],
-               datafield: "keep",
-               cellsrenderer: cellRendererKeep,
+               datafield: "ASSETLABEL",
                align: "center",
-               cellclassname: "keepClass",
-               columnType: "template",
-               createEditor: (
-                  row: any,
-                  cellvalue: any,
-                  editor: any,
-                  cellText: any,
-                  width: any,
-                  height: any
-               ): void => {
-                  ReactDOM.render(
-                     <JqxDropDownList
-                        ref={this.keepDropDownList}
-                        autoOpen={true}
-                        width={80}
-                        height={80}
-                        source={getEditorDataAdapter("keep")}
-                        // selectedIndex={0}
-                        onSelect={this.keepOnSelect}
-                        itemHeight={40}
-                        dropDownHeight={80}
-                        valueMember={"own"}
-                        renderer={this.state.keepEditorRenderer}
-                        dropDownVerticalAlignment={"top"}
-                     />,
-                     editor[0]
-                  );
-               },
-               getEditorValue: (
-                  row: any,
-                  cellvalue: any,
-                  editor: any
-               ): void => {
-                  // return the editor's value.
-                  return cellvalue;
-               },
-               initEditor: (
-                  row: any,
-                  cellvalue: any,
-                  editor: any,
-                  celltext: any,
-                  width: any,
-                  height: any
-               ): void => {
-                  let theKey = this.myChairHeadersTable.current!.getCellValue(
-                     row,
-                     "key"
-                  );
-                  this.modifyKey = theKey;
-                  let selectedIndex = cellvalue ? 0 : 1;
-                  editor.selectedIndex = selectedIndex;
-               },
+               cellclassname: "ASSETLABELClass",
+               editable: false,
             },
             {
-               text: "Property",
-               datafield: "chairHeader",
+               text: "State",
+               datafield: "STATE",
+               width: columnWidths[10][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+            },
+            {
+               text: "Beach",
+               datafield: "BEACH",
                width: columnWidths[1][1],
                align: "center",
+               cellsalign: "center",
                editable: false,
             },
             {
-               text: "Mandatory",
-               datafield: "mandatory",
-               width: columnWidths[2][1],
+               text: "Rental Agent",
+               datafield: "RENTALAGENT",
+               width: columnWidths[9][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+            },
+            {
+               text: "Lat.",
+               datafield: "LATITUDE",
+               width: columnWidths[7][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+            },
+            {
+               text: "Long.",
+               datafield: "LONGITUDE",
+               width: columnWidths[8][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+            },
+            {
+               text: "GPS MPH",
+               datafield: "GPS_MPH",
+               width: columnWidths[13][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+            },
+            {
+               text: "ID",
+               datafield: "ID",
+               width: columnWidths[5][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+            },
+            {
+               text: "File",
+               datafield: "FNAME",
+               width: columnWidths[4][1],
                align: "center",
                editable: false,
-               cellsrenderer: cellRendererMandatory,
+               hidden: true,
+            },
+            {
+               text: "Update Time",
+               datafield: "UPDATETIME",
+               width: columnWidths[11][1],
+               align: "center",
+               editable: false,
+            },
+            {
+               text: "Device ID",
+               datafield: "DEVICEID",
+               width: columnWidths[3][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+               hidden: true,
+            },
+            {
+               text: "IMEI",
+               datafield: "IMEI",
+               width: columnWidths[6][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+               hidden: true,
+            },
+            {
+               text: "FB Upload Time",
+               datafield: "UPLOADFBTIME",
+               width: columnWidths[12][1],
+               align: "center",
+               editable: false,
+               hidden: true,
+            },
+            {
+               text: "Cell Accuracy",
+               datafield: "CELLACCURACY",
+               width: columnWidths[12][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+               hidden: true,
             },
          ];
 
          return (
             <JqxDataTable
-               ref={this.myChairHeadersTable}
-               width={325}
+               ref={this.myChairLocTable}
+               width={800}
                theme={"fresh"}
                source={this.dataAdapter}
                columns={this.columns}
@@ -302,12 +394,12 @@ class ShowChairData extends React.PureComponent<
                pageable={true}
                altRows={true}
                autoRowHeight={true}
-               height={350}
+               height={575}
                sortable={true}
                onRowSelect={this.onRowSelect}
                columnsReorder={true}
                columnsResize={true}
-               editable={true}
+               editable={false}
                key={this.numUpdates} // this forces a re-render of the table!
                editSettings={this.state.editSettings}
                pageSize={100}
@@ -319,47 +411,19 @@ class ShowChairData extends React.PureComponent<
    }
    render() {
       if (this.props.loggedInToFirebase && !this.state.subscribed) {
-         this.subscribeToChairHeaders();
+         this.subscribeToAssetUploadedToday();
       }
       if (!this.props.loggedInToFirebase && this.state.subscribed) {
-         this.unsubscribeFromChairHeadersTable();
+         this.unsubscribeFromAssetLabelSpecific();
       }
-      return <div>{this.getChairHeadersContent()}</div>;
-   }
-
-   private keepOnSelect(e: any): void {
-      const index = e.args.item.index;
-      this.keepDropDownList.current!.close();
-      let keeper = index === 0 ? true : false;
-      updateKeepChairHdr(
-         this.props.auth2,
-         this.props.idToken,
-         this.modifyKey,
-         keeper,
-         this.props.myPanel
-      ).then(() => {});
+      return <div>{this.getChairLocContent()}</div>;
    }
 
    private onRowSelect(e: any): void {
-      if (!e.args.row.mandatory) {
-         this.myChairHeadersTable.current!.sortBy("chairHeader", "asc");
-         this.myChairHeadersTable.current!.removeFilter("keep");
-         this.myChairHeadersTable.current!.removeFilter("chairHeader");
-         this.boundIndex = e.args.boundIndex;
-         setTimeout(() => {
-            this.myChairHeadersTable.current!.ensureRowVisible(
-               e.args.boundIndex
-            );
-         }, 300);
-         this.myChairHeadersTable.current!.beginCellEdit(
-            e.args.boundIndex,
-            "keep"
-         );
-      } else {
-         this.props.myPanel.current!.append(
-            `<p style="color:red;font-size:10px;">${e.args.row.chairHeader} is mandatory; it cannot be edited.</p>`
-         );
-      }
+      console.dir(e.args.row);
+      this.props.myPanel.current!.append(
+         `<p style="color:gray; font-size:10px;">${e.args.row.ID} </p>`
+      );
    }
 }
 

@@ -10,6 +10,7 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import readDataRowsOfFile from "./componentHandlers/helpers/readDataRowsOfFile";
 import processTableHeadersFromCSVFile from "./componentHandlers/helpers/headers/processTableHeadersFromCSVFile";
 import { HeaderMapping } from "../misc/chairLocTypes";
+import { AssetLabelQueryType } from "../misc/chairLocTypes";
 import createFatChairObject from "../components/componentHandlers/helpers/createFatChairObj";
 
 import storeHeadersOnFirebase from "../fetches/storeHeadersOnFirebase";
@@ -35,6 +36,7 @@ class CleanAndUploadFiles extends Component<
       additionalPropValues: AdditionalPropsType;
       disabledSetAdditionalPropertiesButton: boolean;
       disabledCleanRowsButton: boolean;
+      assetLabelQuery: AssetLabelQueryType;
    }
 > {
    private myPanel = React.createRef<JqxPanel>();
@@ -73,6 +75,8 @@ class CleanAndUploadFiles extends Component<
          additionalPropValues: {},
          disabledSetAdditionalPropertiesButton: true,
          disabledCleanRowsButton: true,
+         // assetLabelQuery: { ASSETLABEL: "CHAIR-088" },
+         assetLabelQuery: { ASSETLABEL: "" },
       };
    }
 
@@ -253,6 +257,7 @@ class CleanAndUploadFiles extends Component<
                      idToken={this.props.idToken}
                      loggedInToFirebase={this.props.loggedInToFirebase}
                      myPanel={this.myPanel}
+                     query={this.state.assetLabelQuery}
                   ></ShowChairData>
                </div>
             </section>
@@ -302,6 +307,7 @@ class CleanAndUploadFiles extends Component<
                   dataRows.forEach((aRow: string) => {
                      createFatChairObject(aRow, headerMappingArray).then(
                         (fatChairObj: any) => {
+                           console.dir(fatChairObj);
                            extendedFat = addValuesForAdditionalHeaders(
                               fatChairObj,
                               aFile.name
@@ -340,10 +346,11 @@ class CleanAndUploadFiles extends Component<
          let numRowsSurvived = this.shortAndSkinnyArray.length;
          let numParameters = Object.keys(this.shortAndSkinnyArray[0]).length;
          let asset = this.shortAndSkinnyArray[0].ASSETLABEL;
+         this.state.assetLabelQuery.ASSETLABEL = asset;
          this.myPanel.current!.append(
             `<p style="color:#738108;font-size:12px;">For ${asset}, uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
          );
-         let lengthOfTimeIn_mSec = numRowsSurvived * 0.15 * 1000;
+         let lengthOfTimeIn_mSec = numRowsSurvived * 0.1 * 1000;
          this.shortAndSkinnyArray.forEach((x: any) => {
             const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
             setTimeout(() => {
