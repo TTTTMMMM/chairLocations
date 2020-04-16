@@ -40,29 +40,7 @@
 
 `console.dir(extendedFat)`
 
-<span style="font-family: 'Verdana';">**Object**
-
-<span style="font-family: 'Verdana';">ReportID: "0"
-
-<span style="font-family: 'Verdana';">DeviceID: "31905"
-
-<span style="font-family: 'Verdana';">ProductID: "45"
-
-<span style="font-family: 'Verdana';">DeviceTypeID: "14"
-
-<span style="font-family: 'Verdana';">OrgID: "1"
-
-<span style="font-family: 'Verdana';">IMEI: "1.51E+13"
-
-<span style="font-family: 'Verdana';">...snip...
-
-<span style="font-family: 'Verdana';">FName: "CHAIR088_2020-03-14.csv"
-
-<span style="font-family: 'Verdana';">UploadFBTime: "4/8/2020, 11:59:46 AM"
-
-<span style="font-family: 'Verdana';">ID: "1f6cdadd498bdac7f2b5aa089c66625a7ef4e768f3b029c1672543067e3f6e93"
-
-<span style="font-family: 'Verdana';">**proto**: Object
+![](/markdownImages/extendedFatChairObj.png)
 
 ---
 
