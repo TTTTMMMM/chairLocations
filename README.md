@@ -48,33 +48,7 @@
 
 <span style="font-family: 'Verdana';">The extendedExtendedFat's properties are spread of the fatChairObj + calculated values for the additionalHeaders + the entered values of where the chair is deployed (STATE, BEACH, RENTALAGENT):
 
-<span style="font-family: 'Verdana';">REPORTID: "0"
-
-<span style="font-family: 'Verdana';">DEVICEID: "31905"
-
-<span style="font-family: 'Verdana';">PRODUCTID: "45"
-
-<span style="font-family: 'Verdana';">DEVICETYPEID: "14"
-
-<span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">ORGID: "1"
-
-<span style="font-family: 'Verdana';">IMEI: "1.5058E+13"
-
-.<span style="font-family: 'Verdana';">..[snip]...
-
-<span style="font-family: 'Verdana';">FName: "CHAIR088_2020-03-14_mod.csv"
-
-<span style="font-family: 'Verdana';">UploadFBTime: "4/13/2020, 10:35:56 AM"
-
-<span style="font-family: 'Verdana';">ID: "9f49abe5a320cedfbbdfc653999cc772b343b744878286b9ca580cfe62480e16"
-
-<span style="font-family: 'Verdana';">STATE: "Florida"
-
-<span style="font-family: 'Verdana';">BEACH: "Miami Beach"
-
-<span style="font-family: 'Verdana';">RENTALAGENT: "SANDHELPER"
-
-<span style="font-family: 'Verdana';">**proto**: Object
+![](/markdownImages/eEFO.png)
 
 ---
 

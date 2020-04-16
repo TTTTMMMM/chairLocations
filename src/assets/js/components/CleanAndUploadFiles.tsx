@@ -94,7 +94,8 @@ class CleanAndUploadFiles extends Component<
             console.dir(eEFO);
             this.extendedExtendedFatArray.push(eEFO);
          });
-         // console.dir(this.extendedExtendedFatArray);
+         console.log(`extendedExtendedFatArray below:`);
+         console.dir(this.extendedExtendedFatArray);
          let skinnyObjTemplate: any = {};
          getKeptChairHeaders(this.props.auth2, this.props.idToken)
             .then((data: any) => {
@@ -112,11 +113,10 @@ class CleanAndUploadFiles extends Component<
                   Object.keys(skinnyObjTemplate).forEach((property) => {
                      skinnyObj[property] = row[property];
                   });
-                  console.log(`skinnyObj below:`);
-                  console.dir(skinnyObj);
                   this.tallAndSkinnyArray.push(skinnyObj);
                });
-               // console.dir(this.tallAndSkinnyArray);
+               console.log(`tallAndSkinnyArray below:`);
+               console.dir(this.tallAndSkinnyArray);
             })
             .catch((err: any) => {
                console.error(`C0003: ${err}`);
@@ -144,6 +144,9 @@ class CleanAndUploadFiles extends Component<
    }
 
    render() {
+      console.log(
+         `CleanAndUploadFiles Component render(), [${this.state.assetLabelQuery.ASSETLABEL}]`
+      );
       return (
          <div>
             <section>
@@ -350,7 +353,7 @@ class CleanAndUploadFiles extends Component<
          let asset = this.shortAndSkinnyArray[0].ASSETLABEL;
          this.state.assetLabelQuery.ASSETLABEL = asset;
          console.log(
-            `this.state.assetLabelQuery.ASSETLABEL: ${this.state.assetLabelQuery.ASSETLABEL}`
+            `after setting ASSETLABEL in cleanRowsAndUploadClicked(), this.state.assetLabelQuery.ASSETLABEL: ${this.state.assetLabelQuery.ASSETLABEL}`
          );
          this.myPanel.current!.append(
             `<p style="color:#738108;font-size:12px;">For ${asset}, uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
