@@ -518,7 +518,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ![](/markdownImages/oneDayUsage.png)
 
-A better place to see usage data is on the [Firebase console Usage and Billing Page](https://console.firebase.google.com/project/chairlocations/usage).
+[ChairLoc usage shown on Firebase Console](https://console.firebase.google.com/project/chairlocations/usage).
 
 ![](/markdownImages/chairLocsUsage.png)
 
