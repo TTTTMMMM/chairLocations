@@ -444,7 +444,7 @@
 
 ### Rough Calculations on Size and Cost of ChairLoc Database
 
-**Exemplar ChairLoc Document:**
+**<ins>Exemplar ChairLoc Document:</ins>**
 
 <span style="font-family: 'Verdana';">ASSETLABEL: "CHAIR-088"
 
