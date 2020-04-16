@@ -350,6 +350,8 @@
 
 <span style="font-family: 'Verdana';">The shortAndSkinnyArray[] is the tallAndSkinny[] minus a few rows that are cleansed (e.g., LATITUTE = "-360"). This reduces the number of objects loaded in Firebase. shortAndSkinny[] is uploaded to Firebase.
 
+`console.dir(this.shortAndSkinnyArray);`
+
 ![](/markdownImages/shortAndSkinnyArray.png)
 
 ---
