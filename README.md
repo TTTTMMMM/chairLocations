@@ -46,7 +46,7 @@
 
 ### extendedExtendedFatChairObject
 
-<span style="font-family: 'Verdana';">The extendedExtendedFat's properties are spread of the fatChairObj + calculated values for the additionalHeaders + the entered values of where the chair is deployed (STATE, BEACH, RENTALAGENT):
+<span style="font-family: 'Verdana';">The extendedExtendedFat's (eEFO) properties are spread of the fatChairObj + calculated values for the additionalHeaders + the entered values of where the chair is deployed (STATE, BEACH, RENTALAGENT):
 
 ```
          this.extendedFatArray.forEach((x) => {
