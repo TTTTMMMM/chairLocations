@@ -352,7 +352,7 @@
 
 <span style="font-family: 'Verdana';"><span style="font-family: 'Verdana';">66 properties
 
-**Array(221)** <-- Number of objects in tallAndSkinny[]
+**Array(221)** <-- <u>Number of objects in tallAndSkinny[]</u>
 
 **0:**
 
@@ -398,7 +398,7 @@
 
 ---
 
-**Array(181)** <-- number of objects in shortAndSkinnyArray[]
+**Array(181)** <-- <ins>number of objects in shortAndSkinnyArray[]</ins>
 
 **0:**
 
