@@ -146,7 +146,7 @@ class CleanAndUploadFiles extends Component<
          <div>
             <section>
                <fieldset>
-                  <legend>Cleanse Data</legend>
+                  <legend>Cleanse and Upload Data</legend>
                   <div>
                      <label>
                         Choose File
@@ -282,7 +282,7 @@ class CleanAndUploadFiles extends Component<
          // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
          headers.forEach((x: HeaderMapping) => {
             headerMappingArray.push(x);
-            const randomTime = Math.floor(Math.random() * 10000);
+            const randomTime = Math.floor(Math.random() * 3000);
             setTimeout(() => {
                storeHeadersOnFirebase(
                   this.props.auth2,
@@ -350,7 +350,7 @@ class CleanAndUploadFiles extends Component<
          this.myPanel.current!.append(
             `<p style="color:#738108;font-size:12px;">For ${asset}, uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
          );
-         let lengthOfTimeIn_mSec = numRowsSurvived * 0.07 * 1000;
+         let lengthOfTimeIn_mSec = numRowsSurvived * 0.02 * 1000; // 1/.025 = 50 writes/second to the Firestore collection
          this.shortAndSkinnyArray.forEach((x: any) => {
             const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
             setTimeout(() => {

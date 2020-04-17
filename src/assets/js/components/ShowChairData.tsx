@@ -40,7 +40,6 @@ class ShowChairData extends React.PureComponent<
    columns: any[] | undefined;
    dataAdapter: null;
    modifyKey: string | undefined;
-   boundIndex: number | 0;
 
    private myChairLocTable = React.createRef<JqxDataTable>();
    // private keepDropDownList = React.createRef<JqxDropDownList>();
@@ -59,7 +58,6 @@ class ShowChairData extends React.PureComponent<
       this.columns = [];
       this.modifyKey = "";
       this.numUpdates = 0;
-      this.boundIndex = 0;
 
       this.onRowSelect = this.onRowSelect.bind(this);
 
@@ -119,7 +117,7 @@ class ShowChairData extends React.PureComponent<
                CELLACCURACY: string;
                DEVICEID: string;
                FNAME: string;
-               GPS_MPH: string;
+               GPS_MPH: number;
                ID: string;
                IMEI: string;
                LATITUDE: string;
@@ -171,13 +169,10 @@ class ShowChairData extends React.PureComponent<
          chairDataWatch,
       });
       this.numRows++;
-      console.log(
-         `%c ChairDataWatch<${this.numUpdates}>`,
-         "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
-      );
-      setTimeout(() => {
-         this.myChairLocTable.current!.ensureRowVisible(this.boundIndex!);
-      }, 150);
+      // console.log(
+      //    `%c ChairDataWatch<${this.numUpdates}>`,
+      //    "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
+      // );
    };
 
    getChairLocContent() {
@@ -190,7 +185,7 @@ class ShowChairData extends React.PureComponent<
                { name: "CELLACCURACY", type: "string" },
                { name: "DEVICEID", type: "string" },
                { name: "FNAME", type: "string" },
-               { name: "GPS_MPH", type: "string" },
+               { name: "GPS_MPH", type: "number" },
                { name: "ID", type: "string" },
                { name: "IMEI", type: "string" },
                { name: "LATITUDE", type: "string" },
@@ -245,7 +240,7 @@ class ShowChairData extends React.PureComponent<
             ["STATE", 100],
             ["UPDATETIME", 170],
             ["UPLOADFBTIME", 110],
-            ["GPS_MPH", 70],
+            ["GPS_MPH", 77],
          ];
          this.columns = [
             {
@@ -305,6 +300,13 @@ class ShowChairData extends React.PureComponent<
                editable: false,
             },
             {
+               text: "Update Time",
+               datafield: "UPDATETIME",
+               width: columnWidths[11][1],
+               align: "center",
+               editable: false,
+            },
+            {
                text: "ID",
                datafield: "ID",
                width: columnWidths[5][1],
@@ -319,13 +321,6 @@ class ShowChairData extends React.PureComponent<
                align: "center",
                editable: false,
                hidden: true,
-            },
-            {
-               text: "Update Time",
-               datafield: "UPDATETIME",
-               width: columnWidths[11][1],
-               align: "center",
-               editable: false,
             },
             {
                text: "Device ID",
@@ -403,7 +398,9 @@ class ShowChairData extends React.PureComponent<
    private onRowSelect(e: any): void {
       console.dir(e.args.row);
       this.props.myPanel.current!.append(
-         `<p style="color:gray; font-size:10px;">${e.args.row.ID} </p>`
+         `<p style="color:gray; font-size:10px;">${JSON.stringify(
+            e.args.row
+         )} </p>`
       );
    }
 }
