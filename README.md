@@ -183,7 +183,7 @@ For the following Compound Query (which is used to create a listener for a speci
         );
 ```
 
-Firebase needed to create the following index (sorted list of a field):
+Firebase needed to create the following "composite index." When the listener above failed the first time I ran it, the developer-friendly error pointed me to a URL, where I instructed Firebase to construct this "composite index," which is not automatically created by Firebase, unlike a single-field index, which is automatically created by Firebase on every field in a document. (An index is a sorted list of, usually one, field that makes querying fast.):
 
 ![](/markdownImages/indexForQuery.png)
 
