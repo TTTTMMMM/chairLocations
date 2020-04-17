@@ -183,7 +183,7 @@ For the following Compound Query (which is used to create a listener for a speci
         );
 ```
 
-Firebase needed to created the following index:
+Firebase needed to create the following index (sorted list of a field):
 
 ![](/markdownImages/indexForQuery.png)
 
