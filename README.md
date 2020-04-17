@@ -14,7 +14,7 @@
 
 ### Data Cleaning
 
-<span style="font-family: 'Verdana';">The first step in processing the chair location information is to clean the data. That means eliminating columns (also known as, parameters or fields). There are also undesired rows (also known as documents) that must be eliminated in the cleansing process. Eliminating undesired columns makes the data "skinny," and eliminating undesired rows makes the data "shorter."
+<span style="font-family: 'Verdana';">The first step in processing the chair location information is to clean the data. That means eliminating columns (also known as, table headers or parameters or fields). There are also undesired rows (also known as documents) that must be eliminated in the cleansing process. Eliminating undesired columns makes the data "skinny," and eliminating undesired rows makes the data "shorter."
 
 <span style="font-family: 'Verdana';">Examples of undesired columns are columns that contain no data, or columns that contain the same value for each row, among other reasons. Data is cleansed of undesired columns before cleansing of undesired rows takes place.
 
@@ -26,7 +26,7 @@
 
 ### FatChairObject
 
-<span style="font-family: 'Verdana';">Each row in the original comma separated values (csv) file becomes a "fat chair object" (fatChairOBj). If a csv file contains 200 rows of data, then 200 fatChairObjs will be created. The fatChairObj's properties or fields are derived from the values in the original csv file. In the case we look at below, the csv file had ~65 table headers and 221 rows. Each of the table headers becomes a property or field _name_ in the object. The object, because it contains ~65 fields, the values for which many are undefined or meaningless for our purposes in the original csv file, is known as being "fat." The goal of cleansing is to make this fatChair object "skinny," meaning that irrelevant properties or fields are eliminated before we upload the object or "document" to the Firebase cloud.
+<span style="font-family: 'Verdana';">Each row in the original comma separated values (csv) file becomes a "fat chair object" (fatChairOBj). If a csv file contains 200 rows of data, then 200 fatChairObjs will be created. The fatChairObj's properties or fields are derived from the values in the original csv file. In the case we look at below, the csv file had ~65 table headers or columns/properties and 221 rows. Each of the table headers becomes a property or field _name_ in the object. The object, because it contains ~65 fields, the values for which many are undefined or meaningless for our purposes in the original csv file, is known as being "fat." The goal of cleansing is to make this fatChair object "skinny," meaning that irrelevant properties or fields are eliminated before we upload the object or "document" to the Firebase cloud.
 
 `console.dir(fatChairObj):`
 
