@@ -169,9 +169,21 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 #### TODO:
 
-1. [Set a listener on the uploaded data using conditional query logic](https://firebase.google.com/docs/firestore/query-data/listen#listen_to_multiple_documents_in_a_collection). Query where ASSETLABEL=_ASSETLABLE_ and new Date(UPLOADFBTIME) > new Date(Today_at_0000).
+1. [Set a listener on the uploaded data using conditional query logic](https://firebase.google.com/docs/firestore/query-data/listen#listen_to_multiple_documents_in_a_collection).
 
----
+```
+    const beginningOfDay = new Date(
+            new Date().toISOString().substr(0, 10)
+        ).toISOString();
+        this.assetLabelSpecific = firebase
+            .firestore()
+            .collection("chairLocs")
+            .where("ASSETLABEL", "==", this.props.query.ASSETLABEL)
+            .where("UPLOADFBTIME", ">", beginningOfDay);
+        this.unsubscribe = this.assetLabelSpecific.onSnapshot(
+            this.onCollectionUpdate
+        );
+```
 
 #### <ins>TODO Physical World</ins>
 
