@@ -157,7 +157,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ### Screenshot of Usage on 4/15/2020
 
-[ChairLoc Usage as Shown on GCP](https://console.cloud.google.com/appengine/quotadetails?project=chairlocations&folder&organizationId), with explanation of pricing explained in [this video](https://www.youtube.com/watch?v=6NegFl9p_sE&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=3_).
+[ChairLoc Usage as Shown on GCP](https://console.cloud.google.com/appengine/quotadetails?project=chairlocations&folder&organizationId), with explanation of pricing explained in [this video](https://www.youtube.com/watch?v=6NegFl9p_sE&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=3_). Three rows of importance are Cloud Firestore Read Operations, Cloud Firestore Entity Writes, and Cloud Firestor Entity Deletes.
 
 ![](/markdownImages/oneDayUsage.png)
 
