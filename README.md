@@ -26,7 +26,7 @@
 
 ### FatChairObject
 
-<span style="font-family: 'Verdana';">The fatChairObj's properties or fields are derived from the values in the original comma separated values (csv) file. In this case, the csv file had ~65 table headers. Each of the table headers becomes a property or field in the object. The object, because it contains ~65 fields, many of which are undefined or meaningless in the original csv file, is known as being "fat."
+<span style="font-family: 'Verdana';">The fatChairObj's properties or fields are derived from the values in the original comma separated values (csv) file. In this case, the csv file had ~65 table headers. Each of the table headers becomes a property or field _name_ in the object. The object, because it contains ~65 fields, many of which are undefined or meaningless in the original csv file, is known as being "fat."
 
 `console.dir(fatChairObj):`
 
