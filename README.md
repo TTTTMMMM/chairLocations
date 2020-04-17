@@ -74,7 +74,7 @@
 
 ### Skinny Object & Tall and Skinny Array
 
-<span style="font-family: 'Verdana';">Each extendedExtended fat chair object is "skinnified." The "skinny" object contains the reduced set of properties need for our purposes. The reduced set is selectable by the user, as long as pre-determined, mandatory properties are maintained. The tallAndSkinnyArray[] is the collection of all the skinny objects. At this point of the processing, each element in the array represents one row from the original file, with all the irrelevant properties and fields eliminated.
+<span style="font-family: 'Verdana';">Each extendedExtended fat chair object is "skinnified." The "skinny" object contains the reduced set of properties need for our purposes. The reduced set is selectable by the user, as long as pre-determined, mandatory properties are maintained. The tallAndSkinnyArray[] is the collection of all the skinny objects. At this point of the processing, each element in the array represents one row from the original file, with all the irrelevant properties or fields eliminated.
 
 ```
     this.extendedExtendedFatArray.forEach((row) => {
