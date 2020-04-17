@@ -187,6 +187,8 @@ Firebase needed to create the following "composite index." When the listener abo
 
 ![](/markdownImages/indexForQuery.png)
 
+BTWs: If you use composite indexes, [this tutorial](https://www.youtube.com/watch?v=Ofux_4c94FI&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=2) should be consulted for best practices and limitations.
+
 ---
 
 #### TODO:
