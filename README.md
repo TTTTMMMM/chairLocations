@@ -167,6 +167,8 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ---
 
+### Compound Query for chairLoc listener required the following index on Firebase Console
+
 ```
     const beginningOfDay = new Date(
             new Date().toISOString().substr(0, 10)
@@ -180,6 +182,8 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
             this.onCollectionUpdate
         );
 ```
+
+![](/markDown/indexForQuery.png)
 
 ---
 
