@@ -171,8 +171,6 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 1. [Set a listener on the uploaded data using conditional query logic](https://firebase.google.com/docs/firestore/query-data/listen#listen_to_multiple_documents_in_a_collection). Query where ASSETLABEL=_ASSETLABLE_ and new Date(UPLOADFBTIME) > new Date(Today_at_0000).
 
-2. Replace textutal descriptions of objects with images snipped from Chrome Developer's Console.
-
 ---
 
 #### <ins>TODO Physical World</ins>
