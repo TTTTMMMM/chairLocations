@@ -149,7 +149,7 @@ Writing Costs: 40.2MB = 40200000/100000 * 18 cents ~ $72.36 once
 Reading Costs: 40.2MB = 40200000/100000 * 6 cents * 5 reads ~ $120.60
 ```
 
-Costs appear to be dominated by reads/writes, so estimate $72 + $120 = **\$193** per year, since storage costs are negligible.
+Costs appear to be dominated by reads/writes, so estimate $72 + $120 = **\$193** per year, since storage and network egress costs are negligible.
 
 This estimate may be high. See [this example](https://firebase.google.com/docs/firestore/billing-example) for better estimate, which includes free monthly quotas factored in.
 
@@ -157,7 +157,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ### Screenshot of Usage on 4/15/2020
 
-[ChairLoc Usage as Shown on GCP](https://console.cloud.google.com/appengine/quotadetails?project=chairlocations&folder&organizationId), with explanation of pricing explained in [this video](https://www.youtube.com/watch?v=6NegFl9p_sE&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=3_). Three rows of importance are Cloud Firestore Read Operations, Cloud Firestore Entity Writes, and Cloud Firestor Entity Deletes.
+[ChairLoc Usage as Shown on GCP](https://console.cloud.google.com/appengine/quotadetails?project=chairlocations&folder&organizationId), with explanation of pricing explained in [this video](https://www.youtube.com/watch?v=6NegFl9p_sE&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=3_). Three rows of importance are Cloud Firestore Read Operations, Cloud Firestore Entity Writes, and Cloud Firestore Entity Deletes.
 
 ![](/markdownImages/oneDayUsage.png)
 
