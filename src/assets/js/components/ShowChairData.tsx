@@ -14,8 +14,6 @@ import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
 
-import { AssetLabelQueryType } from "../misc/chairLocTypes";
-
 // import cellRendererKeep from "../renderers/cellRendererKeep";
 // import cellRendererMandatory from "../renderers/cellRendererMandatory";
 
@@ -31,7 +29,7 @@ class ShowChairData extends React.PureComponent<
       idToken: any;
       loggedInToFirebase: boolean;
       myPanel: any;
-      query: AssetLabelQueryType;
+      asset: string;
    },
    MyState
 > {
@@ -53,7 +51,7 @@ class ShowChairData extends React.PureComponent<
       idToken: any;
       loggedInToFirebase: boolean;
       myPanel: any;
-      query: any;
+      asset: string;
    }) {
       super(props);
       this.assetLabelSpecific = "";
@@ -83,14 +81,14 @@ class ShowChairData extends React.PureComponent<
    }
 
    subscribeToAssetUploadedToday() {
-      if (this.props.query.ASSETLABEL!.length > 0) {
+      if (this.props.asset!.length > 0) {
          const beginningOfDay = new Date(
             new Date().toISOString().substr(0, 10)
          ).toISOString();
          this.assetLabelSpecific = firebase
             .firestore()
             .collection("chairLocs")
-            .where("ASSETLABEL", "==", this.props.query.ASSETLABEL)
+            .where("ASSETLABEL", "==", this.props.asset)
             .where("UPLOADFBTIME", ">", beginningOfDay);
          this.unsubscribe = this.assetLabelSpecific.onSnapshot(
             this.onCollectionUpdate
@@ -232,23 +230,6 @@ class ShowChairData extends React.PureComponent<
             },
          };
          this.dataAdapter = new jqx.dataAdapter(source);
-         // --
-         // const getEditorDataAdapter = (dataField: any): any => {
-         //    const editorSource = {
-         //       dataFields: [
-         //          { name: "chairHeader", type: "string" },
-         //          { name: "keep", type: "bool" },
-         //          { name: "mandatory", type: "bool" },
-         //          { name: "key", type: "string" },
-         //       ],
-         //       dataType: "array",
-         //       localData: source.localData(),
-         //    };
-         //    const dataAdapter = new jqx.dataAdapter(editorSource, {
-         //       uniqueDataFields: [dataField],
-         //    });
-         //    return dataAdapter;
-         // };
          // --
          const columnWidths = [
             ["ASSETLABEL", 80],
@@ -410,9 +391,6 @@ class ShowChairData extends React.PureComponent<
       }
    }
    render() {
-      console.log(
-         `ShowChairData Component render(), ASSETLABEL: ${this.props.query.ASSETLABEL}`
-      );
       if (this.props.loggedInToFirebase && !this.state.subscribed) {
          this.subscribeToAssetUploadedToday();
       }

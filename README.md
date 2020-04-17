@@ -167,10 +167,6 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ---
 
-#### TODO:
-
-1. [Set a listener on the uploaded data using conditional query logic](https://firebase.google.com/docs/firestore/query-data/listen#listen_to_multiple_documents_in_a_collection).
-
 ```
     const beginningOfDay = new Date(
             new Date().toISOString().substr(0, 10)
@@ -184,6 +180,14 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
             this.onCollectionUpdate
         );
 ```
+
+---
+
+#### TODO:
+
+1. Learn how to use Firebase Rules to perform data validation.
+
+2. [If you're using the Web, Android, or iOS SDK, use Firebase Authentication and Cloud Firestore Security Rules to secure your data in Cloud Firestore.](https://firebase.google.com/docs/firestore/quickstart#auth-required)
 
 #### <ins>TODO Physical World</ins>
 
