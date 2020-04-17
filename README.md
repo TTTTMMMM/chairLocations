@@ -36,7 +36,7 @@
 
 ### ExtendedFatChairObject
 
-<span style="font-family: 'Verdana';">The extendedFat's properties consist of all the properties of the fatChairObj + calculated values for the additional headers. The additional header properties or fields, at this time, consist of the file name from which this object or document originates, the approximate time of the upload to Firebase, and a unique identifier of this object or document.
+<span style="font-family: 'Verdana';">The extendedFat's properties consist of all the properties of the fatChairObj + calculated values for the additional headers. The additional header properties or fields, at this time, consist of the file name from which this object or document originates, the approximate time of the upload to Firebase, and a unique identifier of this object or document -- noted in the yellow box below.
 
 `console.dir(extendedFat)`
 
