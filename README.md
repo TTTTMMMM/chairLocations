@@ -26,7 +26,7 @@
 
 ### FatChairObject
 
-<span style="font-family: 'Verdana';">Each row in the original comma separated values (csv) file become fat chair objects (fatChairOBj). The fatChairObj's properties or fields are derived from the values in the original comma separated values (csv) file. In this case, the csv file had ~65 table headers. Each of the table headers becomes a property or field _name_ in the object. The object, because it contains ~65 fields, the values for which many are undefined or meaningless in the original csv file, is known as being "fat." The goal of cleansing is to make this fatChair object "skinny," meaning that irrelevant properties or fields are eliminated from the uploaded "document."
+<span style="font-family: 'Verdana';">Each row in the original comma separated values (csv) file become fat chair objects (fatChairOBj). The fatChairObj's properties or fields are derived from the values in the original csv file. In this case, the csv file had ~65 table headers. Each of the table headers becomes a property or field _name_ in the object. The object, because it contains ~65 fields, the values for which many are undefined or meaningless in the original csv file, is known as being "fat." The goal of cleansing is to make this fatChair object "skinny," meaning that irrelevant properties or fields are eliminated from the uploaded "document."
 
 `console.dir(fatChairObj):`
 
