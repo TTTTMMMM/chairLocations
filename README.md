@@ -26,7 +26,7 @@
 
 ### FatChairObject
 
-<span style="font-family: 'Verdana';">The fatChairObj's properties are the cell values from the original file.
+<span style="font-family: 'Verdana';">The fatChairObj's properties are the cell values from the original file. In this case, the csv file had ~65 table headers. Each of the table headers becomes a property or field in the object.
 
 `console.dir(fatChairObj):`
 
