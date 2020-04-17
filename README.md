@@ -90,6 +90,11 @@
 
 ![](/markdownImages/skinnyObject.png)
 
+```
+         console.log(`extendedExtendedFatArray below:`);
+         console.dir(this.extendedExtendedFatArray);
+```
+
 ![](/markdownImages/tallAndSkinnyArray.png)
 
 <span style="font-family: 'Verdana';">Those are all the columns I'm keeping from the original data. The data has been made skinny, but it is still tall. In other words, there are rows that must be purged, i.e., made "short" - the resulting data will be considered transformed from tallAndSkinny[] to shortAndSkinny[] after row reduction is achieved!
