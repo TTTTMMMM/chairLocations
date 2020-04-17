@@ -155,7 +155,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ---
 
-### Screenshot of Usage on 4/15/2020
+### Snapshot of Usage of ChairLoc Project on 4/15/2020
 
 [ChairLoc Usage as Shown on GCP](https://console.cloud.google.com/appengine/quotadetails?project=chairlocations&folder&organizationId), with explanation of pricing explained in [this video](https://www.youtube.com/watch?v=6NegFl9p_sE&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=3_). Three rows of importance for estimating "operations" usage are _Cloud Firestore Read Operations_, _Cloud Firestore Entity Writes_, and _Cloud Firestore Entity Deletes_. To estimate storage, look at the row _Cloud Store Stored Data_.
 
