@@ -167,7 +167,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ---
 
-### Compound Query for chairLoc listener required the following index on Firebase Console
+For the following Compound Query (which is used to create a listener for a specific chair uploaded today to Firebase):
 
 ```
     const beginningOfDay = new Date(
@@ -182,6 +182,8 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
             this.onCollectionUpdate
         );
 ```
+
+Firebase needed to created the following index:
 
 ![](/markdownImages/indexForQuery.png)
 
