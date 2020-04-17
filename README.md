@@ -97,13 +97,13 @@
 
 ![](/markdownImages/tallAndSkinnyArray.png)
 
-<span style="font-family: 'Verdana';">The data has been made skinny, but it is still tall. In other words, there are rows that must be purged, thus making the array "shorter." The resulting array will be considered transformed from tallAndSkinny[] to shortAndSkinny[] after row reduction is achieved! From looking at the original file, it's plain to see that GPS readings that contain lat/long values of (-360, -360) are either meaningless or in error. Those rows are eliminated before being uploaded to Firebase.
+<span style="font-family: 'Verdana';">The data has been made skinny, but it is still tall. In other words, there are rows that must be purged, thus making the array "shorter." The resulting array will be considered transformed from tallAndSkinny[] to shortAndSkinny[] after row reduction is achieved. From looking at the original file, it's plain to see that GPS readings that contain lat/long values of (-360, -360) are either meaningless or in error. Those rows are eliminated before being uploaded to Firebase.
 
 ---
 
 ### Short and Skinny Array
 
-<span style="font-family: 'Verdana';">The shortAndSkinnyArray[] is the tallAndSkinny[] minus a few rows that are cleansed, such as documents that have LATITUTE = "-360". This reduces the number of documents loaded into Firebase. shortAndSkinny[] is uploaded to Firebase.
+<span style="font-family: 'Verdana';">The shortAndSkinnyArray[] is the tallAndSkinny[] minus a few rows that are cleansed, such as documents that have LATITUTE = "-360". This reduces the number of documents loaded into Firebase. shortAndSkinny[] is uploaded to Firebase. In the example we've been working with, the number of rows (called "documents" in Firebase parlance) has been reduced from 221 to 181.
 
 `console.dir(this.shortAndSkinnyArray);`
 
