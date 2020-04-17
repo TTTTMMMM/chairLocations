@@ -74,7 +74,7 @@
 
 ### Skinny Object & Tall and Skinny Array
 
-<span style="font-family: 'Verdana';">The tallAndSkinnyArray[] is the kept Chair Headers (or parameters or fields) applied to the extendedExtendedFatArray[]; i.e., it "skinnifies" the fat array in that it reduces the number of fields kept for eventual uploading to Firebase. (Notice that no headers have been snipped in each object below, in contrast to the snipping I had to do to every (fat) object logged above.):
+<span style="font-family: 'Verdana';">The "skinny" object contains the reduced set of properties need for our purposes. The reduced set is selectable by the user, as long as pre-determined, mandatory properties are maintained. Each extendedExtended fat chair object is "skinnified." The tallAndSkinnyArray[] is the collection of all the skinny objects, which will be uploaded to Firebase.
 
 ```
     this.extendedExtendedFatArray.forEach((row) => {
