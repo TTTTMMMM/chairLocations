@@ -183,7 +183,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
         );
 ```
 
-![](/markDown/indexForQuery.png)
+![](/markdownImages/indexForQuery.png)
 
 ---
 
