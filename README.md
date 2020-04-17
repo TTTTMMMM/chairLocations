@@ -91,8 +91,8 @@
 ![](/markdownImages/skinnyObject.png)
 
 ```
-         console.log(`extendedExtendedFatArray below:`);
-         console.dir(this.extendedExtendedFatArray);
+         console.log(`tallAndSkinnyArray below:`);
+         console.dir(this.tallAndSkinnyArray);
 ```
 
 ![](/markdownImages/tallAndSkinnyArray.png)
