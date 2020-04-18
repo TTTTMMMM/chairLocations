@@ -193,6 +193,12 @@ BTWs: If you use composite indexes, [this tutorial](https://www.youtube.com/watc
 
 ---
 
+### Example Rules written for Data Validation:
+
+![](/markdownImages/dataValidationRules.png)
+
+---
+
 #### TODO:
 
 1. Learn how to use [Firebase Rules](https://www.youtube.com/watch?v=eW5MdE3ZcAw&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=6) to perform data validation.
