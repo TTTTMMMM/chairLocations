@@ -12,6 +12,14 @@ const {
 const path = require("path");
 
 const { addChairHeaders } = require("./public/lib/js/handlers/addChairHeaders");
+
+// const {
+//    grantCustomClaims,
+// } = require("./public/lib/js/handlers/grantCustomClaims");
+
+const { addUser } = require("./public/lib/js/handlers/addUser");
+const { removeUser } = require("./public/lib/js/handlers/removeUser");
+
 const {
    getKeptChairHeaders,
 } = require("./public/lib/js/handlers/getKeptChairHeaders");
@@ -46,6 +54,18 @@ api.use((req, res, next) => {
 api.get("/users", (req, res) => {
    return res.status(200).json(res.locals.loggedInUser);
 });
+
+api.post("/users", (req, res) => {
+   addUser(req, res, admin);
+});
+
+api.delete("/users", (req, res) => {
+   removeUser(req, res, admin);
+});
+
+// api.post("/customclaims", (req, res) => {
+//    grantCustomClaims(req, res, functions, admin);
+// });
 
 api.post("/chairloc", (req, res) => {
    addChairLoc(req, res, admin);

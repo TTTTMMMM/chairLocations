@@ -201,6 +201,19 @@ I'm fairly certain these rules only apply to operations coming in from the clien
 
 ---
 
+### Better Security for ChairLocs
+
+Looking at the security rules in the section above reveals one big problem:
+
+```
+    allow read: if request.auth.uid != null;  // anybody who has authenticated can read
+    allow write: if request.auth.uid != null; // anybody who has authenticated can write
+```
+
+The idea that anyone who authenticates can read or write to chairLoc collections/documents is too liberal a policy. I want a security policy that restricts reading and writing to a very small group, a group I'll call _superusers_.
+
+---
+
 #### TODO:
 
 1. Learn how to use [Firebase Rules](https://www.youtube.com/watch?v=eW5MdE3ZcAw&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=6) to perform data validation. Also, consider "custom auth claims" mentioned briefly at ~17:40 in the video. [This video](https://www.youtube.com/watch?v=3hj_r_N0qMs) may be just what the doctor ordered.
@@ -210,5 +223,5 @@ I'm fairly certain these rules only apply to operations coming in from the clien
 #### <ins>TODO Physical World</ins>
 
 1. Rototill fence garden & lay weedblock
-2. Chip and Shred branches
+2. Chip and shred branches
 3. Mow lawn
