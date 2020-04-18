@@ -240,7 +240,7 @@ class ShowChairData extends React.PureComponent<
             ["STATE", 100],
             ["UPDATETIME", 170],
             ["UPLOADFBTIME", 110],
-            ["GPS_MPH", 77],
+            ["GPS_MPH", 79],
          ];
          this.columns = [
             {
@@ -396,11 +396,14 @@ class ShowChairData extends React.PureComponent<
    }
 
    private onRowSelect(e: any): void {
-      console.dir(e.args.row);
+      let jsrow = JSON.stringify(e.args.row);
+      let prettyJsrow = jsrow
+         .replace(/,/g, "<br>")
+         .replace(/"/g, "")
+         .replace(/{/g, "{<br>")
+         .replace(/}/g, "<br>}");
       this.props.myPanel.current!.append(
-         `<p style="color:gray; font-size:10px;">${JSON.stringify(
-            e.args.row
-         )} </p>`
+         `<br style="color:#104B34 ; font-size:10px;">${prettyJsrow} </br>`
       );
    }
 }

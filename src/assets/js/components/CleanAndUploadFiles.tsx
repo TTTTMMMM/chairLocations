@@ -81,7 +81,7 @@ class CleanAndUploadFiles extends Component<
    myCallBack = (objectFromPopoverContents: AdditionalPropsType) => {
       if (
          // check if additional properties are valid
-         objectFromPopoverContents.BEACH!.length > 3 &&
+         objectFromPopoverContents.BEACH!.length > 2 &&
          objectFromPopoverContents.RENTALAGENT!.length > 3 &&
          objectFromPopoverContents.STATE!.length > 3
       ) {
