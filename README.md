@@ -207,7 +207,6 @@ BTWs: If you use composite indexes, [this tutorial](https://www.youtube.com/watc
 
 #### <ins>TODO Physical World</ins>
 
-1. Repair rototiller
-2. Rototill fence garden & lay weedblock
-3. Chip and Shred branches
-4. Mow lawn
+1. Rototill fence garden & lay weedblock
+2. Chip and Shred branches
+3. Mow lawn
