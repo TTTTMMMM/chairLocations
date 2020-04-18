@@ -12,7 +12,7 @@ const createFatChairObj = (
       let fatChairObj: any = {};
       dataArray.forEach((x) => {
          fatChairObj[headerMappingArray[i++].newHdr] = escapeHTML(
-            x.trim().substring(0, 64)
+            x.trim().substring(0, 31)
          );
       });
       //   console.dir(fatChairObj);

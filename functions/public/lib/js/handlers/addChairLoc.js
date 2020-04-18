@@ -7,7 +7,7 @@ exports.addChairLoc = async (req, res, admin) => {
    const chairLoc = req.body;
    let newChairLoc = {};
    Object.keys(chairLoc).forEach((x) => {
-      newChairLoc[x] = escapeHTML(chairLoc[x].trim().substring(0, 32));
+      newChairLoc[x] = escapeHTML(chairLoc[x].trim().substring(0, 31));
    });
    try {
       await admin

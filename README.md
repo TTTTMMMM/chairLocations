@@ -195,6 +195,8 @@ BTWs: If you use composite indexes, [this tutorial](https://www.youtube.com/watc
 
 ### Example Rules written for Data Validation:
 
+I'm fairly certain these rules only apply to operations coming in from the client via the firebase software development kit, not for operations originating from functions code (server). I've tried violating the data validation rules, such as setting the ID.size() <=9 and sending in my ID of length 10, and nary a peep was uttered by the Firebase rule engine, and the new data was written to the chairLoc connection.
+
 ![](/markdownImages/dataValidationRules.png)
 
 ---
