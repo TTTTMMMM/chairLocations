@@ -208,7 +208,6 @@ BTWs: If you use composite indexes, [this tutorial](https://www.youtube.com/watc
 #### <ins>TODO Physical World</ins>
 
 1. Repair rototiller
-2. Add Neutra7 to neutralizer tank
-3. Rototill fence garden & lay weedblock
-4. chip and shred branches
-5. mow lawn
+2. Rototill fence garden & lay weedblock
+3. Chip and Shred branches
+4. Mow lawn
