@@ -237,7 +237,6 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
         maintenance: boolean
         }
     }
-
 ```
 
 #### <ins>TODO Physical World</ins>
