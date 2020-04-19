@@ -231,9 +231,9 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
 ```
  Interface UserObj = {
     username: string,
-    role: string, ("admin" | "user")
-    canAccess: {
-        maps: boolean,
+    role: string, ("admin" | "user") // will be used for displaying the right GUI elements
+    canAccess: {                     // will be used on the backend to control access to data
+        chairLoc: boolean,
         maintenance: boolean
         }
     }
@@ -243,4 +243,3 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
 
 1. Rototill fence garden & lay weedblock
 2. Chip and shred branches
-3. Mow lawn
