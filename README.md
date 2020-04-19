@@ -231,12 +231,40 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
 ```
  Interface UserObj = {
     username: string,
-    role: string, ("admin" | "user") // will be used for displaying the right GUI elements
+    role: string, ("admin" | "user") // will be used for displaying the correct GUI elements
     canAccess: {                     // will be used on the backend to control access to data
         chairLoc: boolean,
         maintenance: boolean
         }
     }
+```
+
+```
+enum Roles {admin = "admin", user = "user"};
+  interface AccessObj {
+      chairLocs: boolean;
+      maintenance: boolean;
+  }
+
+
+  interface UserObj {
+   role?: Roles | undefined;
+   accessObj?: AccessObj;
+}
+
+let x: UserObj = {};
+
+let access: AccessObj = {chairLocs: false, maintenance: false};
+
+access.chairLocs = true;
+
+x.accessObj = access;
+
+x.role = Roles.admin;
+x.accessObj!.chairLocs = true;
+x.accessObj!.maintenance = true;
+
+console.log(x);
 ```
 
 #### <ins>TODO Physical World</ins>
