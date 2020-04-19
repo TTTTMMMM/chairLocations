@@ -201,7 +201,7 @@ I'm fairly certain these rules only apply to operations coming in from the clien
 
 ---
 
-### Better Security for ChairLocs
+### Role-based Security for ChairLocs
 
 Looking at the security rules in the section above reveals one big problem:
 
@@ -210,7 +210,9 @@ Looking at the security rules in the section above reveals one big problem:
     allow write: if request.auth.uid != null; // anybody who has authenticated can write
 ```
 
-The idea that anyone who authenticates can read or write to chairLoc collections/documents is too liberal a policy. I want a security policy that restricts reading and writing to a very small group, a group I'll call _superusers_.
+The idea that anyone who authenticates can read or write to chairLoc collections/documents is too liberal a policy. I want a security policy that restricts reading and writing to a very small group, a group I'll call _superusers_. A video, [Controlling Data Access Using Firebase Auth Custom Claims (Firecasts)](https://www.youtube.com/watch?v=3hj_r_N0qMs), explains how to do just that. It is possible to assign a "custom claim" or a "role" to the user through his Firebase token. This is implemted through a _firebase.admin_ call that can only be invoked from a Firebase function, not the browser. Once a role has been established for each user, Firebase rules can easily access those roles to perform data access controls. Now, the rules above can be rewritten to make a much more secure environment for the chairLocations project.
+
+![](/markdownImages/roleBasedRules.png)
 
 ---
 
@@ -218,7 +220,7 @@ The idea that anyone who authenticates can read or write to chairLoc collections
 
 1. Learn how to use [Firebase Rules](https://www.youtube.com/watch?v=eW5MdE3ZcAw&list=PLl-K7zZEsYLluG5MCVEzXAQ7ACZBCuZgZ&index=6) to perform data validation. Also, consider "custom auth claims" mentioned briefly at ~17:40 in the video. [This video](https://www.youtube.com/watch?v=3hj_r_N0qMs) may be just what the doctor ordered.
 
-2. [If you're using the Web, Android, or iOS SDK, use Firebase Authentication and Cloud Firestore Security Rules to secure your data in Cloud Firestore.](https://firebase.google.com/docs/firestore/quickstart#auth-required)
+2) [If you're using the Web, Android, or iOS SDK, use Firebase Authentication and Cloud Firestore Security Rules to secure your data in Cloud Firestore.](https://firebase.google.com/docs/firestore/quickstart#auth-required)
 
 #### <ins>TODO Physical World</ins>
 
