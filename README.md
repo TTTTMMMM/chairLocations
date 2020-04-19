@@ -226,7 +226,7 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
 
 #### TODO:
 
-1. Build the user admin feature.
+1. Build the user admin feature that implements setCustomUserClaims.
 
 #### <ins>TODO Physical World</ins>
 
