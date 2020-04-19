@@ -8,19 +8,21 @@ const {
 // -------------------------------------------------------
 // simply add username to validUserCollection (with a role = user)
 // -------------------------------------------------------
-exports.addUser = async (req, res, admin) => {
+exports.addUser = async (req, res, admin, functions) => {
    if (res.locals.loggedInUser.role === "admin") {
       const theUser = req.body;
       let uName = escapeHTML(
-         theUser.username
-            .trim()
-            .substring(0, 49)
-            .toLowerCase()
+         theUser.username.trim().substring(0, 49).toLowerCase()
       );
       const validUsernameRegex = /^[a-z0-9._-]{3,50}$/gi;
       let valid_uName = uName.match(validUsernameRegex);
       if (valid_uName != null) {
-         const retVal = await addUsernameToValidUsers(res, admin, uName);
+         const retVal = await addUsernameToValidUsers(
+            res,
+            admin,
+            uName,
+            functions
+         );
          switch (retVal.errCode) {
             case 1:
                console.log(`${retVal.message}`);

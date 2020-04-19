@@ -56,7 +56,7 @@ api.get("/users", (req, res) => {
 });
 
 api.post("/users", (req, res) => {
-   addUser(req, res, admin);
+   addUser(req, res, admin, functions);
 });
 
 api.delete("/users", (req, res) => {

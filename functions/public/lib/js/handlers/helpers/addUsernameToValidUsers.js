@@ -4,7 +4,7 @@
 // send an email when a document is written to the 'mail' collection
 // ----------------------------------------------------------------
 const { composeWelcomeEmailMsg } = require("./composeWelcomeEmailMsg");
-exports.addUsernameToValidUsers = async (res, admin, uName) => {
+exports.addUsernameToValidUsers = async (res, admin, uName, functions) => {
    const role = { role: "user" };
    const aUser = await admin
       .firestore()
