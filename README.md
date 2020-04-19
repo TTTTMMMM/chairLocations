@@ -228,6 +228,18 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
 
 1. Build the user admin feature that implements setCustomUserClaims.
 
+```
+ Interface UserObj = {
+    username: string,
+    role: string, ("admin" | "user")
+    canAccess: {
+        maps: boolean,
+        maintenance: boolean
+        }
+    }
+
+```
+
 #### <ins>TODO Physical World</ins>
 
 1. Rototill fence garden & lay weedblock
