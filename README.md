@@ -239,6 +239,8 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
     }
 ```
 
+[Typescript Playground](https://www.typescriptlang.org/play)
+
 ```
 enum Roles {admin = "admin", user = "user"};
   interface AccessObj {
