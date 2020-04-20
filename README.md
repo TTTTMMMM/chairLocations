@@ -263,7 +263,7 @@ Role-to-Privilege Table
 ```
  Interface UserObj = {
     username: string,
-    role: string,            // role === "admin" allows configuration from the GUI
+    role: string,            // role === "admin" can configure the app from the GUI
     canAccess: {             // will be used on the backend to control access to data
         chairLoc: boolean,
         maintenance: boolean
