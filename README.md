@@ -214,7 +214,7 @@ The idea that anyone who authenticates can read or write to chairLoc collections
 
 ![](/markdownImages/roleBasedRules.png)
 
-The api call (which must be called from a Firebase function) that makes it possible to set custom claims is:
+The api calls (which must be called from a Firebase function) that makes it possible to set custom claims is:
 
 ```
 user = await admin.auth().getUserByEmail(email);  // gets the firebase user object from an email address
