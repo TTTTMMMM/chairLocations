@@ -22,6 +22,7 @@ import ShowChairData from "./ShowChairData";
 
 import PopoverContents from "./PopoverContents";
 import { AdditionalPropsType } from "../misc/chairLocTypes";
+import { Roles } from "../misc/chairLocTypes";
 
 class CleanAndUploadFiles extends Component<
    {
@@ -29,6 +30,7 @@ class CleanAndUploadFiles extends Component<
       auth2: any;
       idToken: any;
       loggedInToFirebase: boolean;
+      userObject: any;
    },
    {
       value: string;
@@ -57,6 +59,7 @@ class CleanAndUploadFiles extends Component<
       auth2: any;
       idToken: any;
       loggedInToFirebase: boolean;
+      userObject: any;
    }) {
       super(props);
 
@@ -267,68 +270,74 @@ class CleanAndUploadFiles extends Component<
    }
 
    private fileInputHandler(event: any) {
-      this.setState({ value: event.target.value });
-      this.setState({ disabledSetAdditionalPropertiesButton: false });
-      this.setState({ disabledCleanRowsButton: true });
-      this.extendedFatArray.length = 0;
-      this.extendedExtendedFatArray.length = 0;
-      this.tallAndSkinnyArray.length = 0;
-      this.shortAndSkinnyArray.length = 0;
-      let filesListObject = this.fileInput.current.files;
-      // pull headers for all files from the first line of the first file
-      let aFile = filesListObject[0]; // first_file is index [0]
-      let headerMappingArray: Array<HeaderMapping> = [];
-      processTableHeadersFromCSVFile(aFile).then((headers: any) => {
-         // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
-         headers.forEach((x: HeaderMapping) => {
-            headerMappingArray.push(x);
-            const randomTime = Math.floor(Math.random() * 3000);
-            setTimeout(() => {
-               storeHeadersOnFirebase(
-                  this.props.auth2,
-                  this.props.idToken,
-                  x.newHdr,
-                  this.myPanel
-               );
-            }, randomTime);
-         });
+      let uO_role: string = this.props.userObject.role;
+      let isAdmin: number = uO_role.localeCompare(Roles.admin);
+      let isUploader: number = uO_role.localeCompare(Roles.uploader);
+      console.log(`isAdmin: ${isAdmin}    isUploader: ${isUploader}`);
+      if (isAdmin === 0 || isUploader === 0) {
+         this.setState({ value: event.target.value });
+         this.setState({ disabledSetAdditionalPropertiesButton: false });
+         this.setState({ disabledCleanRowsButton: true });
+         this.extendedFatArray.length = 0;
+         this.extendedExtendedFatArray.length = 0;
+         this.tallAndSkinnyArray.length = 0;
+         this.shortAndSkinnyArray.length = 0;
+         let filesListObject = this.fileInput.current.files;
+         // pull headers for all files from the first line of the first file
+         let aFile = filesListObject[0]; // first_file is index [0]
+         let headerMappingArray: Array<HeaderMapping> = [];
+         processTableHeadersFromCSVFile(aFile).then((headers: any) => {
+            // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
+            headers.forEach((x: HeaderMapping) => {
+               headerMappingArray.push(x);
+               const randomTime = Math.floor(Math.random() * 3000);
+               setTimeout(() => {
+                  storeHeadersOnFirebase(
+                     this.props.auth2,
+                     this.props.idToken,
+                     x.newHdr,
+                     this.myPanel
+                  );
+               }, randomTime);
+            });
 
-         Object.keys(filesListObject).forEach((fileIndex: any) => {
-            // get data from all files, including the first file from which the headers were pulled
-            let aFile = filesListObject[fileIndex];
-            readDataRowsOfFile(aFile)
-               .then((dataRows: any) => {
-                  // dataRows[] contains each row of a file
-                  // this.myPanel.current!.append(`<h5>${aFile.name}, `);
-                  // this.myPanel.current!.append(`${dataRows.length} rows, `);
-                  //   let rowNum = 0;
-                  let extendedFat: any = undefined;
-                  let numHeaders = 0;
-                  let rowNum = 0;
-                  dataRows.forEach((aRow: string) => {
-                     createFatChairObject(aRow, headerMappingArray).then(
-                        (fatChairObj: any) => {
-                           extendedFat = addValuesForAdditionalHeaders(
-                              fatChairObj,
-                              aFile.name
-                           );
-                           this.extendedFatArray.push(extendedFat);
-                           numHeaders = Object.keys(extendedFat).length;
-                           if (rowNum++ === 0) {
-                              // console.log(`${numHeaders} properties`);
-                              this.myPanel.current!.append(
-                                 `<p style="text-decoration: underline; color:black;font-size:11px;">${aFile.name}, ${dataRows.length} rows, ${numHeaders} properties</p>`
+            Object.keys(filesListObject).forEach((fileIndex: any) => {
+               // get data from all files, including the first file from which the headers were pulled
+               let aFile = filesListObject[fileIndex];
+               readDataRowsOfFile(aFile)
+                  .then((dataRows: any) => {
+                     // dataRows[] contains each row of a file
+                     // this.myPanel.current!.append(`<h5>${aFile.name}, `);
+                     // this.myPanel.current!.append(`${dataRows.length} rows, `);
+                     //   let rowNum = 0;
+                     let extendedFat: any = undefined;
+                     let numHeaders = 0;
+                     let rowNum = 0;
+                     dataRows.forEach((aRow: string) => {
+                        createFatChairObject(aRow, headerMappingArray).then(
+                           (fatChairObj: any) => {
+                              extendedFat = addValuesForAdditionalHeaders(
+                                 fatChairObj,
+                                 aFile.name
                               );
+                              this.extendedFatArray.push(extendedFat);
+                              numHeaders = Object.keys(extendedFat).length;
+                              if (rowNum++ === 0) {
+                                 // console.log(`${numHeaders} properties`);
+                                 this.myPanel.current!.append(
+                                    `<p style="text-decoration: underline; color:black;font-size:11px;">${aFile.name}, ${dataRows.length} rows, ${numHeaders} properties</p>`
+                                 );
+                              }
                            }
-                        }
-                     );
+                        );
+                     });
+                  })
+                  .catch((err: any) => {
+                     console.error(`C0002: ${err}`);
                   });
-               })
-               .catch((err: any) => {
-                  console.error(`C0002: ${err}`);
-               });
+            });
          });
-      });
+      }
    }
 
    private clearConsoleButtonClicked() {

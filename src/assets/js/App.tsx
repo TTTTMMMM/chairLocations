@@ -121,6 +121,7 @@ class App extends Component<
                loggedInWithGoogle={this.state.isSignedIn}
                googleToken={this.state.googleToken}
                emailAddress={this.emailAddress}
+               userObject={this.state.userObjFmServer}
             ></BodyComponent>
          </div>
       );

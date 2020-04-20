@@ -25,6 +25,7 @@ class BodyComponent extends React.PureComponent<
       loggedInWithGoogle: boolean;
       googleToken: any;
       emailAddress: any;
+      userObject: any;
    },
    MyState
 > {
@@ -41,6 +42,7 @@ class BodyComponent extends React.PureComponent<
       loggedInWithGoogle: boolean;
       googleToken: any;
       emailAddress: any;
+      userObject: any;
    }) {
       super(props);
       this.numUpdates = 0;
@@ -111,6 +113,7 @@ class BodyComponent extends React.PureComponent<
                auth2={this.props.auth2}
                idToken={this.props.googleToken}
                loggedInToFirebase={this.state.isLoggedInToFirebase!}
+               userObject={this.props.userObject}
             ></CleanAndUploadFiles>
          );
       } else {
