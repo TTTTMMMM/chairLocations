@@ -250,7 +250,7 @@ interface AccessObj {
 
 
 interface UserObj {
-   role?: Roles | undefined;
+   role?: Roles;
    access?: AccessObj;
 }
 
