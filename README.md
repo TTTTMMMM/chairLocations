@@ -250,14 +250,14 @@ interface AccessObj {
 
 interface UserObj {
    role?: Roles;
-   access?: AccessObj;
+   canAccess?: AccessObj;
 }
 
-let userObj: UserObj = {role: Roles.user, access: {chairLocs: false, maintenance: false}};
+let userObj: UserObj = {role: Roles.user, canAccess: {chairLocs: false, maintenance: false}};
 
-userObj.role = Roles.admin;
-userObj.access!.chairLocs = true;
-userObj.access!.maintenance = true;
+userObj.role = Roles.user;
+userObj.canAccess!.chairLocs = false;
+userObj.canAccess!.maintenance = true;
 
 console.log(userObj);
 ```
