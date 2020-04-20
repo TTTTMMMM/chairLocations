@@ -293,14 +293,7 @@ export interface UserObj {
    canAccess: AccessObj;
 }
 
-let userObj: UserObj = {username: "", role: Roles.user, canAccess: {chairLocs: false, maintenance: false}};
 
-userObj.username = "juju"
-userObj.role = Roles.user;
-userObj.canAccess!.chairLocs = false;
-userObj.canAccess!.maintenance = true;
-
-console.log(userObj);
 ```
 
 #### <ins>TODO Physical World</ins>
