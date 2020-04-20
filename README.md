@@ -217,12 +217,12 @@ The idea that anyone who authenticates can read or write to chairLoc collections
 The api calls (which must be called from a Firebase function) that makes it possible to set custom claims is:
 
 ```
-user = await admin.auth().getUserByEmail(email);  // gets the firebase user object from an email address
+user = await admin.auth().getUserByEmail(email);  // gets the firebase token from an email address
 admin.auth().setCustomUserClaims(user.uid, {canAccess: { chairLocs: true, maintenance: true },});
 
 ```
 
-I implemented the firebase admin calls above and returned the Firebase user object after customClaims have been set.
+I implemented the firebase admin calls above and returned the Firebase user object (token) after customClaims have been set.
 
 ```
       retMsg = `Successfully set accesses for ${email}, ${JSON.stringify(user)}.`;
@@ -241,9 +241,17 @@ providerData:[{uid: "107324-------------16", displayName: "TT MM", email: "junqu
 
 ```
 
-What I've seen is that the user has to have logged in before a Firebase user object exists. So, I'll need to set the customClaims on the Firebase token user object upon login, not at time of user addition.
+What I've seen is that the user has to have logged in before a Firebase user object exists. So, I'll need to grant the customClaims on the Firebase token upon login, not when the user has been added.
 
 ![](/markdownImages/validUserDocument.png)
+
+Role-to-Privilege Table
+
+| Role        | ChairLocs Read | ChairLocs Write | Maintenance Documents |
+| ----------- | -------------- | --------------- | --------------------- |
+| Uploader    | true           | true            | true                  |
+| Lurker      | true           | false           | false                 |
+| Maintenance | false          | false           | true                  |
 
 ---
 
