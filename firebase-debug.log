@@ -1,0 +1,60 @@
+[debug] [2020-04-20T17:04:43.241Z] ----------------------------------------------------------------------
+[debug] [2020-04-20T17:04:43.255Z] Command:       /Users/tm/.nvm/versions/node/v10.16.3/bin/node /Users/tm/.nvm/versions/node/v10.16.3/bin/firebase deploy
+[debug] [2020-04-20T17:04:43.256Z] CLI Version:   8.0.0
+[debug] [2020-04-20T17:04:43.256Z] Platform:      darwin
+[debug] [2020-04-20T17:04:43.256Z] Node Version:  v10.16.3
+[debug] [2020-04-20T17:04:43.306Z] Time:          Mon Apr 20 2020 13:04:43 GMT-0400 (Eastern Daylight Time)
+[debug] [2020-04-20T17:04:43.306Z] ----------------------------------------------------------------------
+[debug] [2020-04-20T17:04:43.306Z] 
+[debug] [2020-04-20T17:04:43.394Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-20T17:04:43.395Z] > authorizing via signed-in user
+[debug] [2020-04-20T17:04:43.395Z] [iam] checking project chairlocations for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-04-20T17:04:43.399Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/chairlocations:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-04-20T17:04:44.803Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 20 Apr 2020 17:04:44 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=164","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-20T17:04:44.806Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/chairlocations  
+ 
+[debug] [2020-04-20T17:04:45.099Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 20 Apr 2020 17:04:45 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'chairlocations'...
+[info] 
+[info] i  deploying functions, hosting
+[debug] [2020-04-20T17:05:22.992Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "babel-eslint .",
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "10"
+  },
+  "dependencies": {
+    "consolidate": "^0.15.1",
+    "escape-html": "^1.0.3",
+    "express": "^4.17.1",
+    "firebase": "^7.13.1",
+    "firebase-admin": "^8.10.0",
+    "firebase-functions": "^3.6.0",
+    "handlebars": "^4.7.4",
+    "log-timestamp": "^0.3.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "firebase-functions-test": "^0.1.6",
+    "firebase-tools": "^8.0.0",
+    "webpack": "^4.42.1"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[debug] [2020-04-20T17:05:22.994Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/chairlocations/services/cloudfunctions.googleapis.com  
+ 
+[debug] [2020-04-20T17:05:22.995Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/chairlocations/services/runtimeconfig.googleapis.com  
+ 
