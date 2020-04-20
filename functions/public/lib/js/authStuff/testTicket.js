@@ -8,14 +8,20 @@ const firebase = require("firebase");
 
 const { signInToFirebase } = require("./signInToFirebase");
 
-exports.testTicket = async (ticket, requestToken) => {
+exports.testTicket = async (ticket, requestToken, admin) => {
    const payload = ticket.getPayload();
    const userid = payload["sub"];
    const issuer = payload["iss"];
    const email = payload["email"];
    const audience = payload["aud"];
    const expiration = payload["exp"];
-   let retRes = { errCode: 0, collectionName: "", emailAddress: "", role: "" };
+   let retRes = {
+      errCode: 0,
+      collectionName: "",
+      emailAddress: "",
+      role: "",
+      accObj: {},
+   };
 
    console.log(`${email}`);
    if (audience.localeCompare(approvedAudience) !== 0) {
@@ -50,13 +56,25 @@ exports.testTicket = async (ticket, requestToken) => {
       }
       try {
          const w1w1 = await firebase.auth().signInWithCredential(fbCred);
-         retRes.errCode = 7;
          retRes.collectionName = `${email.split("@")[0]}`;
          retRes.emailAddress = email;
          retRes.role = authUser.data().role;
-         return retRes;
+         retRes.accObj = authUser.data().canAccess;
       } catch (err) {
          retRes.errCode = 5;
+         return retRes;
+      }
+      // copy user's access permissions from validUserCollection to firebase.token.customClaims
+      try {
+         let accObj = authUser.data().canAccess;
+         user = await admin.auth().getUserByEmail(email);
+         admin.auth().setCustomUserClaims(user.uid, {
+            canAccess: accObj,
+         });
+         retRes.errCode = 8;
+         return retRes;
+      } catch (err) {
+         retRes.errCode = 7;
          return retRes;
       }
    } else {

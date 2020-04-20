@@ -218,7 +218,7 @@ The api call (which must be called from a Firebase function) that makes it possi
 
 ```
 user = await admin.auth().getUserByEmail(email);  // gets the firebase user object from an email address
-admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the custom claim
+admin.auth().setCustomUserClaims(user.uid, {canAccess: { chairLocs: true, maintenance: true },});
 
 ```
 
@@ -241,7 +241,7 @@ providerData:[{uid: "107324-------------16", displayName: "TT MM", email: "junqu
 
 ```
 
-What I've seen is that the user has to have logged in before a Firebase user object exists. So, I'll need to set the access privileges upon login, not at time of user addition.
+What I've seen is that the user has to have logged in before a Firebase user object exists. So, I'll need to set the customClaims on the Firebase token user object upon login, not at time of user addition.
 
 ![](/markdownImages/validUserDocument.png)
 

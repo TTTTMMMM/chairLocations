@@ -7,7 +7,7 @@ const { testTicket } = require("./testTicket");
 
 var util = require("util");
 
-exports.verifyGoogleToken = (req, res, next) => {
+exports.verifyGoogleToken = (req, res, admin, next) => {
    const client = new OAuth2Client(clientID);
    const requestToken = req.headers.googlecredential;
    const errCode = `https://oauth2.googleapis.com/tokeninfo?id_token=${requestToken}`;
@@ -20,7 +20,7 @@ exports.verifyGoogleToken = (req, res, next) => {
       // eslint-disable-next-line promise/always-return
       .then((ticket) => {
          // eslint-disable-next-line promise/no-nesting
-         testTicket(ticket, requestToken)
+         testTicket(ticket, requestToken, admin)
             .then((result) => {
                switch (result.errCode) {
                   case 1:
@@ -53,11 +53,18 @@ exports.verifyGoogleToken = (req, res, next) => {
                      res.status(500).render("500", { firstLine, errCode });
                      console.log(`<${firstLine}><${errCode}>`);
                      break;
+                  case 7:
+                     firstLine =
+                        "0092: Problem trying to set customClaims on Firebase token";
+                     res.status(500).render("500", { firstLine, errCode });
+                     console.log(`<${firstLine}><${errCode}>`);
+                     break;
                   default:
                      res.locals.loggedInUser = {
                         name: result.collectionName,
                         emailAddress: result.emailAddress,
                         role: result.role,
+                        canAccess: result.accObj,
                         date: new Date(),
                      };
                      // eslint-disable-next-line callback-return

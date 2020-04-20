@@ -14,10 +14,6 @@
          {
             "source": "/users{,/**}",
             "function": "api"
-         },
-         {
-            "source": "/customclaims{,/**}",
-            "function": "api"
          }
       ]
    }

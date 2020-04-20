@@ -13,9 +13,9 @@ const path = require("path");
 
 const { addChairHeaders } = require("./public/lib/js/handlers/addChairHeaders");
 
-const {
-   grantCustomClaims,
-} = require("./public/lib/js/handlers/grantCustomClaims");
+// const {
+//    grantCustomClaims,
+// } = require("./public/lib/js/handlers/grantCustomClaims");
 
 const { addUser } = require("./public/lib/js/handlers/addUser");
 const { removeUser } = require("./public/lib/js/handlers/removeUser");
@@ -48,7 +48,7 @@ require("log-timestamp")(() => {
 });
 
 api.use((req, res, next) => {
-   verifyGoogleToken(req, res, next);
+   verifyGoogleToken(req, res, admin, next);
 });
 
 api.get("/users", (req, res) => {
@@ -63,9 +63,9 @@ api.delete("/users", (req, res) => {
    removeUser(req, res, admin);
 });
 
-api.post("/customclaims", (req, res) => {
-   grantCustomClaims(req, res, functions, admin);
-});
+// api.post("/customclaims", (req, res) => {
+//    grantCustomClaims(req, res, functions, admin);
+// });
 
 api.post("/chairloc", (req, res) => {
    addChairLoc(req, res, admin);
