@@ -17,7 +17,6 @@ exports.addUser = async (req, res, admin, functions) => {
       const validUsernameRegex = /^[a-z0-9._-]{3,50}$/gi;
       let valid_uName = uName.match(validUsernameRegex);
       let canAccessObj = theUser.canAccess;
-      console.log(`canAccessObj: [${JSON.stringify(canAccessObj)}]`);
       if (typeof canAccessObj === "undefined") {
          valid_uName = null;
       }
@@ -64,9 +63,6 @@ exports.addUser = async (req, res, admin, functions) => {
          firstLine = `0894: Invalid username ${theUser.username} or access properties [${canAccessObj}]`;
          errCode = 0894;
          return res.status(400).render("400", { firstLine, errCode });
-         // return res.status(400).json({
-         //    message: `Invalid username ${theUser.username} or access properties [${canAccessObj}]`,
-         // });
       }
    } else {
       return res.status(401).json({

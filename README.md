@@ -222,7 +222,7 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
 
 ```
 
----
+Okay -- the user has to have logged in first! Not sure this is going to work.
 
 #### TODO:
 

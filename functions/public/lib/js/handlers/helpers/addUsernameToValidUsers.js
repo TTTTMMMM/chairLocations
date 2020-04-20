@@ -12,13 +12,7 @@ exports.addUsernameToValidUsers = async (
    canaccess
 ) => {
    const uO = { role: "user", canAccess: canaccess };
-   console.log(`uO [${JSON.stringify(uO)}]`);
-   const aUser = await admin
-      .firestore()
-      .collection("validUserCollection")
-      .doc(uName)
-      .get();
-   // if (!aUser.exists) {
+   console.log(`uO: ${JSON.stringify(uO)}`);
    try {
       await admin
          .firestore()
@@ -50,12 +44,4 @@ exports.addUsernameToValidUsers = async (
          message: msg,
       };
    }
-   // } else {
-   //    const msg = `${uName} already exists`;
-   //    console.log(msg);
-   //    return {
-   //       errCode: 1,
-   //       message: msg,
-   //    };
-   // }
 };
