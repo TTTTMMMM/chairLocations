@@ -249,9 +249,9 @@ Role-to-Privilege Table
 
 | Role        | ChairLocs Read | ChairLocs Write | Maintenance Documents |
 | ----------- | -------------- | --------------- | --------------------- |
-| Uploader    | true           | true            | true                  |
-| Lurker      | true           | false           | false                 |
-| Maintenance | false          | false           | true                  |
+| uploader    | true           | true            | true                  |
+| lurker      | true           | false           | false                 |
+| maintenance | false          | false           | true                  |
 
 ---
 
@@ -275,11 +275,14 @@ Role-to-Privilege Table
 ```
 export enum Roles {
    admin = "admin",
-   user = "user",
+   uploader = "uploader",
+   lurker = "lurker",
+   maintenance = "maintenance",
 }
 
 export interface AccessObj {
-   chairLocs?: boolean;
+   chairLocsRead?: boolean;
+   chairLocsWrite?: boolean;
    maintenance?: boolean;
 }
 

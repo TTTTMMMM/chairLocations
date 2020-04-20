@@ -15,10 +15,13 @@ export interface AssetLabelQueryType {
 
 export enum Roles {
    admin = "admin",
-   user = "user",
+   uploader = "uploader",
+   lurker = "lurker",
+   maintenance = "maintenance",
 }
 export interface AccessObj {
-   chairLocs?: boolean;
+   chairLocsRead?: boolean;
+   chairLocsWrite?: boolean;
    maintenance?: boolean;
 }
 
