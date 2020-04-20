@@ -247,12 +247,12 @@ What I've seen is that the user has to have logged in before a Firebase user obj
 
 Role-to-Privilege Table
 
-| Role        | ChairLocs Read | ChairLocs Write | Maintenance Documents |
-| ----------- | -------------- | --------------- | --------------------- |
-| admin       | true           | true            | true                  |
-| uploader    | true           | true            | true                  |
-| lurker      | true           | false           | false                 |
-| maintenance | false          | false           | true                  |
+| Role        | ChairLocs Read | ChairLocs Write | Maintenance Documents | Configuration Privs |
+| ----------- | -------------- | --------------- | --------------------- | ------------------- |
+| admin       | true           | true            | true                  | true                |
+| uploader    | true           | true            | true                  | false               |
+| lurker      | true           | false           | false                 | false               |
+| maintenance | false          | false           | true                  | false               |
 
 ---
 

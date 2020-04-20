@@ -5,9 +5,9 @@ const {
    addUsernameToValidUsers,
 } = require("./helpers/addUsernameToValidUsers");
 
-// -------------------------------------------------------
-// simply add username to validUserCollection (with a role = user)
-// -------------------------------------------------------
+// ----------------------------------------------------------------
+// add username, role, and access privileges to validUserCollection
+// ----------------------------------------------------------------
 exports.addUser = async (req, res, admin, functions) => {
    if (res.locals.loggedInUser.role === "admin") {
       const theUser = req.body;
@@ -20,13 +20,19 @@ exports.addUser = async (req, res, admin, functions) => {
       if (typeof canAccessObj === "undefined") {
          valid_uName = null;
       }
+      let theRole = theUser.role;
+      if (theRole.toLowerCase().localeCompare("admin") === 0) {
+         theRole = "maintenance";
+         canAccessObj = { canAccess: { maintenance: true } };
+      }
       if (valid_uName != null) {
          const retVal = await addUsernameToValidUsers(
             res,
             admin,
             functions,
             uName,
-            canAccessObj
+            canAccessObj,
+            theRole
          );
          switch (retVal.errCode) {
             case 1:

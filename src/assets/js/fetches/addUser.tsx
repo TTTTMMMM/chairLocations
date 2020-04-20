@@ -5,11 +5,11 @@ import * as clt from "../misc/chairLocTypes";
 const addUser = (auth2: any, id_token: any, theUser: string) => {
    let userObj: clt.UserObj = {
       username: theUser,
-      role: clt.Roles.uploader,
+      role: clt.Roles.lurker,
       canAccess: {
          chairLocsRead: true,
-         chairLocsWrite: true,
-         maintenance: true,
+         chairLocsWrite: false,
+         maintenance: false,
       },
    };
    let myHeaders = new Headers();
