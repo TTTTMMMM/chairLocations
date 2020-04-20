@@ -203,6 +203,8 @@ I'm fairly certain these rules only apply to operations coming in from the clien
 
 ### Role-based Security for ChairLocs
 
+**Big Caveat right up front:** Firebase rules only applies to operations originating from the firebase SDK, not operations originating from functions (API handlers on the server.)! You have to enforce access control at the server if you want any control in the API.
+
 Looking at the security rules in the section above reveals one big problem:
 
 ```
