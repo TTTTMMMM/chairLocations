@@ -72,7 +72,7 @@ exports.addUser = async (req, res, admin, functions) => {
       }
    } else {
       return res.status(401).json({
-         message: `Not authorized: ${res.locals.loggedInUser.emailAddress}`,
+         message: `Not authorized: ${res.locals.loggedInUser.emailAddress} with role ${res.locals.loggedInUser.role}.`,
       });
    }
 };

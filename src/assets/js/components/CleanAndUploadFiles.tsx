@@ -273,9 +273,11 @@ class CleanAndUploadFiles extends Component<
       let uO_role: string = this.props.userObject.role;
       let isAdmin: number = uO_role.localeCompare(Roles.admin);
       let isUploader: number = uO_role.localeCompare(Roles.uploader);
-      console.log(`isAdmin: ${isAdmin}    isUploader: ${isUploader}`);
       if (isAdmin === 0 || isUploader === 0) {
          this.setState({ value: event.target.value });
+         let fileChooserLabel = document.querySelector(
+            "body > div:nth-of-type(1) > div > div > div > section:nth-of-type(1) > fieldset > div:nth-of-type(1) > label"
+         ) as HTMLElement;
          this.setState({ disabledSetAdditionalPropertiesButton: false });
          this.setState({ disabledCleanRowsButton: true });
          this.extendedFatArray.length = 0;
@@ -285,6 +287,7 @@ class CleanAndUploadFiles extends Component<
          let filesListObject = this.fileInput.current.files;
          // pull headers for all files from the first line of the first file
          let aFile = filesListObject[0]; // first_file is index [0]
+         fileChooserLabel.innerHTML = aFile.name;
          let headerMappingArray: Array<HeaderMapping> = [];
          processTableHeadersFromCSVFile(aFile).then((headers: any) => {
             // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
@@ -337,6 +340,10 @@ class CleanAndUploadFiles extends Component<
                   });
             });
          });
+      } else {
+         this.myPanel.current!.append(
+            `<p style="color:#738108;font-size:12px;">${this.props.userObject.role.toUpperCase()} does not have upload rights.</p>`
+         );
       }
    }
 
@@ -371,6 +378,10 @@ class CleanAndUploadFiles extends Component<
                );
             }, randomTime);
          });
+         let fileChooserLabel = document.querySelector(
+            "body > div:nth-of-type(1) > div > div > div > section:nth-of-type(1) > fieldset > div:nth-of-type(1) > label"
+         ) as HTMLElement;
+         fileChooserLabel.innerHTML = "Choose File";
       }
    }
 }

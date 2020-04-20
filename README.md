@@ -256,12 +256,6 @@ Role-to-Privilege Table
 | lurker      | true           | false           | false                 | false               |
 | maintenance | false          | false           | true                  | false               |
 
----
-
-#### TODO:
-
-1. Build the user admin feature that implements setCustomUserClaims.
-
 [Typescript Playground](https://www.typescriptlang.org/play)
 
 ```
@@ -286,6 +280,15 @@ export interface UserObj {
 
 
 ```
+
+---
+
+#### TODO:
+
+0. Work on the Add user Role input.
+1. Work Google Maps logic.
+2. Build out the configuration page (user management, beach management, Rental Agents Management)
+3. Maintenance
 
 #### <ins>TODO Physical World</ins>
 

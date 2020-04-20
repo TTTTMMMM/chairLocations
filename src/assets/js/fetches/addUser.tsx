@@ -5,8 +5,8 @@ import * as clt from "../misc/chairLocTypes";
 const addUser = (auth2: any, id_token: any, theUser: string) => {
    let userObj: clt.UserObj = {
       username: theUser,
-      role: clt.Roles.lurker,
-      canAccess: clt.accessPrivsObj.lurker,
+      role: clt.Roles.uploader,
+      canAccess: clt.accessPrivsObj.uploader,
    };
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
