@@ -243,13 +243,13 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
 
 ```
 enum Roles {admin = "admin", user = "user"};
-  interface AccessObj {
-      chairLocs: boolean;
-      maintenance: boolean;
-  }
+interface AccessObj {
+    chairLocs: boolean;
+    maintenance: boolean;
+}
 
 
-  interface UserObj {
+interface UserObj {
    role?: Roles | undefined;
    accessObj?: AccessObj;
 }
