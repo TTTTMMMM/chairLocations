@@ -248,14 +248,12 @@ interface AccessObj {
     maintenance: boolean;
 }
 
-
 interface UserObj {
    role?: Roles;
    access?: AccessObj;
 }
 
 let userObj: UserObj = {role: Roles.user, access: {chairLocs: false, maintenance: false}};
-
 
 userObj.role = Roles.admin;
 userObj.access!.chairLocs = true;
