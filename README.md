@@ -262,17 +262,6 @@ Role-to-Privilege Table
 
 1. Build the user admin feature that implements setCustomUserClaims.
 
-```
- Interface UserObj = {
-    username: string,
-    role: string,            // role === "admin" can configure the app from the GUI
-    canAccess: {             // will be used on the backend to control access to data
-        chairLoc: boolean,
-        maintenance: boolean
-        }
-    }
-```
-
 [Typescript Playground](https://www.typescriptlang.org/play)
 
 ```
