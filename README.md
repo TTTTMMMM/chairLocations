@@ -249,6 +249,7 @@ Role-to-Privilege Table
 
 | Role        | ChairLocs Read | ChairLocs Write | Maintenance Documents |
 | ----------- | -------------- | --------------- | --------------------- |
+| admin       | true           | true            | true                  |
 | uploader    | true           | true            | true                  |
 | lurker      | true           | false           | false                 |
 | maintenance | false          | false           | true                  |
@@ -262,8 +263,8 @@ Role-to-Privilege Table
 ```
  Interface UserObj = {
     username: string,
-    role: string, ("admin" | "user") // will be used for displaying the correct GUI elements
-    canAccess: {                     // will be used on the backend to control access to data
+    role: string,            // role === "admin" allows configuration from the GUI
+    canAccess: {             // will be used on the backend to control access to data
         chairLoc: boolean,
         maintenance: boolean
         }
