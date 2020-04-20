@@ -242,16 +242,20 @@ admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the cust
 [Typescript Playground](https://www.typescriptlang.org/play)
 
 ```
-enum Roles {admin = "admin", user = "user"};
-interface AccessObj {
-    chairLocs: boolean;
-    maintenance: boolean;
+export enum Roles {
+   admin = "admin",
+   user = "user",
 }
 
-interface UserObj {
+export interface AccessObj {
+   chairLocs?: boolean;
+   maintenance?: boolean;
+}
+
+export interface UserObj {
    username: string;
-   role?: Roles;
-   canAccess?: AccessObj;
+   role: Roles;
+   canAccess: AccessObj;
 }
 
 let userObj: UserObj = {username: "", role: Roles.user, canAccess: {chairLocs: false, maintenance: false}};

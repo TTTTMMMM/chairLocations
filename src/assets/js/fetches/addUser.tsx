@@ -1,8 +1,13 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
+import * as clt from "../misc/chairLocTypes";
 
 const addUser = (auth2: any, id_token: any, theUser: string) => {
-   const theUserObj = { username: `${theUser}` };
+   let userObj: clt.UserObj = {
+      username: theUser,
+      role: clt.Roles.user,
+      canAccess: { chairLocs: true, maintenance: false },
+   };
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -11,7 +16,7 @@ const addUser = (auth2: any, id_token: any, theUser: string) => {
    const myInit = {
       method: "POST",
       headers: myHeaders,
-      body: JSON.stringify(theUserObj),
+      body: JSON.stringify(userObj),
    };
    return new Promise((resolve) => {
       fetch(`/users`, myInit).then((res) => {

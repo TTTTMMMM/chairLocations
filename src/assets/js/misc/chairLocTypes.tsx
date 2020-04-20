@@ -13,16 +13,17 @@ export interface AssetLabelQueryType {
    ASSETLABEL?: string | undefined;
 }
 
-enum Roles {
+export enum Roles {
    admin = "admin",
    user = "user",
 }
-interface AccessObj {
-   chairLocs: boolean;
-   maintenance: boolean;
+export interface AccessObj {
+   chairLocs?: boolean;
+   maintenance?: boolean;
 }
 
-interface UserObj {
-   role?: Roles;
-   canAccess?: AccessObj;
+export interface UserObj {
+   username: string;
+   role: Roles;
+   canAccess: AccessObj;
 }
