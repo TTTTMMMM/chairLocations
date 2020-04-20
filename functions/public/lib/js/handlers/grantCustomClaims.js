@@ -12,22 +12,28 @@ exports.grantCustomClaims = async (req, res, functions, admin) => {
    try {
       user = await admin.auth().getUserByEmail(email);
    } catch (err) {
-      const msg = `0302 Errored out while trying to get admin.auth().getUserByEmail(email)`;
+      const msg = `0302 Errored out while trying to get admin.auth().getUserByEmail(${email})`;
       console.log(msg);
       res.status(500).json({
          message: `${msg}`,
       });
    }
-   if (user.customClaims && user.customClaims.superuser === true) {
-      const msg = `0301 ${email} is already a superuser.`;
-      console.log(msg);
-      res.status(200).json({
-         message: `${msg}`,
-      });
-   }
+   // if (user.customClaims && user.customClaims.superuser === true) {
+   //    const msg = `0301 ${email} is already a superuser.`;
+   //    console.log(msg);
+   //    res.status(200).json({
+   //       message: `${msg}`,
+   //    });
+   // }
    try {
-      admin.auth().setCustomUserClaims(user.uid, { superuser: true });
-      retMsg = `Successfully set [${email}], [${user.uid}], to a superuser.`;
+      // admin.auth().setCustomUserClaims(user.uid, { superuser: true });
+      admin.auth().setCustomUserClaims(user.uid, {
+         canAccess: { chairLocs: true, maintenance: true },
+      });
+      // retMsg = `Successfully set [${email}], [${user.uid}], to a superuser.`;
+      retMsg = `Successfully set accesses for ${email}, [${JSON.stringify(
+         user
+      )}].`;
    } catch (err) {
       const msg = `0300 Errored out trying admin.auth().setCustomUserClaims(user.uid, {superuser: true})`;
       console.log(msg);

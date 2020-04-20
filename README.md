@@ -210,7 +210,7 @@ Looking at the security rules in the section above reveals one big problem:
     allow write: if request.auth.uid != null; // anybody who has authenticated can write
 ```
 
-The idea that anyone who authenticates can read or write to chairLoc collections/documents is too liberal a policy. I want a security policy that restricts reading and writing to a very small group, a group I'll call _superusers_. A video, [Controlling Data Access Using Firebase Auth Custom Claims (Firecasts)](https://www.youtube.com/watch?v=3hj_r_N0qMs), explains how to do just that. It is possible to assign a "custom claim" or a "role" to the user through his Firebase token. This is implemented through a _firebase.admin_ call that can only be invoked from a Firebase function, not the browser. Once a role has been established for each user, Firebase rules can easily access those roles, via the _request.auth.token_ object, to perform data access controls. Now, the rules above can be rewritten to make a much more secure environment for the chairLocations project.
+The idea that anyone who authenticates can read or write to chairLoc collections/documents is too liberal a policy. I want a security policy that restricts reading and writing to a very small group, a group whose access permissions I'll set when adding a new user. A video, [Controlling Data Access Using Firebase Auth Custom Claims (Firecasts)](https://www.youtube.com/watch?v=3hj_r_N0qMs), explains how to do just that. It is possible to assign a "custom claim" or a "access privileges" to the user through his Firebase token. This is implemented through a _firebase.admin_ call that can only be invoked from a Firebase function, not the browser. Once a access privileges have been established for each user, Firebase rules can easily access those roles, via the _request.auth.token_ object, to perform data access controls. Now, the rules above can be rewritten to make a much more secure environment for the chairLocations project.
 
 ![](/markdownImages/roleBasedRules.png)
 
@@ -219,6 +219,25 @@ The api call (which must be called from a Firebase function) that makes it possi
 ```
 user = await admin.auth().getUserByEmail(email);  // gets the firebase user object from an email address
 admin.auth().setCustomUserClaims(user.uid, { superuser: true }); // set the custom claim
+
+```
+
+I implemented the firebase admin calls above and returned the Firebase user object after customClaims have been set.
+
+```
+      retMsg = `Successfully set accesses for ${email}, ${JSON.stringify(user)}.`;
+
+{message:"Successfully set accesses for junque135@gmail.com,
+{uid: "8VtvISiDxKThI1PvXgfakprx7At2",
+email: "junque135@gmail.com",
+emailVerified:true,
+displayName: "TT MM",
+photoURL: "https://lh3.googleusercontent.com/a-/AOh14Gjb061cYR_NfyGaMk9IRwCH6CZGRODxdiOl963Blw=s96-c",
+disabled: false,
+metadata: {lastSignInTime: "Mon, 20 Apr 2020 14:26:31 GMT", creationTime: "Mon, 06 Apr 2020 13:54:27 GMT"},
+customClaims: {canAccess: {chairLocs: true, maintenance: false}},
+tokensValidAfterTime: "Mon, 06 Apr 2020 13:54:27 GMT",
+providerData:[{uid: "107324678895739925416", displayName: "TT MM", email: "junque135@gmail.com", photoURL: "https://lh3.googleusercontent.com/a-/AOh14Gjb061cYR_NfyGaMk9IRwCH6CZGRODxdiOl963Blw=s96-c", providerId: "google.com"}."}
 
 ```
 
