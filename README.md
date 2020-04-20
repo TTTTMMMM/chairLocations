@@ -205,7 +205,7 @@ I'm fairly certain these rules only apply to operations coming in from the clien
 
 **Big Caveat right up front:** _Firebase rules_ only apply to operations originating from the firebase SDK, not operations originating from functions (API handlers on the server.)! And by operations, I mean reads (listeners) and writes. You have to write access control logic code yourself as part of the handlers if you want any access control in the API.
 
-Looking at the _Firebase security_ rules in the section above reveals one big problem:
+Looking at the _Firebase security rules_ in the section above reveals one big problem:
 
 ```
     allow read: if request.auth.uid != null;  // anybody who has authenticated can read
