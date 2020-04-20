@@ -30,3 +30,31 @@ export interface UserObj {
    role: Roles;
    canAccess: AccessObj;
 }
+
+let aa: AccessObj = {
+   chairLocsRead: true,
+   chairLocsWrite: true,
+   maintenance: true,
+};
+let al: AccessObj = {
+   chairLocsRead: true,
+   chairLocsWrite: false,
+   maintenance: false,
+};
+let au: AccessObj = {
+   chairLocsRead: true,
+   chairLocsWrite: true,
+   maintenance: true,
+};
+let am: AccessObj = {
+   chairLocsRead: false,
+   chairLocsWrite: false,
+   maintenance: true,
+};
+
+export let accessPrivsObj: any = {
+   admin: aa,
+   lurker: al,
+   uploader: au,
+   maintenance: am,
+};

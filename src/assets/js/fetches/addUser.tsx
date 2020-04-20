@@ -6,11 +6,7 @@ const addUser = (auth2: any, id_token: any, theUser: string) => {
    let userObj: clt.UserObj = {
       username: theUser,
       role: clt.Roles.lurker,
-      canAccess: {
-         chairLocsRead: true,
-         chairLocsWrite: false,
-         maintenance: false,
-      },
+      canAccess: clt.accessPrivsObj.lurker,
    };
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
