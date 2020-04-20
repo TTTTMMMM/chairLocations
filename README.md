@@ -241,7 +241,7 @@ providerData:[{uid: "107324-------------16", displayName: "TT MM", email: "junqu
 
 ```
 
-Okay -- the user has to have logged in first! Not sure this is going to work.
+What I've seen is that the user has to have logged in before a Firebase user object exists. So, I'll need to set the access privileges upon login, not at time of user addition.
 
 #### TODO:
 
