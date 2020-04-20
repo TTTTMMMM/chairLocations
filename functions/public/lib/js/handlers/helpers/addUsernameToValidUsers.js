@@ -13,7 +13,6 @@ exports.addUsernameToValidUsers = async (
    therole
 ) => {
    const uO = { role: therole, canAccess: canaccess };
-   console.log(`uO: ${JSON.stringify(uO)}`);
    try {
       await admin
          .firestore()

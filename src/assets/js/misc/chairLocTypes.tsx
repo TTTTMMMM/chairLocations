@@ -24,7 +24,6 @@ export interface AccessObj {
    chairLocsWrite?: boolean;
    maintenance?: boolean;
 }
-
 export interface UserObj {
    username: string;
    role: Roles;
@@ -36,16 +35,19 @@ let aa: AccessObj = {
    chairLocsWrite: true,
    maintenance: true,
 };
+
 let al: AccessObj = {
    chairLocsRead: true,
    chairLocsWrite: false,
    maintenance: false,
 };
+
 let au: AccessObj = {
    chairLocsRead: true,
    chairLocsWrite: true,
    maintenance: true,
 };
+
 let am: AccessObj = {
    chairLocsRead: false,
    chairLocsWrite: false,
