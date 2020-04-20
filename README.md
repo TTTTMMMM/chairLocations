@@ -241,7 +241,7 @@ providerData:[{uid: "107324-------------16", displayName: "TT MM", email: "junqu
 
 ```
 
-What I've seen is that the user has to have logged in before a Firebase user object exists. So, I'll need to grant the customClaims on the Firebase token upon login, not when the user has been added.
+The user has to have logged in before a Firebase user object exists, therefore granting customClaims must be performed upon login, not when the user has been added.
 
 ![](/markdownImages/validUserDocument.png)
 
