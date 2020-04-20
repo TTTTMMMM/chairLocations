@@ -249,12 +249,14 @@ interface AccessObj {
 }
 
 interface UserObj {
+   username: string;
    role?: Roles;
    canAccess?: AccessObj;
 }
 
-let userObj: UserObj = {role: Roles.user, canAccess: {chairLocs: false, maintenance: false}};
+let userObj: UserObj = {username: "", role: Roles.user, canAccess: {chairLocs: false, maintenance: false}};
 
+userObj.username = "juju"
 userObj.role = Roles.user;
 userObj.canAccess!.chairLocs = false;
 userObj.canAccess!.maintenance = true;

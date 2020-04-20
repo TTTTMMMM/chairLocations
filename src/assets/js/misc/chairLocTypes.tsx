@@ -12,3 +12,17 @@ export interface AdditionalPropsType {
 export interface AssetLabelQueryType {
    ASSETLABEL?: string | undefined;
 }
+
+enum Roles {
+   admin = "admin",
+   user = "user",
+}
+interface AccessObj {
+   chairLocs: boolean;
+   maintenance: boolean;
+}
+
+interface UserObj {
+   role?: Roles;
+   canAccess?: AccessObj;
+}
