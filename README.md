@@ -228,7 +228,7 @@ I implemented the firebase admin calls above and returned the Firebase user obje
       retMsg = `Successfully set accesses for ${email}, ${JSON.stringify(user)}.`;
 
 {message:"Successfully set accesses for junque135@gmail.com,
-{uid: "8VtvISiDxKThI1PvXgfakprx7At2",
+{uid: "8VtvISiDxXXXXXXXXXXakprx7At2",
 email: "junque135@gmail.com",
 emailVerified:true,
 displayName: "TT MM",
@@ -237,7 +237,7 @@ disabled: false,
 metadata: {lastSignInTime: "Mon, 20 Apr 2020 14:26:31 GMT", creationTime: "Mon, 06 Apr 2020 13:54:27 GMT"},
 customClaims: {canAccess: {chairLocs: true, maintenance: false}},
 tokensValidAfterTime: "Mon, 06 Apr 2020 13:54:27 GMT",
-providerData:[{uid: "107324678895739925416", displayName: "TT MM", email: "junque135@gmail.com", photoURL: "https://lh3.googleusercontent.com/a-/AOh14Gjb061cYR_NfyGaMk9IRwCH6CZGRODxdiOl963Blw=s96-c", providerId: "google.com"}."}
+providerData:[{uid: "107324-------------16", displayName: "TT MM", email: "junque135@gmail.com", photoURL: "https://lh3.googleusercontent.com/a-/AOh14Gjb061cYR_NfyGaMk9IRwCH6CZGRODxdiOl963Blw=s96-c", providerId: "google.com"}."}
 
 ```
 
