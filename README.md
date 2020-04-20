@@ -254,18 +254,12 @@ interface UserObj {
    access?: AccessObj;
 }
 
-let userObj: UserObj = {};
-
-let accessObj: AccessObj = {chairLocs: false, maintenance: false};
-
-accessObj.chairLocs = true;
-
-userObj.access = accessObj;
+let userObj: UserObj = {role: Roles.user, access: {chairLocs: false, maintenance: false}};
 
 
-userObj.role = Roles.user;
-userObj.access.chairLocs = false;
-userObj.access.maintenance = true;
+userObj.role = Roles.admin;
+userObj.access!.chairLocs = true;
+userObj.access!.maintenance = true;
 
 console.log(userObj);
 ```
