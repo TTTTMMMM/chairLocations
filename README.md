@@ -251,22 +251,23 @@ interface AccessObj {
 
 interface UserObj {
    role?: Roles | undefined;
-   accessObj?: AccessObj;
+   access?: AccessObj;
 }
 
-let x: UserObj = {};
+let userObj: UserObj = {};
 
-let access: AccessObj = {chairLocs: false, maintenance: false};
+let accessObj: AccessObj = {chairLocs: false, maintenance: false};
 
-access.chairLocs = true;
+accessObj.chairLocs = true;
 
-x.accessObj = access;
+userObj.access = accessObj;
 
-x.role = Roles.admin;
-x.accessObj!.chairLocs = true;
-x.accessObj!.maintenance = true;
 
-console.log(x);
+userObj.role = Roles.user;
+userObj.access.chairLocs = false;
+userObj.access.maintenance = true;
+
+console.log(userObj);
 ```
 
 #### <ins>TODO Physical World</ins>
