@@ -243,6 +243,8 @@ providerData:[{uid: "107324-------------16", displayName: "TT MM", email: "junqu
 
 What I've seen is that the user has to have logged in before a Firebase user object exists. So, I'll need to set the access privileges upon login, not at time of user addition.
 
+---
+
 #### TODO:
 
 1. Build the user admin feature that implements setCustomUserClaims.
