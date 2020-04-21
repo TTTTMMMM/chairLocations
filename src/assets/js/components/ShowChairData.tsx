@@ -362,7 +362,7 @@ class ShowChairData extends React.PureComponent<
          return (
             <JqxDataTable
                ref={this.myChairLocTable}
-               width={800}
+               width={880}
                theme={"fresh"}
                source={this.dataAdapter}
                columns={this.columns}

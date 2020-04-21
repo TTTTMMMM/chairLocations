@@ -38,6 +38,7 @@ class CleanAndUploadFiles extends Component<
       disabledSetAdditionalPropertiesButton: boolean;
       disabledCleanRowsButton: boolean;
       asset: string;
+      fileChooserLabel: string;
    }
 > {
    private myPanel = React.createRef<JqxPanel>();
@@ -52,6 +53,11 @@ class CleanAndUploadFiles extends Component<
    private extendedFatArray: Array<any> = [];
    private extendedExtendedFatArray: Array<any> = [];
    private tallAndSkinnyArray: Array<any> = [];
+   private shortAndSkinnyArray5: Array<any> = [];
+   private shortAndSkinnyArray4: Array<any> = [];
+   private shortAndSkinnyArray3: Array<any> = [];
+   private shortAndSkinnyArray2: Array<any> = [];
+   private shortAndSkinnyArray1: Array<any> = [];
    private shortAndSkinnyArray: Array<any> = [];
 
    constructor(props: {
@@ -78,6 +84,7 @@ class CleanAndUploadFiles extends Component<
          disabledSetAdditionalPropertiesButton: true,
          disabledCleanRowsButton: true,
          asset: "",
+         fileChooserLabel: "Choose File",
       };
    }
 
@@ -152,7 +159,7 @@ class CleanAndUploadFiles extends Component<
                   <legend>Cleanse and Upload Data</legend>
                   <div>
                      <label>
-                        Choose File
+                        {this.state.fileChooserLabel}
                         <input
                            ref={this.fileInput}
                            type="file"
@@ -275,19 +282,25 @@ class CleanAndUploadFiles extends Component<
       let isUploader: number = uO_role.localeCompare(Roles.uploader);
       if (isAdmin === 0 || isUploader === 0) {
          this.setState({ value: event.target.value });
-         let fileChooserLabel = document.querySelector(
-            "body > div:nth-of-type(1) > div > div > div > section:nth-of-type(1) > fieldset > div:nth-of-type(1) > label"
-         ) as HTMLElement;
+         // let fileChooserLabel = document.querySelector(
+         // "body > div:nth-of-type(1) > div > div > div > section:nth-of-type(1) > fieldset > div:nth-of-type(1) > label"
+         // ) as HTMLElement;
          this.setState({ disabledSetAdditionalPropertiesButton: false });
          this.setState({ disabledCleanRowsButton: true });
          this.extendedFatArray.length = 0;
          this.extendedExtendedFatArray.length = 0;
          this.tallAndSkinnyArray.length = 0;
+         this.shortAndSkinnyArray5.length = 0;
+         this.shortAndSkinnyArray4.length = 0;
+         this.shortAndSkinnyArray3.length = 0;
+         this.shortAndSkinnyArray2.length = 0;
+         this.shortAndSkinnyArray1.length = 0;
          this.shortAndSkinnyArray.length = 0;
          let filesListObject = this.fileInput.current.files;
          // pull headers for all files from the first line of the first file
          let aFile = filesListObject[0]; // first_file is index [0]
-         fileChooserLabel.innerHTML = aFile.name;
+         // fileChooserLabel.innerHTML = aFile.name;
+         this.setState({ fileChooserLabel: aFile.name });
          let headerMappingArray: Array<HeaderMapping> = [];
          processTableHeadersFromCSVFile(aFile).then((headers: any) => {
             // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
@@ -356,15 +369,42 @@ class CleanAndUploadFiles extends Component<
          this.setState({ disabledSetAdditionalPropertiesButton: true });
          this.setState({ disabledCleanRowsButton: true });
          this.tallAndSkinnyArray.forEach((x) => {
-            x.LONGITUDE !== "-360" ? this.shortAndSkinnyArray.push(x) : {};
+            x.LATITUDE !== "-360" ? this.shortAndSkinnyArray5.push(x) : {};
+         });
+         this.shortAndSkinnyArray5.forEach((x) => {
+            x.LONGITUDE !== "-360" ? this.shortAndSkinnyArray4.push(x) : {};
+         });
+         this.shortAndSkinnyArray4.forEach((x) => {
+            typeof x.LATITUDE !== "undefined"
+               ? this.shortAndSkinnyArray3.push(x)
+               : {};
+         });
+         this.shortAndSkinnyArray3.forEach((x) => {
+            typeof x.LONGITUDE != "undefined"
+               ? this.shortAndSkinnyArray2.push(x)
+               : {};
+         });
+         this.shortAndSkinnyArray2.forEach((x) => {
+            typeof x.ASSETLABEL != "undefined"
+               ? this.shortAndSkinnyArray1.push(x)
+               : {};
+         });
+         this.shortAndSkinnyArray1.forEach((x) => {
+            typeof x.UPDATETIME != "undefined"
+               ? this.shortAndSkinnyArray.push(x)
+               : {};
          });
          // console.dir(this.shortAndSkinnyArray);
          let numRowsSurvived = this.shortAndSkinnyArray.length;
-         let numParameters = Object.keys(this.shortAndSkinnyArray[0]).length;
-         let asset = this.shortAndSkinnyArray[0].ASSETLABEL;
+         let numParameters = 0;
+         let asset = "";
+         if (typeof this.shortAndSkinnyArray[0] != "undefined") {
+            numParameters = Object.keys(this.shortAndSkinnyArray[0]).length;
+            asset = this.shortAndSkinnyArray[0].ASSETLABEL;
+         }
          this.setState({ asset: asset });
          this.myPanel.current!.append(
-            `<p style="color:#738108;font-size:12px;">For ${asset}, uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
+            `<p style="color:#738108;font-size:12px;">For [${asset}], uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
          );
          let lengthOfTimeIn_mSec = numRowsSurvived * 0.02 * 1000; // 1/.025 = 50 writes/second to the Firestore collection
          this.shortAndSkinnyArray.forEach((x: any) => {
@@ -378,10 +418,7 @@ class CleanAndUploadFiles extends Component<
                );
             }, randomTime);
          });
-         let fileChooserLabel = document.querySelector(
-            "body > div:nth-of-type(1) > div > div > div > section:nth-of-type(1) > fieldset > div:nth-of-type(1) > label"
-         ) as HTMLElement;
-         fileChooserLabel.innerHTML = "Choose File";
+         this.setState({ fileChooserLabel: "Choose File" });
       }
    }
 }

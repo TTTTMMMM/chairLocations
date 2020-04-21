@@ -132,7 +132,7 @@ class PopoverContents extends React.PureComponent<
                   paddingTop: "9px",
                }}
             >
-               Add Deployed Location Information
+               Append Deployed Location Information
             </JqxButton>
          </div>
       );
