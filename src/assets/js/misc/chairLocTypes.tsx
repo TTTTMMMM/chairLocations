@@ -19,6 +19,8 @@ export enum Roles {
    lurker = "lurker",
    maintenance = "maintenance",
 }
+
+export const rolesArray = Object.keys(Roles);
 export interface AccessObj {
    chairLocsRead?: boolean;
    chairLocsWrite?: boolean;
