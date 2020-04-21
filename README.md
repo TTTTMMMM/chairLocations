@@ -34,10 +34,6 @@
 | ------------------------------------ | -------------------------------------------- |
 | ![](/markdownImages/fatChairObj.png) | ![](/markdownImages/extendedFatChairObj.png) |
 
-`console.dir(fatChairObj):`
-
-![](/markdownImages/fatChairObj.png)
-
 ---
 
 ### ExtendedFatChairObject
