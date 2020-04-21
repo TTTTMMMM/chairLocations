@@ -164,14 +164,14 @@ For the following Compound Query (which is used to create a listener for a speci
     const beginningOfDay = new Date(
             new Date().toISOString().substr(0, 10)
         ).toISOString();
-        this.assetLabelSpecific = firebase
-            .firestore()
-            .collection("chairLocs")
-            .where("ASSETLABEL", "==", this.props.query.ASSETLABEL)
-            .where("UPLOADFBTIME", ">", beginningOfDay);
-        this.unsubscribe = this.assetLabelSpecific.onSnapshot(
-            this.onCollectionUpdate
-        );
+    this.assetLabelSpecific = firebase
+        .firestore()
+        .collection("chairLocs")
+        .where("ASSETLABEL", "==", this.props.query.ASSETLABEL)
+        .where("UPLOADFBTIME", ">", beginningOfDay);
+    this.unsubscribe = this.assetLabelSpecific.onSnapshot(
+        this.onCollectionUpdate
+    );
 ```
 
 Firebase needed to create the following "composite index." When the listener above failed the first time I ran it, the developer-friendly error pointed me to a URL where I instructed Firebase to create this "composite index," which is not automatically created by Firebase, unlike a single-field index, which is automatically created by Firebase on every field in a document. (An index is a sorted list of -- usually one field -- fields that makes querying fast.):
