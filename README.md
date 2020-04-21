@@ -30,6 +30,10 @@
 
 <span style="font-family: 'Verdana';">Each row in the original comma separated values (csv) file becomes a "fat chair object" (fatChairOBj). If a csv file contains 200 rows of data, then 200 fatChairObjs will be created. The fatChairObj's properties or fields are derived from the values in the original csv file. In the case we look at below, the csv file had ~65 columns or table headers/properties/fields and 221 rows. Each of the columns becomes a property or field _name_ in the object. The object, because it contains ~65 fields, the values for which many are undefined or meaningless for our purposes in the original csv file, is known as being "fat." The goal of cleansing is to make this fatChair object "skinny," meaning that irrelevant properties or fields are eliminated before we upload the object or "document" to the Firebase cloud.
 
+| `console.dir(fatChairObj)`           | `console.dir(extendedFat)`                   |
+| ------------------------------------ | -------------------------------------------- |
+| ![](/markdownImages/fatChairObj.png) | ![](/markdownImages/extendedFatChairObj.png) |
+
 `console.dir(fatChairObj):`
 
 ![](/markdownImages/fatChairObj.png)
@@ -203,7 +207,7 @@ I'm fairly certain these rules only apply to operations coming in from the clien
 
 ### Role-based Security for ChairLocs
 
-**Big Caveat right up front:** _Firebase rules_ only apply to operations originating from the firebase SDK, not operations originating from functions (API handlers on the server.)! And by operations, I mean reads (listeners) and writes. You have to implement access control logic code yourself as part of the handlers if you want restrictions on functions code.
+**Big Caveat right up front:** _Firebase rules_ only apply to operations originating from the firebase SDK, not operations originating from functions (API handlers on the server.)! And by operations, I mean reads (listeners) and writes. You have to implement access control logic code yourself as part of the handlers if you want restrictions on functions.
 
 Looking at the _Firebase security rules_ in the section above reveals one big problem:
 

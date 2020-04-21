@@ -99,6 +99,7 @@ class AddDropUser extends React.PureComponent<
                   showCloseButton={false}
                   width={"100%"}
                   height={35}
+                  icon={{ height: 0, width: 0, padding: 0 }}
                   autoClose={true}
                   appendContainer={"#container"}
                   opacity={1}
