@@ -64,7 +64,7 @@
 
 ### Extended Fat Chair Object Array
 
-<span style="font-family: 'Verdana';">Therefore, the extendedExtendedFatArray[] is an array of the above, each element corresponding to one row of the original input csv file:
+<span style="font-family: 'Verdana';">Therefore, the extendedExtendedFatArray[] is an array of the extendedExtendedFatChairObjects, each element corresponding to one row of the original input csv file:
 
 ---
 
