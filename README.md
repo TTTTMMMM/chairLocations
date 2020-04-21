@@ -56,9 +56,9 @@
          console.dir(this.extendedExtendedFatArray);
 ```
 
-| `console.dir(eEFO)`           | `console.dir(this.extendedExtendedFatArray);` |
-| ----------------------------- | --------------------------------------------- |
-| ![](/markdownImages/eEFO.png) | ![](/markdownImages/eEFOArray.png)            |
+| `console.dir(eEFO)`           | `console.dir(this.extendedExtendedFatArray)` |
+| ----------------------------- | -------------------------------------------- |
+| ![](/markdownImages/eEFO.png) | ![](/markdownImages/eEFOArray.png)           |
 
 ---
 
@@ -84,14 +84,9 @@
     });
 ```
 
-![](/markdownImages/skinnyObject.png)
-
-```
-         console.log(`tallAndSkinnyArray below:`);
-         console.dir(this.tallAndSkinnyArray);
-```
-
-![](/markdownImages/tallAndSkinnyArray.png)
+| `console.dir(skinnyObj)`              | `console.dir(this.tallAndSkinnyArray)`      |
+| ------------------------------------- | ------------------------------------------- |
+| ![](/markdownImages/skinnyObject.png) | ![](/markdownImages/tallAndSkinnyArray.png) |
 
 <span style="font-family: 'Verdana';">The data has been made skinny, but it is still tall. In other words, there are rows that must be purged, thus making the array "shorter." The resulting array will be considered transformed from tallAndSkinny[] to shortAndSkinny[] after row reduction is achieved. From looking at the original file, it's plain to see that GPS readings that contain lat/long values of (-360, -360) are either meaningless or in error. Those rows are eliminated before being uploaded to Firebase. Other rows that are removed are rows where ASSETLABEL, UPDATETIME, LATITUDE or LONGITUDE are undefined.
 
