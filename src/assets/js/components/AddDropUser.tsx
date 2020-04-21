@@ -112,7 +112,7 @@ class AddDropUser extends React.PureComponent<
                   id="container"
                   style={{
                      width: "244px",
-                     height: "40px",
+                     height: "35px",
                      marginTop: "3px",
                      opacity: 1.0,
                      backgroundColor: "#F2F2F2",

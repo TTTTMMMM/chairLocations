@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import LoginLogout from "./LoginLogout";
 
-import JqxNotification from "jqwidgets-scripts/jqwidgets-react-tsx/jqxnotification";
+// import JqxNotification from "jqwidgets-scripts/jqwidgets-react-tsx/jqxnotification";
 
 class HeaderComponent extends Component<
    {
@@ -16,7 +16,7 @@ class HeaderComponent extends Component<
    },
    {}
 > {
-   private myNotification = React.createRef<JqxNotification>();
+   // private myNotification = React.createRef<JqxNotification>();
 
    constructor(props: {
       isSignedIn: boolean;
@@ -37,37 +37,7 @@ class HeaderComponent extends Component<
          <header>
             <section></section>
             <section>
-               <fieldset>
-                  <legend>Notifications</legend>
-                  <div
-                     id="clocnotifications"
-                     style={{
-                        width: "200px",
-                        height: "49px",
-                        marginTop: "3px",
-                        opacity: 1.0,
-                        backgroundColor: "#F2F2F2",
-                        border: "1px solid #AAAAAA",
-                        borderRadius: "5px",
-                        boxShadow: "0.3em 0.3em 1em #000",
-                        overflow: "auto",
-                     }}
-                  />
-                  <JqxNotification
-                     ref={this.myNotification}
-                     width={200}
-                     position={"top-right"}
-                     opacity={0.9}
-                     autoOpen={true}
-                     autoClose={true}
-                     animationOpenDelay={800}
-                     autoCloseDelay={20000}
-                     appendContainer={"#clocnotifications"}
-                     template={"info"}
-                  >
-                     <div id="keyup">Please, sign in with Google.</div>
-                  </JqxNotification>
-               </fieldset>
+               <div></div>
             </section>
             <LoginLogout
                isSignedIn={this.props.isSignedIn}

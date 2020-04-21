@@ -285,7 +285,6 @@ export interface UserObj {
 
 #### TODO:
 
-0. Work on the Add user Role input.
 1. Work Google Maps logic.
 2. Build out the configuration page (user management, beach management, Rental Agents Management)
 3. Maintenance
