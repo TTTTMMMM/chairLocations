@@ -1,0 +1,147 @@
+import React, { useState, useEffect } from "react";
+import {
+   GoogleMap,
+   LoadScript,
+   Marker,
+   MarkerClusterer,
+   InfoWindow,
+} from "@react-google-maps/api";
+
+import { style1 } from "./style1";
+import { style2 } from "./style2";
+import { EAST_COAST_BOUNDS } from "./eastCoastRestrictions";
+import { IWLocObj } from "./mapTypes";
+import { chairLocs } from "./chairLocs";
+import { apiKey } from "./apiKey";
+import { divStyleMaker } from "./createDivStyleChoosers";
+import { modChairLoc } from "./modChairLoc";
+import {
+   iwLocStyle,
+   pStyle,
+   pStyleU,
+   pStyleID,
+   borderedDiv,
+} from "./reactStyles";
+
+const optionsMarkerCluster = {
+   imagePath: "/images/m",
+};
+
+const MapContainer = () => {
+   const [mapRef, setMapRef] = useState<any>();
+   const [selected, setSelected] = useState<any>();
+   const [added, setAdded] = useState<boolean>(false);
+   const [styles, setStyles] = useState<any>(style1);
+
+   useEffect(() => {
+      if (typeof mapRef != "undefined" && !added) {
+         mapRef.setOptions({ styles: style1 }); // initialize map style
+         const div1 = divStyleMaker("style1.png");
+         div1.addEventListener("click", () => {
+            mapRef.setOptions({ styles: style1 });
+            setStyles(mapRef.get("styles"));
+            div1.style.border = "4px hsla(12, 95%, 47%, 0.93) solid";
+            div2.style.border = "1px rgb(250, 245, 198) solid";
+         });
+         mapRef.controls[window.google.maps.ControlPosition.LEFT_BOTTOM].push(
+            div1
+         );
+         const div2 = divStyleMaker("style2.png");
+         div2.addEventListener("click", () => {
+            mapRef.setOptions({ styles: style2 });
+            setStyles(mapRef.get("styles"));
+            div2.style.border = "4px hsla(12, 95%, 47%, 0.93) solid";
+            div1.style.border = "1px rgb(250, 245, 198) solid";
+         });
+         mapRef.controls[window.google.maps.ControlPosition.LEFT_BOTTOM].push(
+            div2
+         );
+         div2.style.border = "1px rgb(250, 245, 198) solid";
+         setAdded(true);
+      }
+   });
+
+   const onMarkerSelect = (item: IWLocObj) => {
+      let modifiedItem = modChairLoc(item);
+      setSelected(modifiedItem);
+      mapRef.setOptions({ styles: styles });
+   };
+
+   const onMapLoad = (map: any) => {
+      setMapRef(map);
+   };
+
+   const myMapContainerStyle = {
+      height: "90vh",
+      width: "50%",
+      background: "rgb(250, 245, 198)",
+      border: "2px hsla(12, 95%, 47%, 0.93) solid",
+      borderRadius: "6px",
+   };
+
+   return (
+      <LoadScript googleMapsApiKey={apiKey}>
+         <GoogleMap
+            mapContainerStyle={myMapContainerStyle}
+            zoom={10}
+            center={chairLocs[0].location}
+            onLoad={(map) => onMapLoad(map)}
+            options={{
+               streetViewControl: false,
+               mapTypeControl: false,
+            }}
+            onBoundsChanged={() => {
+               mapRef && mapRef.panToBounds(EAST_COAST_BOUNDS, 20);
+            }}
+            onZoomChanged={() => {
+               if (mapRef && mapRef.getZoom() < 6) {
+                  mapRef.setZoom(6);
+                  mapRef.setOptions({ styles: styles });
+               }
+            }}
+            onClick={() => {
+               setSelected({});
+               mapRef.setOptions({ styles: styles });
+            }}
+         >
+            <MarkerClusterer options={optionsMarkerCluster}>
+               {(clusterer) =>
+                  chairLocs.map((x) => (
+                     <Marker
+                        key={x.id}
+                        position={x.location}
+                        onClick={() => onMarkerSelect(x)}
+                        icon={"./images/xIcon20.png"}
+                        clusterer={clusterer}
+                     />
+                  ))
+               }
+            </MarkerClusterer>
+            {selected && selected.location && (
+               <InfoWindow
+                  position={selected.location}
+                  options={{ clickable: true }}
+                  onCloseClick={() => {
+                     setSelected({});
+                     mapRef.setOptions({ styles: styles });
+                  }}
+               >
+                  <div style={iwLocStyle}>
+                     <div style={borderedDiv}>
+                        <p style={pStyleU}>{selected.assetlabel}</p>
+                     </div>
+                     <p style={pStyle}>{selected.beach}</p>
+                     <p style={pStyle}>
+                        {selected.day} {selected.shortDate}
+                     </p>
+                     <p style={pStyle}> {selected.shortTime}</p>
+                     <p style={pStyleID}>{selected.id}</p>
+                  </div>
+               </InfoWindow>
+            )}
+         </GoogleMap>
+      </LoadScript>
+   );
+};
+
+export default MapContainer;

@@ -98,7 +98,6 @@ export const beachesArray = [
    "Sunset Beach",
    "Ocean Isle Beach",
    "Holden Beach",
-   "Sunset Beach",
    "Wilmington",
    "Southport",
    "North Myrtle Beach",
