@@ -285,7 +285,11 @@ export interface UserObj {
 
 ==========
 
-![](/markdownImages/indivisible.png)
+Identifying the two "Indivisible" Clusters near Ft. Luderdale:
+
+| Locations                            | On the Map                                     |
+| ------------------------------------ | ---------------------------------------------- |
+| ![](/markdownImages/indivisible.png) | ![](/markdownImages/identifyingTheCluster.png) |
 
 ===============================
 
