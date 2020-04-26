@@ -9,7 +9,6 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
 import MapContainer from "./MapContainer";
-// import { chairLocs } from "../configs/mapConfigs/chairLocs";
 
 import firebase from "firebase/app";
 import "firebase/database";
@@ -42,7 +41,7 @@ class ShowChairData extends React.PureComponent<
    modifyKey: string | undefined;
    chairY: Array<IWLocObj> = [];
 
-   // private myChairLocTable = React.createRef<JqxDataTable>();
+   private myChairLocTable = React.createRef<JqxDataTable>();
 
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -60,6 +59,10 @@ class ShowChairData extends React.PureComponent<
       this.numUpdates = 0;
 
       this.onRowSelect = this.onRowSelect.bind(this);
+      console.log(`----------`);
+      console.log(`${Object.keys(MapContainer)}`);
+      console.dir(this.myChairLocTable);
+      console.log(`----------`);
 
       this.state = {
          subscribed: false,
@@ -370,7 +373,6 @@ class ShowChairData extends React.PureComponent<
                hidden: true,
             },
          ];
-
          return <MapContainer {...this.chairY}></MapContainer>;
       } else {
          return <div></div>;

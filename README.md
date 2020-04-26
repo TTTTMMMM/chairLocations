@@ -283,9 +283,14 @@ export interface UserObj {
 1. Rototill fence garden & lay weedblock
 2. Chip and shred branches
 
+==========
+
+![](/markdownImages/indivisible.png)
+
 ===============================
 
-               <JqxDataTable
+         return (
+            <JqxDataTable
                ref={this.myChairLocTable}
                width={880}
                theme={"fresh"}
@@ -305,3 +310,4 @@ export interface UserObj {
                editSettings={this.state.editSettings}
                pageSize={100}
             />
+         );
