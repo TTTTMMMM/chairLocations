@@ -7,27 +7,27 @@ import {
    InfoWindow,
 } from "@react-google-maps/api";
 
-import { style1 } from "./style1";
-import { style2 } from "./style2";
-import { EAST_COAST_BOUNDS } from "./eastCoastRestrictions";
-import { IWLocObj } from "./mapTypes";
-import { chairLocs } from "./chairLocs";
-import { apiKey } from "./apiKey";
-import { divStyleMaker } from "./createDivStyleChoosers";
-import { modChairLoc } from "./modChairLoc";
+import { style1 } from "../configs/mapConfigs/style1";
+import { style2 } from "../configs/mapConfigs/style2";
+import { EAST_COAST_BOUNDS } from "../configs/mapConfigs/eastCoastRestrictions";
+import { IWLocObj } from "../configs/mapConfigs/mapTypes";
+// import { chairLocs } from "../configs/mapConfigs/chairLocs";
+import { apiKey } from "../configs/apiKey";
+import { divStyleMaker } from "../configs/mapConfigs/createDivStyleChoosers";
+import { modChairLoc } from "../configs/mapConfigs/modChairLoc";
 import {
    iwLocStyle,
    pStyle,
    pStyleU,
    pStyleID,
    borderedDiv,
-} from "./reactStyles";
+} from "../configs/mapConfigs/reactStyles";
 
 const optionsMarkerCluster = {
    imagePath: "/images/m",
 };
 
-const MapContainer = () => {
+const MapContainer = (inputObj: Array<IWLocObj>) => {
    const [mapRef, setMapRef] = useState<any>();
    const [selected, setSelected] = useState<any>();
    const [added, setAdded] = useState<boolean>(false);
@@ -64,6 +64,7 @@ const MapContainer = () => {
    const onMarkerSelect = (item: IWLocObj) => {
       let modifiedItem = modChairLoc(item);
       setSelected(modifiedItem);
+      console.log(item.id);
       mapRef.setOptions({ styles: styles });
    };
 
@@ -72,12 +73,14 @@ const MapContainer = () => {
    };
 
    const myMapContainerStyle = {
-      height: "90vh",
-      width: "50%",
+      height: "70vh",
+      width: "60vw",
       background: "rgb(250, 245, 198)",
       border: "2px hsla(12, 95%, 47%, 0.93) solid",
       borderRadius: "6px",
    };
+
+   let chairLocs: Array<IWLocObj> = Object.values(inputObj);
 
    return (
       <LoadScript googleMapsApiKey={apiKey}>
@@ -120,6 +123,7 @@ const MapContainer = () => {
             {selected && selected.location && (
                <InfoWindow
                   position={selected.location}
+                  // @ts-ignore
                   options={{ clickable: true }}
                   onCloseClick={() => {
                      setSelected({});

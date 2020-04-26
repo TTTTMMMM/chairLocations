@@ -1,23 +1,23 @@
 import * as React from "react";
+// @ts-ignore
 import JqxDataTable, {
    IDataTableProps,
    jqx,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
-// import JqxDropDownList from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdropdownlist";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
+
+import MapContainer from "./MapContainer";
+// import { chairLocs } from "../configs/mapConfigs/chairLocs";
 
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
+import { IWLocObj } from "../configs/mapConfigs/mapTypes";
 
-// import cellRendererKeep from "../renderers/cellRendererKeep";
-// import cellRendererMandatory from "../renderers/cellRendererMandatory";
-
-// class ShowTableHeaders extends Component<{ auth2: any; idToken: any }, {}>
 interface MyState extends IDataTableProps {
    chairDataWatch?: any;
    subscribed?: boolean;
@@ -40,9 +40,9 @@ class ShowChairData extends React.PureComponent<
    columns: any[] | undefined;
    dataAdapter: null;
    modifyKey: string | undefined;
+   chairY: Array<IWLocObj> = [];
 
-   private myChairLocTable = React.createRef<JqxDataTable>();
-   // private keepDropDownList = React.createRef<JqxDropDownList>();
+   // private myChairLocTable = React.createRef<JqxDataTable>();
 
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -109,6 +109,7 @@ class ShowChairData extends React.PureComponent<
       this.numUpdates!++;
       let chairDataWatch: any[] = [];
       this.numRows = 0;
+      this.chairY.length = 0;
       querySnapshot.forEach(
          (doc: {
             data: () => {
@@ -145,6 +146,17 @@ class ShowChairData extends React.PureComponent<
                UPDATETIME,
                UPLOADFBTIME,
             } = doc.data();
+            let oneLoc: IWLocObj = {
+               assetlabel: doc.data().ASSETLABEL,
+               beach: doc.data().BEACH,
+               id: doc.data().ID,
+               updatetime: doc.data().UPDATETIME,
+               location: {
+                  lat: parseFloat(doc.data().LATITUDE),
+                  lng: parseFloat(doc.data().LONGITUDE),
+               },
+            };
+            this.chairY.push(oneLoc);
             chairDataWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
@@ -176,7 +188,7 @@ class ShowChairData extends React.PureComponent<
    };
 
    getChairLocContent() {
-      if (this.props.loggedInToFirebase) {
+      if (this.props.loggedInToFirebase && this.chairY.length > 0) {
          const source = {
             datafields: [
                { name: "ASSETLABEL", type: "string" },
@@ -359,28 +371,7 @@ class ShowChairData extends React.PureComponent<
             },
          ];
 
-         return (
-            <JqxDataTable
-               ref={this.myChairLocTable}
-               width={880}
-               theme={"fresh"}
-               source={this.dataAdapter}
-               columns={this.columns}
-               filterable={true}
-               pageable={true}
-               altRows={true}
-               autoRowHeight={true}
-               height={575}
-               sortable={true}
-               onRowSelect={this.onRowSelect}
-               columnsReorder={true}
-               columnsResize={true}
-               editable={false}
-               key={this.numUpdates} // this forces a re-render of the table!
-               editSettings={this.state.editSettings}
-               pageSize={100}
-            />
-         );
+         return <MapContainer {...this.chairY}></MapContainer>;
       } else {
          return <div></div>;
       }
