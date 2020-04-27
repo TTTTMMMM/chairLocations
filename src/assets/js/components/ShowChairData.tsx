@@ -373,7 +373,28 @@ class ShowChairData extends React.PureComponent<
                hidden: true,
             },
          ];
-         return <MapContainer {...this.chairY}></MapContainer>;
+         return (
+            <JqxDataTable
+               ref={this.myChairLocTable}
+               width={880}
+               theme={"fresh"}
+               source={this.dataAdapter}
+               columns={this.columns}
+               filterable={true}
+               pageable={true}
+               altRows={true}
+               autoRowHeight={true}
+               height={575}
+               sortable={true}
+               onRowSelect={this.onRowSelect}
+               columnsReorder={true}
+               columnsResize={true}
+               editable={false}
+               key={this.numUpdates} // this forces a re-render of the table!
+               editSettings={this.state.editSettings}
+               pageSize={100}
+            />
+         );
       } else {
          return <div></div>;
       }
