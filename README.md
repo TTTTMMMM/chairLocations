@@ -285,7 +285,7 @@ export interface UserObj {
 
 ==========
 
-Identifying the two "Indivisible" Clusters near Ft. Lauderdale:
+Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 | Locations                            | On the Map                                     |
 | ------------------------------------ | ---------------------------------------------- |
