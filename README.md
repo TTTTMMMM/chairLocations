@@ -274,9 +274,9 @@ export interface UserObj {
 
 #### TODO:
 
-1. Work Google Maps logic.
-2. Build out the configuration page (user management, beach management, Rental Agents Management)
-3. Maintenance
+1. [NavBar/Link/React-Router](https://www.youtube.com/watch?v=XRfD8xIOroA)
+1. Build out the configuration page (user management, beach management, Rental Agents Management)
+1. Maintenance
 
 #### <ins>TODO Physical World</ins>
 
@@ -290,31 +290,3 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 | Locations                            | On the Map                                     |
 | ------------------------------------ | ---------------------------------------------- |
 | ![](/markdownImages/indivisible.png) | ![](/markdownImages/identifyingTheCluster.png) |
-
-===============================
-
-         return (
-            <JqxDataTable
-               ref={this.myChairLocTable}
-               width={880}
-               theme={"fresh"}
-               source={this.dataAdapter}
-               columns={this.columns}
-               filterable={true}
-               pageable={true}
-               altRows={true}
-               autoRowHeight={true}
-               height={575}
-               sortable={true}
-               onRowSelect={this.onRowSelect}
-               columnsReorder={true}
-               columnsResize={true}
-               editable={false}
-               key={this.numUpdates} // this forces a re-render of the table!
-               editSettings={this.state.editSettings}
-               pageSize={100}
-            />
-         );
-
-
-         return <MapContainer {...this.chairY}></MapContainer>;
