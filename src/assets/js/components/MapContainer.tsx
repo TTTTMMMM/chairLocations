@@ -11,7 +11,6 @@ import { style1 } from "../configs/mapConfigs/style1";
 import { style2 } from "../configs/mapConfigs/style2";
 import { EAST_COAST_BOUNDS } from "../configs/mapConfigs/eastCoastRestrictions";
 import { IWLocObj } from "../configs/mapConfigs/mapTypes";
-// import { chairLocs } from "../configs/mapConfigs/chairLocs";
 import { apiKey } from "../configs/apiKey";
 import { divStyleMaker } from "../configs/mapConfigs/createDivStyleChoosers";
 import { modChairLoc } from "../configs/mapConfigs/modChairLoc";
@@ -31,7 +30,6 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
    const [mapRef, setMapRef] = useState<any>();
    const [selected, setSelected] = useState<any>();
    const [added, setAdded] = useState<boolean>(false);
-   const [styles, setStyles] = useState<any>(style1);
 
    useEffect(() => {
       if (typeof mapRef != "undefined" && !added) {
@@ -39,7 +37,6 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
          const div1 = divStyleMaker("style1.png");
          div1.addEventListener("click", () => {
             mapRef.setOptions({ styles: style1 });
-            setStyles(mapRef.get("styles"));
             div1.style.border = "4px hsla(12, 95%, 47%, 0.93) solid";
             div2.style.border = "1px rgb(250, 245, 198) solid";
          });
@@ -49,7 +46,6 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
          const div2 = divStyleMaker("style2.png");
          div2.addEventListener("click", () => {
             mapRef.setOptions({ styles: style2 });
-            setStyles(mapRef.get("styles"));
             div2.style.border = "4px hsla(12, 95%, 47%, 0.93) solid";
             div1.style.border = "1px rgb(250, 245, 198) solid";
          });
@@ -65,10 +61,12 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
       let modifiedItem = modChairLoc(item);
       setSelected(modifiedItem);
       console.log(item.id);
-      mapRef.setOptions({ styles: styles });
    };
 
    const onMapLoad = (map: any) => {
+      console.log(`.......................`);
+      console.log(`......loading map......`);
+      console.log(`.......................`);
       setMapRef(map);
    };
 
@@ -99,12 +97,10 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
             onZoomChanged={() => {
                if (mapRef && mapRef.getZoom() < 6) {
                   mapRef.setZoom(6);
-                  mapRef.setOptions({ styles: styles });
                }
             }}
             onClick={() => {
                setSelected({});
-               mapRef.setOptions({ styles: styles });
             }}
          >
             <MarkerClusterer options={optionsMarkerCluster}>
@@ -127,7 +123,6 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
                   options={{ clickable: true }}
                   onCloseClick={() => {
                      setSelected({});
-                     mapRef.setOptions({ styles: styles });
                   }}
                >
                   <div style={iwLocStyle}>

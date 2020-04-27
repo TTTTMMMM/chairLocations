@@ -4,6 +4,7 @@ import JqxDataTable, {
    IDataTableProps,
    jqx,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
+import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
@@ -15,11 +16,13 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
+import { divFlexCol, divFlexRow } from "../../styles/reactStyling";
 import { IWLocObj } from "../configs/mapConfigs/mapTypes";
 
 interface MyState extends IDataTableProps {
    chairDataWatch?: any;
    subscribed?: boolean;
+   displayTableMode?: boolean;
 }
 class ShowChairData extends React.PureComponent<
    {
@@ -42,6 +45,8 @@ class ShowChairData extends React.PureComponent<
    chairY: Array<IWLocObj> = [];
 
    private myChairLocTable = React.createRef<JqxDataTable>();
+   private tableModeButton = React.createRef<JqxButton>();
+   // private mapModeButton = React.createRef<JqxButton>();
 
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -57,12 +62,10 @@ class ShowChairData extends React.PureComponent<
       this.columns = [];
       this.modifyKey = "";
       this.numUpdates = 0;
+      this.tableModeButtonClicked = this.tableModeButtonClicked.bind(this);
+      // this.mapModeButtonClicked = this.mapModeButtonClicked.bind(this);
 
       this.onRowSelect = this.onRowSelect.bind(this);
-      console.log(`----------`);
-      console.log(`${Object.keys(MapContainer)}`);
-      console.dir(this.myChairLocTable);
-      console.log(`----------`);
 
       this.state = {
          subscribed: false,
@@ -77,6 +80,7 @@ class ShowChairData extends React.PureComponent<
             saveOnPageChange: true,
             saveOnSelectionChange: true,
          },
+         displayTableMode: true,
       };
       this.getChairLocContent = this.getChairLocContent.bind(this);
    }
@@ -150,9 +154,9 @@ class ShowChairData extends React.PureComponent<
                UPLOADFBTIME,
             } = doc.data();
             let oneLoc: IWLocObj = {
+               id: doc.data().ID,
                assetlabel: doc.data().ASSETLABEL,
                beach: doc.data().BEACH,
-               id: doc.data().ID,
                updatetime: doc.data().UPDATETIME,
                location: {
                   lat: parseFloat(doc.data().LATITUDE),
@@ -191,7 +195,11 @@ class ShowChairData extends React.PureComponent<
    };
 
    getChairLocContent() {
-      if (this.props.loggedInToFirebase && this.chairY.length > 0) {
+      if (
+         this.props.loggedInToFirebase &&
+         this.chairY.length > 0 &&
+         this.state.displayTableMode
+      ) {
          const source = {
             datafields: [
                { name: "ASSETLABEL", type: "string" },
@@ -374,26 +382,62 @@ class ShowChairData extends React.PureComponent<
             },
          ];
          return (
-            <JqxDataTable
-               ref={this.myChairLocTable}
-               width={880}
-               theme={"fresh"}
-               source={this.dataAdapter}
-               columns={this.columns}
-               filterable={true}
-               pageable={true}
-               altRows={true}
-               autoRowHeight={true}
-               height={575}
-               sortable={true}
-               onRowSelect={this.onRowSelect}
-               columnsReorder={true}
-               columnsResize={true}
-               editable={false}
-               key={this.numUpdates} // this forces a re-render of the table!
-               editSettings={this.state.editSettings}
-               pageSize={100}
-            />
+            <div style={divFlexCol}>
+               <JqxDataTable
+                  ref={this.myChairLocTable}
+                  width={880}
+                  theme={"fresh"}
+                  source={this.dataAdapter}
+                  columns={this.columns}
+                  filterable={true}
+                  pageable={true}
+                  altRows={true}
+                  autoRowHeight={true}
+                  height={575}
+                  sortable={true}
+                  onRowSelect={this.onRowSelect}
+                  columnsReorder={true}
+                  columnsResize={true}
+                  editable={false}
+                  key={this.numUpdates} // this forces a re-render of the table!
+                  editSettings={this.state.editSettings}
+                  pageSize={100}
+               />
+               <div style={divFlexRow}>
+                  <JqxButton
+                     ref={this.tableModeButton}
+                     onClick={this.tableModeButtonClicked}
+                     width={325}
+                     height={30}
+                     theme={"fresh"}
+                     textPosition={"center"}
+                  >
+                     Toggle Display
+                  </JqxButton>
+               </div>
+            </div>
+         );
+      } else if (
+         this.props.loggedInToFirebase &&
+         this.chairY.length > 0 &&
+         !this.state.displayTableMode
+      ) {
+         return (
+            <div>
+               <MapContainer {...this.chairY}></MapContainer>
+               <div style={divFlexRow}>
+                  <JqxButton
+                     ref={this.tableModeButton}
+                     onClick={this.tableModeButtonClicked}
+                     width={325}
+                     height={30}
+                     theme={"fresh"}
+                     textPosition={"center"}
+                  >
+                     Toggle Display
+                  </JqxButton>
+               </div>
+            </div>
          );
       } else {
          return <div></div>;
@@ -410,15 +454,24 @@ class ShowChairData extends React.PureComponent<
    }
 
    private onRowSelect(e: any): void {
-      let jsrow = JSON.stringify(e.args.row);
-      let prettyJsrow = jsrow
-         .replace(/,/g, "<br>")
-         .replace(/"/g, "")
-         .replace(/{/g, "{<br>")
-         .replace(/}/g, "<br>}");
+      let jsr = e.args.row;
+      let theKeys = Object.keys(jsr);
+      let prepend = `temp.push({`;
       this.props.myPanel.current!.append(
-         `<br style="color:#104B34 ; font-size:10px;">${prettyJsrow} </br>`
+         `<br style="color:#389304 ; font-size:10px;">${prepend}`
       );
+      theKeys.forEach((x) => {
+         this.props.myPanel.current!.append(
+            `<br style="color:#389304 ; font-size:10px;">${x}: "${jsr[x]}",`
+         );
+      });
+      this.props.myPanel.current!.append(
+         `<br style="color:#389304 ; font-size:10px;">});`
+      );
+   }
+
+   private tableModeButtonClicked() {
+      this.setState({ displayTableMode: !this.state.displayTableMode });
    }
 }
 
