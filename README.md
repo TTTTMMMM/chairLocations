@@ -275,9 +275,10 @@ export interface UserObj {
 #### TODO:
 
 1. [NavBar/Link/React-Router](https://www.youtube.com/watch?v=XRfD8xIOroA)
-2. [Max Schwarzmuller/Academind React Router Tutorial #1](https://www.youtube.com/watch?v=eofpZPRUnP8) and [#2](https://www.youtube.com/watch?v=5pt_igBTCsI)
-3. Build out the configuration page (user management, beach management, Rental Agents Management)
-4. Maintenance
+2. [Max Schwarzmuller/Academind React Router Tutorial #1 -- slightly dated](https://www.youtube.com/watch?v=eofpZPRUnP8) and [#2](https://www.youtube.com/watch?v=5pt_igBTCsI)
+3. [Updated React Router Tutorial](https://www.youtube.com/watch?v=eofpZPRUnP8)
+4. Build out the configuration page (user management, beach management, Rental Agents Management)
+5. Maintenance
 
 #### <ins>TODO Physical World</ins>
 
@@ -297,3 +298,4 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 ### <ins>Notes on React Router:</ins>
 
 1. [index.js is the same as App.js](https://www.youtube.com/watch?v=eofpZPRUnP8&t=200)
+2. App.tsx is my login page
