@@ -284,10 +284,16 @@ export interface UserObj {
 1. Rototill fence garden & lay weedblock
 2. Chip and shred branches
 
-==========
+===
 
 Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 | Locations                            | On the Map                                     |
 | ------------------------------------ | ---------------------------------------------- |
 | ![](/markdownImages/indivisible.png) | ![](/markdownImages/identifyingTheCluster.png) |
+
+===
+
+### <ins>Notes on React Router:</ins>
+
+1. [index.js is the same as App.js](https://www.youtube.com/watch?v=eofpZPRUnP8?t=200)
