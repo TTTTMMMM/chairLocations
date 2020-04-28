@@ -2,9 +2,6 @@
 
 import React, { Component } from "react";
 import LoginLogout from "./LoginLogout";
-
-// import JqxNotification from "jqwidgets-scripts/jqwidgets-react-tsx/jqxnotification";
-
 class HeaderComponent extends Component<
    {
       isSignedIn: boolean;
