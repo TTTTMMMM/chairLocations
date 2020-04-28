@@ -275,7 +275,7 @@ export interface UserObj {
 #### TODO:
 
 1. [NavBar/Link/React-Router](https://www.youtube.com/watch?v=XRfD8xIOroA)
-2. [Max Schwarz/Academind React Router Tutorial](https://www.youtube.com/watch?v=eofpZPRUnP8)
+2. [Max Schwarzmuller/Academind React Router Tutorial #1](https://www.youtube.com/watch?v=eofpZPRUnP8) and [#2](https://www.youtube.com/watch?v=5pt_igBTCsI)
 3. Build out the configuration page (user management, beach management, Rental Agents Management)
 4. Maintenance
 
