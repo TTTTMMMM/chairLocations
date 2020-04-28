@@ -284,7 +284,7 @@ export interface UserObj {
 1. Rototill fence garden & lay weedblock
 2. Chip and shred branches
 
-===
+---
 
 Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
@@ -292,7 +292,7 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 | ------------------------------------ | ---------------------------------------------- |
 | ![](/markdownImages/indivisible.png) | ![](/markdownImages/identifyingTheCluster.png) |
 
-===
+---
 
 ### <ins>Notes on React Router:</ins>
 
