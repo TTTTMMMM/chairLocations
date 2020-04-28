@@ -16,7 +16,7 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
-import { divFlexCol, divFlexRow } from "../../styles/reactStyling";
+import { divFlexRow } from "../../styles/reactStyling";
 import { IWLocObj } from "../configs/mapConfigs/mapTypes";
 
 interface MyState extends IDataTableProps {
@@ -382,7 +382,7 @@ class ShowChairData extends React.PureComponent<
             },
          ];
          return (
-            <div style={divFlexCol}>
+            <>
                <JqxDataTable
                   ref={this.myChairLocTable}
                   width={880}
@@ -415,7 +415,7 @@ class ShowChairData extends React.PureComponent<
                      Toggle Display
                   </JqxButton>
                </div>
-            </div>
+            </>
          );
       } else if (
          this.props.loggedInToFirebase &&
@@ -423,7 +423,7 @@ class ShowChairData extends React.PureComponent<
          !this.state.displayTableMode
       ) {
          return (
-            <div>
+            <>
                <MapContainer {...this.chairY}></MapContainer>
                <div style={divFlexRow}>
                   <JqxButton
@@ -437,7 +437,7 @@ class ShowChairData extends React.PureComponent<
                      Toggle Display
                   </JqxButton>
                </div>
-            </div>
+            </>
          );
       } else {
          return <div></div>;

@@ -15,7 +15,7 @@ class PopoverContents extends React.PureComponent<
    {
       myPanel: any;
       additionalPropsPopover: any;
-      callbackFromCleanAndLoadFiles: any;
+      callbackFromCleanAndLoadFiles: any; // this is the function in the parent component to callback with the values entered for STATE, BEACH and RENTALAGENT
    },
    {
       sourceState: Array<string>;
