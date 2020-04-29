@@ -9,7 +9,7 @@ html {
    --headerURL: url("https://images.unsplash.com/photo-1526344966-89049886b28d?ixlib=rb-1.2.1&dpr=1&auto=format&fit=crop&w=416&h=312&q=60");
    --respHeaderURL: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg");
    --headerHeight: 100px;
-   --headerHeightP20: 120px;
+   --headerHeightP20: 130px;
    --footerPadding: 10px;
 }
 

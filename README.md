@@ -304,3 +304,7 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 | index.js            | index.tsx      |
 | RoutingComponent.js | nada           |
 | mainpage.js         | App.tsx        |
+
+---
+
+[popovercontents](/markdownImages/popoverElements.png)

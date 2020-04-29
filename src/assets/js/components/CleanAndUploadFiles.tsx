@@ -191,7 +191,7 @@ class CleanAndUploadFiles extends Component<
                   <div>
                      <JqxPopover
                         ref={this.additionalPropsPopover}
-                        offset={{ left: -4, top: 0 }}
+                        offset={{ left: 0, top: 0 }}
                         isModal={false}
                         autoClose={false}
                         arrowOffsetValue={0}

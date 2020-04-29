@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "../styles/index.css";
-import App from "./App";
+import RoutingComponent from "./RoutingComponent";
 
-ReactDOM.render(<App />, document.getElementById("root") as HTMLElement);
+ReactDOM.render(
+   <React.StrictMode>
+      <RoutingComponent />
+   </React.StrictMode>,
+   document.getElementById("root")
+);
