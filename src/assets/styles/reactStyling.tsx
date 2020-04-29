@@ -12,8 +12,9 @@ export const divFlexCol: CSSProperties = {
    flexDirection: "column",
 };
 
-export const aStyling = {
+export const aStyling: CSSProperties = {
    marginLeft: "20px",
-   color: "blue",
-   textDecoration: "underline",
+   color: "black",
+   textTransform: "uppercase",
+   letterSpacing: "2px",
 };

@@ -9,66 +9,75 @@ html {
    --headerURL: url("https://images.unsplash.com/photo-1526344966-89049886b28d?ixlib=rb-1.2.1&dpr=1&auto=format&fit=crop&w=416&h=312&q=60");
    --respHeaderURL: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg");
    --headerHeight: 100px;
-   --headerHeightP20: 130px;
+   --headerHeightP20: 15px;
    --footerPadding: 10px;
 }
-
-body {
-   margin: 4px;
-   color: #334;
-   position: relative;
-   padding: 12px;
-}
-
-button:focus {
-   outline: none;
-}
-
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-/* styling in header                                                  */
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 body > div > div > header {
-   font-family: "Josefin Sans", monospace;
-   background: var(--headerURL) no-repeat center center fixed;
-   background-size: cover;
    display: flex;
-   border: 0 solid #000;
-   color: #000;
-   top: 0;
-   left: 0;
-   right: 0;
-   padding: 10px;
-   border-radius: 10px;
-   box-shadow: 0.3em 0.3em 1em #000;
-   position: fixed;
-   width: 98vw;
-   height: var(--headerHeight);
-   margin-left: 1px;
-   margin-right: 1px;
-   margin-bottom: 55px;
-   z-index: 755; /* any less and the vertical scroll bar tramples over the page header */
+   flex-direction: row;
+   background-color: hsla(12, 95%, 47%, 0.93);
+   padding-top: 8px;
 }
-
-/* section that holds the stock input and refresh button  */
+/* ************************* */
+/* section 1  */
 body > div > div > header > section:nth-of-type(1) {
    display: flex;
-   justify-content: flex-end;
-   width: 30vw;
+   justify-content: space-around;
+   width: 15vw;
+   margin-top: -10px;
 }
 
-/* section that holds the notifications  */
+/* section 2  */
 body > div > div > header > section:nth-of-type(2) {
    display: flex;
-   justify-content: flex-end;
-   width: 25vw;
+   justify-content: space-around;
+   width: 65vw;
+   margin-top: -10px;
 }
 
-/* section that holds the admin button for the user who has admin privs and the login/logout button  */
+/* section 3  */
 body > div > div > header > section:nth-of-type(3) {
    display: flex;
    justify-content: flex-end;
-   width: 45vw;
+   width: 18vw;
+   margin-top: -10px;
 }
+/********* navbar styling *********/
+body > div > div > header > section:nth-of-type(2) > nav {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   min-height: 6vh;
+   width: 100%;
+}
+
+body > div > div > header > section:nth-of-type(2) > nav > ul {
+   display: flex;
+   justify-content: space-around;
+   width: 100%;
+}
+
+body > div > div > header > section:nth-of-type(2) > nav > ul > li {
+   list-style-type: none;
+}
+
+body > div > div > header > section:nth-of-type(2) > nav > ul > li > a {
+   color: rgb(250, 245, 198);
+   text-decoration: none;
+   text-transform: uppercase;
+   letter-spacing: 2px;
+   font-size: 14px;
+   transition: all 0.5s;
+}
+
+body > div > div > header > section:nth-of-type(2) > nav > ul > li > a:hover {
+   color: rgb(255, 230, 0);
+   text-decoration: none;
+   text-transform: uppercase;
+   letter-spacing: 2.5px;
+   font-size: 14px;
+}
+/********* navbar styling end *********/
 
 /* div that holds the admin "panel" for the user who has admin privs */
 html > body > div > div > header > section:nth-of-type(3) > div {
@@ -123,7 +132,7 @@ html
 html > body > div > div > header > section:nth-of-type(3) > button {
    float: right;
    padding: 0;
-   margin-top: 27px;
+   margin-top: 10px;
    width: 100px;
    height: 30px;
 }
@@ -140,10 +149,11 @@ html
    > div
    > span
    > span:nth-of-type(1) {
-   font-family: "Josefin Sans", "Karla", monospace;
-   font-size: 16px;
+   font-family: "Josefin Sans", monospace;
+   font-size: 13px;
    color: black;
-   margin-top: 20px;
+   letter-spacing: 2px;
+   margin-top: 22px;
 }
 
 /* Google Sign-in button 'Sign In' words on hover*/
@@ -158,15 +168,19 @@ html
    > div
    > span
    > span:nth-of-type(1):hover {
-   font-size: 17.5px;
+   font-size: 13px;
    color: yellow;
    margin-top: 15px;
-   font-family: "Josefin Sans", "Karla", monospace;
+   font-family: "Josefin Sans", monospace;
+   letter-spacing: 2px;
+   text-transform: uppercase;
 }
 
 .abcRioButtonContents {
    color: black;
-   font-family: "Josefin Sans", "Karla", monospace;
+   font-family: "Josefin Sans", monospace;
+   letter-spacing: 2px;
+   text-transform: uppercase;
 }
 
 /* Login photo figure after successful login */
@@ -218,7 +232,9 @@ html
    font-size: 13px;
    font-family: "Josefin Sans";
    color: yellow;
+   text-transform: uppercase;
    transition: all 0.3s;
+   margin-top: 4px;
 }
 
 /* Login photo caption after successful login */
@@ -230,17 +246,21 @@ html
    > section:nth-of-type(3)
    > figure
    > figcaption:hover {
-   font-size: 14px;
+   font-size: 13px;
    font-family: "Josefin Sans";
-   color: yellow;
+   color: rgb(0, 0, 0);
+   text-transform: uppercase;
    transition: all 0.3s;
+   margin-top: 4px;
 }
 
 /* Login photo image after successful login */
 html > body > div > div > header > section:nth-of-type(3) > figure > img {
-   width: 42px;
-   height: 42px;
-   border-radius: 50%;
+   width: 20px;
+   height: 20px;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 /* this div holds the input field, two buttons div, and user management notifications */

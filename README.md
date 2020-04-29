@@ -283,7 +283,7 @@ export interface UserObj {
 
 #### <ins>TODO Physical World</ins>
 
-1. Rototill fence garden & lay weedblock
+1. Repair rototiller
 2. Chip and shred branches
 
 ---

@@ -2,6 +2,8 @@
 
 import React, { Component } from "react";
 import LoginLogout from "./LoginLogout";
+// import { aStyling } from "../../styles/reactStyling";
+import { Link } from "react-router-dom";
 class HeaderComponent extends Component<
    {
       isSignedIn: boolean;
@@ -34,7 +36,19 @@ class HeaderComponent extends Component<
          <header>
             <section></section>
             <section>
-               <div></div>
+               <nav>
+                  <ul>
+                     <li>
+                        <Link to="/upload">Upload</Link>
+                     </li>
+                     <li>
+                        <Link to="/mappinganalytics">Map'em</Link>
+                     </li>
+                     <li>
+                        <Link to="/maintenance">Maintenance</Link>
+                     </li>
+                  </ul>
+               </nav>
             </section>
             <LoginLogout
                isSignedIn={this.props.isSignedIn}

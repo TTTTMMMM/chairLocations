@@ -180,15 +180,6 @@ class CleanAndUploadFiles extends Component<
                      </label>
                   </div>
                   <div>
-                     <ShowChairHeaders
-                        loggedInWithGoogle={this.props.loggedInWithGoogle}
-                        auth2={this.props.auth2}
-                        idToken={this.props.idToken}
-                        loggedInToFirebase={this.props.loggedInToFirebase}
-                        myPanel={this.myPanel}
-                     ></ShowChairHeaders>
-                  </div>
-                  <div>
                      <JqxPopover
                         ref={this.additionalPropsPopover}
                         offset={{ left: 0, top: 0 }}
@@ -242,6 +233,15 @@ class CleanAndUploadFiles extends Component<
                   >
                      Clean Rows and Upload
                   </JqxButton>
+                  <div>
+                     <ShowChairHeaders
+                        loggedInWithGoogle={this.props.loggedInWithGoogle}
+                        auth2={this.props.auth2}
+                        idToken={this.props.idToken}
+                        loggedInToFirebase={this.props.loggedInToFirebase}
+                        myPanel={this.myPanel}
+                     ></ShowChairHeaders>
+                  </div>
                   <div>
                      <JqxPanel
                         ref={this.myPanel}

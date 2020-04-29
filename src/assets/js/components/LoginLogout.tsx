@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AddDropUser from "./AddDropUser";
+// import AddDropUser from "./AddDropUser";
 
 class LoginLogout extends Component<
    {
@@ -22,11 +22,12 @@ class LoginLogout extends Component<
       if (typeof this.props.userObject != "undefined") {
          return this.props.isSignedIn ? (
             <section>
-               <AddDropUser
+               {/* <AddDropUser
                   isAdmin={this.props.userObject.role === "admin"}
                   auth2={this.props.auth2}
                   idToken={this.props.idToken}
                ></AddDropUser>
+              */}
                <figure onClick={this.props.logout}>
                   <img src={this.props.photoURL} />
                   <figcaption>Logout</figcaption>
