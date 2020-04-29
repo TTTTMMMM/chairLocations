@@ -307,4 +307,4 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ---
 
-[popovercontents](/markdownImages/popoverElements.png)
+![popovercontents](/markdownImages/popoverElements.png)
