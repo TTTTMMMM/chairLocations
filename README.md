@@ -298,10 +298,9 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ### <ins>Notes on React Router:</ins>
 
-| testit                | chairLocations   |
-| --------------------- | ---------------- |
-| index.html            | index.html       |
-| index.js              | index.tsx        |
-| RoutingComponent.js   | nada             |
-| mainpage.js           | App.tsx          |
-| --------------------- | ---------------- |
+| testit              | chairLocations |
+| ------------------- | -------------- |
+| index.html          | index.html     |
+| index.js            | index.tsx      |
+| RoutingComponent.js | nada           |
+| mainpage.js         | App.tsx        |
