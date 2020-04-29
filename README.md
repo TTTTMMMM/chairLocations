@@ -298,5 +298,10 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ### <ins>Notes on React Router:</ins>
 
-1. [index.js is the same as App.js](https://www.youtube.com/watch?v=eofpZPRUnP8&t=200)
-2. App.tsx is my login page
+| testit                | chairLocations   |
+| --------------------- | ---------------- |
+| index.html            | index.html       |
+| index.js              | index.tsx        |
+| RoutingComponent.js   | nada             |
+| mainpage.js           | App.tsx          |
+| --------------------- | ---------------- |
