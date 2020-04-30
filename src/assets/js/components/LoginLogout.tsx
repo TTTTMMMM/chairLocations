@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+
 // import AddDropUser from "./AddDropUser";
 
 class LoginLogout extends Component<
@@ -19,6 +22,7 @@ class LoginLogout extends Component<
       };
    }
    render() {
+      // console.dir(Object.keys(require("@fortawesome/free-solid-svg-icons")));
       if (typeof this.props.userObject != "undefined") {
          return this.props.isSignedIn ? (
             <section>
@@ -28,6 +32,7 @@ class LoginLogout extends Component<
                   idToken={this.props.idToken}
                ></AddDropUser>
               */}
+               <FontAwesomeIcon icon={faCog} />
                <figure onClick={this.props.logout}>
                   <img src={this.props.photoURL} />
                   <figcaption>Logout</figcaption>

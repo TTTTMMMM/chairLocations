@@ -76,6 +76,9 @@ body > div > div > header > section:nth-of-type(2) > nav > ul > li > a:hover {
    text-transform: uppercase;
    letter-spacing: 2.5px;
    font-size: 14px;
+   border: solid yellow 1px;
+   padding-top: 3px;
+   padding-left: 2px;
 }
 /********* navbar styling end *********/
 
@@ -168,7 +171,7 @@ html
    > div
    > span
    > span:nth-of-type(1):hover {
-   font-size: 13px;
+   font-size: 11px;
    color: yellow;
    margin-top: 15px;
    font-family: "Josefin Sans", monospace;
@@ -229,7 +232,7 @@ html
    > section:nth-of-type(3)
    > figure
    > figcaption:not(:hover) {
-   font-size: 13px;
+   font-size: 11px;
    font-family: "Josefin Sans";
    color: yellow;
    text-transform: uppercase;
@@ -246,7 +249,7 @@ html
    > section:nth-of-type(3)
    > figure
    > figcaption:hover {
-   font-size: 13px;
+   font-size: 11px;
    font-family: "Josefin Sans";
    color: rgb(0, 0, 0);
    text-transform: uppercase;
@@ -431,6 +434,23 @@ html
 .jqx-notification-info,
 .jqx-info {
    background-color: blue;
+}
+
+/* font-awesome icon */
+body > div:nth-of-type(1) > div > header > section:nth-of-type(3) > svg {
+   width: 1.5em;
+   height: 1.5em;
+   color: rgb(250, 245, 198);
+   margin-top: 25px;
+   margin-right: -32px;
+   transition: all 0.5s ease-in-out;
+}
+
+body > div:nth-of-type(1) > div > header > section:nth-of-type(3) > svg:hover {
+   width: 1.75em;
+   height: 1.75em;
+   color: yellow;
+   cursor: pointer;
 }
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
