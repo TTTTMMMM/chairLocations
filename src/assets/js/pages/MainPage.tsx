@@ -4,10 +4,10 @@
 // Client-side code follows:
 
 import React, { Component } from "react";
-import "../styles/index.css";
-import HeaderComponent from "./components/HeaderComponent";
-import BodyComponent from "./components/BodyComponent";
-import getLoggedinUser from "./fetches/getLoggedinUser";
+import "../../styles/index.css";
+import HeaderComponent from "../components/HeaderComponent";
+import BodyUpload from "../components/BodyComponents/BodyUpload";
+import getLoggedinUser from "../fetches/getLoggedinUser";
 
 // Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
 class App extends Component<
@@ -99,6 +99,7 @@ class App extends Component<
                };
                gapi.signin2.render("loginButton", opts);
             });
+            window.location.href = "/";
          })
          .catch((err: any) => {
             console.error(`C0016: ${err}`);
@@ -116,13 +117,13 @@ class App extends Component<
                googleToken={this.state.googleToken}
                userObject={this.state.userObjFmServer}
             ></HeaderComponent>
-            <BodyComponent
+            <BodyUpload
                auth2={this.auth2}
                loggedInWithGoogle={this.state.isSignedIn}
                googleToken={this.state.googleToken}
                emailAddress={this.emailAddress}
                userObject={this.state.userObjFmServer}
-            ></BodyComponent>
+            ></BodyUpload>
          </div>
       );
    }

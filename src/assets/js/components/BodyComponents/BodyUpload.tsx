@@ -10,16 +10,16 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
-import "../configs/firebaseInit";
-import "../../styles/index.css";
-import CleanAndUploadFiles from "./CleanAndUploadFiles";
+import "../../configs/firebaseInit";
+import "../../../styles/index.css";
+import CleanAndUploadFiles from "../CleanAndUploadFiles";
 
 // import { months } from "../misc/months";
 
 interface MyState {
    isLoggedInToFirebase?: boolean | false;
 }
-class BodyComponent extends React.PureComponent<
+class BodyUpload extends React.PureComponent<
    {
       auth2: any;
       loggedInWithGoogle: boolean;
@@ -132,4 +132,4 @@ class BodyComponent extends React.PureComponent<
    }
 }
 
-export default BodyComponent;
+export default BodyUpload;

@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import "../../styles/404.css";
+import "../../styles/401.css";
 
-class FourOFour extends Component {
+class FourOFourPage extends Component {
    render() {
       return (
          <div>
             <body>
                <section>
-                  <div className="title">404 Error Page</div>
+                  <div className="title">401 Unauthorized</div>
                   <div className="circles">
                      <p>
-                        404
+                        401
                         <br />
-                        <small>PAGE NOT FOUND (seaside)</small>
+                        <small>Go Away</small>
                      </p>
                      <span className="circle big"></span>
                      <span className="circle med"></span>
@@ -26,4 +26,4 @@ class FourOFour extends Component {
    }
 }
 
-export default FourOFour;
+export default FourOFourPage;

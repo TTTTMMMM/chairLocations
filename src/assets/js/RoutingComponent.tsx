@@ -6,11 +6,13 @@ import {
    Redirect,
 } from "react-router-dom";
 
-import MainPage from "./App";
-import Upload from "./App";
-import MappingAnalytics from "./components/MappingAnalytics";
-import Maintenance from "./components/Maintenance";
-import FourOFour from "./components/FourOFour";
+import MainPage from "./pages/MainPage";
+import Upload from "./pages/UploadPage";
+import MappingPage from "./pages/MappingPage";
+import Maintenance from "./pages/MaintenancePage";
+import ConfigPage from "./pages/ConfigPage";
+import FourOFourPage from "./pages/FourOFourPage";
+import FourOOnePage from "./pages/FourOOnePage";
 
 function RoutingComponent() {
    return (
@@ -18,13 +20,11 @@ function RoutingComponent() {
          <Switch>
             <Route exact path="/" component={MainPage}></Route>
             <Route exact path="/upload" component={Upload}></Route>
-            <Route
-               exact
-               path="/mappinganalytics"
-               component={MappingAnalytics}
-            ></Route>
+            <Route exact path="/mapping" component={MappingPage}></Route>
             <Route exact path="/maintenance" component={Maintenance}></Route>
-            <Route exact path="/404" component={FourOFour}></Route>
+            <Route exact path="/configuration" component={ConfigPage}></Route>
+            <Route exact path="/401" component={FourOOnePage}></Route>
+            <Route exact path="/404" component={FourOFourPage}></Route>
             <Redirect to="/404" />
          </Switch>
       </Router>

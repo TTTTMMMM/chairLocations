@@ -18,6 +18,7 @@ export enum Roles {
    uploader = "uploader",
    lurker = "lurker",
    maintenance = "maintenance",
+   notloggedin = "notloggedin",
 }
 
 export const rolesArray = Object.keys(Roles);

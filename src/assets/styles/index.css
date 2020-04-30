@@ -17,6 +17,7 @@ body > div > div > header {
    flex-direction: row;
    background-color: hsla(12, 95%, 47%, 0.93);
    padding-top: 8px;
+   height: 40px;
 }
 /* ************************* */
 /* section 1  */
@@ -189,7 +190,8 @@ html
 /* Login photo figure after successful login */
 html > body > div > div > header > section:nth-of-type(3) > figure {
    float: right;
-   margin-top: 15px;
+   margin-top: 5px;
+   height: 33px;
    transition: all 0.3s;
 }
 
@@ -234,7 +236,7 @@ html
    > figcaption:not(:hover) {
    font-size: 11px;
    font-family: "Josefin Sans";
-   color: yellow;
+   color: rgb(250, 245, 198);
    text-transform: uppercase;
    transition: all 0.3s;
    margin-top: 4px;
@@ -251,7 +253,7 @@ html
    > figcaption:hover {
    font-size: 11px;
    font-family: "Josefin Sans";
-   color: rgb(0, 0, 0);
+   color: yellow;
    text-transform: uppercase;
    transition: all 0.3s;
    margin-top: 4px;
@@ -437,16 +439,22 @@ html
 }
 
 /* font-awesome icon */
-body > div:nth-of-type(1) > div > header > section:nth-of-type(3) > svg {
+body > div:nth-of-type(1) > div > header > section:nth-of-type(3) > a > svg {
    width: 1.5em;
    height: 1.5em;
    color: rgb(250, 245, 198);
-   margin-top: 25px;
+   margin-top: 12px;
    margin-right: -32px;
    transition: all 0.5s ease-in-out;
 }
 
-body > div:nth-of-type(1) > div > header > section:nth-of-type(3) > svg:hover {
+body
+   > div:nth-of-type(1)
+   > div
+   > header
+   > section:nth-of-type(3)
+   > a
+   > svg:hover {
    width: 1.75em;
    height: 1.75em;
    color: yellow;
@@ -458,6 +466,16 @@ body > div:nth-of-type(1) > div > header > section:nth-of-type(3) > svg:hover {
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /* cherry blossom image */
 body > div > div > div > img {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: var(--headerHeightP20);
+   border-radius: 15px;
+   width: 650px;
+}
+
+/* cherry blossom image after I learned about React.fragments, which doesn't requie gratuitous <div>s */
+body > div > div > img {
    display: block;
    margin-left: auto;
    margin-right: auto;

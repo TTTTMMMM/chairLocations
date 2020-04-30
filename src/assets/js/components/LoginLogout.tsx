@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+import ConfigGear from "./ConfigGear";
 
 // import AddDropUser from "./AddDropUser";
 
@@ -20,7 +19,10 @@ class LoginLogout extends Component<
       this.state = {
          isLoggedIn: this.props.isSignedIn,
       };
+
+      this.gearClick = this.gearClick.bind(this);
    }
+
    render() {
       // console.dir(Object.keys(require("@fortawesome/free-solid-svg-icons")));
       if (typeof this.props.userObject != "undefined") {
@@ -32,7 +34,12 @@ class LoginLogout extends Component<
                   idToken={this.props.idToken}
                ></AddDropUser>
               */}
-               <FontAwesomeIcon icon={faCog} />
+               <ConfigGear
+                  isAdmin={this.props.userObject.role === "admin"}
+                  auth2={this.props.auth2}
+                  idToken={this.props.idToken}
+               ></ConfigGear>
+
                <figure onClick={this.props.logout}>
                   <img src={this.props.photoURL} />
                   <figcaption>Logout</figcaption>
@@ -50,6 +57,10 @@ class LoginLogout extends Component<
             </section>
          );
       }
+   }
+
+   gearClick() {
+      console.log(`gearClick()`);
    }
 }
 
