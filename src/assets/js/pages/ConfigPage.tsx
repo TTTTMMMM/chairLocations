@@ -11,7 +11,7 @@ import getLoggedinUser from "../fetches/getLoggedinUser";
 import * as clt from "../misc/chairLocTypes";
 
 // Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
-class MappingPage extends Component<
+class ConfigPage extends Component<
    {},
    { isSignedIn: boolean; googleToken: any; userObjFmServer: clt.UserObj }
 > {
@@ -138,4 +138,4 @@ class MappingPage extends Component<
    }
 }
 
-export default MappingPage;
+export default ConfigPage;

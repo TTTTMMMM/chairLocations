@@ -10,7 +10,7 @@ import BodyUpload from "../components/BodyComponents/BodyUpload";
 import getLoggedinUser from "../fetches/getLoggedinUser";
 
 // Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
-class App extends Component<
+class MainPage extends Component<
    {},
    { isSignedIn: boolean; googleToken: any; userObjFmServer: any }
 > {
@@ -129,4 +129,4 @@ class App extends Component<
    }
 }
 
-export default App;
+export default MainPage;

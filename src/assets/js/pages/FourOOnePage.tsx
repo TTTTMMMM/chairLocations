@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../styles/401.css";
 
-class FourOFourPage extends Component {
+class FourOOnePage extends Component {
    render() {
       return (
          <div>
@@ -26,4 +26,4 @@ class FourOFourPage extends Component {
    }
 }
 
-export default FourOFourPage;
+export default FourOOnePage;
