@@ -284,11 +284,12 @@ export interface UserObj {
 #### TODO:
 
 1. [NavBar/Link/React-Router](https://www.youtube.com/watch?v=XRfD8xIOroA)
-2. [Max Schwarzmuller/Academind React Router Tutorial #1 -- slightly dated](https://www.youtube.com/watch?v=eofpZPRUnP8) and [#2](https://www.youtube.com/watch?v=5pt_igBTCsI)
-3. [Updated React Router Tutorial](https://www.youtube.com/watch?v=eofpZPRUnP8)
-4. [Protected Routes](https://www.youtube.com/watch?v=Y0-qdp-XBJg)
-5. Build out the configuration page (user management, beach management, Rental Agents Management)
-6. Maintenance
+2. [Protected Routes](https://www.youtube.com/watch?v=Y0-qdp-XBJg)
+3. Conditionally display the navbar in the header based on user role.
+4. Build the User Management section of the Config page.
+5. Build out the configuration page (beach management, Rental Agents Management)
+6. Develop map analytics!
+7. Maintenance
 
 #### <ins>TODO Physical World</ins>
 
@@ -304,16 +305,3 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 | ![](/markdownImages/indivisible.png) | ![](/markdownImages/identifyingTheCluster.png) |
 
 ---
-
-### <ins>Notes on React Router:</ins>
-
-| testit              | chairLocations |
-| ------------------- | -------------- |
-| index.html          | index.html     |
-| index.js            | index.tsx      |
-| RoutingComponent.js | nada           |
-| mainpage.js         | App.tsx        |
-
----
-
-![popovercontents](/markdownImages/popoverElements.png)
