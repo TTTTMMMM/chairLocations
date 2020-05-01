@@ -283,12 +283,13 @@ export interface UserObj {
 
 #### TODO:
 
-1. [NavBar/Link/React-Router](https://www.youtube.com/watch?v=XRfD8xIOroA)
+1. [Consider moving to a single login page ~18:00](https://www.youtube.com/watch?v=XRfD8xIOroA)
 2. [Protected Routes](https://www.youtube.com/watch?v=Y0-qdp-XBJg)
 3. Build the User Management section of the Config page.
 4. Build out the configuration page (beach management, Rental Agents Management)
 5. Develop map analytics!
 6. Maintenance
+7. Consider moving to useContext API to eliminate all the authentication props passing
 
 #### <ins>TODO Physical World</ins>
 
