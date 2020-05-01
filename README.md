@@ -285,11 +285,10 @@ export interface UserObj {
 
 1. [NavBar/Link/React-Router](https://www.youtube.com/watch?v=XRfD8xIOroA)
 2. [Protected Routes](https://www.youtube.com/watch?v=Y0-qdp-XBJg)
-3. Conditionally display the navbar in the header based on user role.
-4. Build the User Management section of the Config page.
-5. Build out the configuration page (beach management, Rental Agents Management)
-6. Develop map analytics!
-7. Maintenance
+3. Build the User Management section of the Config page.
+4. Build out the configuration page (beach management, Rental Agents Management)
+5. Develop map analytics!
+6. Maintenance
 
 #### <ins>TODO Physical World</ins>
 
