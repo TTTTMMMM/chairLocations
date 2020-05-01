@@ -3,7 +3,7 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class ConfigGear extends React.PureComponent<{
    isAdmin: boolean;
@@ -16,9 +16,9 @@ class ConfigGear extends React.PureComponent<{
 
    render() {
       return this.props.isAdmin ? (
-         <Link to="/configuration">
+         <NavLink to="/configuration">
             <FontAwesomeIcon icon={faCog} />
-         </Link>
+         </NavLink>
       ) : (
          <div style={{ display: "none" }}></div>
       );

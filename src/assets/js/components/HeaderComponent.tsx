@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import LoginLogout from "./LoginLogout";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { UserObj } from "../misc/chairLocTypes";
 import { Roles } from "../misc/chairLocTypes";
 
@@ -60,7 +60,16 @@ class HeaderComponent extends Component<
                      <nav>
                         <ul>
                            <li>
-                              <Link to="/maintenance">Maintenance</Link>
+                              <NavLink
+                                 to="/maintenance"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Maintenance
+                              </NavLink>
                            </li>
                         </ul>
                      </nav>
@@ -84,7 +93,16 @@ class HeaderComponent extends Component<
                      <nav>
                         <ul>
                            <li>
-                              <Link to="/mapping">Map'em</Link>
+                              <NavLink
+                                 to="/mapping"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Map'em
+                              </NavLink>
                            </li>
                         </ul>
                      </nav>
@@ -108,13 +126,40 @@ class HeaderComponent extends Component<
                      <nav>
                         <ul>
                            <li>
-                              <Link to="/upload">Upload</Link>
+                              <NavLink
+                                 to="/upload"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Upload
+                              </NavLink>
                            </li>
                            <li>
-                              <Link to="/mapping">Map'em</Link>
+                              <NavLink
+                                 to="/mapping"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Map'em
+                              </NavLink>
                            </li>
                            <li>
-                              <Link to="/maintenance">Maintenance</Link>
+                              <NavLink
+                                 to="/maintenance"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Maintenance
+                              </NavLink>
                            </li>
                         </ul>
                      </nav>
@@ -138,13 +183,40 @@ class HeaderComponent extends Component<
                      <nav>
                         <ul>
                            <li>
-                              <Link to="/upload">Upload</Link>
+                              <NavLink
+                                 to="/upload"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Upload
+                              </NavLink>
                            </li>
                            <li>
-                              <Link to="/mapping">Map'em</Link>
+                              <NavLink
+                                 to="/mapping"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Map'em
+                              </NavLink>
                            </li>
                            <li>
-                              <Link to="/maintenance">Maintenance</Link>
+                              <NavLink
+                                 to="/maintenance"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Maintenance
+                              </NavLink>
                            </li>
                         </ul>
                      </nav>
