@@ -13,6 +13,8 @@ import "firebase/auth";
 import "../../configs/firebaseInit";
 import "../../../styles/index.css";
 import CleanAndUploadFiles from "../CleanAndUploadFiles";
+import { UserObj } from "../../misc/chairLocTypes";
+// import { Roles } from "../../misc/chairLocTypes";
 
 // import { months } from "../misc/months";
 
@@ -25,7 +27,7 @@ class BodyUpload extends React.PureComponent<
       loggedInWithGoogle: boolean;
       googleToken: any;
       emailAddress: any;
-      userObject: any;
+      userObject: UserObj;
    },
    MyState
 > {
@@ -42,7 +44,7 @@ class BodyUpload extends React.PureComponent<
       loggedInWithGoogle: boolean;
       googleToken: any;
       emailAddress: any;
-      userObject: any;
+      userObject: UserObj;
    }) {
       super(props);
       this.numUpdates = 0;
@@ -54,7 +56,7 @@ class BodyUpload extends React.PureComponent<
       };
       this.signInToFirebase = this.signInToFirebase.bind(this);
       this.signOutOfFirebase = this.signOutOfFirebase.bind(this);
-      this.getAppBodyContent = this.getAppBodyContent.bind(this);
+      this.getBodyUploadContent = this.getBodyUploadContent.bind(this);
    }
 
    signInToFirebase(googleUserToken: any) {
@@ -105,7 +107,7 @@ class BodyUpload extends React.PureComponent<
       );
    };
 
-   getAppBodyContent() {
+   getBodyUploadContent() {
       if (this.props.loggedInWithGoogle) {
          return (
             <CleanAndUploadFiles
@@ -128,7 +130,7 @@ class BodyUpload extends React.PureComponent<
       if (this.props.loggedInWithGoogle && !this.state.isLoggedInToFirebase) {
          this.signInToFirebase(this.props.googleToken);
       }
-      return <div>{this.getAppBodyContent()}</div>;
+      return <div>{this.getBodyUploadContent()}</div>;
    }
 }
 

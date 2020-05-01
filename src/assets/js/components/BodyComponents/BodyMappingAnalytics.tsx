@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { divFlexRow } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
+import { UserObj } from "../../misc/chairLocTypes";
+// import { Roles } from "../../misc/chairLocTypes";
 
 class BodyMappingAnalytics extends Component<
    {
@@ -8,7 +10,7 @@ class BodyMappingAnalytics extends Component<
       loggedInWithGoogle: boolean;
       googleToken: any;
       emailAddress: any;
-      userObject: any;
+      userObject: UserObj;
    },
    {}
 > {
@@ -17,13 +19,15 @@ class BodyMappingAnalytics extends Component<
       loggedInWithGoogle: boolean;
       googleToken: any;
       emailAddress: any;
-      userObject: any;
+      userObject: UserObj;
    }) {
       super(props);
-      this.getAppBodyContent = this.getAppBodyContent.bind(this);
+      this.getBodyMappingAnalyticsBodyContent = this.getBodyMappingAnalyticsBodyContent.bind(
+         this
+      );
    }
 
-   getAppBodyContent() {
+   getBodyMappingAnalyticsBodyContent() {
       if (this.props.loggedInWithGoogle) {
          return (
             <>
@@ -35,7 +39,7 @@ class BodyMappingAnalytics extends Component<
       }
    }
    render() {
-      return <>{this.getAppBodyContent()}</>;
+      return <>{this.getBodyMappingAnalyticsBodyContent()}</>;
    }
 }
 

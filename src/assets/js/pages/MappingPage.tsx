@@ -8,11 +8,12 @@ import "../../styles/index.css";
 import HeaderComponent from "../components/HeaderComponent";
 import BodyMappingAnalytics from "../components/BodyComponents/BodyMappingAnalytics";
 import getLoggedinUser from "../fetches/getLoggedinUser";
+import * as clt from "../misc/chairLocTypes";
 
 // Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
 class MappingPage extends Component<
    {},
-   { isSignedIn: boolean; googleToken: any; userObjFmServer: any }
+   { isSignedIn: boolean; googleToken: any; userObjFmServer: clt.UserObj }
 > {
    auth2!: gapi.auth2.GoogleAuth;
    loggedInPhotoURL: string | undefined;
@@ -24,7 +25,15 @@ class MappingPage extends Component<
       this.state = {
          isSignedIn: false,
          googleToken: "dummyValue",
-         userObjFmServer: undefined,
+         userObjFmServer: {
+            username: "",
+            role: clt.Roles.notloggedin,
+            canAccess: {
+               chairLocsRead: false,
+               chairLocsWrite: false,
+               maintenance: false,
+            },
+         },
       };
       this.logout = this.logout.bind(this);
       this.onSuccess = this.onSuccess.bind(this);

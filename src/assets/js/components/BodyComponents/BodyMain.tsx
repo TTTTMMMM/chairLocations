@@ -26,62 +26,56 @@ class BodyMain extends Component<{
    }
 
    getMainBodyContent() {
-      if (!this.props.loggedInWithGoogle) {
-         return <img src={"../../../images/cherry.jpeg"} />;
-      } else if (
-         this.props.loggedInWithGoogle &&
-         this.props.userObject.role === Roles.admin
-      ) {
-         return (
-            <BodyMappingAnalytics
-               auth2={this.props.auth2}
-               loggedInWithGoogle={this.props.loggedInWithGoogle}
-               googleToken={this.props.googleToken}
-               emailAddress={this.props.emailAddress}
-               userObject={this.props.userObject}
-            ></BodyMappingAnalytics>
-         );
-      } else if (
-         this.props.loggedInWithGoogle &&
-         this.props.userObject.role === Roles.uploader
-      ) {
-         return (
-            <BodyUpload
-               auth2={this.props.auth2}
-               loggedInWithGoogle={this.props.loggedInWithGoogle}
-               googleToken={this.props.googleToken}
-               emailAddress={this.props.emailAddress}
-               userObject={this.props.userObject}
-            ></BodyUpload>
-         );
-      } else if (
-         this.props.loggedInWithGoogle &&
-         this.props.userObject.role === Roles.lurker
-      ) {
-         return (
-            <BodyMappingAnalytics
-               auth2={this.props.auth2}
-               loggedInWithGoogle={this.props.loggedInWithGoogle}
-               googleToken={this.props.googleToken}
-               emailAddress={this.props.emailAddress}
-               userObject={this.props.userObject}
-            ></BodyMappingAnalytics>
-         );
-      } else if (
-         this.props.loggedInWithGoogle &&
-         this.props.userObject.role === Roles.maintenance
-      ) {
-         return (
-            <BodyMaintenance
-               auth2={this.props.auth2}
-               loggedInWithGoogle={this.props.loggedInWithGoogle}
-               googleToken={this.props.googleToken}
-               emailAddress={this.props.emailAddress}
-               userObject={this.props.userObject}
-            ></BodyMaintenance>
-         );
-      } else {
-         return <img src={"../../../images/cherry.jpeg"} />;
+      switch (this.props.userObject.role) {
+         case Roles.notloggedin:
+            return <img src={"../../../images/cherry.jpeg"} />;
+            break;
+         case Roles.maintenance:
+            return (
+               <BodyMaintenance
+                  auth2={this.props.auth2}
+                  loggedInWithGoogle={this.props.loggedInWithGoogle}
+                  googleToken={this.props.googleToken}
+                  emailAddress={this.props.emailAddress}
+                  userObject={this.props.userObject}
+               ></BodyMaintenance>
+            );
+            break;
+         case Roles.lurker:
+            return (
+               <BodyMappingAnalytics
+                  auth2={this.props.auth2}
+                  loggedInWithGoogle={this.props.loggedInWithGoogle}
+                  googleToken={this.props.googleToken}
+                  emailAddress={this.props.emailAddress}
+                  userObject={this.props.userObject}
+               ></BodyMappingAnalytics>
+            );
+            break;
+         case Roles.uploader:
+            return (
+               <BodyUpload
+                  auth2={this.props.auth2}
+                  loggedInWithGoogle={this.props.loggedInWithGoogle}
+                  googleToken={this.props.googleToken}
+                  emailAddress={this.props.emailAddress}
+                  userObject={this.props.userObject}
+               ></BodyUpload>
+            );
+            break;
+         case Roles.admin:
+            return (
+               <BodyMappingAnalytics
+                  auth2={this.props.auth2}
+                  loggedInWithGoogle={this.props.loggedInWithGoogle}
+                  googleToken={this.props.googleToken}
+                  emailAddress={this.props.emailAddress}
+                  userObject={this.props.userObject}
+               ></BodyMappingAnalytics>
+            );
+            break;
+         default:
+            return <img src={"../../../images/cherry.jpeg"} />;
       }
    }
    render() {

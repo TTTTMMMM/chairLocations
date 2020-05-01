@@ -24,6 +24,7 @@ class LoginLogout extends Component<
    }
 
    render() {
+      // uncomment next line to see which icons are available!
       // console.dir(Object.keys(require("@fortawesome/free-solid-svg-icons")));
       if (typeof this.props.userObject != "undefined") {
          return this.props.isSignedIn ? (
