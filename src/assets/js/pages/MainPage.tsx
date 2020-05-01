@@ -6,13 +6,14 @@
 import React, { Component } from "react";
 import "../../styles/index.css";
 import HeaderComponent from "../components/HeaderComponent";
-import BodyUpload from "../components/BodyComponents/BodyUpload";
+import BodyMain from "../components/BodyComponents/BodyMain";
 import getLoggedinUser from "../fetches/getLoggedinUser";
+import * as clt from "../misc/chairLocTypes";
 
 // Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
 class MainPage extends Component<
    {},
-   { isSignedIn: boolean; googleToken: any; userObjFmServer: any }
+   { isSignedIn: boolean; googleToken: any; userObjFmServer: clt.UserObj }
 > {
    auth2!: gapi.auth2.GoogleAuth;
    loggedInPhotoURL: string | undefined;
@@ -24,7 +25,15 @@ class MainPage extends Component<
       this.state = {
          isSignedIn: false,
          googleToken: "dummyValue",
-         userObjFmServer: undefined,
+         userObjFmServer: {
+            username: "",
+            role: clt.Roles.notloggedin,
+            canAccess: {
+               chairLocsRead: false,
+               chairLocsWrite: false,
+               maintenance: false,
+            },
+         },
       };
       this.logout = this.logout.bind(this);
       this.onSuccess = this.onSuccess.bind(this);
@@ -117,13 +126,13 @@ class MainPage extends Component<
                googleToken={this.state.googleToken}
                userObject={this.state.userObjFmServer}
             ></HeaderComponent>
-            <BodyUpload
+            <BodyMain
                auth2={this.auth2}
                loggedInWithGoogle={this.state.isSignedIn}
                googleToken={this.state.googleToken}
                emailAddress={this.emailAddress}
                userObject={this.state.userObjFmServer}
-            ></BodyUpload>
+            ></BodyMain>
          </div>
       );
    }

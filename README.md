@@ -236,26 +236,35 @@ The user has to have logged in before a Firebase user object exists, therefore g
 
 ![](/markdownImages/validUserDocument.png)
 
-Role-to-Privilege Table
+**<ins>Role-to-Privilege for Server-side Access Table</ins>**
 
-| Role        | ChairLocs Read | ChairLocs Write | Maintenance Documents | Configuration Privs |
-| ----------- | -------------- | --------------- | --------------------- | ------------------- |
-| admin       | true           | true            | true                  | true                |
-| uploader    | true           | true            | true                  | false               |
-| lurker      | true           | false           | false                 | false               |
-| maintenance | false          | false           | true                  | false               |
+| Role        | ChairLocs Read | ChairLocs Write | Maintenance Documents |
+| ----------- | -------------- | --------------- | --------------------- |
+| admin       | true           | true            | true                  |
+| uploader    | true           | true            | true                  |
+| lurker      | true           | false           | false                 |
+| maintenance | false          | false           | true                  |
+
+**<ins>Role-to-Privilege for Client-side Capabilities Table</ins>**
+
+| Role        | App Configuration Privs | Upload Documents | Access Map Analytics | Perform Maintenance |
+| ----------- | ----------------------- | ---------------- | -------------------- | ------------------- |
+| admin       | true                    | true             | true                 | true                |
+| uploader    | false                   | true             | true                 | true                |
+| lurker      | false                   | false            | true                 | false               |
+| maintenance | false                   | false            | false                | true                |
 
 [Typescript Playground](https://www.typescriptlang.org/play)
 
 ```
-export enum Roles {
+export enum Roles {   // Roles govern what can be done/seen client-side
    admin = "admin",
    uploader = "uploader",
    lurker = "lurker",
    maintenance = "maintenance",
 }
 
-export interface AccessObj {
+export interface AccessObj {   // Accesses govern what can be done/seen server-side
    chairLocsRead?: boolean;
    chairLocsWrite?: boolean;
    maintenance?: boolean;
