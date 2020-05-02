@@ -4,13 +4,24 @@ import { UserObj } from "../../misc/chairLocTypes";
 import { Roles } from "../../misc/chairLocTypes";
 import ConfigContainer from "../ConfigContainer";
 
-class BodyConfig extends Component<{
-   auth2: any;
-   loggedInWithGoogle: boolean;
-   googleToken: any;
-   emailAddress: any;
-   userObject: UserObj;
-}> {
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/firestore";
+import "firebase/auth";
+
+interface MyState {
+   isLoggedInToFirebase?: boolean | false;
+}
+class BodyConfig extends Component<
+   {
+      auth2: any;
+      loggedInWithGoogle: boolean;
+      googleToken: any;
+      emailAddress: any;
+      userObject: UserObj;
+   },
+   MyState
+> {
    constructor(props: {
       auth2: any;
       loggedInWithGoogle: boolean;
@@ -19,24 +30,58 @@ class BodyConfig extends Component<{
       userObject: any;
    }) {
       super(props);
-      this.getAppBodyContent = this.getAppBodyContent.bind(this);
+
+      this.state = {
+         isLoggedInToFirebase: false,
+      };
+
+      this.getBodyConfigContent = this.getBodyConfigContent.bind(this);
    }
 
-   getAppBodyContent() {
-      if (!this.props.loggedInWithGoogle) {
+   signInToFirebase(googleUserToken: any) {
+      const fbCred = firebase.auth.GoogleAuthProvider.credential(
+         googleUserToken
+      );
+      firebase
+         .auth()
+         .signInWithCredential(fbCred)
+         .then(() => {
+            this.setState({ isLoggedInToFirebase: true });
+         })
+         .catch((err) => {
+            const firstLine = "C0101: Error signing into firebase:\n";
+            console.error(`${firstLine} error<${err.message}>`);
+         });
+   }
+
+   signOutOfFirebase() {
+      firebase
+         .auth()
+         .signOut()
+         .then(() => {
+            this.setState({ isLoggedInToFirebase: false });
+         })
+         .catch((err) => {
+            const firstLine =
+               "Couldn't log client-side firebase user out: " +
+               err.message.split("\n")[0];
+            const errCode = err.code;
+            console.log(`${firstLine} ${errCode}`);
+         });
+   }
+
+   getBodyConfigContent() {
+      if (!this.state.isLoggedInToFirebase) {
          return <h3>Not Authorized</h3>;
       } else if (
-         this.props.loggedInWithGoogle &&
+         this.state.isLoggedInToFirebase &&
          this.props.userObject.role === Roles.admin
       ) {
          return (
-            <ConfigContainer>
-               loggedInWithGoogle={this.props.loggedInWithGoogle}
+            <ConfigContainer
                auth2={this.props.auth2}
                idToken={this.props.googleToken}
-               loggedInToFirebase={this.state.isLoggedInToFirebase!}
-               userObject={this.props.userObject}
-            </ConfigContainer>
+            ></ConfigContainer>
          );
       } else if (
          this.props.loggedInWithGoogle &&
@@ -49,7 +94,13 @@ class BodyConfig extends Component<{
       }
    }
    render() {
-      return <>{this.getAppBodyContent()}</>;
+      if (!this.props.loggedInWithGoogle && this.state.isLoggedInToFirebase) {
+         this.signOutOfFirebase();
+      }
+      if (this.props.loggedInWithGoogle && !this.state.isLoggedInToFirebase) {
+         this.signInToFirebase(this.props.googleToken);
+      }
+      return <div>{this.getBodyConfigContent()}</div>;
    }
 }
 

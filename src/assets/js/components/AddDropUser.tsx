@@ -1,42 +1,40 @@
-import * as React from "react";
+import React from "react";
 var escapeHTML = require("escape-html");
 import JqxInput, {
    IInputProps,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
-import JqxNotification from "jqwidgets-scripts/jqwidgets-react-tsx/jqxnotification";
-
 import { rolesArray } from "../misc/chairLocTypes";
 import { Roles } from "../misc/chairLocTypes";
-
-// import removeUserHandler from "./componentHandlers/removeUserHandler";
-
-import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
-import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import addUser from "../fetches/addUser";
 import removeUser from "../fetches/removeUser";
+import { flexRowTop } from "../../styles/reactStyling";
+import { flexRowBottom } from "../../styles/reactStyling";
+import { flexRowButtons } from "../../styles/reactStyling";
+import { flexCol } from "../../styles/reactStyling";
+import { flexUnk } from "../../styles/reactStyling";
+import { fieldsetStyle } from "../../styles/reactStyling";
+import { labelStyleTop } from "../../styles/reactStyling";
+import { labelStyleBottom } from "../../styles/reactStyling";
 
 interface MyState extends IInputProps {
    // isAnAdmin: boolean;
    sourceRoles: Array<string>;
 }
-
 class AddDropUser extends React.PureComponent<
    {
-      isAdmin: boolean;
       auth2: any;
       idToken: any;
+      myPanel: any;
    },
    MyState
 > {
-   private myNotification = React.createRef<JqxNotification>();
    private usernameInput = React.createRef<JqxInput>();
    private userRoleInput = React.createRef<JqxInput>();
 
-   constructor(props: { isAdmin: boolean; auth2: any; idToken: any }) {
+   constructor(props: { auth2: any; idToken: any; myPanel: any }) {
       super(props);
       this.state = {
-         // isAnAdmin: false,
          sourceRoles: [...rolesArray],
       };
 
@@ -45,34 +43,36 @@ class AddDropUser extends React.PureComponent<
    }
 
    render() {
-      return this.props.isAdmin ? (
-         <div>
-            <div>
-               <div
-                  style={{
-                     display: "flex",
-                     flexDirection: "column",
-                  }}
-               >
-                  <JqxInput
-                     ref={this.usernameInput}
-                     minLength={1}
-                     maxLength={50}
-                     theme={"fresh"}
-                     placeHolder={"user name"}
-                  />
-                  <JqxInput
-                     ref={this.userRoleInput}
-                     minLength={1}
-                     maxLength={15}
-                     theme={"fresh"}
-                     source={this.state.sourceRoles}
-                     placeHolder={"user role"}
-                  />
+      return (
+         <fieldset style={fieldsetStyle}>
+            <legend>Manage Users</legend>
+            <div style={flexUnk} className={"flexUnk"}>
+               <div style={flexCol} className={"flexCol"}>
+                  <div style={flexRowTop} className={"flexRowTop"}>
+                     <label style={labelStyleTop}>Username:</label>
+                     <JqxInput
+                        ref={this.usernameInput}
+                        minLength={1}
+                        maxLength={50}
+                        theme={"fresh"}
+                        placeHolder={"user name"}
+                     />
+                  </div>
+                  <div style={flexRowBottom} className={"flexRowBottom"}>
+                     <label style={labelStyleBottom}>Role:</label>
+                     <JqxInput
+                        ref={this.userRoleInput}
+                        minLength={1}
+                        maxLength={50}
+                        theme={"fresh"}
+                        placeHolder={"user role"}
+                        source={this.state.sourceRoles}
+                     />
+                  </div>
                </div>
-               <div>
+               <div style={flexRowButtons} className={"flexRowButtons"}>
                   <JqxButton
-                     width={48}
+                     width={58}
                      imgPosition={"center"}
                      textPosition={"center"}
                      textImageRelation={"imageAboveText"}
@@ -82,7 +82,7 @@ class AddDropUser extends React.PureComponent<
                      Add
                   </JqxButton>
                   <JqxButton
-                     width={48}
+                     width={58}
                      imgPosition={"center"}
                      textPosition={"center"}
                      textImageRelation={"imageAboveText"}
@@ -93,38 +93,7 @@ class AddDropUser extends React.PureComponent<
                   </JqxButton>
                </div>
             </div>
-            <div>
-               <JqxNotification
-                  ref={this.myNotification}
-                  showCloseButton={false}
-                  width={"100%"}
-                  height={35}
-                  icon={{ height: 0, width: 0, padding: 0 }}
-                  autoClose={true}
-                  appendContainer={"#container"}
-                  opacity={1}
-                  theme={"fresh"}
-                  autoOpen={true}
-                  autoCloseDelay={90000}
-               >
-                  <div id="content">Manage Users</div>
-               </JqxNotification>
-               <div
-                  id="container"
-                  style={{
-                     width: "244px",
-                     height: "37px",
-                     marginTop: "2px",
-                     opacity: 1.0,
-                     backgroundColor: "#F2F2F2",
-                     border: "1px solid #AAAAAA",
-                     overflow: "auto",
-                  }}
-               />
-            </div>
-         </div>
-      ) : (
-         <div style={{ display: "none" }}></div>
+         </fieldset>
       );
    }
 
@@ -137,25 +106,25 @@ class AddDropUser extends React.PureComponent<
       );
       const indexOfRole = Object.keys(Roles).indexOf(userRole);
       if (indexOfRole < 0) {
-         this.myNotification.current!.closeLast();
-         document.getElementById("content")!.innerHTML =
-            "Must select one of the roles in the autocomplete but not 'admin'.";
-         this.myNotification.current!.open();
+         this.props.myPanel.current!.append(
+            `<p style="font-style: normal; color:blue; font-size:12px;">Must select one of the roles in the autocomplete but not 'admin'.</p>`
+         );
       } else if (indexOfRole === 0) {
-         this.myNotification.current!.closeLast();
-         document.getElementById("content")!.innerHTML =
-            "Cannot set user role to 'admin.'";
-         this.myNotification.current!.open();
+         this.props.myPanel.current!.append(
+            `<p style="font-style: normal; color:blue; font-size:12px;">Cannot set user role to 'admin.'</p>`
+         );
       } else {
          addUser(this.props.auth2, this.props.idToken, userName, indexOfRole)
             .then((retVal: any) => {
-               this.myNotification.current!.closeLast();
                const msg = retVal.message;
-               document.getElementById("content")!.innerHTML = msg;
-               this.myNotification.current!.open();
+               this.props.myPanel.current!.append(
+                  `<p style="font-style: normal; color:green; font-size:12px;">${msg}</p>`
+               );
             })
             .catch((err: any) => {
-               console.error(`C0008: ${err}`);
+               this.props.myPanel.current!.append(
+                  `<p style="font-style: normal; color:red; font-size:12px;">C0018: ${err}</p>`
+               );
             });
       }
    }
@@ -166,13 +135,15 @@ class AddDropUser extends React.PureComponent<
       );
       removeUser(this.props.auth2, this.props.idToken, userName)
          .then((retVal: any) => {
-            this.myNotification.current!.closeLast();
             const msg = retVal.message;
-            document.getElementById("content")!.innerHTML = msg;
-            this.myNotification.current!.open();
+            this.props.myPanel.current!.append(
+               `<p style="font-style: normal; color:green; font-size:12px;">${msg}</p>`
+            );
          })
          .catch((err: any) => {
-            console.error(`C0009: ${err}`);
+            this.props.myPanel.current!.append(
+               `<p style="font-style: normal; color:red; font-size:12px;">C0019: ${err}</p>`
+            );
          });
    }
 }
