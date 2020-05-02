@@ -64,9 +64,10 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
    };
 
    const onMapLoad = (map: any) => {
-      console.log(`.......................`);
-      console.log(`......loading map......`);
-      console.log(`.......................`);
+      console.log(
+         `%cloading map`,
+         "background:white; border: 3px solid red; margin: 2px; padding: 3px; color:red;"
+      );
       setMapRef(map);
    };
 

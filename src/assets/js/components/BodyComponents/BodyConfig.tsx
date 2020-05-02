@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { divFlexRow } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
 import { Roles } from "../../misc/chairLocTypes";
+import ConfigContainer from "../ConfigContainer";
 
 class BodyConfig extends Component<{
    auth2: any;
@@ -30,9 +30,13 @@ class BodyConfig extends Component<{
          this.props.userObject.role === Roles.admin
       ) {
          return (
-            <>
-               <div style={divFlexRow}>Body Config Component</div>
-            </>
+            <ConfigContainer>
+               loggedInWithGoogle={this.props.loggedInWithGoogle}
+               auth2={this.props.auth2}
+               idToken={this.props.googleToken}
+               loggedInToFirebase={this.state.isLoggedInToFirebase!}
+               userObject={this.props.userObject}
+            </ConfigContainer>
          );
       } else if (
          this.props.loggedInWithGoogle &&
