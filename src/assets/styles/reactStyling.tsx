@@ -50,7 +50,7 @@ export const flexRowButtons: CSSProperties = {
    display: "flex",
    flexDirection: "row",
    justifyContent: "center",
-   marginTop: "5px",
+   marginTop: "20px",
 };
 
 export const flexCol: CSSProperties = {
@@ -88,6 +88,16 @@ export const fieldsetStyle: CSSProperties = {
    fontFamily: "Josefin Sans",
 };
 
+export const fieldsetBeachStyle: CSSProperties = {
+   height: "300px",
+   marginLeft: " 5px",
+   borderRadius: "5px",
+   border: "2px hsla(12, 95%, 47%, 0.93) solid",
+   background: "rgb(250, 245, 198)",
+   color: "black",
+   fontFamily: "Josefin Sans",
+};
+
 export const flexHeader: CSSProperties = {
    marginLeft: " 5px",
    borderRadius: "5px",
@@ -115,12 +125,12 @@ export const textInputStyleBottom: CSSProperties = {
 
 export const labelStyleTop: CSSProperties = {
    marginTop: "5px",
-   fontSize: "20px",
+   fontSize: "14px",
    marginRight: "7px",
 };
 
 export const labelStyleBottom: CSSProperties = {
    marginTop: "3px",
-   fontSize: "20px",
+   fontSize: "14px",
    marginRight: "7px",
 };

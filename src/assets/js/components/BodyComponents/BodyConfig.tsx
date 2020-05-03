@@ -81,6 +81,7 @@ class BodyConfig extends Component<
             <ConfigContainer
                auth2={this.props.auth2}
                idToken={this.props.googleToken}
+               loggedInToFirebase={this.state.isLoggedInToFirebase}
             ></ConfigContainer>
          );
       } else if (

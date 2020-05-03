@@ -37,6 +37,9 @@ const addUser = (
          };
          break;
       default:
+         return new Promise((resolve) => {
+            resolve({ message: "Invalid role" });
+         });
    }
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
