@@ -5,12 +5,27 @@ import { flexColContainer } from "../../styles/reactStyling";
 import { flexRowSplit } from "../../styles/reactStyling";
 import { divFlexRow } from "../../styles/reactStyling";
 import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
+import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 
 class ConfigContainer extends Component<
    { auth2: any; idToken: any; loggedInToFirebase: boolean },
    {}
 > {
    private myPanel = React.createRef<JqxPanel>();
+   private clearConsoleButton = React.createRef<JqxButton>();
+
+   constructor(props: {
+      auth2: any;
+      idToken: any;
+      loggedInToFirebase: boolean;
+   }) {
+      super(props);
+
+      this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
+         this
+      );
+   }
+
    render() {
       return (
          <>
@@ -28,6 +43,16 @@ class ConfigContainer extends Component<
                      height={150}
                      theme={"fresh"}
                   />
+                  <JqxButton
+                     ref={this.clearConsoleButton}
+                     onClick={this.clearConsoleButtonClicked}
+                     width={325}
+                     height={30}
+                     theme={"fresh"}
+                     textPosition={"center"}
+                  >
+                     Clear Console
+                  </JqxButton>
                </div>
                <div style={flexColContainer} className={"configContainerDiv"}>
                   <ShowBeaches
@@ -46,6 +71,10 @@ class ConfigContainer extends Component<
             </div>
          </>
       );
+   }
+
+   private clearConsoleButtonClicked() {
+      this.myPanel.current!.clearcontent();
    }
 }
 

@@ -68,13 +68,16 @@ exports.addUser = async (req, res, admin, functions) => {
             }
          } else {
             firstLine = `0894: Invalid username ${theUser.username} or access properties [${canAccessObj}]`;
-            errCode = 0894;
-            return res.status(400).render("400", { firstLine, errCode });
+            return res.status(400).json({
+               message: `0894:  Invalid username [${
+                  theUser.username
+               }] or access properties [${JSON.stringify(canAccessObj)}]`,
+            });
          }
       } else {
-         firstLine = `0893: Invalid username or access properties`;
-         errCode = 0893;
-         return res.status(400).render("400", { firstLine, errCode });
+         return res
+            .status(400)
+            .json({ message: `0893: Invalid username or access properties` });
       }
    } else {
       return res.status(401).json({

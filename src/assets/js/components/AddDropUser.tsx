@@ -110,18 +110,18 @@ class AddDropUser extends React.PureComponent<
       const indexOfRole = Object.keys(Roles).indexOf(userRole);
       if (indexOfRole < 0) {
          this.props.myPanel.current!.append(
-            `<p style="font-style: normal; color:blue; font-size:12px;">Must select one of the roles in the autocomplete but not 'admin'.</p>`
+            `<p style="font-style: normal; color:red; font-size:12px;">Must select one of the roles in the autocomplete but not 'admin'.</p>`
          );
       } else if (indexOfRole === 0) {
          this.props.myPanel.current!.append(
-            `<p style="font-style: normal; color:blue; font-size:12px;">Cannot set user role to 'admin.'</p>`
+            `<p style="font-style: normal; color:red; font-size:12px;">Cannot set user role to 'admin.'</p>`
          );
       } else {
          addUser(this.props.auth2, this.props.idToken, userName, indexOfRole)
             .then((retVal: any) => {
                const msg = retVal.message;
                this.props.myPanel.current!.append(
-                  `<p style="font-style: normal; color:green; font-size:12px;">${msg}</p>`
+                  `<p style="font-style: normal; color:blue; font-size:12px;">${msg}</p>`
                );
             })
             .catch((err: any) => {
