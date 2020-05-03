@@ -8,7 +8,6 @@ import JqxDataTable, {
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
 import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
-
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
@@ -17,11 +16,13 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
+
 import { divFlexRowBeach } from "../../styles/reactStyling";
 import { divThin } from "../../styles/reactStyling";
 import { labelStyleBeach } from "../../styles/reactStyling";
-
 import { fieldsetBeachStyle } from "../../styles/reactStyling";
+
+import addBeach from "../fetches/addBeach";
 
 import cellRendererDelete from "../renderers/cellRendererDelete";
 
@@ -112,15 +113,15 @@ class ShowBeaches extends React.PureComponent<
       querySnapshot.forEach(
          (doc: {
             data: () => {
-               BEACH: string;
+               beach: string;
             };
             id: any;
          }) => {
-            const { BEACH } = doc.data();
+            const { beach } = doc.data();
             beachesWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
-               BEACH,
+               beach,
             });
          }
       );
@@ -138,7 +139,7 @@ class ShowBeaches extends React.PureComponent<
       if (this.props.loggedInToFirebase) {
          const source = {
             datafields: [
-               { name: "BEACH", type: "string" },
+               { name: "beach", type: "string" },
                { name: "key", type: "string" },
             ],
             id: "key",
@@ -150,7 +151,7 @@ class ShowBeaches extends React.PureComponent<
                this.state.beachesWatch.forEach((val: any) => {
                   data[i++] = {
                      key: val.key,
-                     BEACH: val.BEACH,
+                     beach: val.beach,
                   };
                   this.numRows!++;
                });
@@ -161,7 +162,7 @@ class ShowBeaches extends React.PureComponent<
          // --
          const columnWidths = [
             ["", 33] /* trash can */,
-            ["BEACH", 200],
+            ["beach", 200],
          ];
          this.columns = [
             {
@@ -175,7 +176,7 @@ class ShowBeaches extends React.PureComponent<
             {
                text: "Beach",
                width: columnWidths[1][1],
-               datafield: "BEACH",
+               datafield: "beach",
                align: "center",
                cellclassname: "BeachClass",
                editable: false,
@@ -194,7 +195,7 @@ class ShowBeaches extends React.PureComponent<
                   pageable={true}
                   altRows={true}
                   autoRowHeight={true}
-                  height={275}
+                  height={295}
                   sortable={true}
                   onRowSelect={this.onRowSelect}
                   columnsReorder={true}
@@ -266,9 +267,18 @@ class ShowBeaches extends React.PureComponent<
       const beachName = escapeHTML(
          this.beachInput.current!.val().trim().substring(0, 49)
       );
-      this.props.myPanel.current!.append(
-         `<br style="color:#389304 ; font-size:10px;">${beachName}`
-      );
+      addBeach(this.props.auth2, this.props.idToken, beachName)
+         .then((retVal: any) => {
+            const msg = retVal.message;
+            this.props.myPanel.current!.append(
+               `<p style="font-style: normal; color:blue; font-size:12px;">${msg}</p>`
+            );
+         })
+         .catch((err: any) => {
+            this.props.myPanel.current!.append(
+               `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
+            );
+         });
    }
 }
 

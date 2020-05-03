@@ -25,7 +25,7 @@ exports.getKeptChairHeaders = async (req, res, admin) => {
             })
             .catch((err) => {
                const firstLine =
-                  "0201: Couldn't log user out: " + err.message.split("\n")[0];
+                  "0231: Couldn't log user out: " + err.message.split("\n")[0];
                const errCode = err.code;
                res.status(500).render("500", { firstLine, errCode });
                console.log(`${firstLine} ${err}`);
@@ -36,7 +36,6 @@ exports.getKeptChairHeaders = async (req, res, admin) => {
             "no-cache, private, max-age=2, s-maxage=2, must-revalidate"
          );
          return res.status(200).json(keptProps);
-         // return res.status(200).json(res.locals.loggedInUser);
       })
       .catch((err) => {
          const firstLine = "0197: Query Error: " + err.message.split("\n")[0];

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import AddDropUser from "./AddDropUser";
 import ShowBeaches from "./ShowBeaches";
+// @ts-ignore
 import { flexColContainer } from "../../styles/reactStyling";
+// @ts-ignore
+import { flexRowContainer } from "../../styles/reactStyling";
+
 import { flexRowSplit } from "../../styles/reactStyling";
 import { divFlexRow } from "../../styles/reactStyling";
 import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
@@ -54,7 +58,8 @@ class ConfigContainer extends Component<
                      Clear Console
                   </JqxButton>
                </div>
-               <div style={flexColContainer} className={"configContainerDiv"}>
+               <div style={flexRowSplit}></div>
+               <div style={divFlexRow} className={"configContainerDiv"}>
                   <ShowBeaches
                      auth2={this.props.auth2}
                      idToken={this.props.idToken}

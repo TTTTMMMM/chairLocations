@@ -70,7 +70,7 @@ class AddDropUser extends React.PureComponent<
                         theme={"fresh"}
                         placeHolder={"user role"}
                         source={this.state.sourceRoles.slice(
-                           0,
+                           1,
                            this.state.sourceRoles.length - 1
                         )}
                      />

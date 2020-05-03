@@ -16,6 +16,10 @@
             "function": "api"
          },
          {
+            "source": "/beaches{,/**}",
+            "function": "api"
+         },
+         {
             "source": "**",
             "destination": "/index.html"
          }

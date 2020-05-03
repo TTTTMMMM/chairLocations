@@ -80,6 +80,14 @@ export const flexColContainer: CSSProperties = {
    marginLeft: "25px",
 };
 
+export const flexRowContainer: CSSProperties = {
+   display: "inline-block",
+   flexDirection: "row",
+   marginTop: "20px",
+   justifyContent: "center",
+   marginLeft: "25px",
+};
+
 export const buttonStyle: CSSProperties = {
    height: "30px",
    border: "2px solid hsla(12, 95%, 47%, 0.93)",
@@ -102,7 +110,7 @@ export const fieldsetStyle: CSSProperties = {
 };
 
 export const fieldsetBeachStyle: CSSProperties = {
-   height: "345px",
+   height: "365px",
    marginLeft: " 5px",
    borderRadius: "5px",
    border: "2px hsla(12, 95%, 47%, 0.93) solid",

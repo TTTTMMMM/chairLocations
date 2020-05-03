@@ -30,6 +30,8 @@ const {
 
 const { addChairLoc } = require("./public/lib/js/handlers/addChairLoc");
 
+const { addBeach } = require("./public/lib/js/handlers/addBeach");
+
 const { render404 } = require("./public/lib/js/renderings/render404");
 
 // -----------------------------------------------------------------------
@@ -81,6 +83,10 @@ api.post("/chairheaders", (req, res) => {
 
 api.put("/chairheaders/keep/:id", (req, res) => {
    updateChairHeader(req, res, admin);
+});
+
+api.post("/beaches", (req, res) => {
+   addBeach(req, res, admin);
 });
 
 api.get("*", (req, res) => {
