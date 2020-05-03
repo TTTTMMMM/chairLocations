@@ -7,6 +7,13 @@ export const divFlexRow: CSSProperties = {
    justifyContent: "center",
 };
 
+export const divFlexRowBeach: CSSProperties = {
+   marginTop: "15px",
+   display: "flex",
+   flexDirection: "row",
+   justifyContent: "center",
+};
+
 export const divFlexCol: CSSProperties = {
    display: "flex",
    flexDirection: "column",
@@ -44,6 +51,12 @@ export const flexRowSplit: CSSProperties = {
    margin: "20px",
    borderBottom: "1px solid #808B96",
    marginTop: "40px",
+};
+
+export const divThin: CSSProperties = {
+   marginTop: "3px",
+   display: "flex",
+   flexDirection: "row",
 };
 
 export const flexRowButtons: CSSProperties = {
@@ -89,7 +102,7 @@ export const fieldsetStyle: CSSProperties = {
 };
 
 export const fieldsetBeachStyle: CSSProperties = {
-   height: "300px",
+   height: "345px",
    marginLeft: " 5px",
    borderRadius: "5px",
    border: "2px hsla(12, 95%, 47%, 0.93) solid",
@@ -133,4 +146,10 @@ export const labelStyleBottom: CSSProperties = {
    marginTop: "3px",
    fontSize: "14px",
    marginRight: "7px",
+};
+
+export const labelStyleBeach: CSSProperties = {
+   marginTop: "5px",
+   fontSize: "14px",
+   marginRight: "3px",
 };

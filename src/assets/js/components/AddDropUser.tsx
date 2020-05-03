@@ -3,6 +3,9 @@ var escapeHTML = require("escape-html");
 import JqxInput, {
    IInputProps,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
+
+import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
+import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 import { rolesArray } from "../misc/chairLocTypes";
 import { Roles } from "../misc/chairLocTypes";
@@ -80,6 +83,7 @@ class AddDropUser extends React.PureComponent<
                      textPosition={"center"}
                      textImageRelation={"imageAboveText"}
                      imgSrc={"./images/addUser.png"}
+                     theme={"fresh"}
                      onClick={this.addUserButtonClicked}
                   >
                      Add
@@ -90,6 +94,7 @@ class AddDropUser extends React.PureComponent<
                      textPosition={"center"}
                      textImageRelation={"imageAboveText"}
                      imgSrc={"./images/removeUser.png"}
+                     theme={"fresh"}
                      onClick={this.removeUserButtonClicked}
                   >
                      Remove

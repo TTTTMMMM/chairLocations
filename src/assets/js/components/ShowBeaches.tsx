@@ -1,9 +1,12 @@
 import * as React from "react";
+var escapeHTML = require("escape-html");
+
 // @ts-ignore
 import JqxDataTable, {
    IDataTableProps,
    jqx,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
+import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
@@ -14,7 +17,10 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
-import { divFlexRow } from "../../styles/reactStyling";
+import { divFlexRowBeach } from "../../styles/reactStyling";
+import { divThin } from "../../styles/reactStyling";
+import { labelStyleBeach } from "../../styles/reactStyling";
+
 import { fieldsetBeachStyle } from "../../styles/reactStyling";
 
 import cellRendererDelete from "../renderers/cellRendererDelete";
@@ -42,7 +48,7 @@ class ShowBeaches extends React.PureComponent<
 
    private myBeachesTable = React.createRef<JqxDataTable>();
    private addBeachButton = React.createRef<JqxButton>();
-   // private mapModeButton = React.createRef<JqxButton>();
+   private beachInput = React.createRef<JqxInput>();
 
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -78,6 +84,7 @@ class ShowBeaches extends React.PureComponent<
          },
       };
       this.getBeachesContent = this.getBeachesContent.bind(this);
+      this.addBeachButtonClicked = this.addBeachButtonClicked.bind(this);
    }
 
    subscribeToBeaches() {
@@ -197,13 +204,26 @@ class ShowBeaches extends React.PureComponent<
                   editSettings={this.state.editSettings}
                   pageSize={50}
                />
-               <div style={divFlexRow}>
+               <div style={divThin}>
+                  <label style={labelStyleBeach}>Beach:</label>
+                  <JqxInput
+                     ref={this.beachInput}
+                     minLength={3}
+                     maxLength={50}
+                     theme={"fresh"}
+                     width={150}
+                     placeHolder={"Name of Beach"}
+                  />
+               </div>
+               <div style={divFlexRowBeach}>
                   <JqxButton
                      ref={this.addBeachButton}
                      onClick={this.addBeachButtonClicked}
-                     width={200}
-                     height={30}
+                     width={90}
+                     height={50}
                      theme={"fresh"}
+                     textImageRelation={"imageAboveText"}
+                     imgSrc={"./images/beach1.png"}
                      textPosition={"center"}
                   >
                      Add Beach
@@ -243,8 +263,11 @@ class ShowBeaches extends React.PureComponent<
    }
 
    private addBeachButtonClicked() {
+      const beachName = escapeHTML(
+         this.beachInput.current!.val().trim().substring(0, 49)
+      );
       this.props.myPanel.current!.append(
-         `<br style="color:#389304 ; font-size:10px;"> addBeachButtonClicked()`
+         `<br style="color:#389304 ; font-size:10px;">${beachName}`
       );
    }
 }
