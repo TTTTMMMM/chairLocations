@@ -3,11 +3,17 @@
 
 interface BeachObj {
    beach: string;
+   rentalagent: string;
 }
 
-const addBeach = (auth2: any, id_token: any, theBeach: string) => {
+const addBeach = (
+   auth2: any,
+   id_token: any,
+   theBeach: string,
+   rentalAgent: string
+) => {
    let myHeaders = new Headers();
-   let beachObj: BeachObj = { beach: theBeach };
+   let beachObj: BeachObj = { beach: theBeach, rentalagent: rentalAgent };
 
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");

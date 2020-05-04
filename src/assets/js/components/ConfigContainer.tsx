@@ -66,12 +66,6 @@ class ConfigContainer extends Component<
                      loggedInToFirebase={this.props.loggedInToFirebase}
                      myPanel={this.myPanel}
                   ></ShowBeaches>
-                  <div style={flexRowSplit}></div>
-                  <AddDropUser
-                     auth2={this.props.auth2}
-                     idToken={this.props.idToken}
-                     myPanel={this.myPanel}
-                  ></AddDropUser>
                </div>
             </div>
          </>

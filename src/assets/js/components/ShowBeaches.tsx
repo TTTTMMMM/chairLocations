@@ -17,10 +17,7 @@ import "firebase/firestore";
 import "firebase/auth";
 import "../configs/firebaseInit";
 
-import { divFlexRowBeach } from "../../styles/reactStyling";
-import { divThin } from "../../styles/reactStyling";
-import { labelStyleBeach } from "../../styles/reactStyling";
-import { fieldsetBeachStyle } from "../../styles/reactStyling";
+import * as rs from "../../styles/reactStyling";
 
 import addBeach from "../fetches/addBeach";
 import removeBeach from "../fetches/removeBeach";
@@ -51,6 +48,7 @@ class ShowBeaches extends React.PureComponent<
    private myBeachesTable = React.createRef<JqxDataTable>();
    private addBeachButton = React.createRef<JqxButton>();
    private beachInput = React.createRef<JqxInput>();
+   private rentalAgentInput = React.createRef<JqxInput>();
 
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -116,14 +114,16 @@ class ShowBeaches extends React.PureComponent<
          (doc: {
             data: () => {
                beach: string;
+               rentalagent: string;
             };
             id: any;
          }) => {
-            const { beach } = doc.data();
+            let { beach, rentalagent } = doc.data();
             beachesWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
                beach,
+               rentalagent,
             });
          }
       );
@@ -133,7 +133,7 @@ class ShowBeaches extends React.PureComponent<
       this.numRows++;
       console.log(
          `%c beachesWatch<${this.numUpdates}>`,
-         "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
+         "background:rgb(250, 245, 198); border: 3px solid hsla(12, 95%, 47%, 0.98); margin: 2px; padding: 3px; color:hsla(12, 95%, 47%, 0.98);"
       );
    };
 
@@ -143,6 +143,7 @@ class ShowBeaches extends React.PureComponent<
             datafields: [
                { name: "beach", type: "string" },
                { name: "key", type: "string" },
+               { name: "rentalagent", type: "string" },
             ],
             id: "key",
             dataType: "json",
@@ -154,6 +155,7 @@ class ShowBeaches extends React.PureComponent<
                   data[i++] = {
                      key: val.key,
                      beach: val.beach,
+                     rentalagent: val.rentalagent,
                   };
                   this.numRows!++;
                });
@@ -165,6 +167,7 @@ class ShowBeaches extends React.PureComponent<
          const columnWidths = [
             ["", 33] /* trash can */,
             ["beach", 200],
+            ["rentalagent", 250],
          ];
          this.columns = [
             {
@@ -176,6 +179,14 @@ class ShowBeaches extends React.PureComponent<
                cellclassname: "trashcan",
             },
             {
+               text: "Rental Agent",
+               width: columnWidths[2][1],
+               datafield: "rentalagent",
+               align: "center",
+               cellclassname: "RentalAgentClass",
+               editable: false,
+            },
+            {
                text: "Beach",
                width: columnWidths[1][1],
                datafield: "beach",
@@ -185,11 +196,11 @@ class ShowBeaches extends React.PureComponent<
             },
          ];
          return (
-            <fieldset style={fieldsetBeachStyle}>
-               <legend>Manage Beaches</legend>
+            <fieldset style={rs.fieldsetBeachStyle}>
+               <legend>Manage Rental Agents/Beaches</legend>
                <JqxDataTable
                   ref={this.myBeachesTable}
-                  width={225}
+                  width={425}
                   theme={"fresh"}
                   source={this.dataAdapter}
                   columns={this.columns}
@@ -197,7 +208,7 @@ class ShowBeaches extends React.PureComponent<
                   pageable={true}
                   altRows={true}
                   autoRowHeight={true}
-                  height={295}
+                  height={350}
                   sortable={true}
                   onRowDoubleClick={this.onRowDoubleClick}
                   columnsReorder={true}
@@ -207,8 +218,19 @@ class ShowBeaches extends React.PureComponent<
                   editSettings={this.state.editSettings}
                   pageSize={100}
                />
-               <div style={divThin}>
-                  <label style={labelStyleBeach}>Beach:</label>
+               <div style={rs.divThin}>
+                  <label style={rs.labelStyleRental}>RentalAgent:</label>
+                  <JqxInput
+                     ref={this.rentalAgentInput}
+                     minLength={3}
+                     maxLength={50}
+                     theme={"fresh"}
+                     width={270}
+                     placeHolder={"Rental Agent"}
+                  />
+               </div>
+               <div style={rs.divThin}>
+                  <label style={rs.labelStyleBeach}>Beach:</label>
                   <JqxInput
                      ref={this.beachInput}
                      minLength={3}
@@ -218,18 +240,18 @@ class ShowBeaches extends React.PureComponent<
                      placeHolder={"Name of Beach"}
                   />
                </div>
-               <div style={divFlexRowBeach}>
+               <div style={rs.divFlexRowBeach}>
                   <JqxButton
                      ref={this.addBeachButton}
                      onClick={this.addBeachButtonClicked}
-                     width={90}
+                     width={140}
                      height={50}
                      theme={"fresh"}
                      textImageRelation={"imageAboveText"}
                      imgSrc={"./images/beach1.png"}
                      textPosition={"center"}
                   >
-                     Add Beach
+                     Add Rental/Beach
                   </JqxButton>
                </div>
             </fieldset>
@@ -277,7 +299,10 @@ class ShowBeaches extends React.PureComponent<
       const beachName = escapeHTML(
          this.beachInput.current!.val().trim().substring(0, 49)
       );
-      addBeach(this.props.auth2, this.props.idToken, beachName)
+      const rentalAgent = escapeHTML(
+         this.rentalAgentInput.current!.val().trim().substring(0, 49)
+      );
+      addBeach(this.props.auth2, this.props.idToken, beachName, rentalAgent)
          .then((retVal: any) => {
             const msg = retVal.message;
             this.props.myPanel.current!.append(

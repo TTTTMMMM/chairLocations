@@ -16,12 +16,36 @@ exports.addBeach = async (req, res, admin) => {
          let bName = escapeHTML(
             theBeach.beach.trim().substring(0, 49).toUpperCase()
          );
-         const validBeachRegex = /^[A-Z',.\- ]{3,50}$/gi;
+         const validBeachRegex = /^[A-Z39'&#;,.\- ]{3,50}$/gi;
          let valid_Beach = bName.match(validBeachRegex);
-         if (valid_Beach != null) {
-            let docName = valid_Beach[0].replace(/\s+/g, "");
+         let raName = escapeHTML(
+            theBeach.rentalagent.trim().substring(0, 49).toUpperCase()
+         );
+         const validRentalAgentRegex = /^[A-Z39'&#;,.\- ]{3,50}$/gi;
+         let valid_RentalAgent = raName.match(validRentalAgentRegex);
+         if (valid_Beach != null && valid_RentalAgent != null) {
+            let beachPart = valid_Beach[0]
+               .replace(/\s+/g, "")
+               .replace("&amp;", "&")
+               .replace("&AMP;", "&")
+               .replace("&#39;", "'"); // eliminate whitespace and correct for ampersand and apostrophe
+            let rentalAgentPart = valid_RentalAgent[0]
+               .replace(/\s+/g, "")
+               .replace("&amp;", "&")
+               .replace("&AMP;", "&")
+               .replace("&#39;", "'"); // eliminate whitespace and correct for ampersand and apostrophe
+            let docName = rentalAgentPart.concat("_").concat(beachPart);
+            let beachField = valid_Beach[0]
+               .replace("&amp;", "&")
+               .replace("&AMP;", "&")
+               .replace("&#39;", "'");
+            let rentalAgentField = valid_RentalAgent[0]
+               .replace("&amp;", "&")
+               .replace("&AMP;", "&")
+               .replace("&#39;", "'");
             let beachObj = {};
-            beachObj.beach = valid_Beach[0];
+            beachObj.beach = beachField;
+            beachObj.rentalagent = rentalAgentField;
             try {
                await admin
                   .firestore()
@@ -30,7 +54,7 @@ exports.addBeach = async (req, res, admin) => {
                   .set(beachObj);
                try {
                   await firebaseApp.auth().signOut();
-                  let msg = `Added ${beachObj.beach}`;
+                  let msg = `Added ${docName}`;
                   console.log(msg);
                   console.log(`Logged out`);
                   res.append("Cache-Control", "no-cache, must-revalidate");
@@ -53,14 +77,20 @@ exports.addBeach = async (req, res, admin) => {
                });
             }
          } else {
-            firstLine = `0794: Invalid beach name [${theBeach.beach}]`;
+            firstLine = `0794: Invalid beach name [${theBeach.beach}] [${
+               bName.match(validBeachRegex)[0]
+            }] or rental agent [${theBeach.rentalagent}] [${raName.match(
+               validRentalAgentRegex[0]
+            )}]`;
             console.log(`${firstLine}`);
             return res.status(400).json({
-               message: `0794:  Invalid beach name [${theBeach.beach}]`,
+               message: `${firstLine}`,
             });
          }
       } else {
-         return res.status(400).json({ message: `0793: Invalid beach` });
+         return res
+            .status(400)
+            .json({ message: `0793: Invalid beach/rental object` });
       }
    } else {
       return res.status(401).json({

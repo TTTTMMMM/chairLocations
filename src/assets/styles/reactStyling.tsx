@@ -110,7 +110,7 @@ export const fieldsetStyle: CSSProperties = {
 };
 
 export const fieldsetBeachStyle: CSSProperties = {
-   height: "365px",
+   height: "400px",
    marginLeft: " 5px",
    borderRadius: "5px",
    border: "2px hsla(12, 95%, 47%, 0.93) solid",
@@ -158,6 +158,12 @@ export const labelStyleBottom: CSSProperties = {
 
 export const labelStyleBeach: CSSProperties = {
    marginTop: "5px",
-   fontSize: "14px",
+   fontSize: "13px",
+   marginRight: "3px",
+};
+
+export const labelStyleRental: CSSProperties = {
+   marginTop: "5px",
+   fontSize: "13px",
    marginRight: "3px",
 };
