@@ -293,7 +293,6 @@ export interface UserObj {
 #### <ins>TODO Physical World</ins>
 
 1. Repair rototiller
-2. Machete bamboo
 
 ---
 
