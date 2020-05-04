@@ -7,7 +7,7 @@ const cellsRendererDelete = (
    _columnproperties: any,
    _rowdata: any
 ) => {
-   return `<span style="font-size: 1.0rem; margin-left: 5px; color: #2D71D4; cursor: pointer;">
+   return `<span style="font-size: 1.0rem; margin-left: 5px; color: hsla(12, 95%, 47%, 0.93); cursor: pointer;">
     <i class="fas fa-trash"></i>
        </span>`;
 };

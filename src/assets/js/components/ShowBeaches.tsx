@@ -67,7 +67,7 @@ class ShowBeaches extends React.PureComponent<
       this.dataAdapter = null;
       // this.mapModeButtonClicked = this.mapModeButtonClicked.bind(this);
 
-      // this.onRowSelect = this.onRowSelect.bind(this);
+      this.onRowSelect = this.onRowSelect.bind(this);
       this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
 
       this.state = {
@@ -167,7 +167,7 @@ class ShowBeaches extends React.PureComponent<
          const columnWidths = [
             ["", 33] /* trash can */,
             ["beach", 200],
-            ["rentalagent", 250],
+            ["rentalagent", 270],
          ];
          this.columns = [
             {
@@ -200,7 +200,7 @@ class ShowBeaches extends React.PureComponent<
                <legend>Manage Rental Agents/Beaches</legend>
                <JqxDataTable
                   ref={this.myBeachesTable}
-                  width={425}
+                  width={470}
                   theme={"fresh"}
                   source={this.dataAdapter}
                   columns={this.columns}
@@ -208,9 +208,10 @@ class ShowBeaches extends React.PureComponent<
                   pageable={true}
                   altRows={true}
                   autoRowHeight={true}
-                  height={350}
+                  height={400}
                   sortable={true}
                   onRowDoubleClick={this.onRowDoubleClick}
+                  onRowSelect={this.onRowSelect}
                   columnsReorder={true}
                   columnsResize={true}
                   editable={false}
@@ -284,7 +285,7 @@ class ShowBeaches extends React.PureComponent<
             .then((retVal: any) => {
                const msg = retVal.message;
                this.props.myPanel.current!.append(
-                  `<p style="font-style: normal; color:black; font-size:12px;">${msg}</p>`
+                  `<p style="font-style: normal; color:blue; font-size:12px;">${msg}</p>`
                );
             })
             .catch((err: any) => {
@@ -295,12 +296,29 @@ class ShowBeaches extends React.PureComponent<
       }
    }
 
+   private onRowSelect(e: any): void {
+      let jsr = e.args.row;
+      let theKeys = Object.keys(jsr);
+      let prepend = `{`;
+      this.props.myPanel.current!.append(
+         `<br style="color:#389304 ; font-size:10px;">${prepend}`
+      );
+      theKeys.forEach((x) => {
+         this.props.myPanel.current!.append(
+            `<br style="color:#389304 ; font-size:10px;">${x}: "${jsr[x]}",`
+         );
+      });
+      this.props.myPanel.current!.append(
+         `<br style="color:#389304 ; font-size:10px;">});`
+      );
+   }
+
    private addBeachButtonClicked() {
       const beachName = escapeHTML(
-         this.beachInput.current!.val().trim().substring(0, 49)
+         this.beachInput.current!.val().trim().substring(0, 59)
       );
       const rentalAgent = escapeHTML(
-         this.rentalAgentInput.current!.val().trim().substring(0, 49)
+         this.rentalAgentInput.current!.val().trim().substring(0, 59)
       );
       addBeach(this.props.auth2, this.props.idToken, beachName, rentalAgent)
          .then((retVal: any) => {

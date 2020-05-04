@@ -110,7 +110,7 @@ export const fieldsetStyle: CSSProperties = {
 };
 
 export const fieldsetBeachStyle: CSSProperties = {
-   height: "400px",
+   height: "500px",
    marginLeft: " 5px",
    borderRadius: "5px",
    border: "2px hsla(12, 95%, 47%, 0.93) solid",

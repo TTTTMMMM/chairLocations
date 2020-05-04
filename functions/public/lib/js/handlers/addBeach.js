@@ -14,14 +14,14 @@ exports.addBeach = async (req, res, admin) => {
       // validate the input!
       if (theBeach) {
          let bName = escapeHTML(
-            theBeach.beach.trim().substring(0, 49).toUpperCase()
+            theBeach.beach.trim().substring(0, 59).toUpperCase()
          );
-         const validBeachRegex = /^[A-Z39'&#;,.\- ]{3,50}$/gi;
+         const validBeachRegex = /^[A-Z39'&#;,.\- \(\)]{3,50}$/gi;
          let valid_Beach = bName.match(validBeachRegex);
          let raName = escapeHTML(
-            theBeach.rentalagent.trim().substring(0, 49).toUpperCase()
+            theBeach.rentalagent.trim().substring(0, 59).toUpperCase()
          );
-         const validRentalAgentRegex = /^[A-Z39'&#;,.\- ]{3,50}$/gi;
+         const validRentalAgentRegex = /^[A-Z39'&#;,.\- \(\)]{3,50}$/gi;
          let valid_RentalAgent = raName.match(validRentalAgentRegex);
          if (valid_Beach != null && valid_RentalAgent != null) {
             let beachPart = valid_Beach[0]

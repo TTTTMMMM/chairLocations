@@ -11,14 +11,16 @@ exports.removeBeach = async (req, res, admin) => {
       // validate the input!
       if (theBeach) {
          let bName = escapeHTML(
-            theBeach.beach.trim().substring(0, 49).toUpperCase()
+            theBeach.beach.trim().substring(0, 59).toUpperCase()
          );
-         const validBeachRegex = /^[A-Z',.\- ]{3,50}$/gi;
+         const validBeachRegex = /^[A-Z_39'&#;,.\- \(\)]{3,50}$/gi;
          let valid_Beach = bName.match(validBeachRegex);
          if (valid_Beach != null) {
-            let docName = valid_Beach[0].replace(/\s+/g, "");
-            let beachObj = {};
-            beachObj.beach = valid_Beach[0];
+            let docName = valid_Beach[0]
+               .replace(/\s+/g, "")
+               .replace("&amp;", "&")
+               .replace("&AMP;", "&")
+               .replace("&#39;", "'");
             try {
                await admin
                   .firestore()
@@ -34,7 +36,7 @@ exports.removeBeach = async (req, res, admin) => {
             }
             try {
                await firebaseApp.auth().signOut();
-               let msg = `Removed ${beachObj.beach}`;
+               let msg = `Removed ${docName}`;
                console.log(msg);
                console.log(`Logged out`);
                res.append("Cache-Control", "no-cache, must-revalidate");
@@ -49,10 +51,10 @@ exports.removeBeach = async (req, res, admin) => {
                console.log(`${firstLine} ${err}`);
             }
          } else {
-            firstLine = `0792: Invalid beach name [${theBeach.beach}]`;
+            firstLine = `0792: Invalid beach name [${docName}]`;
             console.log(`${firstLine}`);
             return res.status(400).json({
-               message: `0792:  Invalid beach name [${theBeach.beach}]`,
+               message: `0792:  Invalid beach name [${docName}]`,
             });
          }
       } else {
