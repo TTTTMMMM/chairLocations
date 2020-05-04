@@ -23,6 +23,7 @@ import { labelStyleBeach } from "../../styles/reactStyling";
 import { fieldsetBeachStyle } from "../../styles/reactStyling";
 
 import addBeach from "../fetches/addBeach";
+import removeBeach from "../fetches/removeBeach";
 
 import cellRendererDelete from "../renderers/cellRendererDelete";
 
@@ -68,7 +69,8 @@ class ShowBeaches extends React.PureComponent<
       this.dataAdapter = null;
       // this.mapModeButtonClicked = this.mapModeButtonClicked.bind(this);
 
-      this.onRowSelect = this.onRowSelect.bind(this);
+      // this.onRowSelect = this.onRowSelect.bind(this);
+      this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
 
       this.state = {
          subscribed: false,
@@ -197,13 +199,13 @@ class ShowBeaches extends React.PureComponent<
                   autoRowHeight={true}
                   height={295}
                   sortable={true}
-                  onRowSelect={this.onRowSelect}
+                  onRowDoubleClick={this.onRowDoubleClick}
                   columnsReorder={true}
                   columnsResize={true}
                   editable={false}
                   key={this.numUpdates} // this forces a re-render of the table!
                   editSettings={this.state.editSettings}
-                  pageSize={50}
+                  pageSize={100}
                />
                <div style={divThin}>
                   <label style={labelStyleBeach}>Beach:</label>
@@ -246,21 +248,29 @@ class ShowBeaches extends React.PureComponent<
       return <div>{this.getBeachesContent()}</div>;
    }
 
-   private onRowSelect(e: any): void {
-      let jsr = e.args.row;
-      let theKeys = Object.keys(jsr);
-      let prepend = `temp.push({`;
-      this.props.myPanel.current!.append(
-         `<br style="color:#389304 ; font-size:10px;">${prepend}`
-      );
-      theKeys.forEach((x) => {
-         this.props.myPanel.current!.append(
-            `<br style="color:#389304 ; font-size:10px;">${x}: "${jsr[x]}",`
+   private onRowDoubleClick(e: any): void {
+      // console.dir(e.args);
+      const rowIndex = e.args.index;
+      const columnSelected = e.args.dataField;
+
+      if (columnSelected.localeCompare("D") == 0) {
+         let theKey = this.myBeachesTable.current!.getCellValue(
+            rowIndex,
+            "key"
          );
-      });
-      this.props.myPanel.current!.append(
-         `<br style="color:#389304 ; font-size:10px;">});`
-      );
+         removeBeach(this.props.auth2, this.props.idToken, theKey)
+            .then((retVal: any) => {
+               const msg = retVal.message;
+               this.props.myPanel.current!.append(
+                  `<p style="font-style: normal; color:black; font-size:12px;">${msg}</p>`
+               );
+            })
+            .catch((err: any) => {
+               this.props.myPanel.current!.append(
+                  `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
+               );
+            });
+      }
    }
 
    private addBeachButtonClicked() {
