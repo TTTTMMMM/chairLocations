@@ -6,9 +6,9 @@ const {
 } = require("./helpers/addUsernameToValidUsers");
 
 // ----------------------------------------------------------------
-// add username, role, and access privileges to validUserCollection
+// add beach to beaches collection
 // ----------------------------------------------------------------
-exports.addBeach = async (req, res, admin, functions) => {
+exports.addBeach = async (req, res, admin) => {
    if (res.locals.loggedInUser.role === "admin") {
       const theBeach = req.body;
       // validate the input!

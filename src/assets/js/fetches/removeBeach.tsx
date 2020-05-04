@@ -1,20 +1,24 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
 
-const removeUser = (auth2: any, id_token: any, theUser: string) => {
-   const theUserObj = { username: `${theUser}` };
+interface BeachObj {
+   beach: string;
+}
+
+const removeBeach = (auth2: any, id_token: any, theBeach: string) => {
    let myHeaders = new Headers();
+   let beachObj: BeachObj = { beach: theBeach };
+
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
    myHeaders.append("Content-Type", "application/json");
-   myHeaders.append("Cache-control", "no-cache, must-revalidate");
    const myInit = {
       method: "DELETE",
       headers: myHeaders,
-      body: JSON.stringify(theUserObj),
+      body: JSON.stringify(beachObj),
    };
    return new Promise((resolve) => {
-      fetch(`/users`, myInit).then((res) => {
+      fetch(`/beaches`, myInit).then((res) => {
          switch (res.status) {
             case 400:
                res.json().then((data: any) => {
@@ -30,4 +34,4 @@ const removeUser = (auth2: any, id_token: any, theUser: string) => {
    });
 };
 
-export default removeUser;
+export default removeBeach;
