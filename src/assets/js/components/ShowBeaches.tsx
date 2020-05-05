@@ -167,7 +167,7 @@ class ShowBeaches extends React.PureComponent<
          const columnWidths = [
             ["", 33] /* trash can */,
             ["beach", 200],
-            ["rentalagent", 270],
+            ["rentalagent", 300],
          ];
          this.columns = [
             {
@@ -200,7 +200,7 @@ class ShowBeaches extends React.PureComponent<
                <legend>Manage Rental Agents/Beaches</legend>
                <JqxDataTable
                   ref={this.myBeachesTable}
-                  width={470}
+                  width={500}
                   theme={"fresh"}
                   source={this.dataAdapter}
                   columns={this.columns}
@@ -224,9 +224,9 @@ class ShowBeaches extends React.PureComponent<
                   <JqxInput
                      ref={this.rentalAgentInput}
                      minLength={3}
-                     maxLength={50}
+                     maxLength={60}
                      theme={"fresh"}
-                     width={270}
+                     width={300}
                      placeHolder={"Rental Agent"}
                   />
                </div>
@@ -235,9 +235,9 @@ class ShowBeaches extends React.PureComponent<
                   <JqxInput
                      ref={this.beachInput}
                      minLength={3}
-                     maxLength={50}
+                     maxLength={60}
                      theme={"fresh"}
-                     width={150}
+                     width={170}
                      placeHolder={"Name of Beach"}
                   />
                </div>

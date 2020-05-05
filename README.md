@@ -285,7 +285,7 @@ export interface UserObj {
 
 1. [Consider moving to a single login page ~18:00](https://www.youtube.com/watch?v=XRfD8xIOroA)
 2. [Protected Routes](https://www.youtube.com/watch?v=Y0-qdp-XBJg)
-3. Build out the configuration page (beach management, Rental Agents Management)
+3. Tie the Additional Headers input dropdowns to the beaches collection.
 4. Develop map analytics!
 5. Maintenance
 6. Consider moving to useContext API to eliminate all the authentication props passing
