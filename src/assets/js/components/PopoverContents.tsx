@@ -2,8 +2,6 @@ import * as React from "react";
 import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 import additionalHeaders from "../configs/additionalTableHeaders";
 import { statesArray } from "../configs/additionalTableHeaders";
-import { beachesArray } from "../configs/additionalTableHeaders";
-import { rentalAgentArray } from "../configs/additionalTableHeaders";
 import { AdditionalPropsType } from "../misc/chairLocTypes";
 
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
@@ -11,11 +9,18 @@ import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/firestore";
+import "firebase/auth";
+import "../configs/firebaseInit";
+
 class PopoverContents extends React.PureComponent<
    {
       myPanel: any;
       additionalPropsPopover: any;
       callbackFromCleanAndLoadFiles: any; // this is the function in the parent component to callback with the values entered for STATE, BEACH and RENTALAGENT
+      loggedInToFirebase: boolean;
    },
    {
       sourceState: Array<string>;
@@ -23,6 +28,7 @@ class PopoverContents extends React.PureComponent<
       sourceRentalAgent: Array<string>;
    }
 > {
+   beachesCollection: any;
    private stateInput = React.createRef<JqxInput>();
    private beachInput = React.createRef<JqxInput>();
    private rentalAgentInput = React.createRef<JqxInput>();
@@ -32,14 +38,37 @@ class PopoverContents extends React.PureComponent<
       myPanel: any;
       additionalPropsPopover: any;
       callbackFromCleanAndLoadFiles: any;
+      loggedInToFirebase: boolean;
    }) {
       super(props);
+      this.beachesCollection = "";
       this.enterButtonClicked = this.enterButtonClicked.bind(this);
       this.state = {
          sourceState: [...statesArray],
-         sourceBeach: [...beachesArray],
-         sourceRentalAgent: [...rentalAgentArray],
+         sourceBeach: [],
+         sourceRentalAgent: [],
       };
+   }
+
+   componentDidMount() {
+      let sourceRentalAgent: Array<string> = [];
+      let sourceBeach: Array<string> = [];
+      this.beachesCollection = firebase.firestore().collection("beaches");
+      this.beachesCollection
+         .get()
+         .then((snapshot: any) => {
+            snapshot.forEach((doc: any) => {
+               sourceBeach.push(doc.data().beach);
+               sourceRentalAgent.push(doc.data().rentalagent);
+            });
+            this.setState({ sourceBeach: [...new Set(sourceBeach)] });
+            this.setState({
+               sourceRentalAgent: [...new Set(sourceRentalAgent)],
+            });
+         })
+         .catch((err: any) => {
+            console.log("Error getting documents", err);
+         });
    }
 
    render() {
@@ -113,7 +142,7 @@ class PopoverContents extends React.PureComponent<
                </label>
                <JqxInput
                   ref={this.rentalAgentInput}
-                  width={170}
+                  width={200}
                   height={20}
                   placeHolder={"Enter a Rental Agent"}
                   source={this.state.sourceRentalAgent}

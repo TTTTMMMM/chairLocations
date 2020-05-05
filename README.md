@@ -276,7 +276,6 @@ export interface UserObj {
    canAccess: AccessObj;
 }
 
-
 ```
 
 ---
@@ -285,10 +284,9 @@ export interface UserObj {
 
 1. [Consider moving to a single login page ~18:00](https://www.youtube.com/watch?v=XRfD8xIOroA)
 2. [Protected Routes](https://www.youtube.com/watch?v=Y0-qdp-XBJg)
-3. Tie the Additional Headers input dropdowns to the beaches collection.
-4. Develop map analytics!
-5. Maintenance
-6. Consider moving to useContext API to eliminate all the authentication props passing
+3. Develop map analytics!
+4. Maintenance
+5. Consider moving to useContext API to eliminate all the authentication props passing
 
 #### <ins>TODO Physical World</ins>
 

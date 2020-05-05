@@ -251,7 +251,7 @@ class ShowChairData extends React.PureComponent<
          // --
          const columnWidths = [
             ["ASSETLABEL", 80],
-            ["BEACH", 150],
+            ["BEACH", 180],
             ["CELLACCURACY", 50],
             ["DEVICEID", 70],
             ["FNAME", 100],
@@ -259,7 +259,7 @@ class ShowChairData extends React.PureComponent<
             ["IMEI", 80],
             ["LATITUDE", 100],
             ["LONGITUDE", 100],
-            ["RENTALAGENT", 120],
+            ["RENTALAGENT", 250],
             ["STATE", 100],
             ["UPDATETIME", 170],
             ["UPLOADFBTIME", 110],

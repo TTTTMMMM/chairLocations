@@ -143,14 +143,6 @@ class CleanAndUploadFiles extends Component<
 
    componentDidMount() {
       this.addAdditionalButton.current!.val("Set Additonal Properties");
-      ReactDOM.render(
-         <PopoverContents
-            myPanel={this.myPanel}
-            additionalPropsPopover={this.additionalPropsPopover}
-            callbackFromCleanAndLoadFiles={this.myCallBack}
-         ></PopoverContents>,
-         document.getElementById("popoverContents")
-      );
    }
 
    render() {
@@ -283,10 +275,16 @@ class CleanAndUploadFiles extends Component<
       let isAdmin: number = uO_role.localeCompare(Roles.admin);
       let isUploader: number = uO_role.localeCompare(Roles.uploader);
       if (isAdmin === 0 || isUploader === 0) {
+         ReactDOM.render(
+            <PopoverContents
+               myPanel={this.myPanel}
+               additionalPropsPopover={this.additionalPropsPopover}
+               callbackFromCleanAndLoadFiles={this.myCallBack}
+               loggedInToFirebase={this.props.loggedInToFirebase}
+            ></PopoverContents>,
+            document.getElementById("popoverContents")
+         );
          this.setState({ value: event.target.value });
-         // let fileChooserLabel = document.querySelector(
-         // "body > div:nth-of-type(1) > div > div > div > section:nth-of-type(1) > fieldset > div:nth-of-type(1) > label"
-         // ) as HTMLElement;
          this.setState({ disabledSetAdditionalPropertiesButton: false });
          this.setState({ disabledCleanRowsButton: true });
          this.extendedFatArray.length = 0;
