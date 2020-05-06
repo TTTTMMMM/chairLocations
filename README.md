@@ -304,18 +304,22 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 ---
 
 CHAIR072_2020-05-05_1.csv
+
 California, CLEARWATER, COASTAL GOLF CART RENTALS
+
 For [Crimped], uploading to Firebase 2 records, each containing 14 parameters.
+
 Added 213c7c... Crimped [ATLANTIC CITY] 2020-05-03T23:38:42Z
+
 Added 086a68... Crimped [ATLANTIC CITY] 2020-05-04T23:37:31Z
 
 CHAIR088_2020-03-14_mod.csv
+
 Delaware, DEWEY, GRAND RENTAL STATION
+
 For [CHAIR-088], uploading to Firebase 1 records, each containing 14 parameters.
-Added 5f5096... CHAIR-088 [DEWEY] 2020-03-11T23:35:20Z
 
-Now, Map'em, then back to UPLOAD
+CHAIR072_2020-05-05_1.csv
 
-CHAIR088_2020-03-14_mod.csv
-Delaware, Dewey, Mobility Center of the Grand Strand entered in the Input boxes, but
-California, CLEARWATER, COASTAL GOLF CART RENTALS is what is picked up
+Entered in boxes: American Samoa, LONG BEACH ISLAND, BEACH EASY RENTALS, then pushed Append button, but
+Delaware, DEWEY, GRAND RENTAL STATION is what is picked up

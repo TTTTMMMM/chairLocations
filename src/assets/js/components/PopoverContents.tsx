@@ -186,20 +186,25 @@ class PopoverContents extends React.PureComponent<
    }
 
    private enterButtonClicked() {
-      let deployedState = document.querySelector(
-         ".popovercontents > div:nth-of-type(1) > input"
-      ) as HTMLInputElement;
-      let dsv = deployedState.value;
+      console.log(`in PopoverContents component, enterButtonClicked()`);
+      // let deployedState = document.querySelector(
+      //    ".popovercontents > div:nth-of-type(1) > input"
+      // ) as HTMLInputElement;
+      // let dsv = deployedState.value;
+      let dsv: any = this.stateInput.current!.val;
+      let dbv: any = this.beachInput.current!.val;
+      let rav: any = this.rentalAgentInput.current!.val;
+      console.log(`dsv[${dsv}] dbv[${dbv}] rav[${rav}] `);
 
-      let deployedBeach = document.querySelector(
-         ".popovercontents > div:nth-of-type(2) > input"
-      ) as HTMLInputElement;
-      let dbv = deployedBeach.value;
+      // let deployedBeach = document.querySelector(
+      //    ".popovercontents > div:nth-of-type(2) > input"
+      // ) as HTMLInputElement;
+      // let dbv = deployedBeach.value;
 
-      let rentalAgent = document.querySelector(
-         ".popovercontents > div:nth-of-type(3) > input"
-      ) as HTMLInputElement;
-      let rav = rentalAgent.value;
+      // let rentalAgent = document.querySelector(
+      //    ".popovercontents > div:nth-of-type(3) > input"
+      // ) as HTMLInputElement;
+      // let rav = rentalAgent.value;
 
       let additionalPropVals: AdditionalPropsType = {};
       additionalPropVals.STATE = dsv;
