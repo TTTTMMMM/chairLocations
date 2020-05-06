@@ -191,9 +191,9 @@ class PopoverContents extends React.PureComponent<
       //    ".popovercontents > div:nth-of-type(1) > input"
       // ) as HTMLInputElement;
       // let dsv = deployedState.value;
-      let dsv: any = this.stateInput.current!.val;
-      let dbv: any = this.beachInput.current!.val;
-      let rav: any = this.rentalAgentInput.current!.val;
+      let dsv: any = this.stateInput.current!.val();
+      let dbv: any = this.beachInput.current!.val();
+      let rav: any = this.rentalAgentInput.current!.val();
       console.log(`dsv[${dsv}] dbv[${dbv}] rav[${rav}] `);
 
       // let deployedBeach = document.querySelector(
