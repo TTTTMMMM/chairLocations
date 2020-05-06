@@ -93,8 +93,6 @@ class CleanAndUploadFiles extends Component<
    // this function is called (technically a callback) from PopoverContents.tsx
    // -- it's the way data is passed from child component to parent component
    myCallBack = (objectFromPopoverContents: AdditionalPropsType) => {
-      console.log(`myCallBack, objectFromPopoverContents below`);
-      console.dir(objectFromPopoverContents);
       if (
          // check if additional properties are valid
          objectFromPopoverContents.BEACH!.length > 2 &&

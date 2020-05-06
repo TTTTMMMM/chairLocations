@@ -327,5 +327,29 @@ Added 5f5096... CHAIR-088 [FORT LAUDERDALE] 2020-03-11T23:35:20Z
 
 **<ins>CHAIR072_2020-05-05_1.csv</ins>**
 
-Entered: American Samoa, LONG BEACH ISLAND, BEACH EASY RENTALS, then pushed Append button, but
-Delaware, DEWEY, GRAND RENTAL STATION is what is picked up
+Entered: Guam, GOLDEN BEACH, GRAND RENTAL STATION, then pushed Append button, but
+Guam, GOLDEN BEACH, GRAND RENTAL STATION is what is picked up!
+
+For [Crimped], uploading to Firebase 2 records, each containing 14 parameters.
+
+Added 086a68... Crimped [GOLDEN BEACH] 2020-05-04T23:37:31Z
+
+Added 213c7c... Crimped [GOLDEN BEACH] 2020-05-03T23:38:42Z
+
+**<ins>CHAIR088_2020-03-14_mod.csv</ins>**
+
+Hawaii, HOLDEN BEACH, BEACH EASY RENTALS
+
+For [CHAIR-088], uploading to Firebase 1 records, each containing 14 parameters.
+
+Added 5f5096... CHAIR-088 [HOLDEN BEACH] 2020-03-11T23:35:20Z
+
+#### Hit MAP'EM, then back to UPLOAD
+
+**<ins>CHAIR088_2020-03-14_mod.csv</ins>**
+
+Idaho, INDIAN ROCKS, BEACH POWER MOBIILITY
+
+For [CHAIR-088], uploading to Firebase 1 records, each containing 14 parameters.
+
+Added 5f5096... CHAIR-088 [INDIAN ROCKS] 2020-03-11T23:35:20Z

@@ -28,7 +28,6 @@ class PopoverContents extends React.PureComponent<
       sourceBeach: Array<string>;
       sourceRentalAgent: Array<string>;
       alreadyGotInfo: boolean;
-      assetUnderObservation?: string;
    }
 > {
    beachesCollection: any;
@@ -52,7 +51,6 @@ class PopoverContents extends React.PureComponent<
          sourceBeach: [],
          sourceRentalAgent: [],
          alreadyGotInfo: false,
-         assetUnderObservation: "dummyValue",
       };
    }
 
@@ -72,7 +70,6 @@ class PopoverContents extends React.PureComponent<
                sourceRentalAgent: [...new Set(sourceRentalAgent)],
             });
             this.setState({ alreadyGotInfo: true });
-            this.setState({ assetUnderObservation: this.props.asset });
          })
          .catch((err: any) => {
             console.log("C0045: Error getting rental/beach documents", err);
@@ -82,12 +79,7 @@ class PopoverContents extends React.PureComponent<
    componentDidMount() {}
 
    render() {
-      let changeInAsset = this.props.asset != this.state.assetUnderObservation;
-      if (
-         this.props.loggedInToFirebase &&
-         !this.state.alreadyGotInfo &&
-         changeInAsset
-      ) {
+      if (this.props.loggedInToFirebase && !this.state.alreadyGotInfo) {
          this.getBeachAndRentalInfo();
       }
       return (
@@ -186,25 +178,9 @@ class PopoverContents extends React.PureComponent<
    }
 
    private enterButtonClicked() {
-      console.log(`in PopoverContents component, enterButtonClicked()`);
-      // let deployedState = document.querySelector(
-      //    ".popovercontents > div:nth-of-type(1) > input"
-      // ) as HTMLInputElement;
-      // let dsv = deployedState.value;
       let dsv: any = this.stateInput.current!.val();
       let dbv: any = this.beachInput.current!.val();
       let rav: any = this.rentalAgentInput.current!.val();
-      console.log(`dsv[${dsv}] dbv[${dbv}] rav[${rav}] `);
-
-      // let deployedBeach = document.querySelector(
-      //    ".popovercontents > div:nth-of-type(2) > input"
-      // ) as HTMLInputElement;
-      // let dbv = deployedBeach.value;
-
-      // let rentalAgent = document.querySelector(
-      //    ".popovercontents > div:nth-of-type(3) > input"
-      // ) as HTMLInputElement;
-      // let rav = rentalAgent.value;
 
       let additionalPropVals: AdditionalPropsType = {};
       additionalPropVals.STATE = dsv;
