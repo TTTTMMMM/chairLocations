@@ -303,7 +303,7 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ---
 
-**CHAIR072_2020-05-05_1.csv**
+**<ins>CHAIR072_2020-05-05_1.csv</ins>**
 
 California, CLEARWATER, COASTAL GOLF CART RENTALS
 
@@ -313,13 +313,13 @@ Added 213c7c... Crimped [ATLANTIC CITY] 2020-05-03T23:38:42Z
 
 Added 086a68... Crimped [ATLANTIC CITY] 2020-05-04T23:37:31Z
 
-**CHAIR088_2020-03-14_mod.csv**
+**<ins>CHAIR088_2020-03-14_mod.csv</ins>**
 
 Delaware, DEWEY, GRAND RENTAL STATION
 
 For [CHAIR-088], uploading to Firebase 1 records, each containing 14 parameters.
 
-**CHAIR072_2020-05-05_1.csv**
+**<ins>CHAIR072_2020-05-05_1.csv</ins>**
 
-Entered in boxes: American Samoa, LONG BEACH ISLAND, BEACH EASY RENTALS, then pushed Append button, but
+Entered: American Samoa, LONG BEACH ISLAND, BEACH EASY RENTALS, then pushed Append button, but
 Delaware, DEWEY, GRAND RENTAL STATION is what is picked up
