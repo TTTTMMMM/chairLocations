@@ -21,11 +21,14 @@ class PopoverContents extends React.PureComponent<
       additionalPropsPopover: any;
       callbackFromCleanAndLoadFiles: any; // this is the function in the parent component to callback with the values entered for STATE, BEACH and RENTALAGENT
       loggedInToFirebase: boolean;
+      asset: string;
    },
    {
       sourceState: Array<string>;
       sourceBeach: Array<string>;
       sourceRentalAgent: Array<string>;
+      alreadyGotInfo: boolean;
+      assetUnderObservation?: string;
    }
 > {
    beachesCollection: any;
@@ -39,6 +42,7 @@ class PopoverContents extends React.PureComponent<
       additionalPropsPopover: any;
       callbackFromCleanAndLoadFiles: any;
       loggedInToFirebase: boolean;
+      asset: string;
    }) {
       super(props);
       this.beachesCollection = "";
@@ -47,10 +51,12 @@ class PopoverContents extends React.PureComponent<
          sourceState: [...statesArray],
          sourceBeach: [],
          sourceRentalAgent: [],
+         alreadyGotInfo: false,
+         assetUnderObservation: "dummyValue",
       };
    }
 
-   componentDidMount() {
+   getBeachAndRentalInfo() {
       let sourceRentalAgent: Array<string> = [];
       let sourceBeach: Array<string> = [];
       this.beachesCollection = firebase.firestore().collection("beaches");
@@ -65,13 +71,25 @@ class PopoverContents extends React.PureComponent<
             this.setState({
                sourceRentalAgent: [...new Set(sourceRentalAgent)],
             });
+            this.setState({ alreadyGotInfo: true });
+            this.setState({ assetUnderObservation: this.props.asset });
          })
          .catch((err: any) => {
-            console.log("Error getting documents", err);
+            console.log("C0045: Error getting rental/beach documents", err);
          });
    }
 
+   componentDidMount() {}
+
    render() {
+      let changeInAsset = this.props.asset != this.state.assetUnderObservation;
+      if (
+         this.props.loggedInToFirebase &&
+         !this.state.alreadyGotInfo &&
+         changeInAsset
+      ) {
+         this.getBeachAndRentalInfo();
+      }
       return (
          <div className="popovercontents">
             <div
@@ -191,7 +209,6 @@ class PopoverContents extends React.PureComponent<
          `<p style="color:#FF1493; font-size:11px;"> ${additionalPropVals.STATE}, ${additionalPropVals.BEACH}, ${additionalPropVals.RENTALAGENT}</p>`
       );
       this.props.callbackFromCleanAndLoadFiles(additionalPropVals);
-      this.props.additionalPropsPopover.current!.close();
    }
 }
 

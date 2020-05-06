@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import * as ReactDOM from "react-dom";
 
 import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
@@ -43,10 +42,10 @@ class CleanAndUploadFiles extends Component<
 > {
    private myPanel = React.createRef<JqxPanel>();
    private clearConsoleButton = React.createRef<JqxButton>();
-   private addAdditionalButton = React.createRef<JqxButton>();
-   private cleanRowsAndUploadlButton = React.createRef<JqxButton>();
+   private setAdditionalPropertiesButton = React.createRef<JqxButton>();
+   private cleanRowsAndUploadButton = React.createRef<JqxButton>();
 
-   private someDiv = React.createRef<HTMLDivElement>();
+   // private someDiv = React.createRef<HTMLDivElement>();
    private additionalPropsPopover = React.createRef<JqxPopover>();
 
    private fileInput: any;
@@ -77,6 +76,9 @@ class CleanAndUploadFiles extends Component<
       this.cleanRowsAndUploadClicked = this.cleanRowsAndUploadClicked.bind(
          this
       );
+      this.additionalPropertiesClick = this.additionalPropertiesClick.bind(
+         this
+      );
 
       this.state = {
          value: "",
@@ -91,6 +93,8 @@ class CleanAndUploadFiles extends Component<
    // this function is called (technically a callback) from PopoverContents.tsx
    // -- it's the way data is passed from child component to parent component
    myCallBack = (objectFromPopoverContents: AdditionalPropsType) => {
+      console.log(`myCallBack, objectFromPopoverContents below`);
+      console.dir(objectFromPopoverContents);
       if (
          // check if additional properties are valid
          objectFromPopoverContents.BEACH!.length > 2 &&
@@ -142,7 +146,10 @@ class CleanAndUploadFiles extends Component<
    };
 
    componentDidMount() {
-      this.addAdditionalButton.current!.val("Set Additonal Properties");
+      this.setAdditionalPropertiesButton.current &&
+         this.setAdditionalPropertiesButton.current!.val(
+            "Set Additonal Properties"
+         );
    }
 
    render() {
@@ -186,10 +193,16 @@ class CleanAndUploadFiles extends Component<
                         height={155}
                         width={285}
                      >
-                        <div ref={this.someDiv} id={"popoverContents"} />
+                        <PopoverContents
+                           myPanel={this.myPanel}
+                           additionalPropsPopover={this.additionalPropsPopover}
+                           callbackFromCleanAndLoadFiles={this.myCallBack}
+                           loggedInToFirebase={this.props.loggedInToFirebase}
+                           asset={this.state.asset}
+                        ></PopoverContents>
                      </JqxPopover>
                      <JqxButton
-                        ref={this.addAdditionalButton}
+                        ref={this.setAdditionalPropertiesButton}
                         style={{
                            marginLeft: "0px",
                            marginBottom: "2px",
@@ -205,10 +218,11 @@ class CleanAndUploadFiles extends Component<
                         height={20}
                         theme={"fresh"}
                         className="addPropsButton"
+                        onClick={this.additionalPropertiesClick}
                      ></JqxButton>
                   </div>
                   <JqxButton
-                     ref={this.cleanRowsAndUploadlButton}
+                     ref={this.cleanRowsAndUploadButton}
                      style={{
                         marginLeft: "0px",
                         marginBottom: "7px",
@@ -275,15 +289,6 @@ class CleanAndUploadFiles extends Component<
       let isAdmin: number = uO_role.localeCompare(Roles.admin);
       let isUploader: number = uO_role.localeCompare(Roles.uploader);
       if (isAdmin === 0 || isUploader === 0) {
-         ReactDOM.render(
-            <PopoverContents
-               myPanel={this.myPanel}
-               additionalPropsPopover={this.additionalPropsPopover}
-               callbackFromCleanAndLoadFiles={this.myCallBack}
-               loggedInToFirebase={this.props.loggedInToFirebase}
-            ></PopoverContents>,
-            document.getElementById("popoverContents")
-         );
          this.setState({ value: event.target.value });
          this.setState({ disabledSetAdditionalPropertiesButton: false });
          this.setState({ disabledCleanRowsButton: true });
@@ -364,7 +369,10 @@ class CleanAndUploadFiles extends Component<
       this.myPanel.current!.clearcontent();
    }
 
+   private additionalPropertiesClick() {}
+
    private cleanRowsAndUploadClicked() {
+      // this.additionalPropsPopover.current!.close();
       if (!this.state.disabledSetAdditionalPropertiesButton) {
          this.setState({ disabledSetAdditionalPropertiesButton: true });
          this.setState({ disabledCleanRowsButton: true });
