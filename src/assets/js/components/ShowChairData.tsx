@@ -23,6 +23,7 @@ interface MyState extends IDataTableProps {
    chairDataWatch?: any;
    subscribed?: boolean;
    displayTableMode?: boolean;
+   assetUnderObservation?: string;
 }
 class ShowChairData extends React.PureComponent<
    {
@@ -81,12 +82,15 @@ class ShowChairData extends React.PureComponent<
             saveOnSelectionChange: true,
          },
          displayTableMode: true,
+         assetUnderObservation: "",
       };
       this.getChairLocContent = this.getChairLocContent.bind(this);
    }
 
    subscribeToAssetUploadedToday() {
       if (this.props.asset!.length > 0) {
+         this.unsubscribeFromAssetLabelSpecific();
+         this.setState({ assetUnderObservation: this.props.asset });
          const beginningOfDay = new Date(
             new Date().toISOString().substr(0, 10)
          ).toISOString();
@@ -444,7 +448,8 @@ class ShowChairData extends React.PureComponent<
       }
    }
    render() {
-      if (this.props.loggedInToFirebase && !this.state.subscribed) {
+      let changeInAsset = this.props.asset != this.state.assetUnderObservation;
+      if (this.props.loggedInToFirebase && changeInAsset) {
          this.subscribeToAssetUploadedToday();
       }
       if (!this.props.loggedInToFirebase && this.state.subscribed) {

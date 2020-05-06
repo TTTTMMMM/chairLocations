@@ -104,7 +104,7 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
                setSelected({});
             }}
          >
-            <MarkerClusterer options={optionsMarkerCluster}>
+            <MarkerClusterer options={optionsMarkerCluster} gridSize={35}>
                {(clusterer) =>
                   chairLocs.map((x) => (
                      <Marker
