@@ -412,7 +412,7 @@ class CleanAndUploadFiles extends Component<
          this.myPanel.current!.append(
             `<p style="color:#738108;font-size:12px;">For [${asset}], uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
          );
-         let lengthOfTimeIn_mSec = numRowsSurvived * 0.15 * 1000; // 1/.15 = 6.66 writes/second to the Firestore collection
+         let lengthOfTimeIn_mSec = numRowsSurvived * 0.25 * 1000; // 1/.25 = 4 writes/second to the Firestore collection
          this.shortAndSkinnyArray.forEach((x: any) => {
             const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
             setTimeout(() => {

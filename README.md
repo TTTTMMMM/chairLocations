@@ -286,7 +286,7 @@ export interface UserObj {
 2. [Protected Routes](https://www.youtube.com/watch?v=Y0-qdp-XBJg)
 3. Develop map analytics!
 4. Maintenance
-5. Consider moving to useContext API to eliminate all the authentication props passing
+5. Consider moving to useContext API to eliminate all the authentication props drilling
 
 #### <ins>TODO Physical World</ins>
 
