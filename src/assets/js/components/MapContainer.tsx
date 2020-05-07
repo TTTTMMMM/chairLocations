@@ -72,8 +72,8 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
    };
 
    const myMapContainerStyle = {
-      height: "70vh",
-      width: "60vw",
+      height: "78vh",
+      width: "65vw",
       background: "rgb(250, 245, 198)",
       border: "2px hsla(12, 95%, 47%, 0.93) solid",
       borderRadius: "6px",

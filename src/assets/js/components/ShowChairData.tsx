@@ -397,7 +397,7 @@ class ShowChairData extends React.PureComponent<
                   pageable={true}
                   altRows={true}
                   autoRowHeight={true}
-                  height={575}
+                  height={625}
                   sortable={true}
                   onRowSelect={this.onRowSelect}
                   columnsReorder={true}
