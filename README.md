@@ -307,3 +307,36 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 | ![](/markdownImages/indivisible.png) | ![](/markdownImages/identifyingTheCluster.png) |
 
 ---
+
+cluster center: (27.71781, -82.73887) 3
+searching for: 27.71781
+
+ID: "5c9836b38d",
+LATITUDE: "27.71781",
+LONGITUDE: "-82.73888",
+
+ID: "02c40afeac",
+LATITUDE: "27.71781",
+LONGITUDE: "-82.73887",
+
+ID: "4c83c71ffe",
+LATITUDE: "27.71781",
+LONGITUDE: "-82.73888",
+
+---
+
+searching for: -82.73887
+
+ID: "02c40afeac",
+LATITUDE: "27.71781",
+LONGITUDE: "-82.73887",
+
+ID: "2e9a1cd3ac",
+LATITUDE: "27.7178",
+LONGITUDE: "-82.73887",
+
+ID: "3ac0791814",
+LATITUDE: "27.71783",
+LONGITUDE: "-82.73887",
+
+So, it's hard to say what 3 markers make up the cluster I clicked on when I have to search for the locations using the _center of the cluster_ and not using the _locations of individual markers_.
