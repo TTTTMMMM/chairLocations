@@ -156,6 +156,8 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ![](/markdownImages/chairLocsUsage.png)
 
+![](/markdownImages/chairLocsUsage_20200506.png)
+
 ---
 
 For the following Compound Query (which is used to create a listener for a specific chair uploaded today to Firebase):
