@@ -87,55 +87,6 @@ body > div > div > header > section:nth-of-type(2) > nav > ul > li > a:hover {
 }
 /********* navbar styling end *********/
 
-/* div that holds the admin "panel" for the user who has admin privs */
-html > body > div > div > header > section:nth-of-type(3) > div {
-   padding: 3px;
-   margin-top: -3px;
-   border: solid 1px black;
-   border-radius: 4px;
-}
-
-/* Add-Remove User Input text */
-html
-   > body
-   > div:nth-of-type(1)
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > input[type="text"] {
-   font-family: "Josefin Sans", monospace;
-   border-radius: 5px;
-   font-size: 14px;
-   line-height: 18px;
-   height: 25px;
-   width: 150px; /* was 100% */
-   outline: none;
-   padding: 0px 5px 0px 5px;
-   margin: 3px 1px 3px 0px;
-   border: 1px solid #dddddd;
-   transition: all 0.3s ease-in-out;
-   box-shadow: inset 0 0 2px rgb(0, 0, 0);
-   text-transform: lowercase;
-   min-width: 50px;
-}
-
-/* add/remove user input text field */
-html
-   > body
-   > div:nth-of-type(1)
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > input[type="text"]:focus {
-   box-shadow: inset 0 0 5px rgb(68, 105, 172);
-   margin: 5px 1px 3px 0px;
-   font-size: 14.25px;
-}
-
 /* Google Sign-in Button */
 html > body > div > div > header > section:nth-of-type(3) > button {
    float: right;
@@ -272,171 +223,6 @@ html > body > div > div > header > section:nth-of-type(3) > figure > img {
    margin-right: auto;
 }
 
-/* this div holds the input field, two buttons div, and user management notifications */
-html > body > div > div > header > section:nth-of-type(3) > div {
-   display: block;
-}
-/* div that holds text input and add and remove user buttons */
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div:nth-of-type(1) {
-   display: flex;
-}
-
-/* this div holds the two buttons (add and remove) */
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div:nth-of-type(1)
-   > div {
-   display: flex;
-}
-
-/* Remove user button */
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > div
-   > div:nth-of-type(2) {
-   border: 1px #aaaaaa solid;
-   transition: all 0.3s;
-   padding: 2px;
-}
-
-/* Remove user button */
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > div
-   > div:nth-of-type(2):hover {
-   border: 2px black solid;
-   cursor: pointer;
-}
-
-/* Remove user button */
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > div
-   > div:nth-of-type(2):not(:hover) {
-   border: 1px #aaaaaa solid;
-}
-
-/* words "remove" in remove user button */
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > div
-   > div:nth-of-type(2)
-   > span {
-   font-size: 11px;
-   font-family: "Josefin Sans";
-}
-
-/* words "add" in remove user button */
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > div
-   > div:nth-of-type(4)
-   > span {
-   font-size: 11px;
-   font-family: "Josefin Sans";
-}
-
-/* add user button*/
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > div
-   > div:nth-of-type(4) {
-   border: 1px #aaaaaa solid;
-   transition: all 0.3s;
-   padding: 2px;
-}
-/* "add" button*/
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > div
-   > div:nth-of-type(4):hover {
-   border: 2px black solid;
-   cursor: pointer;
-}
-/* "add" button*/
-html
-   > body
-   > div
-   > div
-   > header
-   > section:nth-of-type(3)
-   > div
-   > div
-   > div
-   > div:nth-of-type(4):not(:hover) {
-   border: 1px #aaaaaa solid;
-}
-
-/* Notification panel for managing users */
-#container {
-   font-family: "Josefin Sans";
-   border-radius: 4px;
-   padding: 3px;
-   font-size: 10px;
-}
-
-/* Notification panel in center of header component */
-#clocnotifications {
-   font-family: "Josefin Sans";
-   font-size: 10px;
-   border-radius: 4px;
-   padding: 3px;
-}
-
 .jqx-notification-info,
 .jqx-info {
    background-color: blue;
@@ -468,17 +254,7 @@ body
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /* styling in body                                                  */
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-/* cherry blossom image */
-body > div > div > div > img {
-   display: block;
-   margin-left: auto;
-   margin-right: auto;
-   margin-top: var(--headerHeightP20);
-   border-radius: 15px;
-   width: 650px;
-}
-
-/* cherry blossom image after I learned about React.fragments, which doesn't requie gratuitous <div>s */
+/* cherry blossom image after I learned about React.fragments, which doesn't require gratuitous <div>s */
 body > div > div > img {
    display: block;
    margin-left: auto;
@@ -506,9 +282,6 @@ body > div > div > div > div > div > input {
    border-radius: 5px;
    margin-bottom: 9px;
 }
-
-/* .popovercontents > div:nth-of-type(1) > input {
-} */
 
 /* overall structure of the body block is two sections running side-by-side */
 body > div:nth-of-type(1) > div > div > div {
