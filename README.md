@@ -308,7 +308,7 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ---
 
-cluster center: (27.71781, -82.73887) 3
+#### cluster center: (27.71781, -82.73887) 3
 
 ### searching for: 27.71781
 
