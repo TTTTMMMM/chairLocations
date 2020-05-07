@@ -338,4 +338,4 @@ ID: "3ac0791814",
 LATITUDE: "27.71783",
 LONGITUDE: "-82.73887",
 
-So, it's hard to say which 3 markers make up the targeted cluster, especially when limited to searching for the locations using the _center of the cluster_ and not using the _locations of individual markers_.
+So, it's hard to identify which 3 markers make up the targeted cluster, especially when limited to searching for the locations using the _center of the cluster_ and not using the _locations of individual markers_.
