@@ -116,6 +116,9 @@ class MappingPage extends Component<
    }
 
    public render() {
+      console.log(
+         `++++ MappingPage(), this.props.match.path/url [${this.props.match.path}] [${this.props.match.url}]`
+      );
       return (
          <div>
             <HeaderComponent
