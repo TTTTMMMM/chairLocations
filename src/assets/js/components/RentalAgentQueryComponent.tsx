@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { divFlexRow } from "../../../styles/reactStyling";
-import "../../../styles/index.css";
-import { UserObj } from "../../misc/chairLocTypes";
-import BodyMappingSubheader from "../../components/BodyMappingSubheader";
-class BodyMappingAnalytics extends Component<
+import { divFlexRow } from "../../styles/reactStyling";
+import "../../styles/index.css";
+import { UserObj } from "../misc/chairLocTypes";
+import BodyMappingSubheader from "./BodyMappingSubheader";
+class RentalAgentQueryComponent extends Component<
    {
       auth2: any;
       loggedInWithGoogle: boolean;
@@ -23,22 +23,22 @@ class BodyMappingAnalytics extends Component<
       match: any;
    }) {
       super(props);
-      this.getBodyMappingAnalyticsBodyContent = this.getBodyMappingAnalyticsBodyContent.bind(
+      this.getRentalAgentQueryBodyContent = this.getRentalAgentQueryBodyContent.bind(
          this
       );
    }
 
-   getBodyMappingAnalyticsBodyContent() {
+   getRentalAgentQueryBodyContent() {
       if (this.props.loggedInWithGoogle) {
          console.log(
-            `in BodyMappingAnalytics Component,  match [${this.props.match.path}] [${this.props.match.url}]`
+            `in RentalAgentQueryComponent,  match [${this.props.match.path}] [${this.props.match.url}]`
          );
          return (
             <>
                <BodyMappingSubheader
                   match={this.props.match}
                ></BodyMappingSubheader>
-               <div style={divFlexRow}>Body MappingAnalytics Component</div>
+               <div style={divFlexRow}>RentalAgentQueryComponent</div>
             </>
          );
       } else {
@@ -46,8 +46,8 @@ class BodyMappingAnalytics extends Component<
       }
    }
    render() {
-      return <>{this.getBodyMappingAnalyticsBodyContent()}</>;
+      return <>{this.getRentalAgentQueryBodyContent()}</>;
    }
 }
 
-export default BodyMappingAnalytics;
+export default RentalAgentQueryComponent;

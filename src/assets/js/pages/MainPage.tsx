@@ -12,14 +12,14 @@ import * as clt from "../misc/chairLocTypes";
 
 // Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
 class MainPage extends Component<
-   {},
+   { match: any },
    { isSignedIn: boolean; googleToken: any; userObjFmServer: clt.UserObj }
 > {
    auth2!: gapi.auth2.GoogleAuth;
    loggedInPhotoURL: string | undefined;
    emailAddress: string | undefined;
    id_token: any | undefined;
-   constructor(props: {}) {
+   constructor(props: { match: any }) {
       super(props);
 
       this.state = {
@@ -132,6 +132,7 @@ class MainPage extends Component<
                googleToken={this.state.googleToken}
                emailAddress={this.emailAddress}
                userObject={this.state.userObjFmServer}
+               match={this.props.match}
             ></BodyMain>
          </div>
       );

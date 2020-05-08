@@ -12,7 +12,9 @@ html {
    --headerHeightP20: 15px;
    --footerPadding: 10px;
 }
-body > div > div > header {
+
+/* header 1 */
+body > div > div > header:nth-of-type(1) {
    position: sticky;
    top: 0;
    display: flex;
@@ -23,32 +25,71 @@ body > div > div > header {
    box-shadow: 0 8px 6px -6px black;
    z-index: 10;
 }
-/* ************************* */
-/* section 1  */
-body > div > div > header > section:nth-of-type(1) {
+
+/* header 2 */
+body > div > div > header:nth-of-type(2) {
+   position: sticky;
+   top: 0;
+   display: flex;
+   flex-direction: row;
+   background-color: rgb(250, 245, 198);
+   padding-top: 4px;
+   height: 18px;
+   box-shadow: 0 8px 6px -6px black;
+   z-index: 10;
+}
+/* ********************** */
+/*  header 1 > section 1  */
+body > div > div > header:nth-of-type(1) > section:nth-of-type(1) {
    display: flex;
    justify-content: space-around;
    width: 15vw;
    margin-top: -10px;
 }
 
-/* section 2  */
-body > div > div > header > section:nth-of-type(2) {
+/* header 1 > section 2  */
+body > div > div > header:nth-of-type(1) > section:nth-of-type(2) {
    display: flex;
    justify-content: space-around;
    width: 65vw;
    margin-top: -10px;
 }
 
-/* section 3  */
-body > div > div > header > section:nth-of-type(3) {
+/* header 1 > section 3  */
+body > div > div > header:nth-of-type(1) > section:nth-of-type(3) {
    display: flex;
    justify-content: flex-end;
    width: 18vw;
    margin-top: -10px;
 }
-/********* navbar styling *********/
-body > div > div > header > section:nth-of-type(2) > nav {
+
+/* ************************* */
+/*  header 2 > section 1     */
+body > div > div > header:nth-of-type(2) > section:nth-of-type(1) {
+   display: flex;
+   justify-content: space-around;
+   width: 15vw;
+   margin-top: -10px;
+}
+
+/* header 2 > section 2  */
+body > div > div > header:nth-of-type(2) > section:nth-of-type(2) {
+   display: flex;
+   justify-content: space-around;
+   width: 65vw;
+   margin-top: -8px;
+}
+
+/* header 2 > section 3  */
+body > div > div > header:nth-of-type(2) > section:nth-of-type(3) {
+   display: flex;
+   justify-content: flex-end;
+   width: 18vw;
+   margin-top: -10px;
+}
+
+/****header 1 navbar styling *********/
+body > div > div > header:nth-of-type(1) > section:nth-of-type(2) > nav {
    display: flex;
    justify-content: space-around;
    align-items: center;
@@ -56,17 +97,32 @@ body > div > div > header > section:nth-of-type(2) > nav {
    width: 100%;
 }
 
-body > div > div > header > section:nth-of-type(2) > nav > ul {
+body > div > div > header:nth-of-type(1) > section:nth-of-type(2) > nav > ul {
    display: flex;
    justify-content: space-around;
    width: 100%;
 }
 
-body > div > div > header > section:nth-of-type(2) > nav > ul > li {
+body
+   > div
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(2)
+   > nav
+   > ul
+   > li {
    list-style-type: none;
 }
 
-body > div > div > header > section:nth-of-type(2) > nav > ul > li > a {
+body
+   > div
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(2)
+   > nav
+   > ul
+   > li
+   > a {
    color: rgb(250, 245, 198);
    text-decoration: none;
    text-transform: uppercase;
@@ -75,7 +131,15 @@ body > div > div > header > section:nth-of-type(2) > nav > ul > li > a {
    transition: all 0.5s;
 }
 
-body > div > div > header > section:nth-of-type(2) > nav > ul > li > a:hover {
+body
+   > div
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(2)
+   > nav
+   > ul
+   > li
+   > a:hover {
    color: rgb(255, 230, 0);
    text-decoration: none;
    text-transform: uppercase;
@@ -85,10 +149,79 @@ body > div > div > header > section:nth-of-type(2) > nav > ul > li > a:hover {
    padding-top: 3px;
    padding-left: 2px;
 }
-/********* navbar styling end *********/
+/********* header 1 navbar styling end *********/
+
+/****header 2 navbar styling *********/
+body > div > div > header:nth-of-type(2) > section:nth-of-type(2) > nav {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   min-height: 4vh;
+   width: 100%;
+}
+
+body > div > div > header:nth-of-type(2) > section:nth-of-type(2) > nav > ul {
+   display: flex;
+   justify-content: space-around;
+   width: 100%;
+}
+
+body
+   > div
+   > div
+   > header:nth-of-type(2)
+   > section:nth-of-type(2)
+   > nav
+   > ul
+   > li {
+   list-style-type: none;
+}
+
+body
+   > div
+   > div
+   > header:nth-of-type(2)
+   > section:nth-of-type(2)
+   > nav
+   > ul
+   > li
+   > a {
+   color: hsla(12, 95%, 47%, 0.98);
+   text-decoration: none;
+   text-transform: uppercase;
+   letter-spacing: 2px;
+   font-size: 11px;
+   transition: all 0.5s;
+}
+
+body
+   > div
+   > div
+   > header:nth-of-type(2)
+   > section:nth-of-type(2)
+   > nav
+   > ul
+   > li
+   > a:hover {
+   color: hsla(12, 95%, 47%, 0.98);
+   text-decoration: none;
+   text-transform: uppercase;
+   letter-spacing: 2.5px;
+   font-size: 13px;
+   border: solid hsla(12, 95%, 47%, 0.98) 2px;
+   padding-top: 3px;
+   padding-left: 2px;
+}
+/********* header 2 navbar styling end *********/
 
 /* Google Sign-in Button */
-html > body > div > div > header > section:nth-of-type(3) > button {
+html
+   > body
+   > div
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(3)
+   > button {
    float: right;
    padding: 0;
    margin-top: 10px;
@@ -101,7 +234,7 @@ html
    > body
    > div
    > div
-   > header
+   > header:nth-of-type(1)
    > section:nth-of-type(3)
    > button
    > div
@@ -120,7 +253,7 @@ html
    > body
    > div
    > div
-   > header
+   > header:nth-of-type(1)
    > section:nth-of-type(3)
    > button
    > div
@@ -143,7 +276,13 @@ html
 }
 
 /* Login photo figure after successful login */
-html > body > div > div > header > section:nth-of-type(3) > figure {
+html
+   > body
+   > div
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(3)
+   > figure {
    float: right;
    margin-top: 5px;
    height: 33px;
@@ -151,7 +290,13 @@ html > body > div > div > header > section:nth-of-type(3) > figure {
 }
 
 /* Login photo figure after successful login */
-html > body > div > div > header > section:nth-of-type(3) > figure:hover {
+html
+   > body
+   > div
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(3)
+   > figure:hover {
    cursor: pointer;
    transform: scale(1);
    transition: all 0.3s;
@@ -167,7 +312,13 @@ html > body > div > div > header > section:nth-of-type(3) > figure:hover {
 }
 
 /* Login photo figure after successful login */
-html > body > div > div > header > section:nth-of-type(3) > figure:not(:hover) {
+html
+   > body
+   > div
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(3)
+   > figure:not(:hover) {
    transform: scale(1);
    padding: 4px;
    transition: all 0.3s;
@@ -185,7 +336,7 @@ html
    > body
    > div
    > div
-   > header
+   > header:nth-of-type(1)
    > section:nth-of-type(3)
    > figure
    > figcaption:not(:hover) {
@@ -202,7 +353,7 @@ html
    > body
    > div
    > div
-   > header
+   > header:nth-of-type(1)
    > section:nth-of-type(3)
    > figure
    > figcaption:hover {
@@ -215,7 +366,14 @@ html
 }
 
 /* Login photo image after successful login */
-html > body > div > div > header > section:nth-of-type(3) > figure > img {
+html
+   > body
+   > div
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(3)
+   > figure
+   > img {
    width: 20px;
    height: 20px;
    display: block;
@@ -228,8 +386,14 @@ html > body > div > div > header > section:nth-of-type(3) > figure > img {
    background-color: blue;
 }
 
-/* font-awesome icon  gear */
-body > div:nth-of-type(1) > div > header > section:nth-of-type(3) > a > svg {
+/* font-awesome icon gear */
+body
+   > div:nth-of-type(1)
+   > div
+   > header:nth-of-type(1)
+   > section:nth-of-type(3)
+   > a
+   > svg {
    width: 1.5em;
    height: 1.5em;
    color: rgb(250, 245, 198);
@@ -241,7 +405,7 @@ body > div:nth-of-type(1) > div > header > section:nth-of-type(3) > a > svg {
 body
    > div:nth-of-type(1)
    > div
-   > header
+   > header:nth-of-type(1)
    > section:nth-of-type(3)
    > a
    > svg:hover {

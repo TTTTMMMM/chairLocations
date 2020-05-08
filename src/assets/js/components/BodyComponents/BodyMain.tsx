@@ -13,6 +13,7 @@ class BodyMain extends Component<{
    googleToken: any;
    emailAddress: any;
    userObject: UserObj;
+   match: any;
 }> {
    constructor(props: {
       auth2: any;
@@ -20,6 +21,7 @@ class BodyMain extends Component<{
       googleToken: any;
       emailAddress: any;
       userObject: any;
+      match: any;
    }) {
       super(props);
       this.getMainBodyContent = this.getMainBodyContent.bind(this);
@@ -49,6 +51,7 @@ class BodyMain extends Component<{
                   googleToken={this.props.googleToken}
                   emailAddress={this.props.emailAddress}
                   userObject={this.props.userObject}
+                  match={this.props.match}
                ></BodyMappingAnalytics>
             );
             break;
@@ -71,6 +74,7 @@ class BodyMain extends Component<{
                   googleToken={this.props.googleToken}
                   emailAddress={this.props.emailAddress}
                   userObject={this.props.userObject}
+                  match={this.props.match}
                ></BodyMappingAnalytics>
             );
             break;

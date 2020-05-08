@@ -19,6 +19,10 @@ function RoutingComponent() {
       <Router>
          <Switch>
             <Route exact path="/" component={MainPage}></Route>
+            <Route exact path="/1" component={MappingPage}></Route>
+            <Route exact path="/mapping/1" component={MappingPage}></Route>
+            <Route exact path="/2" component={MappingPage}></Route>
+            <Route exact path="/mapping/2" component={MappingPage}></Route>
             <Route exact path="/upload" component={Upload}></Route>
             <Route exact path="/mapping" component={MappingPage}></Route>
             <Route exact path="/maintenance" component={Maintenance}></Route>
