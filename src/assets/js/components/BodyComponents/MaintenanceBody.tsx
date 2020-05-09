@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { divFlexRow } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
-// import { Roles } from "../../misc/chairLocTypes";
 
-class BodyMaintenance extends Component<
+class MaintenanceBody extends Component<
    {
       auth2: any;
       loggedInWithGoogle: boolean;
@@ -28,19 +27,15 @@ class BodyMaintenance extends Component<
    }
 
    getMaintenanceBodyContent() {
-      if (this.props.loggedInWithGoogle) {
-         return (
-            <>
-               <div style={divFlexRow}>Body Maintenance Component</div>
-            </>
-         );
-      } else {
-         return <img src={"../../images/cherry.jpeg"} />;
-      }
+      return (
+         <>
+            <div style={divFlexRow}>Body Maintenance Component</div>
+         </>
+      );
    }
    render() {
       return <>{this.getMaintenanceBodyContent()}</>;
    }
 }
 
-export default BodyMaintenance;
+export default MaintenanceBody;

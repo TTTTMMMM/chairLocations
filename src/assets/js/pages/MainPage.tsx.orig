@@ -6,20 +6,20 @@
 import React, { Component } from "react";
 import "../../styles/index.css";
 import HeaderComponent from "../components/HeaderComponent";
-import BodyUpload from "../components/BodyComponents/BodyUpload";
+import MainBody from "../components/BodyComponents/MainBody";
 import getLoggedinUser from "../fetches/getLoggedinUser";
 import * as clt from "../misc/chairLocTypes";
 
 // Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
-class UploadPage extends Component<
-   {},
+class MainPage extends Component<
+   { match: any },
    { isSignedIn: boolean; googleToken: any; userObjFmServer: clt.UserObj }
 > {
    auth2!: gapi.auth2.GoogleAuth;
    loggedInPhotoURL: string | undefined;
    emailAddress: string | undefined;
    id_token: any | undefined;
-   constructor(props: {}) {
+   constructor(props: { match: any }) {
       super(props);
 
       this.state = {
@@ -126,16 +126,17 @@ class UploadPage extends Component<
                googleToken={this.state.googleToken}
                userObject={this.state.userObjFmServer}
             ></HeaderComponent>
-            <BodyUpload
+            <MainBody
                auth2={this.auth2}
                loggedInWithGoogle={this.state.isSignedIn}
                googleToken={this.state.googleToken}
                emailAddress={this.emailAddress}
                userObject={this.state.userObjFmServer}
-            ></BodyUpload>
+               match={this.props.match}
+            ></MainBody>
          </div>
       );
    }
 }
 
-export default UploadPage;
+export default MainPage;

@@ -14,7 +14,7 @@ html {
 }
 
 /* header 1 */
-body > div > div > header:nth-of-type(1) {
+body > div > header:nth-of-type(1) {
    position: sticky;
    top: 0;
    display: flex;
@@ -26,8 +26,8 @@ body > div > div > header:nth-of-type(1) {
    z-index: 10;
 }
 
-/* header 2 */
-body > div > div > header:nth-of-type(2) {
+/* BodyMappingSubheader */
+body > div > header:nth-of-type(2) {
    position: sticky;
    top: 0;
    display: flex;
@@ -40,7 +40,7 @@ body > div > div > header:nth-of-type(2) {
 }
 /* ********************** */
 /*  header 1 > section 1  */
-body > div > div > header:nth-of-type(1) > section:nth-of-type(1) {
+body > div > header:nth-of-type(1) > section:nth-of-type(1) {
    display: flex;
    justify-content: space-around;
    width: 15vw;
@@ -48,7 +48,7 @@ body > div > div > header:nth-of-type(1) > section:nth-of-type(1) {
 }
 
 /* header 1 > section 2  */
-body > div > div > header:nth-of-type(1) > section:nth-of-type(2) {
+body > div > header:nth-of-type(1) > section:nth-of-type(2) {
    display: flex;
    justify-content: space-around;
    width: 65vw;
@@ -56,32 +56,32 @@ body > div > div > header:nth-of-type(1) > section:nth-of-type(2) {
 }
 
 /* header 1 > section 3  */
-body > div > div > header:nth-of-type(1) > section:nth-of-type(3) {
+body > div > header:nth-of-type(1) > section:nth-of-type(3) {
    display: flex;
    justify-content: flex-end;
    width: 18vw;
    margin-top: -10px;
 }
 
-/* ************************* */
-/*  header 2 > section 1     */
-body > div > div > header:nth-of-type(2) > section:nth-of-type(1) {
+/* ************************************* */
+/*  BodyMappingSubheader > section 1     */
+body > div > header:nth-of-type(2) > section:nth-of-type(1) {
    display: flex;
    justify-content: space-around;
    width: 15vw;
    margin-top: -10px;
 }
 
-/* header 2 > section 2  */
-body > div > div > header:nth-of-type(2) > section:nth-of-type(2) {
+/* BodyMappingSubheader > section 2  */
+body > div > header:nth-of-type(2) > section:nth-of-type(2) {
    display: flex;
    justify-content: space-around;
    width: 65vw;
    margin-top: -8px;
 }
 
-/* header 2 > section 3  */
-body > div > div > header:nth-of-type(2) > section:nth-of-type(3) {
+/* BodyMappingSubheader > section 3  */
+body > div > header:nth-of-type(2) > section:nth-of-type(3) {
    display: flex;
    justify-content: flex-end;
    width: 18vw;
@@ -89,7 +89,7 @@ body > div > div > header:nth-of-type(2) > section:nth-of-type(3) {
 }
 
 /****header 1 navbar styling *********/
-body > div > div > header:nth-of-type(1) > section:nth-of-type(2) > nav {
+body > div > header:nth-of-type(1) > section:nth-of-type(2) > nav {
    display: flex;
    justify-content: space-around;
    align-items: center;
@@ -97,25 +97,17 @@ body > div > div > header:nth-of-type(1) > section:nth-of-type(2) > nav {
    width: 100%;
 }
 
-body > div > div > header:nth-of-type(1) > section:nth-of-type(2) > nav > ul {
+body > div > header:nth-of-type(1) > section:nth-of-type(2) > nav > ul {
    display: flex;
    justify-content: space-around;
    width: 100%;
 }
 
-body
-   > div
-   > div
-   > header:nth-of-type(1)
-   > section:nth-of-type(2)
-   > nav
-   > ul
-   > li {
+body > div > header:nth-of-type(1) > section:nth-of-type(2) > nav > ul > li {
    list-style-type: none;
 }
 
 body
-   > div
    > div
    > header:nth-of-type(1)
    > section:nth-of-type(2)
@@ -132,7 +124,6 @@ body
 }
 
 body
-   > div
    > div
    > header:nth-of-type(1)
    > section:nth-of-type(2)
@@ -151,34 +142,26 @@ body
 }
 /********* header 1 navbar styling end *********/
 
-/****header 2 navbar styling *********/
-body > div > div > header:nth-of-type(2) > section:nth-of-type(2) > nav {
+/**** BodyMappingSubheader navbar styling  begin *********/
+body > div > header:nth-of-type(2) > section:nth-of-type(2) > nav {
    display: flex;
    justify-content: space-around;
    align-items: center;
-   min-height: 4vh;
+   min-height: 3.5vh;
    width: 100%;
 }
 
-body > div > div > header:nth-of-type(2) > section:nth-of-type(2) > nav > ul {
+body > div > header:nth-of-type(2) > section:nth-of-type(2) > nav > ul {
    display: flex;
    justify-content: space-around;
    width: 100%;
 }
 
-body
-   > div
-   > div
-   > header:nth-of-type(2)
-   > section:nth-of-type(2)
-   > nav
-   > ul
-   > li {
+body > div > header:nth-of-type(2) > section:nth-of-type(2) > nav > ul > li {
    list-style-type: none;
 }
 
 body
-   > div
    > div
    > header:nth-of-type(2)
    > section:nth-of-type(2)
@@ -196,7 +179,6 @@ body
 
 body
    > div
-   > div
    > header:nth-of-type(2)
    > section:nth-of-type(2)
    > nav
@@ -212,16 +194,10 @@ body
    padding-top: 3px;
    padding-left: 2px;
 }
-/********* header 2 navbar styling end *********/
+/********* BodyMappingSubheader navbar styling end *********/
 
 /* Google Sign-in Button */
-html
-   > body
-   > div
-   > div
-   > header:nth-of-type(1)
-   > section:nth-of-type(3)
-   > button {
+html > body > div > header:nth-of-type(1) > section:nth-of-type(3) > button {
    float: right;
    padding: 0;
    margin-top: 10px;
@@ -233,7 +209,6 @@ html
 html
    > body
    > div
-   > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
    > button
@@ -242,16 +217,16 @@ html
    > span
    > span:nth-of-type(1) {
    font-family: "Josefin Sans", monospace;
-   font-size: 13px;
+   font-size: 11px;
    color: black;
    letter-spacing: 2px;
    margin-top: 22px;
+   transition: all 0.5s;
 }
 
 /* Google Sign-in button 'Sign In' words on hover*/
 html
    > body
-   > div
    > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
@@ -260,11 +235,11 @@ html
    > div
    > span
    > span:nth-of-type(1):hover {
-   font-size: 11px;
+   font-size: 11.5px;
    color: yellow;
    margin-top: 15px;
    font-family: "Josefin Sans", monospace;
-   letter-spacing: 2px;
+   letter-spacing: 2.2px;
    text-transform: uppercase;
 }
 
@@ -276,13 +251,7 @@ html
 }
 
 /* Login photo figure after successful login */
-html
-   > body
-   > div
-   > div
-   > header:nth-of-type(1)
-   > section:nth-of-type(3)
-   > figure {
+html > body > div > header:nth-of-type(1) > section:nth-of-type(3) > figure {
    float: right;
    margin-top: 5px;
    height: 33px;
@@ -292,7 +261,6 @@ html
 /* Login photo figure after successful login */
 html
    > body
-   > div
    > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
@@ -315,7 +283,6 @@ html
 html
    > body
    > div
-   > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
    > figure:not(:hover) {
@@ -335,7 +302,6 @@ html
 html
    > body
    > div
-   > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
    > figure
@@ -352,7 +318,6 @@ html
 html
    > body
    > div
-   > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
    > figure
@@ -368,7 +333,6 @@ html
 /* Login photo image after successful login */
 html
    > body
-   > div
    > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
@@ -389,7 +353,6 @@ html
 /* font-awesome icon gear */
 body
    > div:nth-of-type(1)
-   > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
    > a
@@ -404,7 +367,6 @@ body
 
 body
    > div:nth-of-type(1)
-   > div
    > header:nth-of-type(1)
    > section:nth-of-type(3)
    > a
@@ -418,8 +380,9 @@ body
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 /* styling in body                                                  */
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-/* cherry blossom image after I learned about React.fragments, which doesn't require gratuitous <div>s */
-body > div > div > img {
+/* cherry blossom image  */
+
+body > div > img {
    display: block;
    margin-left: auto;
    margin-right: auto;
@@ -433,12 +396,12 @@ body > div:nth-of-type(1) > div > div > div > div:nth-of-type(3) {
    margin-top: 1px;
 }
 
-body > div:nth-of-type(1) > div > div {
+body > div:nth-of-type(1) > div {
    margin-top: var(--headerHeightP20);
 }
 
 /* the file input element */
-body > div > div > div > div > div > input {
+body > div > div > div > input {
    font-family: "Josefin Sans", monospace;
    width: 260px;
    height: 20px;
@@ -448,37 +411,28 @@ body > div > div > div > div > div > input {
 }
 
 /* overall structure of the body block is two sections running side-by-side */
-body > div:nth-of-type(1) > div > div > div {
+body > div:nth-of-type(1) > div {
    display: flex;
    flex-direction: row;
 }
 /* Section that holds the data cleansing block */
-body > div:nth-of-type(1) > div > div > div > section:nth-of-type(1) {
+body > div:nth-of-type(1) > div > section:nth-of-type(1) {
    margin-right: 2px;
    padding: 2px;
 }
 
 /* Section that holds the data table and maybe google_maps block */
-body > div:nth-of-type(1) > div > div > div > section:nth-of-type(2) {
+body > div:nth-of-type(1) > div > section:nth-of-type(2) {
    padding: 2px;
 }
 
-body
-   > div:nth-of-type(1)
-   > div
-   > div
-   > div
-   > section:nth-of-type(1)
-   > fieldset
-   > legend {
+body > div:nth-of-type(1) > div > section:nth-of-type(1) > fieldset > legend {
    font-size: 0.7em;
 }
 
 /* input label choose file styling */
 body
    > div:nth-of-type(1)
-   > div
-   > div
    > div
    > section:nth-of-type(1)
    > fieldset
@@ -509,8 +463,6 @@ body
 /* input label choose file styling */
 body
    > div:nth-of-type(1)
-   > div
-   > div
    > div
    > section:nth-of-type(1)
    > fieldset

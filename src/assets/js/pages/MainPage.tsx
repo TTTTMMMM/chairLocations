@@ -4,15 +4,25 @@
 // Client-side code follows:
 
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import "../../styles/index.css";
 import HeaderComponent from "../components/HeaderComponent";
-import BodyMain from "../components/BodyComponents/BodyMain";
+import MainBody from "../components/BodyComponents/MainBody";
 import getLoggedinUser from "../fetches/getLoggedinUser";
 import * as clt from "../misc/chairLocTypes";
 
+import FourOFourPage from "./FourOFourPage";
+import FourOOnePage from "./FourOOnePage";
+
+import UploadBody from "../components/BodyComponents/UploadBody";
+import MappingBody from "../components/BodyComponents/MappingBody";
+import MaintenanceBody from "../components/BodyComponents/MaintenanceBody";
+import ConfigBody from "../components/BodyComponents/ConfigBody";
+
 // Note: gapi (Google APIs) are available because I included this line: <script src="https://apis.google.com/js/api.js"></script> in index.html. That's the mystery behind how the gapi calls work without importing them in App.tsx (this file). Also, note that the type definitions for gapi objects can be found in node_modules/@types/gapi.auth2/index.d.ts file.
 class MainPage extends Component<
-   { match: any },
+   {},
    { isSignedIn: boolean; googleToken: any; userObjFmServer: clt.UserObj }
 > {
    auth2!: gapi.auth2.GoogleAuth;
@@ -117,7 +127,7 @@ class MainPage extends Component<
 
    public render() {
       return (
-         <div>
+         <Router>
             <HeaderComponent
                isSignedIn={this.state.isSignedIn}
                logout={this.logout}
@@ -126,15 +136,95 @@ class MainPage extends Component<
                googleToken={this.state.googleToken}
                userObject={this.state.userObjFmServer}
             ></HeaderComponent>
-            <BodyMain
-               auth2={this.auth2}
-               loggedInWithGoogle={this.state.isSignedIn}
-               googleToken={this.state.googleToken}
-               emailAddress={this.emailAddress}
-               userObject={this.state.userObjFmServer}
-               match={this.props.match}
-            ></BodyMain>
-         </div>
+            <Switch>
+               <Route
+                  exact
+                  path="/"
+                  render={(match) => (
+                     <MainBody
+                        match={match}
+                        auth2={this.auth2}
+                        loggedInWithGoogle={this.state.isSignedIn}
+                        googleToken={this.state.googleToken}
+                        emailAddress={this.emailAddress}
+                        userObject={this.state.userObjFmServer}
+                     ></MainBody>
+                  )}
+               />
+               <Route
+                  exact
+                  path="/upload"
+                  render={(match) =>
+                     this.state.isSignedIn ? (
+                        <UploadBody
+                           auth2={this.auth2}
+                           loggedInWithGoogle={this.state.isSignedIn}
+                           googleToken={this.state.googleToken}
+                           emailAddress={this.emailAddress}
+                           userObject={this.state.userObjFmServer}
+                        ></UploadBody>
+                     ) : (
+                        <Redirect to="/" />
+                     )
+                  }
+               />
+               <Route
+                  exact
+                  path="/mapping"
+                  render={(match) =>
+                     this.state.isSignedIn ? (
+                        <MappingBody
+                           match={match}
+                           auth2={this.auth2}
+                           loggedInWithGoogle={this.state.isSignedIn}
+                           googleToken={this.state.googleToken}
+                           emailAddress={this.emailAddress}
+                           userObject={this.state.userObjFmServer}
+                        ></MappingBody>
+                     ) : (
+                        <Redirect to="/" />
+                     )
+                  }
+               />
+               <Route
+                  exact
+                  path="/maintenance"
+                  render={(match) =>
+                     this.state.isSignedIn ? (
+                        <MaintenanceBody
+                           auth2={this.auth2}
+                           loggedInWithGoogle={this.state.isSignedIn}
+                           googleToken={this.state.googleToken}
+                           emailAddress={this.emailAddress}
+                           userObject={this.state.userObjFmServer}
+                        ></MaintenanceBody>
+                     ) : (
+                        <Redirect to="/" />
+                     )
+                  }
+               />
+               <Route
+                  exact
+                  path="/configuration"
+                  render={(match) =>
+                     this.state.isSignedIn ? (
+                        <ConfigBody
+                           auth2={this.auth2}
+                           loggedInWithGoogle={this.state.isSignedIn}
+                           googleToken={this.state.googleToken}
+                           emailAddress={this.emailAddress}
+                           userObject={this.state.userObjFmServer}
+                        ></ConfigBody>
+                     ) : (
+                        <Redirect to="/" />
+                     )
+                  }
+               />
+               <Route exact path="/401" component={FourOOnePage}></Route>
+               <Route exact path="/404" component={FourOFourPage}></Route>
+               <Redirect to="/404" />
+            </Switch>
+         </Router>
       );
    }
 }

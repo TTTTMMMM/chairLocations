@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
 import { Roles } from "../../misc/chairLocTypes";
@@ -12,7 +14,7 @@ import "firebase/auth";
 interface MyState {
    isLoggedInToFirebase?: boolean | false;
 }
-class BodyConfig extends Component<
+class ConfigBody extends Component<
    {
       auth2: any;
       loggedInWithGoogle: boolean;
@@ -90,8 +92,8 @@ class BodyConfig extends Component<
       ) {
          return <h3>Not Authorized</h3>;
       } else {
-         window.location.href = "/401";
-         return <h3>Not Auhtorized</h3>;
+         <Redirect to="/" />;
+         return <h3>Not Authorized</h3>;
       }
    }
    render() {
@@ -105,4 +107,4 @@ class BodyConfig extends Component<
    }
 }
 
-export default BodyConfig;
+export default ConfigBody;

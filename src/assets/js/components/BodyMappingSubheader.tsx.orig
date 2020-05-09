@@ -3,8 +3,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
-class BodyMappingSubheader extends Component<{}, {}> {
-   constructor(props: {}) {
+class BodyMappingSubheader extends Component<{ match: any }, {}> {
+   constructor(props: { match: any }) {
       super(props);
       this.state = {};
       this.getHeader = this.getHeader.bind(this);
@@ -21,7 +21,7 @@ class BodyMappingSubheader extends Component<{}, {}> {
                   <ul>
                      <li>
                         <NavLink
-                           to={`/mapping/bychair`}
+                           to={`${this.props.match.url}/bychair`}
                            activeStyle={{
                               border: "solid rgb(250, 245, 198) 2px ",
                               paddingTop: "3px",
@@ -33,7 +33,7 @@ class BodyMappingSubheader extends Component<{}, {}> {
                      </li>
                      <li>
                         <NavLink
-                           to={`/mapping/byrentalagent`}
+                           to={`${this.props.match.url}/byrentalagent`}
                            activeStyle={{
                               border: "solid rgb(250, 245, 198) 2px ",
                               paddingTop: "3px",

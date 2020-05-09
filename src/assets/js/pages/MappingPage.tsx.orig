@@ -6,7 +6,7 @@
 import React, { Component } from "react";
 import "../../styles/index.css";
 import HeaderComponent from "../components/HeaderComponent";
-import BodyMappingAnalytics from "../components/BodyComponents/BodyMappingAnalytics";
+import MappingBody from "../components/BodyComponents/MappingBody";
 import getLoggedinUser from "../fetches/getLoggedinUser";
 import * as clt from "../misc/chairLocTypes";
 
@@ -129,14 +129,14 @@ class MappingPage extends Component<
                googleToken={this.state.googleToken}
                userObject={this.state.userObjFmServer}
             ></HeaderComponent>
-            <BodyMappingAnalytics
+            <MappingBody
                auth2={this.auth2}
                loggedInWithGoogle={this.state.isSignedIn}
                googleToken={this.state.googleToken}
                emailAddress={this.emailAddress}
                userObject={this.state.userObjFmServer}
                match={this.props.match}
-            ></BodyMappingAnalytics>
+            ></MappingBody>
          </div>
       );
    }

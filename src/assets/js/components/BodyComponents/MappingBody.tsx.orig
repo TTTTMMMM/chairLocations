@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
-// import {Redirect} from "react-router-dom";
-import MainPage from "../../pages/MainPage";
+import { Redirect } from "react-router-dom";
+// import MainPage from "../../pages/MainPage";
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
-import BodyMappingSubheader from "../../components/BodyMappingSubheader";
+import BodyMappingSubheader from "../BodyMappingSubheader";
 import ChairQueryComponent from "../ChairQueryComponent";
 import RentalAgentQueryComponent from "../RentalAgentQueryComponent";
-class BodyMappingAnalytics extends Component<
+class MappingBody extends Component<
    {
       auth2: any;
       loggedInWithGoogle: boolean;
@@ -27,33 +27,33 @@ class BodyMappingAnalytics extends Component<
       match: any;
    }) {
       super(props);
-      this.getBodyMappingAnalyticsBodyContent = this.getBodyMappingAnalyticsBodyContent.bind(
-         this
-      );
+      this.getMappingBodyContent = this.getMappingBodyContent.bind(this);
    }
 
-   getBodyMappingAnalyticsBodyContent() {
+   getMappingBodyContent() {
       if (this.props.loggedInWithGoogle) {
          return (
             <>
                <BodyMappingSubheader
                   match={this.props.match}
                ></BodyMappingSubheader>
-               <Route path="/mapping/bychair" component={ChairQueryComponent} />
                <Route
-                  path="/mapping/byrentalagent"
+                  path={`${this.props.match.url}/bychair`}
+                  component={ChairQueryComponent}
+               />
+               <Route
+                  path={`${this.props.match.url}/byrentalagent`}
                   component={RentalAgentQueryComponent}
                />
             </>
          );
       } else {
-         return <Route path="/" component={MainPage} />;
-         // return <Redirect to="/" />;
+         return <Redirect to="/" />;
       }
    }
    render() {
-      return <>{this.getBodyMappingAnalyticsBodyContent()}</>;
+      return <>{this.getMappingBodyContent()}</>;
    }
 }
 
-export default BodyMappingAnalytics;
+export default MappingBody;

@@ -1,8 +1,6 @@
 // // Client-side code follows:
 
 import * as React from "react";
-// import * as ReactDOM from "react-dom";
-// var escapeHTML = require("escape-html");
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
@@ -14,9 +12,6 @@ import "../../configs/firebaseInit";
 import "../../../styles/index.css";
 import CleanAndUploadFiles from "../CleanAndUploadFiles";
 import { UserObj } from "../../misc/chairLocTypes";
-// import { Roles } from "../../misc/chairLocTypes";
-
-// import { months } from "../misc/months";
 
 interface MyState {
    isLoggedInToFirebase?: boolean | false;
@@ -108,19 +103,15 @@ class BodyUpload extends React.PureComponent<
    };
 
    getBodyUploadContent() {
-      if (this.props.loggedInWithGoogle) {
-         return (
-            <CleanAndUploadFiles
-               loggedInWithGoogle={this.props.loggedInWithGoogle}
-               auth2={this.props.auth2}
-               idToken={this.props.googleToken}
-               loggedInToFirebase={this.state.isLoggedInToFirebase!}
-               userObject={this.props.userObject}
-            ></CleanAndUploadFiles>
-         );
-      } else {
-         return <img src={"../../images/cherry.jpeg"} />;
-      }
+      return (
+         <CleanAndUploadFiles
+            loggedInWithGoogle={this.props.loggedInWithGoogle}
+            auth2={this.props.auth2}
+            idToken={this.props.googleToken}
+            loggedInToFirebase={this.state.isLoggedInToFirebase!}
+            userObject={this.props.userObject}
+         ></CleanAndUploadFiles>
+      );
    }
 
    public render() {
@@ -130,7 +121,7 @@ class BodyUpload extends React.PureComponent<
       if (this.props.loggedInWithGoogle && !this.state.isLoggedInToFirebase) {
          this.signInToFirebase(this.props.googleToken);
       }
-      return <div>{this.getBodyUploadContent()}</div>;
+      return <>{this.getBodyUploadContent()}</>;
    }
 }
 

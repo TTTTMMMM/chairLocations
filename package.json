@@ -21,7 +21,9 @@
       "type-check": "tsc --noEmit",
       "type-check:watch": "npm run type-check -- --watch",
       "start": "webpack-dev-server --host localhost --port 9008 --config webpack.config.js --progress --colors --open --mode=development",
-      "build": "webpack --mode=production --config webpack.config.js --colors --progress  && firebase deploy"
+      "build": "webpack --mode=production --config webpack.config.js --colors --progress  && firebase deploy",
+      "buildhosting": "webpack --mode=production --config webpack.config.js --colors --progress  && firebase deploy --only hosting",
+      "buildfunctions": "webpack --mode=production --config webpack.config.js --colors --progress  && firebase deploy --only functions"
    },
    "devDependencies": {
       "@babel/cli": "^7.8.4",

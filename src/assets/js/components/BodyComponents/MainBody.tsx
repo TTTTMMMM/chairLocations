@@ -3,25 +3,25 @@ import React, { Component } from "react";
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
 import { Roles } from "../../misc/chairLocTypes";
-import BodyMappingAnalytics from "./BodyMappingAnalytics";
-import BodyUpload from "./BodyUpload";
-import BodyMaintenance from "./BodyMaintenance";
+import MappingBody from "./MappingBody";
+import BodyUpload from "./UploadBody";
+import MaintenanceBody from "./MaintenanceBody";
 
-class BodyMain extends Component<{
+class MainBody extends Component<{
+   match: any;
    auth2: any;
    loggedInWithGoogle: boolean;
    googleToken: any;
    emailAddress: any;
    userObject: UserObj;
-   match: any;
 }> {
    constructor(props: {
+      match: any;
       auth2: any;
       loggedInWithGoogle: boolean;
       googleToken: any;
       emailAddress: any;
       userObject: any;
-      match: any;
    }) {
       super(props);
       this.getMainBodyContent = this.getMainBodyContent.bind(this);
@@ -34,25 +34,25 @@ class BodyMain extends Component<{
             break;
          case Roles.maintenance:
             return (
-               <BodyMaintenance
+               <MaintenanceBody
                   auth2={this.props.auth2}
                   loggedInWithGoogle={this.props.loggedInWithGoogle}
                   googleToken={this.props.googleToken}
                   emailAddress={this.props.emailAddress}
                   userObject={this.props.userObject}
-               ></BodyMaintenance>
+               ></MaintenanceBody>
             );
             break;
          case Roles.lurker:
             return (
-               <BodyMappingAnalytics
+               <MappingBody
+                  match={this.props.match}
                   auth2={this.props.auth2}
                   loggedInWithGoogle={this.props.loggedInWithGoogle}
                   googleToken={this.props.googleToken}
                   emailAddress={this.props.emailAddress}
                   userObject={this.props.userObject}
-                  match={this.props.match}
-               ></BodyMappingAnalytics>
+               ></MappingBody>
             );
             break;
          case Roles.uploader:
@@ -68,14 +68,14 @@ class BodyMain extends Component<{
             break;
          case Roles.admin:
             return (
-               <BodyMappingAnalytics
+               <MappingBody
+                  match={this.props.match}
                   auth2={this.props.auth2}
                   loggedInWithGoogle={this.props.loggedInWithGoogle}
                   googleToken={this.props.googleToken}
                   emailAddress={this.props.emailAddress}
                   userObject={this.props.userObject}
-                  match={this.props.match}
-               ></BodyMappingAnalytics>
+               ></MappingBody>
             );
             break;
          default:
@@ -87,4 +87,4 @@ class BodyMain extends Component<{
    }
 }
 
-export default BodyMain;
+export default MainBody;
