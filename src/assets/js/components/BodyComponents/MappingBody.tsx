@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
-import MappingSubheader from "../MappingSubheader";
-import ChairQueryComponent from "../ChairQueryComponent";
-import RentalAgentQueryComponent from "../RentalAgentQueryComponent";
+import MappingSubheader from "../MapEmComponents/MappingSubheader";
+import ChairQueryComponent from "../MapEmComponents/ChairQueryComponent";
+import RentalAgentQueryComponent from "../MapEmComponents/RentalAgentQueryComponent";
 class MappingBody extends Component<
    {
       match: any;

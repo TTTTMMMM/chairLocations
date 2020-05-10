@@ -7,6 +7,13 @@ export const divFlexRow: CSSProperties = {
    justifyContent: "center",
 };
 
+export const divFlexRowL: CSSProperties = {
+   marginTop: "10px",
+   display: "flex",
+   flexDirection: "row",
+   justifyContent: "left",
+};
+
 export const divFlexRowBeach: CSSProperties = {
    marginTop: "15px",
    display: "flex",
@@ -166,4 +173,18 @@ export const labelStyleRental: CSSProperties = {
    marginTop: "5px",
    fontSize: "13px",
    marginRight: "3px",
+};
+
+export const querySideStyling: CSSProperties = {
+   borderRight: "2px solid rgba(234, 52, 6, 0.93)",
+   display: "flex",
+   flexDirection: "column",
+   width: "320px",
+   marginLeft: "15px",
+};
+
+export const resultsSideStyling: CSSProperties = {
+   display: "flex",
+   flexDirection: "column",
+   marginLeft: "15px",
 };
