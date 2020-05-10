@@ -106,6 +106,15 @@ class MainPage extends Component<
             this.setState({
                isSignedIn: this.auth2!.isSignedIn.get(),
                googleToken: "dummyValue",
+               userObjFmServer: {
+                  username: "",
+                  role: clt.Roles.notloggedin,
+                  canAccess: {
+                     chairLocsRead: false,
+                     chairLocsWrite: false,
+                     maintenance: false,
+                  },
+               },
             });
          })
          .then(() => {
@@ -118,7 +127,7 @@ class MainPage extends Component<
                };
                gapi.signin2.render("loginButton", opts);
             });
-            window.location.href = "/";
+            <Redirect to="/" />;
          })
          .catch((err: any) => {
             console.error(`C0016: ${err}`);
@@ -140,13 +149,8 @@ class MainPage extends Component<
                <Route
                   exact
                   path="/"
-                  render={(match) => (
+                  render={(props) => (
                      <MainBody
-                        match={match}
-                        auth2={this.auth2}
-                        loggedInWithGoogle={this.state.isSignedIn}
-                        googleToken={this.state.googleToken}
-                        emailAddress={this.emailAddress}
                         userObject={this.state.userObjFmServer}
                      ></MainBody>
                   )}
@@ -154,7 +158,7 @@ class MainPage extends Component<
                <Route
                   exact
                   path="/upload"
-                  render={(match) =>
+                  render={(props) =>
                      this.state.isSignedIn ? (
                         <UploadBody
                            auth2={this.auth2}
@@ -170,10 +174,10 @@ class MainPage extends Component<
                />
                <Route
                   path="/mapping"
-                  render={(match) =>
+                  render={(props) =>
                      this.state.isSignedIn ? (
                         <MappingBody
-                           match={match}
+                           match={props.match}
                            auth2={this.auth2}
                            loggedInWithGoogle={this.state.isSignedIn}
                            googleToken={this.state.googleToken}
@@ -188,7 +192,7 @@ class MainPage extends Component<
                <Route
                   exact
                   path="/maintenance"
-                  render={(match) =>
+                  render={(props) =>
                      this.state.isSignedIn ? (
                         <MaintenanceBody
                            auth2={this.auth2}
@@ -207,7 +211,6 @@ class MainPage extends Component<
                   path="/configuration"
                   render={(match) =>
                      this.state.isSignedIn &&
-                     this.state.userObjFmServer &&
                      this.state.userObjFmServer.role === clt.Roles.admin ? (
                         <ConfigBody
                            auth2={this.auth2}

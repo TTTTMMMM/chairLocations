@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import ConfigGear from "./ConfigGear";
-
-// import AddDropUser from "./AddDropUser";
-
 class LoginLogout extends Component<
    {
       isSignedIn: boolean;
@@ -29,12 +26,6 @@ class LoginLogout extends Component<
       if (typeof this.props.userObject != "undefined") {
          return this.props.isSignedIn ? (
             <section>
-               {/* <AddDropUser
-                  isAdmin={this.props.userObject.role === "admin"}
-                  auth2={this.props.auth2}
-                  idToken={this.props.idToken}
-               ></AddDropUser>
-              */}
                <ConfigGear
                   isAdmin={this.props.userObject.role === "admin"}
                   auth2={this.props.auth2}

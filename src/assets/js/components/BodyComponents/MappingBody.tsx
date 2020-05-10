@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
@@ -28,18 +29,24 @@ class MappingBody extends Component<
       this.getMappingBodyContent = this.getMappingBodyContent.bind(this);
    }
 
+   componentDidMount() {}
+
    getMappingBodyContent() {
       return (
          <>
-            <MappingSubheader match={this.props.match}></MappingSubheader>
-            <Route
-               path={`${this.props.match.match.path}/bychair`}
-               component={ChairQueryComponent}
-            />
-            <Route
-               path={`${this.props.match.match.path}/byrentalagent`}
-               component={RentalAgentQueryComponent}
-            />
+            <Router>
+               <MappingSubheader match={this.props.match}></MappingSubheader>
+               <Switch>
+                  <Route
+                     path={`${this.props.match.path}/bychair`}
+                     component={ChairQueryComponent}
+                  />
+                  <Route
+                     path={`${this.props.match.path}/byrentalagent`}
+                     component={RentalAgentQueryComponent}
+                  />
+               </Switch>
+            </Router>
          </>
       );
    }

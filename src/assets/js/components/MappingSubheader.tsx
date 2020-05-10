@@ -13,10 +13,6 @@ class MappingSubheader extends Component<{ match: any }, {}> {
    componentDidMount() {}
 
    getHeader() {
-      let prefix = this.props.match.match.url;
-      if (this.props.match.match.url === "/") {
-         prefix = "/mapping";
-      }
       return (
          <header>
             <section></section>
@@ -25,7 +21,7 @@ class MappingSubheader extends Component<{ match: any }, {}> {
                   <ul>
                      <li>
                         <NavLink
-                           to={`${prefix}/bychair`}
+                           to={`${this.props.match.url}/bychair`}
                            activeStyle={{
                               border: "solid rgb(250, 245, 198) 2px ",
                               paddingTop: "3px",
@@ -37,7 +33,7 @@ class MappingSubheader extends Component<{ match: any }, {}> {
                      </li>
                      <li>
                         <NavLink
-                           to={`${prefix}/byrentalagent`}
+                           to={`${this.props.match.url}/byrentalagent`}
                            activeStyle={{
                               border: "solid rgb(250, 245, 198) 2px ",
                               paddingTop: "3px",

@@ -1,30 +1,26 @@
 import React, { Component } from "react";
-// import { divFlexRow } from "../../../styles/reactStyling";
+import { Redirect } from "react-router-dom";
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
 import { Roles } from "../../misc/chairLocTypes";
-import MappingBody from "./MappingBody";
-import BodyUpload from "./UploadBody";
-import MaintenanceBody from "./MaintenanceBody";
 
 class MainBody extends Component<{
-   match: any;
-   auth2: any;
-   loggedInWithGoogle: boolean;
-   googleToken: any;
-   emailAddress: any;
+   // match: any;
+   // auth2: any;
+   // loggedInWithGoogle: boolean;
+   // googleToken: any;
+   // emailAddress: any;
    userObject: UserObj;
 }> {
    constructor(props: {
-      match: any;
-      auth2: any;
-      loggedInWithGoogle: boolean;
-      googleToken: any;
-      emailAddress: any;
+      // match: any;
+      // auth2: any;
+      // loggedInWithGoogle: boolean;
+      // googleToken: any;
+      // emailAddress: any;
       userObject: any;
    }) {
       super(props);
-      this.getMainBodyContent = this.getMainBodyContent.bind(this);
    }
 
    getMainBodyContent() {
@@ -33,50 +29,16 @@ class MainBody extends Component<{
             return <img src={"../../../images/cherry.jpeg"} />;
             break;
          case Roles.maintenance:
-            return (
-               <MaintenanceBody
-                  auth2={this.props.auth2}
-                  loggedInWithGoogle={this.props.loggedInWithGoogle}
-                  googleToken={this.props.googleToken}
-                  emailAddress={this.props.emailAddress}
-                  userObject={this.props.userObject}
-               ></MaintenanceBody>
-            );
+            return <Redirect to="/maintenance" />;
             break;
          case Roles.lurker:
-            return (
-               <MappingBody
-                  match={this.props.match}
-                  auth2={this.props.auth2}
-                  loggedInWithGoogle={this.props.loggedInWithGoogle}
-                  googleToken={this.props.googleToken}
-                  emailAddress={this.props.emailAddress}
-                  userObject={this.props.userObject}
-               ></MappingBody>
-            );
+            return <Redirect to="/mapping" />;
             break;
          case Roles.uploader:
-            return (
-               <BodyUpload
-                  auth2={this.props.auth2}
-                  loggedInWithGoogle={this.props.loggedInWithGoogle}
-                  googleToken={this.props.googleToken}
-                  emailAddress={this.props.emailAddress}
-                  userObject={this.props.userObject}
-               ></BodyUpload>
-            );
+            return <Redirect to="/upload" />;
             break;
          case Roles.admin:
-            return (
-               <MappingBody
-                  match={this.props.match}
-                  auth2={this.props.auth2}
-                  loggedInWithGoogle={this.props.loggedInWithGoogle}
-                  googleToken={this.props.googleToken}
-                  emailAddress={this.props.emailAddress}
-                  userObject={this.props.userObject}
-               ></MappingBody>
-            );
+            return <Redirect to="/mapping" />;
             break;
          default:
             return <img src={"../../../images/cherry.jpeg"} />;
