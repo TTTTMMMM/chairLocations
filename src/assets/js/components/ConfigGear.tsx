@@ -7,10 +7,8 @@ import { NavLink } from "react-router-dom";
 
 class ConfigGear extends React.PureComponent<{
    isAdmin: boolean;
-   auth2: any;
-   idToken: any;
 }> {
-   constructor(props: { isAdmin: boolean; auth2: any; idToken: any }) {
+   constructor(props: { isAdmin: boolean }) {
       super(props);
    }
 

@@ -1,6 +1,3 @@
-// *****
-// important: disable typescript checking of this file in tsconfig.json
-// *****
 // Client-side code follows:
 
 import React, { Component } from "react";
@@ -141,8 +138,6 @@ class MainPage extends Component<
                isSignedIn={this.state.isSignedIn}
                logout={this.logout}
                photoURL={this.loggedInPhotoURL}
-               auth2={this.auth2}
-               googleToken={this.state.googleToken}
                userObject={this.state.userObjFmServer}
             ></HeaderComponent>
             <Switch>

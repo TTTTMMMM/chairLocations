@@ -8,18 +8,28 @@ exports.addChairLoc = async (req, res, admin) => {
       const chairLoc = req.body;
       let newChairLoc = {};
       let theAssetLabel = {};
+      let theRentalAgent = {};
+      // perform data validation on input
+      // grab the assetlabel field to eventually store in the "uniqueAssetLabels" collection
+      // grab the rentalagent field to eventually store in the "uniquerentalagents" collection
       Object.keys(chairLoc).forEach((x) => {
          newChairLoc[x] = escapeHTML(chairLoc[x].trim().substring(0, 59));
          if (x.localeCompare("ASSETLABEL") === 0) {
             theAssetLabel[x] = newChairLoc[x];
          }
+         if (x.localeCompare("RENTALAGENT") === 0) {
+            theRentalAgent[x] = newChairLoc[x];
+         }
          if (x.localeCompare("FNAME") === 0) {
             theAssetLabel[x] = newChairLoc[x];
+            theRentalAgent[x] = newChairLoc[x];
          }
          if (x.localeCompare("UPLOADFBTIME") === 0) {
             theAssetLabel[x] = newChairLoc[x];
+            theRentalAgent[x] = newChairLoc[x];
          }
       });
+      // store the chair location data into  "chairLocs" collection
       try {
          await admin
             .firestore()
@@ -33,6 +43,7 @@ exports.addChairLoc = async (req, res, admin) => {
          res.status(500).render("500", { firstLine, errCode });
          console.log(`${firstLine} ${err}`);
       }
+      // if this asset label does not already exist, then store it in "uniqueAssetLabels"
       try {
          const theAsset = await admin
             .firestore()
@@ -55,6 +66,37 @@ exports.addChairLoc = async (req, res, admin) => {
          }
       } catch (err) {
          const firstLine = `0192: Checking existence of ${theAssetLabel} in 'uniqueAssetLabels' collection error: ${
+            err.message.split("\n")[0]
+         }`;
+         const errCode = err.code;
+         res.status(500).render("500", { firstLine, errCode });
+         console.log(`${firstLine} ${err}`);
+      }
+      // if this rentalagent does not already exist, then store it in "uniquerentalagents"
+      try {
+         const theRental = await admin
+            .firestore()
+            .collection("uniqueRentalAgents")
+            .get(theRentalAgent.RENTALAGENT);
+         if (!theRental.exists) {
+            try {
+               await admin
+                  .firestore()
+                  .collection("uniqueRentalAgents")
+                  .doc(theRentalAgent.RENTALAGENT)
+                  .set(theRentalAgent);
+            } catch (error) {
+               console.log(
+                  `0171: Problem trying to add ${JSON.stringify(
+                     theRentalAgent
+                  )}`
+               );
+               retRes.errCode = 6;
+               return retRes;
+            }
+         }
+      } catch (err) {
+         const firstLine = `0172: Checking existence of ${theRentalAgent} in 'uniqueRentalAgents' collection error: ${
             err.message.split("\n")[0]
          }`;
          const errCode = err.code;

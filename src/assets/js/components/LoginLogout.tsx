@@ -5,8 +5,6 @@ class LoginLogout extends Component<
       isSignedIn: boolean;
       logout: any;
       photoURL: any;
-      auth2: any;
-      idToken: any;
       userObject: any;
    },
    {}
@@ -16,43 +14,26 @@ class LoginLogout extends Component<
       this.state = {
          isLoggedIn: this.props.isSignedIn,
       };
-
-      this.gearClick = this.gearClick.bind(this);
    }
 
    render() {
       // uncomment next line to see which icons are available!
       // console.dir(Object.keys(require("@fortawesome/free-solid-svg-icons")));
-      if (typeof this.props.userObject != "undefined") {
-         return this.props.isSignedIn ? (
-            <section>
-               <ConfigGear
-                  isAdmin={this.props.userObject.role === "admin"}
-                  auth2={this.props.auth2}
-                  idToken={this.props.idToken}
-               ></ConfigGear>
-
-               <figure onClick={this.props.logout}>
-                  <img src={this.props.photoURL} />
-                  <figcaption>Logout</figcaption>
-               </figure>
-            </section>
-         ) : (
-            <section>
-               <button id="loginButton"></button>
-            </section>
-         );
-      } else {
-         return (
-            <section>
-               <button id="loginButton"></button>
-            </section>
-         );
-      }
-   }
-
-   gearClick() {
-      console.log(`gearClick()`);
+      return this.props.isSignedIn ? (
+         <section>
+            <ConfigGear
+               isAdmin={this.props.userObject.role === "admin"}
+            ></ConfigGear>
+            <figure onClick={this.props.logout}>
+               <img src={this.props.photoURL} />
+               <figcaption>Logout</figcaption>
+            </figure>
+         </section>
+      ) : (
+         <section>
+            <button id="loginButton"></button>
+         </section>
+      );
    }
 }
 
