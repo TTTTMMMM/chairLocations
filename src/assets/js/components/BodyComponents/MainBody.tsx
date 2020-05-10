@@ -5,21 +5,9 @@ import { UserObj } from "../../misc/chairLocTypes";
 import { Roles } from "../../misc/chairLocTypes";
 
 class MainBody extends Component<{
-   // match: any;
-   // auth2: any;
-   // loggedInWithGoogle: boolean;
-   // googleToken: any;
-   // emailAddress: any;
    userObject: UserObj;
 }> {
-   constructor(props: {
-      // match: any;
-      // auth2: any;
-      // loggedInWithGoogle: boolean;
-      // googleToken: any;
-      // emailAddress: any;
-      userObject: any;
-   }) {
+   constructor(props: { userObject: any }) {
       super(props);
    }
 
