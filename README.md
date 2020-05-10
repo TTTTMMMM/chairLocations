@@ -286,14 +286,12 @@ export interface UserObj {
 
 #### TODO:
 
-1. [Consider moving to a single login page ~18:00](https://www.youtube.com/watch?v=XRfD8xIOroA)
-2. [Protected Routes](https://www.youtube.com/watch?v=Y0-qdp-XBJg)
-3. Develop map analytics!
+1. Develop map analytics!
 
    [Cluster click](https://stackoverflow.com/questions/5710568/markerclusterer-on-click-zoom)
 
-4. Maintenance
-5. Consider moving to useContext API to eliminate all the authentication props drilling
+2. Maintenance
+3. Consider moving to useContext API to eliminate all the authentication props drilling
 
 #### <ins>TODO Physical World</ins>
 

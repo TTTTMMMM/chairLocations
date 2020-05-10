@@ -3,8 +3,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
-class BodyMappingSubheader extends Component<{}, {}> {
-   constructor(props: {}) {
+class MappingSubheader extends Component<{ match: any }, {}> {
+   constructor(props: { match: any }) {
       super(props);
       this.state = {};
       this.getHeader = this.getHeader.bind(this);
@@ -13,6 +13,10 @@ class BodyMappingSubheader extends Component<{}, {}> {
    componentDidMount() {}
 
    getHeader() {
+      let prefix = this.props.match.match.url;
+      if (this.props.match.match.url === "/") {
+         prefix = "/mapping";
+      }
       return (
          <header>
             <section></section>
@@ -21,7 +25,7 @@ class BodyMappingSubheader extends Component<{}, {}> {
                   <ul>
                      <li>
                         <NavLink
-                           to={`/mapping/bychair`}
+                           to={`${prefix}/bychair`}
                            activeStyle={{
                               border: "solid rgb(250, 245, 198) 2px ",
                               paddingTop: "3px",
@@ -33,7 +37,7 @@ class BodyMappingSubheader extends Component<{}, {}> {
                      </li>
                      <li>
                         <NavLink
-                           to={`/mapping/byrentalagent`}
+                           to={`${prefix}/byrentalagent`}
                            activeStyle={{
                               border: "solid rgb(250, 245, 198) 2px ",
                               paddingTop: "3px",
@@ -56,4 +60,4 @@ class BodyMappingSubheader extends Component<{}, {}> {
    }
 }
 
-export default BodyMappingSubheader;
+export default MappingSubheader;

@@ -92,7 +92,7 @@ class ConfigBody extends Component<
       ) {
          return <h3>Not Authorized</h3>;
       } else {
-         <Redirect to="/" />;
+         <Redirect to="/401" />;
          return <h3>Not Authorized</h3>;
       }
    }

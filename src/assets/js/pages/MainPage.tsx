@@ -169,7 +169,6 @@ class MainPage extends Component<
                   }
                />
                <Route
-                  exact
                   path="/mapping"
                   render={(match) =>
                      this.state.isSignedIn ? (
@@ -207,7 +206,9 @@ class MainPage extends Component<
                   exact
                   path="/configuration"
                   render={(match) =>
-                     this.state.isSignedIn ? (
+                     this.state.isSignedIn &&
+                     this.state.userObjFmServer &&
+                     this.state.userObjFmServer.role === clt.Roles.admin ? (
                         <ConfigBody
                            auth2={this.auth2}
                            loggedInWithGoogle={this.state.isSignedIn}
@@ -216,7 +217,7 @@ class MainPage extends Component<
                            userObject={this.state.userObjFmServer}
                         ></ConfigBody>
                      ) : (
-                        <Redirect to="/" />
+                        <Redirect to="/401" />
                      )
                   }
                />

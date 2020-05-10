@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import "../../../styles/index.css";
 import { UserObj } from "../../misc/chairLocTypes";
-import BodyMappingSubheader from "../BodyMappingSubheader";
+import MappingSubheader from "../MappingSubheader";
 import ChairQueryComponent from "../ChairQueryComponent";
 import RentalAgentQueryComponent from "../RentalAgentQueryComponent";
 class MappingBody extends Component<
@@ -29,14 +29,15 @@ class MappingBody extends Component<
    }
 
    getMappingBodyContent() {
-      console.log(`getMappingBodyContent(), match:`);
-      console.dir(this.props.match);
       return (
          <>
-            <BodyMappingSubheader></BodyMappingSubheader>
-            <Route path={`/mapping/bychair`} component={ChairQueryComponent} />
+            <MappingSubheader match={this.props.match}></MappingSubheader>
             <Route
-               path={`/mapping/byrentalagent`}
+               path={`${this.props.match.match.path}/bychair`}
+               component={ChairQueryComponent}
+            />
+            <Route
+               path={`${this.props.match.match.path}/byrentalagent`}
                component={RentalAgentQueryComponent}
             />
          </>
