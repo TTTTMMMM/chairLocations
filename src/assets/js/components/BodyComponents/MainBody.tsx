@@ -20,7 +20,7 @@ class MainBody extends Component<{
             return <Redirect to="/maintenance" />;
             break;
          case Roles.lurker:
-            return <Redirect to="/mapping" />;
+            return <Redirect to="/mapping/bychair" />;
             break;
          case Roles.uploader:
             return <Redirect to="/upload" />;

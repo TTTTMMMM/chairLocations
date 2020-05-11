@@ -23,7 +23,7 @@ class MappingSubheader extends Component<{ match: any }, {}> {
                         <NavLink
                            to={`${this.props.match.url}/bychair`}
                            activeStyle={{
-                              border: "solid rgb(250, 245, 198) 2px ",
+                              border: "solid hsla(12, 95%, 47%, 0.98) 2px ",
                               paddingTop: "3px",
                               paddingLeft: "3px",
                            }}
@@ -35,7 +35,7 @@ class MappingSubheader extends Component<{ match: any }, {}> {
                         <NavLink
                            to={`${this.props.match.url}/byrentalagent`}
                            activeStyle={{
-                              border: "solid rgb(250, 245, 198) 2px ",
+                              border: "solid hsla(12, 95%, 47%, 0.98) 2px ",
                               paddingTop: "3px",
                               paddingLeft: "3px",
                            }}

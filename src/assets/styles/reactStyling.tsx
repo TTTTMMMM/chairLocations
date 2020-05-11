@@ -176,10 +176,10 @@ export const labelStyleRental: CSSProperties = {
 };
 
 export const querySideStyling: CSSProperties = {
-   borderRight: "2px solid rgba(234, 52, 6, 0.93)",
+   borderRight: "1px solid rgba(234, 52, 6, 0.93)",
    display: "flex",
    flexDirection: "column",
-   width: "320px",
+   width: "300px",
    marginLeft: "15px",
 };
 
