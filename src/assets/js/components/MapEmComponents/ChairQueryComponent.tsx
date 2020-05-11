@@ -5,8 +5,11 @@ import { resultsSideStyling } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
 import ChairQuerySide from "./ChairQuerySide";
 import ChairResultsSide from "./ChairResultsSide";
-class ChairQueryComponent extends Component<{}, {}> {
-   constructor(props: {}) {
+class ChairQueryComponent extends Component<
+   { loggedInToFirebase: boolean },
+   {}
+> {
+   constructor(props: { loggedInToFirebase: boolean }) {
       super(props);
       this.getChairQueryBodyContent = this.getChairQueryBodyContent.bind(this);
    }
@@ -16,7 +19,9 @@ class ChairQueryComponent extends Component<{}, {}> {
          <>
             <div style={divFlexRowL}>
                <section className={"queryside"} style={querySideStyling}>
-                  <ChairQuerySide></ChairQuerySide>
+                  <ChairQuerySide
+                     loggedInToFirebase={this.props.loggedInToFirebase}
+                  ></ChairQuerySide>
                </section>
                <section className={"resultsside"} style={resultsSideStyling}>
                   <ChairResultsSide></ChairResultsSide>

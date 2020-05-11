@@ -37,23 +37,27 @@ class ConfigBody extends Component<
          isLoggedInToFirebase: false,
       };
 
-      this.getBodyConfigContent = this.getBodyConfigContent.bind(this);
+      this.getConfigBodyContent = this.getConfigBodyContent.bind(this);
    }
 
    signInToFirebase(googleUserToken: any) {
-      const fbCred = firebase.auth.GoogleAuthProvider.credential(
-         googleUserToken
-      );
-      firebase
-         .auth()
-         .signInWithCredential(fbCred)
-         .then(() => {
-            this.setState({ isLoggedInToFirebase: true });
-         })
-         .catch((err) => {
-            const firstLine = "C0101: Error signing into firebase:\n";
-            console.error(`${firstLine} error<${err.message}>`);
-         });
+      if (!firebase.auth().currentUser) {
+         const fbCred = firebase.auth.GoogleAuthProvider.credential(
+            googleUserToken
+         );
+         firebase
+            .auth()
+            .signInWithCredential(fbCred)
+            .then(() => {
+               this.setState({ isLoggedInToFirebase: true });
+            })
+            .catch((err) => {
+               const firstLine = "C0111: Error signing into firebase:\n";
+               console.error(`${firstLine} error<${err.message}>`);
+            });
+      } else {
+         this.setState({ isLoggedInToFirebase: true });
+      }
    }
 
    signOutOfFirebase() {
@@ -72,7 +76,7 @@ class ConfigBody extends Component<
          });
    }
 
-   getBodyConfigContent() {
+   getConfigBodyContent() {
       if (!this.state.isLoggedInToFirebase) {
          return <h3>Not Authorized</h3>;
       } else if (
@@ -103,7 +107,7 @@ class ConfigBody extends Component<
       if (this.props.loggedInWithGoogle && !this.state.isLoggedInToFirebase) {
          this.signInToFirebase(this.props.googleToken);
       }
-      return <div>{this.getBodyConfigContent()}</div>;
+      return <div>{this.getConfigBodyContent()}</div>;
    }
 }
 

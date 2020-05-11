@@ -16,7 +16,7 @@ import { UserObj } from "../../misc/chairLocTypes";
 interface MyState {
    isLoggedInToFirebase?: boolean | false;
 }
-class BodyUpload extends React.PureComponent<
+class UploadBody extends React.PureComponent<
    {
       auth2: any;
       loggedInWithGoogle: boolean;
@@ -55,19 +55,23 @@ class BodyUpload extends React.PureComponent<
    }
 
    signInToFirebase(googleUserToken: any) {
-      const fbCred = firebase.auth.GoogleAuthProvider.credential(
-         googleUserToken
-      );
-      firebase
-         .auth()
-         .signInWithCredential(fbCred)
-         .then(() => {
-            this.setState({ isLoggedInToFirebase: true });
-         })
-         .catch((err) => {
-            const firstLine = "C0001: Error signing into firebase:\n";
-            console.error(`${firstLine} error<${err.message}>`);
-         });
+      if (!firebase.auth().currentUser) {
+         const fbCred = firebase.auth.GoogleAuthProvider.credential(
+            googleUserToken
+         );
+         firebase
+            .auth()
+            .signInWithCredential(fbCred)
+            .then(() => {
+               this.setState({ isLoggedInToFirebase: true });
+            })
+            .catch((err) => {
+               const firstLine = "C0111: Error signing into firebase:\n";
+               console.error(`${firstLine} error<${err.message}>`);
+            });
+      } else {
+         this.setState({ isLoggedInToFirebase: true });
+      }
    }
 
    signOutOfFirebase() {
@@ -125,4 +129,4 @@ class BodyUpload extends React.PureComponent<
    }
 }
 
-export default BodyUpload;
+export default UploadBody;
