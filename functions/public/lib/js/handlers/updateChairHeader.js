@@ -4,7 +4,7 @@ var util = require("util");
 
 // eslint-disable-next-line consistent-return
 exports.updateChairHeader = async (req, res, admin) => {
-   //req.body looks like: {chairhdr: "CellAccuracy", keep: false}
+   //req.body looks like: {chairhdr: "CellAccuracy", keep: false, mandatory: false}
    // url looks like: https://chairlocations.web.app/chairheaders/keep/CellAccuracy  <-- req.params.id = CellAccuracy
    const keepItObj = req.body;
    let keepIt = true;

@@ -3,7 +3,6 @@
 // Server-side code follows
 
 const approvedAudience = require("../configs/audience");
-var util = require("util");
 const firebase = require("firebase");
 
 const { signInToFirebase } = require("./signInToFirebase");
@@ -46,6 +45,7 @@ exports.testTicket = async (ticket, requestToken, admin) => {
       .collection("validUserCollection")
       .doc(`${email.split("@")[0]}`)
       .get();
+   // if the user is on whitelist, log him in
    if (authUser.exists) {
       try {
          fbCred = firebase.auth.GoogleAuthProvider.credential(requestToken);

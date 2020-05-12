@@ -350,5 +350,16 @@ Dependency Graph for Mapping Branch:
 | ![](/markdownImages/dI/depIndex.tsx.png) | ![](/markdownImages/dI/depMainPage.png) |
 | mappingBody.tsx                          | chairQueryComponent.tsx                 |
 | ![](/markdownImages/dI/depMB.png)        | ![](/markdownImages/dI/depChairQC.png)  |
-| index.js (on functions server)           |
-| ![](/markdownImages/dI/depIndex.js.png)  |
+
+Dependency Graph for Uploading Branch:
+
+| index.tsx                                 | mainPage.tsx                            |
+| ----------------------------------------- | --------------------------------------- |
+| ![](/markdownImages/dI/depIndex.tsx.png)  | ![](/markdownImages/dI/depMainPage.png) |
+| uploadBody.tsx                            | chairQueryComponent.tsx                 |
+| ![](/markdownImages/dI/depUploadBody.png) | ![](/markdownImages/dI/depChairQC.png)  |
+
+Dependency Graph for Index.js (on Functions server):
+
+| index.js |
+| ![](/markdownImages/dI/depIndex.js.png) |

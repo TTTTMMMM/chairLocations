@@ -5,8 +5,6 @@ const clientID = require("../configs/clientID");
 const aud = require("../configs/audience");
 const { testTicket } = require("./testTicket");
 
-var util = require("util");
-
 exports.verifyGoogleToken = (req, res, admin, next) => {
    const client = new OAuth2Client(clientID);
    const requestToken = req.headers.googlecredential;
