@@ -10,25 +10,14 @@ exports.addChairLoc = async (req, res, admin) => {
       let theAssetLabel = {};
       let theRentalAgent = {};
       // perform data validation on input
-      // grab the assetlabel field to eventually store in the "uniqueAssetLabels" collection
-      // grab the rentalagent field to eventually store in the "uniquerentalagents" collection
       Object.keys(chairLoc).forEach((x) => {
          newChairLoc[x] = escapeHTML(chairLoc[x].trim().substring(0, 59));
-         if (x.localeCompare("ASSETLABEL") === 0) {
-            theAssetLabel[x] = newChairLoc[x];
-         }
-         if (x.localeCompare("RENTALAGENT") === 0) {
-            theRentalAgent[x] = newChairLoc[x];
-         }
-         if (x.localeCompare("FNAME") === 0) {
-            theAssetLabel[x] = newChairLoc[x];
-            theRentalAgent[x] = newChairLoc[x];
-         }
-         if (x.localeCompare("UPLOADFBTIME") === 0) {
-            theAssetLabel[x] = newChairLoc[x];
-            theRentalAgent[x] = newChairLoc[x];
-         }
       });
+      // grab the assetlabel field to eventually store in the "uniqueAssetLabels" collection
+      // grab the rentalagent field to eventually store in the "uniquerentalagents" collection
+      const { ASSETLABEL, FNAME, UPLOADFBTIME, RENTALAGENT } = newChairLoc;
+      theAssetLabel = { ASSETLABEL, FNAME, UPLOADFBTIME };
+      theRentalAgent = { RENTALAGENT, FNAME, UPLOADFBTIME };
       // store the chair location data into  "chairLocs" collection
       try {
          await admin
@@ -106,21 +95,6 @@ exports.addChairLoc = async (req, res, admin) => {
       return res.status(200).json({
          message: `Added ${newChairLoc.ID}`,
       });
-      // try {
-      //    await firebaseApp.auth().signOut();
-      //    res.append("Cache-Control", "no-cache, must-revalidate");
-      //    return res.status(200).json({
-      //       message: `Added ${newChairLoc.ID.substr(0, 6)}... ${
-      //          newChairLoc.ASSETLABEL
-      //       } [${newChairLoc.BEACH}] ${newChairLoc.UPDATETIME}`,
-      //    });
-      // } catch (err) {
-      //    const firstLine =
-      //       "0195: Couldn't log user out: " + err.message.split("\n")[0];
-      //    const errCode = err.code;
-      //    res.status(500).render("500", { firstLine, errCode });
-      //    console.log(`${firstLine} ${err}`);
-      // }
    } else {
       res.status(401).json({
          message: `Not authorized ${res.locals.loggedInUser.role.toUpperCase()}`,

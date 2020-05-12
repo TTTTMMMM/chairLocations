@@ -350,3 +350,5 @@ Dependency Graph for Mapping Branch:
 | ![](/markdownImages/dI/depIndex.tsx.png) | ![](/markdownImages/dI/depMainPage.png) |
 | mappingBody.tsx                          | chairQueryComponent.tsx                 |
 | ![](/markdownImages/dI/depMB.png)        | ![](/markdownImages/dI/depChairQC.png)  |
+
+| ![](/markdownImages/dI/depIndex.js.png)
