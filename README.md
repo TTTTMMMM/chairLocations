@@ -345,6 +345,7 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 
 Dependency Graph for Mapping Branch:
 
-| index.tsx | mainPage.tsx |
+| index.tsx                                | mainPage.tsx                            |
+| ---------------------------------------- | --------------------------------------- |
 | ![](/markdownImages/dI/depIndex.tsx.png) | ![](/markdownImages/dI/depMainPage.png) |
-| ![](/markdownImages/dI/depMB.png) | ![](/markdownImages/dI/depChairQC.png) |
+| ![](/markdownImages/dI/depMB.png)        | ![](/markdownImages/dI/depChairQC.png)  |
