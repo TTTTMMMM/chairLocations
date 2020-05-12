@@ -343,7 +343,7 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 
 ---
 
-#### Dependency Graph for Mapping Branch:
+### <ins>Dependency Graph for Mapping Branch</ins>
 
 | index.tsx                                | mainPage.tsx                            |
 | ---------------------------------------- | --------------------------------------- |
@@ -351,7 +351,9 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 | mappingBody.tsx                          | chairQueryComponent.tsx                 |
 | ![](/markdownImages/dI/depMB.png)        | ![](/markdownImages/dI/depChairQC.png)  |
 
-#### Dependency Graph for Uploading Branch:
+---
+
+### <ins>Dependency Graph for Uploading Branch</ins>
 
 | index.tsx                                 | mainPage.tsx                                |
 | ----------------------------------------- | ------------------------------------------- |
@@ -361,7 +363,9 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 | showChairData.tsx                         | mapContainer.tsx                            |
 | ![](/markdownImages/dI/depShowCData.png)  | ![](/markdownImages/dI/depMapContainer.png) |
 
-#### Dependency Graph for Index.js (on Functions server):
+---
+
+### <ins>Dependency Graph for Index.js (on Functions server)</ins>
 
 | index.js |
 | ![](/markdownImages/dI/depIndex.js.png) |
