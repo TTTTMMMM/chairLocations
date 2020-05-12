@@ -356,8 +356,8 @@ Dependency Graph for Uploading Branch:
 | index.tsx                                 | mainPage.tsx                            |
 | ----------------------------------------- | --------------------------------------- |
 | ![](/markdownImages/dI/depIndex.tsx.png)  | ![](/markdownImages/dI/depMainPage.png) |
-| uploadBody.tsx                            | chairQueryComponent.tsx                 |
-| ![](/markdownImages/dI/depUploadBody.png) | ![](/markdownImages/dI/depChairQC.png)  |
+| uploadBody.tsx                            | cleanAndUploadFiles.tsx                 |
+| ![](/markdownImages/dI/depUploadBody.png) | ![](/markdownImages/dI/depCandUp.png)   |
 
 Dependency Graph for Index.js (on Functions server):
 
