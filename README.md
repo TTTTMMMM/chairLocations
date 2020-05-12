@@ -259,6 +259,7 @@ The user has to have logged in before a Firebase user object exists, therefore g
 | maintenance | false                   | false            | false                | true                |
 
 [Typescript Playground](https://www.typescriptlang.org/play)
+[moment.js Playground](http://jsfiddle.net/brandonscript/rLjQx/)
 
 ```
 export enum Roles {   // Roles govern what can be done/seen client-side
@@ -365,6 +366,22 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 
 ---
 
-### <ins>Dependency Graph for index.js (on Functions server)</ins>
+### <ins>Dependency Graph for index.js (on firebase functions server)</ins>
 
 | ![](/markdownImages/dI/depIndex.js.png) |
+
+---
+
+```
+let beginDate = moment.utc("2020-02-20T14:13:17").format('YYYY-MM-DD');
+let endDate = moment.utc("2020-02-23T14:13:17").format('YYYY-MM-DD');
+
+let firebaseDate = "2020-02-22T14:13:17Z";
+let withinDate = (firebaseDate > beginDate) && (firebaseDate < endDate);
+alert(`
+${beginDate}
+>>${firebaseDate}<<
+${endDate}
+${withinDate}
+`);
+```

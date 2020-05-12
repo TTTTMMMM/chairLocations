@@ -63,3 +63,13 @@ export let accessPrivsObj: any = {
    uploader: au,
    maintenance: am,
 };
+
+export enum CallingFrom {
+   cleanAndUploadFiles = "cleanAndUploadFiles",
+   chairResultsSide = "chairResultsSide",
+}
+
+export interface RangeObject {
+   startDate: string;
+   endDate: string;
+}

@@ -21,6 +21,7 @@ import { divFlexCol } from "../../../styles/reactStyling";
 import { divFlexRowLazyMan } from "../../../styles/reactStyling";
 import { fieldsetRangePicker } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
+import { RangeObject } from "../../misc/chairLocTypes";
 
 interface MyState extends ICalendarProps {
    sourceChair: Array<string>;
@@ -365,10 +366,14 @@ class ChairQuerySide extends Component<
          );
       } else {
          let range: any = this.myCalendar.current!.getRange();
-         let rFm = moment(range.from).format("MMM DD, YYYY");
-         let rTm = moment(range.to).format("MMM DD, YYYY");
+         let rangeObj: RangeObject = {
+            startDate: moment(range.from).format("YYYY-MM-DD"),
+            endDate: moment(range.to).format("YYYY-MM-DD"),
+         };
+         // let rFm = moment(range.from).format("MMM DD, YYYY");
+         // let rTm = moment(range.to).format("MMM DD, YYYY");
          this.myPanel.current!.append(
-            `<p style="color:#152811; font-size:12px;"> ${chairAsset} ${rFm} -- ${rTm}</p>`
+            `<p style="color:#152811; font-size:12px;"> ${chairAsset} ${rangeObj.startDate} -- ${rangeObj.endDate}</p>`
          );
       }
    }
@@ -380,6 +385,7 @@ class ChairQuerySide extends Component<
    private thisWeekClicked() {
       let thisWeekStart = moment().startOf("week");
       let thisWeekEnd = moment();
+
       this.myCalendar.current!.setRange(
          thisWeekStart.toDate(),
          thisWeekEnd.toDate()

@@ -20,8 +20,12 @@ import ShowChairHeaders from "./ShowChairHeaders";
 import ShowChairData from "./ShowChairData";
 
 import PopoverContents from "./PopoverContents";
-import { AdditionalPropsType } from "../misc/chairLocTypes";
-import { Roles } from "../misc/chairLocTypes";
+import {
+   AdditionalPropsType,
+   Roles,
+   CallingFrom,
+   RangeObject,
+} from "../misc/chairLocTypes";
 
 class CleanAndUploadFiles extends Component<
    {
@@ -58,6 +62,10 @@ class CleanAndUploadFiles extends Component<
    private shortAndSkinnyArray2: Array<any> = [];
    private shortAndSkinnyArray1: Array<any> = [];
    private shortAndSkinnyArray: Array<any> = [];
+   private range: RangeObject = {
+      startDate: "2099-01-01",
+      endDate: "2099-12-31",
+   }; // never used by CleanAndUploadFiles
 
    constructor(props: {
       loggedInWithGoogle: boolean;
@@ -275,6 +283,8 @@ class CleanAndUploadFiles extends Component<
                      loggedInToFirebase={this.props.loggedInToFirebase}
                      myPanel={this.myPanel}
                      asset={this.state.asset}
+                     range={this.range}
+                     callingFrom={CallingFrom.cleanAndUploadFiles}
                   ></ShowChairData>
                </div>
             </section>
