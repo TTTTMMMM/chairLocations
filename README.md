@@ -346,11 +346,13 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 
 ### <ins>Dependency Graph for Mapping Branch</ins>
 
-| index.tsx                                | mainPage.tsx                            |
-| ---------------------------------------- | --------------------------------------- |
-| ![](/markdownImages/dI/depIndex.tsx.png) | ![](/markdownImages/dI/depMainPage.png) |
-| mappingBody.tsx                          | chairQueryComponent.tsx                 |
-| ![](/markdownImages/dI/depMB.png)        | ![](/markdownImages/dI/depChairQC.png)  |
+| index.tsx                                     | mainPage.tsx                            |
+| --------------------------------------------- | --------------------------------------- |
+| ![](/markdownImages/dI/depIndex.tsx.png)      | ![](/markdownImages/dI/depMainPage.png) |
+| mappingBody.tsx                               | chairQueryComponent.tsx                 |
+| ![](/markdownImages/dI/depMB.png)             | ![](/markdownImages/dI/depChairQC.png)  |
+| ChairQuerySide.tsx                            |
+| ![](/markdownImages/dI/depChairQuerySide.png) |
 
 ---
 
