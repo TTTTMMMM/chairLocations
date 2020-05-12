@@ -7,6 +7,12 @@ export const divFlexRow: CSSProperties = {
    justifyContent: "center",
 };
 
+export const divFlexRowLazyMan: CSSProperties = {
+   display: "flex",
+   flexDirection: "row",
+   justifyContent: "left",
+};
+
 export const divFlexRowL: CSSProperties = {
    marginTop: "10px",
    display: "flex",
@@ -126,6 +132,18 @@ export const fieldsetBeachStyle: CSSProperties = {
    fontFamily: "Josefin Sans",
 };
 
+export const fieldsetRangePicker: CSSProperties = {
+   marginLeft: " -5px",
+   borderRadius: "5px",
+   border: "1px hsla(12, 95%, 47%, 0.93) solid",
+   color: "black",
+   fontFamily: "Josefin Sans",
+   fontSize: "10px",
+   padding: "2px",
+   marginBottom: "2px",
+   marginTop: "2px",
+};
+
 export const flexHeader: CSSProperties = {
    marginLeft: " 5px",
    borderRadius: "5px",
@@ -179,7 +197,7 @@ export const querySideStyling: CSSProperties = {
    borderRight: "1px solid rgba(234, 52, 6, 0.93)",
    display: "flex",
    flexDirection: "column",
-   width: "300px",
+   width: "275px",
    marginLeft: "15px",
 };
 

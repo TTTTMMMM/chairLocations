@@ -9,6 +9,8 @@ import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
+import moment from "moment";
+
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
@@ -16,6 +18,8 @@ import "firebase/auth";
 import "../../configs/firebaseInit";
 
 import { divFlexCol } from "../../../styles/reactStyling";
+import { divFlexRowLazyMan } from "../../../styles/reactStyling";
+import { fieldsetRangePicker } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
 import { months } from "../../misc/months";
 
@@ -35,6 +39,18 @@ class ChairQuerySide extends Component<
    private myPanel = React.createRef<JqxPanel>();
    private clearConsoleButton = React.createRef<JqxButton>();
 
+   private thisWeek = React.createRef<JqxButton>();
+   private sinceLastWeek = React.createRef<JqxButton>();
+   private lastWeek = React.createRef<JqxButton>();
+   private last2Weeks = React.createRef<JqxButton>();
+
+   private thisMonth = React.createRef<JqxButton>();
+   private lastMonth = React.createRef<JqxButton>();
+   private last2Months = React.createRef<JqxButton>();
+   private last3Months = React.createRef<JqxButton>();
+
+   private thisYear = React.createRef<JqxButton>();
+
    constructor(props: { loggedInToFirebase: boolean }) {
       super(props);
       this.getChairQueryContent = this.getChairQueryContent.bind(this);
@@ -44,6 +60,18 @@ class ChairQuerySide extends Component<
          this
       );
 
+      this.thisWeekClicked = this.thisWeekClicked.bind(this);
+      this.sinceLastWeekClicked = this.sinceLastWeekClicked.bind(this);
+      this.lastWeekClicked = this.lastWeekClicked.bind(this);
+      this.last2WeeksClicked = this.last2WeeksClicked.bind(this);
+
+      this.thisMonthClicked = this.thisMonthClicked.bind(this);
+      this.lastMonthClicked = this.lastMonthClicked.bind(this);
+      this.last2MonthsClicked = this.last2MonthsClicked.bind(this);
+      this.last3MonthsClicked = this.last3MonthsClicked.bind(this);
+
+      this.thisYearClicked = this.thisYearClicked.bind(this);
+
       this.state = {
          sourceChair: [],
          alreadyGotInfo: false,
@@ -51,16 +79,12 @@ class ChairQuerySide extends Component<
    }
 
    public componentDidMount() {
-      const d1 = new Date();
-      let fullYear = d1.getFullYear();
-      let currMonth = d1.getMonth();
-      let currDay = d1.getDate();
-      let date1 = new Date(fullYear, currMonth, currDay);
-      const d2 = new Date();
-      d2.setDate(date1.getDate() - 6);
-      let dd2 = new Date(d2);
-      let date2 = new Date(dd2.getFullYear(), dd2.getMonth(), dd2.getDate());
-      this.myCalendar.current!.setRange(date1, date2);
+      let startOf1WeekBack = moment().day(-5).startOf("day");
+      let today = moment();
+      this.myCalendar.current!.setRange(
+         startOf1WeekBack.toDate(),
+         today.toDate()
+      );
       this.myCalendar.current!.setMinDate(new Date("January 1, 2020"));
       this.myCalendar.current!.setMaxDate(new Date());
    }
@@ -105,7 +129,7 @@ class ChairQuerySide extends Component<
                         marginRight: "4px",
                      }}
                   >
-                     Chair
+                     Chair:
                   </label>
                   <JqxInput
                      ref={this.chairInput}
@@ -119,10 +143,155 @@ class ChairQuerySide extends Component<
                <JqxCalendar
                   ref={this.myCalendar}
                   selectionMode={"range"}
+                  showOtherMonthDays={false}
                   theme={"fresh"}
                   width={270}
                   height={270}
                />
+               <div className={"lazyManRangePickerEnvelope"} style={divFlexCol}>
+                  <fieldset style={fieldsetRangePicker}>
+                     <legend>Quick Range Picker</legend>
+                     <div className={"lazyManRow1"} style={divFlexRowLazyMan}>
+                        <JqxButton
+                           ref={this.thisWeek}
+                           onClick={this.thisWeekClicked}
+                           width={45}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           This Week
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.sinceLastWeek}
+                           onClick={this.sinceLastWeekClicked}
+                           width={40}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           Since LW
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.lastWeek}
+                           onClick={this.lastWeekClicked}
+                           width={40}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           Last W
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.last2Weeks}
+                           onClick={this.last2WeeksClicked}
+                           width={40}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           Last 2W
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.thisMonth}
+                           onClick={this.thisMonthClicked}
+                           width={50}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           This Month
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.lastMonth}
+                           onClick={this.lastMonthClicked}
+                           width={40}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           Last M
+                        </JqxButton>
+                     </div>
+                     <div className={"lazyManRow2"} style={divFlexRowLazyMan}>
+                        <JqxButton
+                           ref={this.last2Months}
+                           onClick={this.last2MonthsClicked}
+                           width={40}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           Last 2M
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.last3Months}
+                           onClick={this.last3MonthsClicked}
+                           width={40}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           Last 3M
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.thisYear}
+                           onClick={this.thisYearClicked}
+                           width={45}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           This Year
+                        </JqxButton>
+                     </div>
+                  </fieldset>
+               </div>
                <JqxButton
                   ref={this.enterButton}
                   onClick={this.enterButtonClicked}
@@ -133,6 +302,8 @@ class ChairQuerySide extends Component<
                   style={{
                      marginLeft: "10px",
                      paddingTop: "9px",
+                     marginBottom: "5px",
+                     cursor: "pointer",
                   }}
                >
                   Query for Chair Data
@@ -151,6 +322,9 @@ class ChairQuerySide extends Component<
                      height={30}
                      theme={"fresh"}
                      textPosition={"center"}
+                     style={{
+                        cursor: "pointer",
+                     }}
                   >
                      Clear Console
                   </JqxButton>
@@ -175,6 +349,7 @@ class ChairQuerySide extends Component<
          );
       } else {
          let range: any = this.myCalendar.current!.getRange();
+         // console.dir(range);
          let rangeFrom: Date = range.from;
          let rangeTo: Date = range.to;
          let fromYear = rangeFrom.getFullYear();
@@ -194,8 +369,87 @@ class ChairQuerySide extends Component<
    private clearConsoleButtonClicked() {
       this.myPanel.current!.clearcontent();
    }
+
+   private thisWeekClicked() {
+      let thisWeekStart = moment().startOf("week");
+      let thisWeekEnd = moment();
+      this.myCalendar.current!.setRange(
+         thisWeekStart.toDate(),
+         thisWeekEnd.toDate()
+      );
+   }
+
+   private sinceLastWeekClicked() {
+      let startOfLastWeek = moment().day(-7).startOf("week");
+      let thisWeekEnd = moment();
+      this.myCalendar.current!.setRange(
+         startOfLastWeek.toDate(),
+         thisWeekEnd.toDate()
+      );
+   }
+
+   private lastWeekClicked() {
+      let lastWeekStart = moment().day(-7).startOf("week");
+      let lastWeekEnd = moment().day(-7).endOf("week");
+      this.myCalendar.current!.setRange(
+         lastWeekStart.toDate(),
+         lastWeekEnd.toDate()
+      );
+   }
+
+   private last2WeeksClicked() {
+      let startOf2WeeksAgo = moment().day(-14).startOf("week");
+      let endOf2WeeksAgo = moment().day(-14).endOf("week");
+      this.myCalendar.current!.setRange(
+         startOf2WeeksAgo.toDate(),
+         endOf2WeeksAgo.toDate()
+      );
+   }
+
+   private thisMonthClicked() {
+      let thisMonthStart = moment().startOf("month");
+      let thisMonthEnd = moment();
+      this.myCalendar.current!.setRange(
+         thisMonthStart.toDate(),
+         thisMonthEnd.toDate()
+      );
+   }
+
+   private lastMonthClicked() {
+      let startOfLastMonth = moment().subtract(1, "M").startOf("month");
+      let endOfLastMonth = moment().subtract(1, "M").endOf("month");
+      this.myCalendar.current!.setRange(
+         startOfLastMonth.toDate(),
+         endOfLastMonth.toDate()
+      );
+   }
+
+   private last2MonthsClicked() {
+      let startOf2MonthsAgo = moment().subtract(2, "M").startOf("month");
+      let endOf2MonthsAgo = moment().subtract(2, "M").endOf("month");
+      this.myCalendar.current!.setRange(
+         startOf2MonthsAgo.toDate(),
+         endOf2MonthsAgo.toDate()
+      );
+   }
+
+   private last3MonthsClicked() {
+      let startOf3MonthsAgo = moment().subtract(3, "M").startOf("month");
+      let endOf3MonthsAgo = moment().subtract(3, "M").endOf("month");
+      this.myCalendar.current!.setRange(
+         startOf3MonthsAgo.toDate(),
+         endOf3MonthsAgo.toDate()
+      );
+   }
+
+   private thisYearClicked() {
+      let startOfYear = moment().startOf("year");
+      let endOfYear = moment();
+      this.myCalendar.current!.setRange(
+         startOfYear.toDate(),
+         endOfYear.toDate()
+      );
+   }
 }
 
 export default ChairQuerySide;
-
-// value={this.state.calendarValue}
