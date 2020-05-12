@@ -21,7 +21,6 @@ import { divFlexCol } from "../../../styles/reactStyling";
 import { divFlexRowLazyMan } from "../../../styles/reactStyling";
 import { fieldsetRangePicker } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
-import { months } from "../../misc/months";
 
 interface MyState extends ICalendarProps {
    sourceChair: Array<string>;
@@ -48,6 +47,7 @@ class ChairQuerySide extends Component<
    private lastMonth = React.createRef<JqxButton>();
    private last2Months = React.createRef<JqxButton>();
    private last3Months = React.createRef<JqxButton>();
+   private last4Months = React.createRef<JqxButton>();
 
    private thisYear = React.createRef<JqxButton>();
 
@@ -69,6 +69,7 @@ class ChairQuerySide extends Component<
       this.lastMonthClicked = this.lastMonthClicked.bind(this);
       this.last2MonthsClicked = this.last2MonthsClicked.bind(this);
       this.last3MonthsClicked = this.last3MonthsClicked.bind(this);
+      this.last4MonthsClicked = this.last4MonthsClicked.bind(this);
 
       this.thisYearClicked = this.thisYearClicked.bind(this);
 
@@ -210,7 +211,7 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           Last 2W
+                           2W Ago
                         </JqxButton>
                         <JqxButton
                            ref={this.thisMonth}
@@ -257,7 +258,7 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           Last 2M
+                           2M Ago
                         </JqxButton>
                         <JqxButton
                            ref={this.last3Months}
@@ -272,7 +273,22 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           Last 3M
+                           3M Ago
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.last4Months}
+                           onClick={this.last4MonthsClicked}
+                           width={40}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           4M Ago
                         </JqxButton>
                         <JqxButton
                            ref={this.thisYear}
@@ -349,19 +365,10 @@ class ChairQuerySide extends Component<
          );
       } else {
          let range: any = this.myCalendar.current!.getRange();
-         // console.dir(range);
-         let rangeFrom: Date = range.from;
-         let rangeTo: Date = range.to;
-         let fromYear = rangeFrom.getFullYear();
-         let toYear = rangeTo.getFullYear();
-         let fromMonth = rangeFrom.getMonth();
-         let toMonth = rangeTo.getMonth();
-         let fromDate = rangeFrom.getDate();
-         let toDate = rangeTo.getDate();
-         let fromString = `${months[fromMonth]} ${fromDate}, ${fromYear}`;
-         let toString = `${months[toMonth]} ${toDate}, ${toYear}`;
+         let rFm = moment(range.from).format("MMM DD, YYYY");
+         let rTm = moment(range.to).format("MMM DD, YYYY");
          this.myPanel.current!.append(
-            `<p style="color:#152811; font-size:12px;"> ${chairAsset} ${fromString} -- ${toString}</p>`
+            `<p style="color:#152811; font-size:12px;"> ${chairAsset} ${rFm} -- ${rTm}</p>`
          );
       }
    }
@@ -439,6 +446,15 @@ class ChairQuerySide extends Component<
       this.myCalendar.current!.setRange(
          startOf3MonthsAgo.toDate(),
          endOf3MonthsAgo.toDate()
+      );
+   }
+
+   private last4MonthsClicked() {
+      let startOf4MonthsAgo = moment().subtract(4, "M").startOf("month");
+      let endOf4MonthsAgo = moment().subtract(4, "M").endOf("month");
+      this.myCalendar.current!.setRange(
+         startOf4MonthsAgo.toDate(),
+         endOf4MonthsAgo.toDate()
       );
    }
 
