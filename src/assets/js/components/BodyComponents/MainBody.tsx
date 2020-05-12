@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import "../../../styles/index.css";
-import { UserObj } from "../../misc/chairLocTypes";
-import { Roles } from "../../misc/chairLocTypes";
+import { UserObj, Roles } from "../../misc/chairLocTypes";
 
 class MainBody extends Component<{
    userObject: UserObj;
