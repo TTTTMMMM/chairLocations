@@ -365,7 +365,6 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 
 ---
 
-### <ins>Dependency Graph for Index.js (on Functions server)</ins>
+### <ins>Dependency Graph for index.js (on Functions server)</ins>
 
-| index.js |
 | ![](/markdownImages/dI/depIndex.js.png) |
