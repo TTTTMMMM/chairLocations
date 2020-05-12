@@ -345,6 +345,5 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 
 Dependency Graph for Mapping Branch:
 
-| ------------------------------------------ | --------------------------------------- |
 | ![](/markdownImages/dI/depIndex.tsx.png) | ![](/markdownImages/dI/depMainPage.png) |
-| ![](/markdownImages/dI/depMappingBody.png) | ![](/markdownImages/dI/depChairQueryComp.png) |
+| ![](/markdownImages/dI/depMB.png) | ![](/markdownImages/dI/depChairQC.png) |
