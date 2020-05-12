@@ -1,9 +1,6 @@
 // Server-side code follows:
 var escapeHTML = require("escape-html");
 var util = require("util");
-const {
-   addUsernameToValidUsers,
-} = require("./helpers/addUsernameToValidUsers");
 
 // ----------------------------------------------------------------
 // add beach to beaches collection
