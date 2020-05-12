@@ -353,11 +353,13 @@ Dependency Graph for Mapping Branch:
 
 Dependency Graph for Uploading Branch:
 
-| index.tsx                                 | mainPage.tsx                            |
-| ----------------------------------------- | --------------------------------------- |
-| ![](/markdownImages/dI/depIndex.tsx.png)  | ![](/markdownImages/dI/depMainPage.png) |
-| uploadBody.tsx                            | cleanAndUploadFiles.tsx                 |
-| ![](/markdownImages/dI/depUploadBody.png) | ![](/markdownImages/dI/depCandUp.png)   |
+| index.tsx                                 | mainPage.tsx                                |
+| ----------------------------------------- | ------------------------------------------- |
+| ![](/markdownImages/dI/depIndex.tsx.png)  | ![](/markdownImages/dI/depMainPage.png)     |
+| uploadBody.tsx                            | cleanAndUploadFiles.tsx                     |
+| ![](/markdownImages/dI/depUploadBody.png) | ![](/markdownImages/dI/depCandUp.png)       |
+| showChairData.tsx                         | mapContainer.tsx                            |
+| ![](/markdownImages/dI/depShowCData.png)  | ![](/markdownImages/dI/depMapContainer.png) |
 
 Dependency Graph for Index.js (on Functions server):
 
