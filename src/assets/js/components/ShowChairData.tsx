@@ -15,7 +15,7 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
-import "../configs/firebaseInit";
+// import "../configs/firebaseInit";
 import { divFlexRow } from "../../styles/reactStyling";
 import { IWLocObj } from "../configs/mapConfigs/mapTypes";
 import { CallingFrom, RangeObject } from "../misc/chairLocTypes";
@@ -30,12 +30,9 @@ interface MyState extends IDataTableProps {
 }
 class ShowChairData extends React.PureComponent<
    {
-      loggedInWithGoogle: boolean;
-      auth2: any;
-      idToken: any;
       loggedInToFirebase: boolean;
       myPanel: any;
-      asset: string;
+      asset: string | undefined;
       range: RangeObject;
       callingFrom: CallingFrom;
    },
@@ -56,9 +53,6 @@ class ShowChairData extends React.PureComponent<
    private tableModeButton = React.createRef<JqxButton>();
 
    constructor(props: {
-      loggedInWithGoogle: boolean;
-      auth2: any;
-      idToken: any;
       loggedInToFirebase: boolean;
       myPanel: any;
       asset: string;
@@ -73,9 +67,8 @@ class ShowChairData extends React.PureComponent<
       this.modifyKey = "";
       this.numUpdates = 0;
       this.tableModeButtonClicked = this.tableModeButtonClicked.bind(this);
-      // this.mapModeButtonClicked = this.mapModeButtonClicked.bind(this);
-
       this.onRowSelect = this.onRowSelect.bind(this);
+      this.getChairLocContent = this.getChairLocContent.bind(this);
 
       this.state = {
          subscribedLabelSpecific: false,
@@ -95,15 +88,22 @@ class ShowChairData extends React.PureComponent<
          range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          asset: "",
       };
-      this.getChairLocContent = this.getChairLocContent.bind(this);
+
+      console.log(`in constructor, this.props and this.state are:`);
+      console.dir(this.props);
+      console.dir(this.state);
    }
 
    // this subscription is used by CleanAndUpload Component
    subscribeToAssetUploadedToday() {
+      console.log(`subscribing to subscribeToAssetUploadedToday`);
       if (this.props.asset!.length > 0) {
          this.unsubscribeFromAssetLabelSpecific();
          this.unsubscribeFromAssetWithinRange();
-         this.setState({ asset: this.props.asset });
+         this.setState({ asset: this.props.asset }, () => {
+            console.log(`in callbackof setState() -- in UploadedToday`);
+            console.dir(this.state);
+         });
          const beginningOfDay = new Date(
             new Date().toISOString().substr(0, 10)
          ).toISOString();
@@ -121,10 +121,16 @@ class ShowChairData extends React.PureComponent<
 
    // this subscription is used by ChairQuerySide Component
    subscribeToAssetBeaconingWithinDateRange() {
-      if (this.props.asset) {
+      console.log(
+         `subscribing to subscribeToAssetBeaconingWithinDateRange, this.props and this.state before setting state`
+      );
+      if (this.props.asset!.length > 0) {
          this.unsubscribeFromAssetLabelSpecific();
          this.unsubscribeFromAssetWithinRange();
-         this.setState({ asset: this.props.asset });
+         this.setState({ asset: this.props.asset }, () => {
+            console.log(`in callbackof setState() -- in Beaconing`);
+            console.dir(this.state);
+         });
          this.setState({ range: this.props.range });
          this.assetWithinRange = firebase
             .firestore()
@@ -160,6 +166,7 @@ class ShowChairData extends React.PureComponent<
    onCollectionUpdate = (querySnapshot: any) => {
       // console.log(`In onCollectionUpdate() <${util.inspect(querySnapshot)}>`);
       this.numUpdates!++;
+      console.log(`initializing local chairDataWatch[] to empty array`);
       let chairDataWatch: any[] = [];
       this.numRows = 0;
       this.chairY.length = 0;
@@ -230,17 +237,32 @@ class ShowChairData extends React.PureComponent<
             });
          }
       );
+      console.log(`local chairDataWatch has length [${chairDataWatch.length}]`);
+      console.log(
+         `about to set state of chairDataWatch, which currently has length [${this.state.chairDataWatch.length}]`
+      );
+      console.log(`this.state:`);
+      console.dir(this.state);
       this.setState({
-         chairDataWatch,
+         chairDataWatch: chairDataWatch,
       });
+      console.log(
+         `after setting state of chairDataWatch, it currently has length [${this.state.chairDataWatch.length}]`
+      );
+      console.log(`this.state:`);
+      console.dir(this.state);
       this.numRows++;
-      // console.log(
-      //    `%c ChairDataWatch<${this.numUpdates}>`,
-      //    "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
-      // );
+      console.log(
+         `%c ChairDataWatch<${this.numUpdates}>`,
+         "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
+      );
    };
 
    getChairLocContent() {
+      console.log(`in getChairLocContent()`);
+      console.log(
+         `[${this.props.loggedInToFirebase}], [${this.chairY.length}], [${this.state.displayTableMode}]`
+      );
       if (
          this.props.loggedInToFirebase &&
          this.chairY.length > 0 &&
@@ -490,8 +512,10 @@ class ShowChairData extends React.PureComponent<
       }
    }
    render() {
-      let changeInAsset = this.props.asset != this.state.asset;
+      console.log(`in render()`);
       if (this.props.callingFrom === CallingFrom.cleanAndUploadFiles) {
+         let changeInAsset = this.props.asset != this.state.asset;
+         // console.log(`changeInAsset[${changeInAsset}]`);
          if (this.props.loggedInToFirebase && changeInAsset) {
             this.subscribeToAssetUploadedToday();
          }
@@ -502,6 +526,7 @@ class ShowChairData extends React.PureComponent<
             this.unsubscribeFromAssetLabelSpecific();
          }
       } else if (this.props.callingFrom === CallingFrom.chairResultsSide) {
+         let changeInAsset = this.props.asset != this.state.asset;
          let changeInRange = this.props.range != this.state.range;
          if (
             this.props.loggedInToFirebase &&

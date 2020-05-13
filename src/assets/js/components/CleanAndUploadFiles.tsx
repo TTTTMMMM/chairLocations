@@ -277,9 +277,6 @@ class CleanAndUploadFiles extends Component<
             <section>
                <div>
                   <ShowChairData
-                     loggedInWithGoogle={this.props.loggedInWithGoogle}
-                     auth2={this.props.auth2}
-                     idToken={this.props.idToken}
                      loggedInToFirebase={this.props.loggedInToFirebase}
                      myPanel={this.myPanel}
                      asset={this.state.asset}

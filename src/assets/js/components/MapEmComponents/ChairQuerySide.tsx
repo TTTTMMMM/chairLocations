@@ -4,7 +4,6 @@ import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 import JqxCalendar, {
    ICalendarProps,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxcalendar";
-import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
@@ -15,29 +14,30 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
-import "../../configs/firebaseInit";
+// import "../../configs/firebaseInit";
 
 import { divFlexCol } from "../../../styles/reactStyling";
 import { divFlexRowLazyMan } from "../../../styles/reactStyling";
 import { fieldsetRangePicker } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
-import { RangeObject } from "../../misc/chairLocTypes";
+import { RangeObject, AssetRangeQO } from "../../misc/chairLocTypes";
 
 interface MyState extends ICalendarProps {
    sourceChair: Array<string>;
    alreadyGotInfo: boolean;
-   // calendarValue: any;
 }
 class ChairQuerySide extends Component<
-   { loggedInToFirebase: boolean },
+   {
+      loggedInToFirebase: boolean;
+      chairQueryComponentCallback: any;
+      myPanel: any;
+   },
    MyState
 > {
    chairCollection: any;
    private chairInput = React.createRef<JqxInput>();
    private enterButton = React.createRef<JqxButton>();
    private myCalendar = React.createRef<JqxCalendar>();
-   private myPanel = React.createRef<JqxPanel>();
-   private clearConsoleButton = React.createRef<JqxButton>();
 
    private thisWeek = React.createRef<JqxButton>();
    private sinceLastWeek = React.createRef<JqxButton>();
@@ -52,14 +52,18 @@ class ChairQuerySide extends Component<
 
    private thisYear = React.createRef<JqxButton>();
 
-   constructor(props: { loggedInToFirebase: boolean }) {
+   constructor(props: {
+      loggedInToFirebase: boolean;
+      chairQueryComponentCallback: any;
+      myPanel: any;
+   }) {
       super(props);
       this.getChairQueryContent = this.getChairQueryContent.bind(this);
       this.chairCollection = "";
       this.enterButtonClicked = this.enterButtonClicked.bind(this);
-      this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
-         this
-      );
+      // this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
+      //    this
+      // );
 
       this.thisWeekClicked = this.thisWeekClicked.bind(this);
       this.sinceLastWeekClicked = this.sinceLastWeekClicked.bind(this);
@@ -325,27 +329,6 @@ class ChairQuerySide extends Component<
                >
                   Query for Chair Data
                </JqxButton>
-               <div>
-                  <JqxPanel
-                     ref={this.myPanel}
-                     width={270}
-                     height={250}
-                     theme={"fresh"}
-                  />
-                  <JqxButton
-                     ref={this.clearConsoleButton}
-                     onClick={this.clearConsoleButtonClicked}
-                     width={270}
-                     height={30}
-                     theme={"fresh"}
-                     textPosition={"center"}
-                     style={{
-                        cursor: "pointer",
-                     }}
-                  >
-                     Clear Console
-                  </JqxButton>
-               </div>
             </div>
          </>
       );
@@ -361,7 +344,7 @@ class ChairQuerySide extends Component<
    private enterButtonClicked() {
       let chairAsset: string = this.chairInput.current!.val();
       if (chairAsset.length <= 5) {
-         this.myPanel.current!.append(
+         this.props.myPanel.current!.append(
             `<p style="color: red; font-size:15px;"> Choose a chair from dropdown list.</p>`
          );
       } else {
@@ -370,16 +353,12 @@ class ChairQuerySide extends Component<
             startDate: moment(range.from).format("YYYY-MM-DD"),
             endDate: moment(range.to).format("YYYY-MM-DD"),
          };
-         // let rFm = moment(range.from).format("MMM DD, YYYY");
-         // let rTm = moment(range.to).format("MMM DD, YYYY");
-         this.myPanel.current!.append(
-            `<p style="color:#152811; font-size:12px;"> ${chairAsset} ${rangeObj.startDate} -- ${rangeObj.endDate}</p>`
-         );
+         let arqo: AssetRangeQO = { asset: chairAsset, range: rangeObj };
+         // this.props.myPanel.current!.append(
+         //    `<p style="color:#152811; font-size:12px;"> ${arqo.asset} ${arqo.range.startDate} -- ${arqo.range.endDate}</p>`
+         // );
+         this.props.chairQueryComponentCallback(arqo);
       }
-   }
-
-   private clearConsoleButtonClicked() {
-      this.myPanel.current!.clearcontent();
    }
 
    private thisWeekClicked() {

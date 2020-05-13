@@ -296,7 +296,7 @@ export interface UserObj {
 
 #### <ins>TODO Physical World</ins>
 
-1. Repair rototiller
+1. Install carburetor in rototiller
 2. Change oil in John Deere
 3. Split wood
 
@@ -346,22 +346,22 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 
 ### <ins>Dependency Graph for Mapping Branch</ins>
 
-| index.tsx                                     | mainPage.tsx                            |
-| --------------------------------------------- | --------------------------------------- |
-| ![](/markdownImages/dI/depIndex.tsx.png)      | ![](/markdownImages/dI/depMainPage.png) |
-| mappingBody.tsx                               | chairQueryComponent.tsx                 |
-| ![](/markdownImages/dI/depMB.png)             | ![](/markdownImages/dI/depChairQC.png)  |
-| ChairQuerySide.tsx                            |
-| ![](/markdownImages/dI/depChairQuerySide.png) |
+| index.tsx                                     | MainPage.tsx                                    |
+| --------------------------------------------- | ----------------------------------------------- |
+| ![](/markdownImages/dI/depIndex.tsx.png)      | ![](/markdownImages/dI/depMainPage.png)         |
+| MappingBody.tsx                               | ChairQueryComponent.tsx                         |
+| ![](/markdownImages/dI/depMB.png)             | ![](/markdownImages/dI/depChairQC.png)          |
+| ChairQuerySide.tsx                            | ChairResultsSide.tsx                            |
+| ![](/markdownImages/dI/depChairQuerySide.png) | ![](/markdownImages/dI/depChairResultsSide.png) |
 
 ---
 
 ### <ins>Dependency Graph for Uploading Branch</ins>
 
-| index.tsx                                 | mainPage.tsx                                |
+| index.tsx                                 | MainPage.tsx                                |
 | ----------------------------------------- | ------------------------------------------- |
 | ![](/markdownImages/dI/depIndex.tsx.png)  | ![](/markdownImages/dI/depMainPage.png)     |
-| uploadBody.tsx                            | cleanAndUploadFiles.tsx                     |
+| UploadBody.tsx                            | CleanAndUploadFiles.tsx                     |
 | ![](/markdownImages/dI/depUploadBody.png) | ![](/markdownImages/dI/depCandUp.png)       |
 | showChairData.tsx                         | mapContainer.tsx                            |
 | ![](/markdownImages/dI/depShowCData.png)  | ![](/markdownImages/dI/depMapContainer.png) |
