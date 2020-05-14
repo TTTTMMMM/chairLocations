@@ -154,7 +154,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ![](/markdownImages/oneDayUsage.png)
 
-![](/markdownImages/anotherDayUsage.png)
+![](/markdownImages/anotherDayUsage1.png)
 
 [ChairLoc usage shown on Firebase Console](https://console.firebase.google.com/project/chairlocations/usage).
 
