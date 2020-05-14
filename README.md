@@ -384,29 +384,53 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 ---
 
 temp.push({
+
 ASSETLABEL: "CHAIR-064",
+
 BEACH: "WEST PALM BEACH",
+
 key: "f8ff9b66a6",
+
 CELLACCURACY: "0",
+
 DEVICEID: "11705",
+
 FNAME: "CHAIR064_2020-05-05.csv",
+
 GPS_MPH: "",
+
 ID: "f8ff9b66a6",
+
 IMEI: "013108002623037",
+
 LATITUDE: "360",
+
 LONGITUDE: "360",
+
 RENTALAGENT: "SAND HELPER",
+
 STATE: "Florida",
+
 UPDATETIME: "2020-05-02T02:53:01Z",
+
 UPLOADFBTIME: "2020-05-14T19:09:12.791Z",
+
 uid: "f8ff9b66a6",
+
 \_visible: "true",
+
 });
 
 CHAIR064_2020-05-05.csv
+
 CHAIR066_2020-05-05.csv For [CHAIR-066], uploading to Firebase 174 records, each containing 14 parameters.
+
 CHAIR068_2020-05-05.csv
+
 CHAIR070_2020-05-05.csv
+
 CHAIR072_2020-05-05_1.csv
+
 CHAIR078_2020-05-05.csv
+
 CHAIR088_2020-05-05.csv
