@@ -373,17 +373,3 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 | ![](/markdownImages/dI/depIndex.js.png) |
 
 ---
-
-```
-let beginDate = moment.utc("2020-02-20T14:13:17").format('YYYY-MM-DD');
-let endDate = moment.utc("2020-02-23T14:13:17").format('YYYY-MM-DD');
-
-let firebaseDate = "2020-02-22T14:13:17Z";
-let withinDate = (firebaseDate > beginDate) && (firebaseDate < endDate);
-alert(`
-${beginDate}
->>${firebaseDate}<<
-${endDate}
-${withinDate}
-`);
-```
