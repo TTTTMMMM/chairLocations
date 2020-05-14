@@ -50,6 +50,7 @@ class ChairQuerySide extends Component<
    private last4Months = React.createRef<JqxButton>();
 
    private thisYear = React.createRef<JqxButton>();
+   private lastYear = React.createRef<JqxButton>();
 
    constructor(props: {
       loggedInToFirebase: boolean;
@@ -73,6 +74,7 @@ class ChairQuerySide extends Component<
       this.last4MonthsClicked = this.last4MonthsClicked.bind(this);
 
       this.thisYearClicked = this.thisYearClicked.bind(this);
+      this.lastYearClicked = this.lastYearClicked.bind(this);
 
       this.state = {
          sourceChair: [],
@@ -89,6 +91,53 @@ class ChairQuerySide extends Component<
       );
       this.myCalendar.current!.setMinDate(new Date("January 1, 2020"));
       this.myCalendar.current!.setMaxDate(new Date());
+      let tempArr: Array<string> = [];
+      let tempLabel: string = "";
+      const thisMonthStartDate = moment()
+         .startOf("month")
+         .format("MMM DD YYYY");
+      tempArr = thisMonthStartDate.split(" ");
+      tempLabel = tempArr[0] + " " + tempArr[2];
+      this.thisMonth.current!.val(`${tempLabel}`);
+      const lastMonthStartDate = moment()
+         .subtract(1, "M")
+         .startOf("month")
+         .format("MMM DD YYYY");
+      tempArr = lastMonthStartDate.split(" ");
+      tempLabel = tempArr[0] + " " + tempArr[2];
+      this.lastMonth.current!.val(`${tempLabel}`);
+      const last2MonthsStartDate = moment()
+         .subtract(2, "M")
+         .startOf("month")
+         .format("MMM DD YYYY");
+      tempArr = last2MonthsStartDate.split(" ");
+      tempLabel = tempArr[0] + " " + tempArr[2];
+      this.last2Months.current!.val(`${tempLabel}`);
+      const last3MonthsStartDate = moment()
+         .subtract(3, "M")
+         .startOf("month")
+         .format("MMM DD YYYY");
+      tempArr = last3MonthsStartDate.split(" ");
+      tempLabel = tempArr[0] + " " + tempArr[2];
+      this.last3Months.current!.val(`${tempLabel}`);
+      const last4MonthsStartDate = moment()
+         .subtract(4, "M")
+         .startOf("month")
+         .format("MMM DD YYYY");
+      tempArr = last4MonthsStartDate.split(" ");
+      tempLabel = tempArr[0];
+      this.last4Months.current!.val(`${tempLabel}`);
+      const lastYearStartDate = moment()
+         .subtract(12, "M")
+         .startOf("year")
+         .format("MMM DD YYYY");
+      tempArr = lastYearStartDate.split(" ");
+      tempLabel = tempArr[2];
+      this.lastYear.current!.val(`${tempLabel}`);
+      const thisYearStartDate = moment().startOf("year").format("MMM DD YYYY");
+      tempArr = thisYearStartDate.split(" ");
+      tempLabel = tempArr[2];
+      this.thisYear.current!.val(`${tempLabel}`);
    }
 
    getChairAssetInfo() {
@@ -215,9 +264,9 @@ class ChairQuerySide extends Component<
                            2W Ago
                         </JqxButton>
                         <JqxButton
-                           ref={this.thisMonth}
-                           onClick={this.thisMonthClicked}
-                           width={50}
+                           ref={this.last4Months}
+                           onClick={this.last4MonthsClicked}
+                           width={45}
                            height={40}
                            theme={"fresh"}
                            textPosition={"center"}
@@ -227,12 +276,12 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           This Month
+                           {"11"}
                         </JqxButton>
                         <JqxButton
-                           ref={this.lastMonth}
-                           onClick={this.lastMonthClicked}
-                           width={40}
+                           ref={this.last3Months}
+                           onClick={this.last3MonthsClicked}
+                           width={45}
                            height={40}
                            theme={"fresh"}
                            textPosition={"center"}
@@ -242,14 +291,14 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           Last M
+                           222 2222
                         </JqxButton>
                      </div>
                      <div className={"lazyManRow2"} style={divFlexRowLazyMan}>
                         <JqxButton
                            ref={this.last2Months}
                            onClick={this.last2MonthsClicked}
-                           width={40}
+                           width={45}
                            height={40}
                            theme={"fresh"}
                            textPosition={"center"}
@@ -259,12 +308,12 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           2M Ago
+                           333 3333
                         </JqxButton>
                         <JqxButton
-                           ref={this.last3Months}
-                           onClick={this.last3MonthsClicked}
-                           width={40}
+                           ref={this.lastMonth}
+                           onClick={this.lastMonthClicked}
+                           width={45}
                            height={40}
                            theme={"fresh"}
                            textPosition={"center"}
@@ -274,12 +323,12 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           3M Ago
+                           444 4444
                         </JqxButton>
                         <JqxButton
-                           ref={this.last4Months}
-                           onClick={this.last4MonthsClicked}
-                           width={40}
+                           ref={this.thisMonth}
+                           onClick={this.thisMonthClicked}
+                           width={45}
                            height={40}
                            theme={"fresh"}
                            textPosition={"center"}
@@ -289,7 +338,7 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           4M Ago
+                           555 55555
                         </JqxButton>
                         <JqxButton
                            ref={this.thisYear}
@@ -304,7 +353,22 @@ class ChairQuerySide extends Component<
                               cursor: "pointer",
                            }}
                         >
-                           This Year
+                           {"6666666666666"}
+                        </JqxButton>
+                        <JqxButton
+                           ref={this.lastYear}
+                           onClick={this.lastYearClicked}
+                           width={45}
+                           height={40}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                           style={{
+                              margin: "1px",
+                              paddingLeft: "-3px",
+                              cursor: "pointer",
+                           }}
+                        >
+                           {"7777777777777777"}
                         </JqxButton>
                      </div>
                   </fieldset>
@@ -442,6 +506,15 @@ class ChairQuerySide extends Component<
       this.myCalendar.current!.setRange(
          startOfYear.toDate(),
          endOfYear.toDate()
+      );
+   }
+
+   private lastYearClicked() {
+      let lastYearStart = moment().subtract(12, "M").startOf("year");
+      let lastYearEnd = moment().subtract(12, "M").endOf("year");
+      this.myCalendar.current!.setRange(
+         lastYearStart.toDate(),
+         lastYearEnd.toDate()
       );
    }
 }

@@ -226,10 +226,10 @@ class ShowChairData extends React.PureComponent<
          chairDataWatch: chairDataWatch,
       });
       this.numRows++;
-      console.log(
-         `%c ChairDataWatch<${this.numUpdates}>`,
-         "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
-      );
+      // console.log(
+      //    `%c ChairDataWatch<${this.numUpdates}>`,
+      //    "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
+      // );
    };
 
    getChairLocContent() {
