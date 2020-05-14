@@ -56,6 +56,8 @@ class CleanAndUploadFiles extends Component<
    private extendedFatArray: Array<any> = [];
    private extendedExtendedFatArray: Array<any> = [];
    private tallAndSkinnyArray: Array<any> = [];
+   private shortAndSkinnyArray7: Array<any> = [];
+   private shortAndSkinnyArray6: Array<any> = [];
    private shortAndSkinnyArray5: Array<any> = [];
    private shortAndSkinnyArray4: Array<any> = [];
    private shortAndSkinnyArray3: Array<any> = [];
@@ -300,6 +302,8 @@ class CleanAndUploadFiles extends Component<
          this.extendedFatArray.length = 0;
          this.extendedExtendedFatArray.length = 0;
          this.tallAndSkinnyArray.length = 0;
+         this.shortAndSkinnyArray7.length = 0;
+         this.shortAndSkinnyArray6.length = 0;
          this.shortAndSkinnyArray5.length = 0;
          this.shortAndSkinnyArray4.length = 0;
          this.shortAndSkinnyArray3.length = 0;
@@ -382,6 +386,12 @@ class CleanAndUploadFiles extends Component<
          this.setState({ disabledSetAdditionalPropertiesButton: true });
          this.setState({ disabledCleanRowsButton: true });
          this.tallAndSkinnyArray.forEach((x) => {
+            x.LATITUDE !== "360" ? this.shortAndSkinnyArray7.push(x) : {};
+         });
+         this.shortAndSkinnyArray7.forEach((x) => {
+            x.LONGITUDE !== "360" ? this.shortAndSkinnyArray6.push(x) : {};
+         });
+         this.shortAndSkinnyArray6.forEach((x) => {
             x.LATITUDE !== "-360" ? this.shortAndSkinnyArray5.push(x) : {};
          });
          this.shortAndSkinnyArray5.forEach((x) => {
