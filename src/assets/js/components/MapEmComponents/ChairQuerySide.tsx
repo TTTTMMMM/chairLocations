@@ -14,7 +14,6 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
-// import "../../configs/firebaseInit";
 
 import { divFlexCol } from "../../../styles/reactStyling";
 import { divFlexRowLazyMan } from "../../../styles/reactStyling";
@@ -61,9 +60,6 @@ class ChairQuerySide extends Component<
       this.getChairQueryContent = this.getChairQueryContent.bind(this);
       this.chairCollection = "";
       this.enterButtonClicked = this.enterButtonClicked.bind(this);
-      // this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
-      //    this
-      // );
 
       this.thisWeekClicked = this.thisWeekClicked.bind(this);
       this.sinceLastWeekClicked = this.sinceLastWeekClicked.bind(this);
