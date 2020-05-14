@@ -111,7 +111,7 @@ class ShowChairData extends React.PureComponent<
       }
    }
 
-   // this subscription is used by ChairQuerySide Component
+   // this subscription is used by ChairResultSide Component and defined in ChairQuerySide Component
    subscribeToAssetBeaconingWithinDateRange() {
       if (this.props.asset!.length > 0) {
          this.unsubscribeFromAssetLabelSpecific();
