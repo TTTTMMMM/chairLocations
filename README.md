@@ -425,14 +425,14 @@ uid: "f8ff9b66a6",
 
 CHAIR064_2020-05-05.csv
 
-CHAIR066_2020-05-05.csv For [CHAIR-066], uploading to Firebase 174 records, each containing 14 parameters.
+CHAIR066_2020-05-05.csv: For [CHAIR-066], uploading to Firebase 174 records, each containing 14 parameters.
 
-CHAIR068_2020-05-05.csv
+CHAIR068_2020-05-05.csv: For [CHAIR-068], uploading to Firebase 141 records, each containing 14 parameters.
 
-CHAIR070_2020-05-05.csv
+CHAIR070_2020-05-05.csv: For [CHAIR-070], uploading to Firebase 95 records, each containing 14 parameters.
 
-CHAIR072_2020-05-05_1.csv
+CHAIR072_2020-05-05_1.csv: For [CHAIR-072], uploading to Firebase 314 records, each containing 14 parameters.
 
-CHAIR078_2020-05-05.csv
+CHAIR078_2020-05-05.csv: For [CHAIR-078], uploading to Firebase 289 records, each containing 14 parameters.
 
-CHAIR088_2020-05-05.csv
+CHAIR088_2020-05-05.csv: For [CHAIR-088], uploading to Firebase 179 records, each containing 14 parameters.
