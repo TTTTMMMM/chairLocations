@@ -91,3 +91,5 @@ class ChairQueryComponent extends Component<
 }
 
 export default ChairQueryComponent;
+
+// <ChairResultsSide arqo={this.state.arqo}></ChairResultsSide>

@@ -88,22 +88,14 @@ class ShowChairData extends React.PureComponent<
          range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          asset: "",
       };
-
-      console.log(`in constructor, this.props and this.state are:`);
-      console.dir(this.props);
-      console.dir(this.state);
    }
 
    // this subscription is used by CleanAndUpload Component
    subscribeToAssetUploadedToday() {
-      console.log(`subscribing to subscribeToAssetUploadedToday`);
       if (this.props.asset!.length > 0) {
          this.unsubscribeFromAssetLabelSpecific();
          this.unsubscribeFromAssetWithinRange();
-         this.setState({ asset: this.props.asset }, () => {
-            console.log(`in callbackof setState() -- in UploadedToday`);
-            console.dir(this.state);
-         });
+         this.setState({ asset: this.props.asset });
          const beginningOfDay = new Date(
             new Date().toISOString().substr(0, 10)
          ).toISOString();
@@ -121,16 +113,10 @@ class ShowChairData extends React.PureComponent<
 
    // this subscription is used by ChairQuerySide Component
    subscribeToAssetBeaconingWithinDateRange() {
-      console.log(
-         `subscribing to subscribeToAssetBeaconingWithinDateRange, this.props and this.state before setting state`
-      );
       if (this.props.asset!.length > 0) {
          this.unsubscribeFromAssetLabelSpecific();
          this.unsubscribeFromAssetWithinRange();
-         this.setState({ asset: this.props.asset }, () => {
-            console.log(`in callbackof setState() -- in Beaconing`);
-            console.dir(this.state);
-         });
+         this.setState({ asset: this.props.asset });
          this.setState({ range: this.props.range });
          this.assetWithinRange = firebase
             .firestore()
@@ -166,7 +152,6 @@ class ShowChairData extends React.PureComponent<
    onCollectionUpdate = (querySnapshot: any) => {
       // console.log(`In onCollectionUpdate() <${util.inspect(querySnapshot)}>`);
       this.numUpdates!++;
-      console.log(`initializing local chairDataWatch[] to empty array`);
       let chairDataWatch: any[] = [];
       this.numRows = 0;
       this.chairY.length = 0;
@@ -237,20 +222,9 @@ class ShowChairData extends React.PureComponent<
             });
          }
       );
-      console.log(`local chairDataWatch has length [${chairDataWatch.length}]`);
-      console.log(
-         `about to set state of chairDataWatch, which currently has length [${this.state.chairDataWatch.length}]`
-      );
-      console.log(`this.state:`);
-      console.dir(this.state);
       this.setState({
          chairDataWatch: chairDataWatch,
       });
-      console.log(
-         `after setting state of chairDataWatch, it currently has length [${this.state.chairDataWatch.length}]`
-      );
-      console.log(`this.state:`);
-      console.dir(this.state);
       this.numRows++;
       console.log(
          `%c ChairDataWatch<${this.numUpdates}>`,
@@ -259,10 +233,6 @@ class ShowChairData extends React.PureComponent<
    };
 
    getChairLocContent() {
-      console.log(`in getChairLocContent()`);
-      console.log(
-         `[${this.props.loggedInToFirebase}], [${this.chairY.length}], [${this.state.displayTableMode}]`
-      );
       if (
          this.props.loggedInToFirebase &&
          this.chairY.length > 0 &&
@@ -512,10 +482,8 @@ class ShowChairData extends React.PureComponent<
       }
    }
    render() {
-      console.log(`in render()`);
       if (this.props.callingFrom === CallingFrom.cleanAndUploadFiles) {
          let changeInAsset = this.props.asset != this.state.asset;
-         // console.log(`changeInAsset[${changeInAsset}]`);
          if (this.props.loggedInToFirebase && changeInAsset) {
             this.subscribeToAssetUploadedToday();
          }
