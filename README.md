@@ -260,8 +260,15 @@ The user has to have logged in before a Firebase user object exists, therefore g
 | lurker      | false                   | false            | true                 | false               |
 | maintenance | false                   | false            | false                | true                |
 
+---
+
+#### Two Good Playgrounds
+
 [Typescript Playground](https://www.typescriptlang.org/play)
+
 [moment.js Playground](http://jsfiddle.net/brandonscript/rLjQx/)
+
+---
 
 ```
 export enum Roles {   // Roles govern what can be done/seen client-side
