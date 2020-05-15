@@ -439,7 +439,7 @@ CHAIR088_2020-05-05.csv: For [CHAIR-088], uploading to Firebase 179 records, eac
 
 ---
 
-Annoying font change with "Logged In"
+Annoying font change with "Signed In" words after succesful login.
 
 ![](/markdownImages/loginStyling/1.png)
 
