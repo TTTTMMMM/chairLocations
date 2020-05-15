@@ -162,6 +162,10 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ![](/markdownImages/chairLocsUsage_20200506.png)
 
+The day after above usage. It cost me \$.01 to go over the 50K/day read operations overlimit!
+
+![](/markdownImages/overageCost.png)
+
 ---
 
 For the following Compound Query (which is used to create a listener for a specific chair uploaded today to Firebase):
