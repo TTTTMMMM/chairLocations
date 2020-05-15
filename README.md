@@ -162,7 +162,7 @@ This estimate may be high. See [this example](https://firebase.google.com/docs/f
 
 ![](/markdownImages/chairLocsUsage_20200506.png)
 
-The day after above usage. It cost me \$.01 to go over the 50K/day read operations overlimit!
+The day after above usage. It cost me \$.01 to go over the limit of 50K read operations per day!
 
 ![](/markdownImages/overageCost.png)
 
