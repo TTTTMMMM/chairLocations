@@ -439,7 +439,7 @@ CHAIR088_2020-05-05.csv: For [CHAIR-088], uploading to Firebase 179 records, eac
 
 ---
 
-Annoying font change with "Signed In" words after succesful login.
+Annoying font change with "Signed In" words after succesful login. The id on the span tag is random.
 
 ![](/markdownImages/loginStyling/1.png)
 
