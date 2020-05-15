@@ -436,3 +436,13 @@ CHAIR072_2020-05-05_1.csv: For [CHAIR-072], uploading to Firebase 314 records, e
 CHAIR078_2020-05-05.csv: For [CHAIR-078], uploading to Firebase 289 records, each containing 14 parameters.
 
 CHAIR088_2020-05-05.csv: For [CHAIR-088], uploading to Firebase 179 records, each containing 14 parameters.
+
+---
+
+Annoying font change with "Logged In"
+
+![](/markdownImages/loginStyling/1.png)
+
+![](/markdownImages/loginStyling/2.png)
+
+![](/markdownImages/loginStyling/3.png)
