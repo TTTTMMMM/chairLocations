@@ -73,7 +73,7 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
 
    const myMapContainerStyle = {
       height: "82vh",
-      width: "65vw",
+      width: "73vw",
       background: "rgb(250, 245, 198)",
       border: "2px hsla(12, 95%, 47%, 0.93) solid",
       borderRadius: "6px",
@@ -96,8 +96,8 @@ const MapContainer = (inputObj: Array<IWLocObj>) => {
                mapRef && mapRef.panToBounds(EAST_COAST_BOUNDS, 20);
             }}
             onZoomChanged={() => {
-               if (mapRef && mapRef.getZoom() < 6) {
-                  mapRef.setZoom(6);
+               if (mapRef && mapRef.getZoom() < 5) {
+                  mapRef.setZoom(5);
                }
             }}
             onClick={() => {

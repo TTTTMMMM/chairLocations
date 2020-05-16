@@ -48,9 +48,12 @@ class ShowChairData extends React.PureComponent<
    dataAdapter: null;
    modifyKey: string | undefined;
    chairY: Array<IWLocObj> = [];
+   chairYBackup: Array<IWLocObj> = [];
+   selectedMappings: Array<IWLocObj> = [];
 
    private myChairLocTable = React.createRef<JqxDataTable>();
    private tableModeButton = React.createRef<JqxButton>();
+   private mapSelectionButton = React.createRef<JqxButton>();
 
    constructor(props: {
       loggedInToFirebase: boolean;
@@ -67,6 +70,9 @@ class ShowChairData extends React.PureComponent<
       this.modifyKey = "";
       this.numUpdates = 0;
       this.tableModeButtonClicked = this.tableModeButtonClicked.bind(this);
+      this.mapSelectionButtonClicked = this.mapSelectionButtonClicked.bind(
+         this
+      );
       this.onRowSelect = this.onRowSelect.bind(this);
       this.getChairLocContent = this.getChairLocContent.bind(this);
 
@@ -107,6 +113,9 @@ class ShowChairData extends React.PureComponent<
          this.unsubscribeLabelSpecific = this.assetLabelSpecific.onSnapshot(
             this.onCollectionUpdate
          );
+         this.chairY.length = 0;
+         this.chairYBackup.length = 0;
+         this.selectedMappings.length = 0;
          this.setState({ subscribedLabelSpecific: true });
       }
    }
@@ -127,6 +136,9 @@ class ShowChairData extends React.PureComponent<
          this.unsubscribeWithinRange = this.assetWithinRange.onSnapshot(
             this.onCollectionUpdate
          );
+         this.chairY.length = 0;
+         this.chairYBackup.length = 0;
+         this.selectedMappings.length = 0;
          this.setState({ subscribedWithinRange: true });
       }
    }
@@ -136,6 +148,9 @@ class ShowChairData extends React.PureComponent<
          this.unsubscribeLabelSpecific();
          this.setState({ subscribedLabelSpecific: false });
          this.numUpdates = 0;
+         this.chairY.length = 0;
+         this.chairYBackup.length = 0;
+         this.selectedMappings.length = 0;
       }
    }
 
@@ -144,6 +159,9 @@ class ShowChairData extends React.PureComponent<
          this.unsubscribeWithinRange();
          this.setState({ subscribedWithinRange: false });
          this.numUpdates = 0;
+         this.chairY.length = 0;
+         this.chairYBackup.length = 0;
+         this.selectedMappings.length = 0;
       }
    }
 
@@ -202,6 +220,7 @@ class ShowChairData extends React.PureComponent<
                },
             };
             this.chairY.push(oneLoc);
+            this.chairYBackup.push(oneLoc);
             chairDataWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
@@ -329,11 +348,10 @@ class ShowChairData extends React.PureComponent<
                editable: false,
             },
             {
-               text: "Rental Agent",
-               datafield: "RENTALAGENT",
-               width: columnWidths[9][1],
+               text: "Update Time",
+               datafield: "UPDATETIME",
+               width: columnWidths[11][1],
                align: "center",
-               cellsalign: "center",
                editable: false,
             },
             {
@@ -361,10 +379,11 @@ class ShowChairData extends React.PureComponent<
                editable: false,
             },
             {
-               text: "Update Time",
-               datafield: "UPDATETIME",
-               width: columnWidths[11][1],
+               text: "Rental Agent",
+               datafield: "RENTALAGENT",
+               width: columnWidths[9][1],
                align: "center",
+               cellsalign: "center",
                editable: false,
             },
             {
@@ -443,6 +462,17 @@ class ShowChairData extends React.PureComponent<
                />
                <div style={divFlexRow}>
                   <JqxButton
+                     ref={this.mapSelectionButton}
+                     onClick={this.mapSelectionButtonClicked}
+                     disabled={false}
+                     width={325}
+                     height={30}
+                     theme={"fresh"}
+                     textPosition={"center"}
+                  >
+                     Map Selection
+                  </JqxButton>
+                  <JqxButton
                      ref={this.tableModeButton}
                      onClick={this.tableModeButtonClicked}
                      width={325}
@@ -464,6 +494,17 @@ class ShowChairData extends React.PureComponent<
             <>
                <MapContainer {...this.chairY}></MapContainer>
                <div style={divFlexRow}>
+                  <JqxButton
+                     ref={this.mapSelectionButton}
+                     onClick={this.mapSelectionButtonClicked}
+                     disabled={true}
+                     width={325}
+                     height={30}
+                     theme={"fresh"}
+                     textPosition={"center"}
+                  >
+                     Map Selection
+                  </JqxButton>
                   <JqxButton
                      ref={this.tableModeButton}
                      onClick={this.tableModeButtonClicked}
@@ -530,7 +571,42 @@ class ShowChairData extends React.PureComponent<
    }
 
    private tableModeButtonClicked() {
+      this.selectedMappings.length = 0;
+      this.chairY.splice(0, this.chairY.length, ...this.chairYBackup);
       this.setState({ displayTableMode: !this.state.displayTableMode });
+   }
+
+   private mapSelectionButtonClicked() {
+      const rowsSelected: Array<Object> = this.myChairLocTable.current!.getSelection();
+      if (rowsSelected.length > 0) {
+         rowsSelected.forEach((x: any) => {
+            const {
+               ID,
+               ASSETLABEL,
+               BEACH,
+               UPDATETIME,
+               LATITUDE,
+               LONGITUDE,
+            } = x;
+            let oneLoc: IWLocObj = {
+               id: ID,
+               assetlabel: ASSETLABEL,
+               beach: BEACH,
+               updatetime: UPDATETIME,
+               location: {
+                  lat: parseFloat(LATITUDE),
+                  lng: parseFloat(LONGITUDE),
+               },
+            };
+            this.selectedMappings.push(oneLoc);
+         });
+         this.chairY.splice(0, this.chairY.length, ...this.selectedMappings);
+         this.setState({ displayTableMode: false });
+      } else {
+         this.props.myPanel.current!.append(
+            `<br style="color:#F61D21 ; font-size:10px;"> No rows selected.`
+         );
+      }
    }
 }
 
