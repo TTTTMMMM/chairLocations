@@ -5,9 +5,12 @@ import JqxDataTable, {
    jqx,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
+import JqxCheckBox from "jqwidgets-scripts/jqwidgets-react-tsx/jqxcheckbox";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
+
+import "../../styles/index.css";
 
 import MapContainer from "./MapContainer";
 
@@ -53,7 +56,8 @@ class ShowChairData extends React.PureComponent<
 
    private myChairLocTable = React.createRef<JqxDataTable>();
    private tableModeButton = React.createRef<JqxButton>();
-   private mapSelectionButton = React.createRef<JqxButton>();
+   private myCheckBox = React.createRef<JqxCheckBox>();
+   // private mapSelectionButton = React.createRef<JqxButton>();
 
    constructor(props: {
       loggedInToFirebase: boolean;
@@ -70,9 +74,9 @@ class ShowChairData extends React.PureComponent<
       this.modifyKey = "";
       this.numUpdates = 0;
       this.tableModeButtonClicked = this.tableModeButtonClicked.bind(this);
-      this.mapSelectionButtonClicked = this.mapSelectionButtonClicked.bind(
-         this
-      );
+      this.checkedEvent = this.checkedEvent.bind(this);
+      this.uncheckedEvent = this.uncheckedEvent.bind(this);
+
       this.onRowSelect = this.onRowSelect.bind(this);
       this.getChairLocContent = this.getChairLocContent.bind(this);
 
@@ -462,17 +466,6 @@ class ShowChairData extends React.PureComponent<
                />
                <div style={divFlexRow}>
                   <JqxButton
-                     ref={this.mapSelectionButton}
-                     onClick={this.mapSelectionButtonClicked}
-                     disabled={false}
-                     width={325}
-                     height={30}
-                     theme={"fresh"}
-                     textPosition={"center"}
-                  >
-                     Map Selection
-                  </JqxButton>
-                  <JqxButton
                      ref={this.tableModeButton}
                      onClick={this.tableModeButtonClicked}
                      width={325}
@@ -482,6 +475,18 @@ class ShowChairData extends React.PureComponent<
                   >
                      Toggle Display
                   </JqxButton>
+                  <JqxCheckBox
+                     ref={this.myCheckBox}
+                     style={{ marginLeft: "10px", float: "left" }}
+                     width={120}
+                     height={25}
+                     theme={"fresh"}
+                     onChecked={this.checkedEvent}
+                     onUnchecked={this.uncheckedEvent}
+                     disabled={false}
+                  >
+                     Map Selection
+                  </JqxCheckBox>
                </div>
             </>
          );
@@ -495,17 +500,6 @@ class ShowChairData extends React.PureComponent<
                <MapContainer {...this.chairY}></MapContainer>
                <div style={divFlexRow}>
                   <JqxButton
-                     ref={this.mapSelectionButton}
-                     onClick={this.mapSelectionButtonClicked}
-                     disabled={true}
-                     width={325}
-                     height={30}
-                     theme={"fresh"}
-                     textPosition={"center"}
-                  >
-                     Map Selection
-                  </JqxButton>
-                  <JqxButton
                      ref={this.tableModeButton}
                      onClick={this.tableModeButtonClicked}
                      width={325}
@@ -515,6 +509,16 @@ class ShowChairData extends React.PureComponent<
                   >
                      Toggle Display
                   </JqxButton>
+                  <JqxCheckBox
+                     ref={this.myCheckBox}
+                     style={{ marginLeft: "10px", float: "left" }}
+                     width={120}
+                     height={30}
+                     theme={"fresh"}
+                     disabled={true}
+                  >
+                     Map Selection
+                  </JqxCheckBox>
                </div>
             </>
          );
@@ -571,12 +575,15 @@ class ShowChairData extends React.PureComponent<
    }
 
    private tableModeButtonClicked() {
-      this.selectedMappings.length = 0;
-      this.chairY.splice(0, this.chairY.length, ...this.chairYBackup);
+      this.myCheckBox.current!.val()
+         ? this.chairY.splice(0, this.chairY.length, ...this.selectedMappings)
+         : this.chairY.splice(0, this.chairY.length, ...this.chairYBackup);
       this.setState({ displayTableMode: !this.state.displayTableMode });
+      this.myCheckBox.current!.uncheck();
    }
 
-   private mapSelectionButtonClicked() {
+   private checkedEvent() {
+      this.selectedMappings.length = 0;
       const rowsSelected: Array<Object> = this.myChairLocTable.current!.getSelection();
       if (rowsSelected.length > 0) {
          rowsSelected.forEach((x: any) => {
@@ -600,13 +607,16 @@ class ShowChairData extends React.PureComponent<
             };
             this.selectedMappings.push(oneLoc);
          });
-         this.chairY.splice(0, this.chairY.length, ...this.selectedMappings);
-         this.setState({ displayTableMode: false });
       } else {
+         this.myCheckBox.current!.uncheck();
          this.props.myPanel.current!.append(
             `<br style="color:#F61D21 ; font-size:10px;"> No rows selected.`
          );
       }
+   }
+
+   private uncheckedEvent(event: any): void {
+      console.log("in uncheckedEvent()");
    }
 }
 
