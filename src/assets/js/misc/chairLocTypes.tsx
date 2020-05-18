@@ -77,3 +77,23 @@ export interface RangeObject {
    startDate: string;
    endDate: string;
 }
+
+export interface GeoPoint {
+   lat: number;
+   lng: number;
+}
+
+export interface DateGeoObj {
+   geoDate: string;
+   geo: GeoPoint;
+}
+
+export interface DistanceObj {
+   inMeters: number;
+   inFeet: number;
+   inMiles: number;
+}
+export interface CumDistDaily {
+   dailyDate: string;
+   distObj: DistanceObj;
+}

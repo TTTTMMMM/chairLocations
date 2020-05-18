@@ -21,7 +21,15 @@ import "firebase/auth";
 // import "../configs/firebaseInit";
 import { divFlexRow } from "../../styles/reactStyling";
 import { IWLocObj } from "../configs/mapConfigs/mapTypes";
-import { CallingFrom, RangeObject } from "../misc/chairLocTypes";
+import {
+   CallingFrom,
+   RangeObject,
+   GeoPoint,
+   DateGeoObj,
+   DistanceObj,
+   CumDistDaily,
+} from "../misc/chairLocTypes";
+import { calculateDistance, sumDistance } from "../misc/calculateDistance";
 
 interface MyState extends IDataTableProps {
    chairDataWatch?: any;
@@ -56,6 +64,7 @@ class ShowChairData extends React.PureComponent<
 
    private myChairLocTable = React.createRef<JqxDataTable>();
    private tableModeButton = React.createRef<JqxButton>();
+   private calcDistButton = React.createRef<JqxButton>();
    private myCheckBox = React.createRef<JqxCheckBox>();
    // private mapSelectionButton = React.createRef<JqxButton>();
 
@@ -74,6 +83,7 @@ class ShowChairData extends React.PureComponent<
       this.modifyKey = "";
       this.numUpdates = 0;
       this.tableModeButtonClicked = this.tableModeButtonClicked.bind(this);
+      this.calcDistButtonClicked = this.calcDistButtonClicked.bind(this);
       this.checkedEvent = this.checkedEvent.bind(this);
       this.uncheckedEvent = this.uncheckedEvent.bind(this);
 
@@ -466,6 +476,16 @@ class ShowChairData extends React.PureComponent<
                />
                <div style={divFlexRow}>
                   <JqxButton
+                     ref={this.calcDistButton}
+                     onClick={this.calcDistButtonClicked}
+                     width={325}
+                     height={30}
+                     theme={"fresh"}
+                     textPosition={"center"}
+                  >
+                     Calculate Distance
+                  </JqxButton>
+                  <JqxButton
                      ref={this.tableModeButton}
                      onClick={this.tableModeButtonClicked}
                      width={325}
@@ -499,6 +519,16 @@ class ShowChairData extends React.PureComponent<
             <>
                <MapContainer {...this.chairY}></MapContainer>
                <div style={divFlexRow}>
+                  <JqxButton
+                     ref={this.calcDistButton}
+                     onClick={this.calcDistButtonClicked}
+                     width={325}
+                     height={30}
+                     theme={"fresh"}
+                     textPosition={"center"}
+                  >
+                     Calculate Distance
+                  </JqxButton>
                   <JqxButton
                      ref={this.tableModeButton}
                      onClick={this.tableModeButtonClicked}
@@ -582,6 +612,77 @@ class ShowChairData extends React.PureComponent<
       this.myCheckBox.current!.uncheck();
    }
 
+   private calcDistButtonClicked() {
+      let prevGeoPoint: GeoPoint = {
+         lat: this.chairYBackup[0].location.lat,
+         lng: this.chairYBackup[0].location.lng,
+      };
+      let geo1: DateGeoObj = {
+         geoDate: this.chairYBackup[0].updatetime.slice(0, 10),
+         geo: prevGeoPoint,
+      };
+      let cumulativeDistanceObj: DistanceObj = {
+         inMeters: 0,
+         inFeet: 0,
+         inMiles: 0,
+      };
+      let cumDistDaily: CumDistDaily = {
+         dailyDate: this.chairYBackup[0].updatetime.slice(0, 10),
+         distObj: cumulativeDistanceObj,
+      };
+      // ---- loop through each document in resultset from firebase
+      this.chairYBackup.forEach((x) => {
+         let endGeoPoint: GeoPoint = {
+            lat: x.location.lat,
+            lng: x.location.lng,
+         };
+         let geo2: DateGeoObj = {
+            geoDate: x.updatetime.slice(0, 10),
+            geo: endGeoPoint,
+         };
+         let pointToPointDist: DistanceObj = calculateDistance(
+            geo1.geo,
+            geo2.geo
+         );
+         cumulativeDistanceObj = sumDistance(
+            cumulativeDistanceObj,
+            pointToPointDist
+         );
+         cumDistDaily.distObj = Object.assign({}, cumulativeDistanceObj);
+         if (cumDistDaily.dailyDate === geo2.geoDate) {
+            prevGeoPoint = {
+               lat: endGeoPoint.lat,
+               lng: endGeoPoint.lng,
+            };
+            geo1 = {
+               geoDate: geo2.geoDate,
+               geo: prevGeoPoint,
+            };
+         } else {
+            this.props.myPanel.current!.append(
+               `<p style="color:#310DF3 ; font-size:10px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+            );
+            prevGeoPoint = {
+               lat: endGeoPoint.lat,
+               lng: endGeoPoint.lng,
+            };
+            geo1 = {
+               geoDate: geo2.geoDate,
+               geo: prevGeoPoint,
+            };
+            cumulativeDistanceObj = {
+               inMeters: 0,
+               inFeet: 0,
+               inMiles: 0,
+            };
+            cumDistDaily = {
+               dailyDate: geo2.geoDate,
+               distObj: cumulativeDistanceObj,
+            };
+         }
+      });
+   }
+
    private checkedEvent() {
       this.selectedMappings.length = 0;
       const rowsSelected: Array<Object> = this.myChairLocTable.current!.getSelection();
@@ -610,7 +711,7 @@ class ShowChairData extends React.PureComponent<
       } else {
          this.myCheckBox.current!.uncheck();
          this.props.myPanel.current!.append(
-            `<br style="color:#F61D21 ; font-size:10px;"> No rows selected.`
+            `<p style="color:#F61D21 ; font-size:11px;"> Select row(s), then check 'Map Selection Button.'</p>`
          );
       }
    }
