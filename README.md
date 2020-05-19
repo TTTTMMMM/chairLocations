@@ -327,40 +327,6 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ---
 
-#### cluster center: (27.71781, -82.73887) 3
-
-### searching for: 27.71781
-
-ID: "5c9836b38d",
-LATITUDE: "27.71781",
-LONGITUDE: "-82.73888",
-
-ID: "02c40afeac",
-LATITUDE: "27.71781",
-LONGITUDE: "-82.73887",
-
-ID: "4c83c71ffe",
-LATITUDE: "27.71781",
-LONGITUDE: "-82.73888",
-
-### searching for: -82.73887
-
-ID: "02c40afeac",
-LATITUDE: "27.71781",
-LONGITUDE: "-82.73887",
-
-ID: "2e9a1cd3ac",
-LATITUDE: "27.7178",
-LONGITUDE: "-82.73887",
-
-ID: "3ac0791814",
-LATITUDE: "27.71783",
-LONGITUDE: "-82.73887",
-
-So, it's hard to identify which 3 markers make up the targeted cluster, especially when limited to searching for the locations using the _center of the cluster_ and not using the _locations of individual markers_.
-
----
-
 ### <ins>Dependency Graph for Mapping Branch</ins>
 
 | index.tsx                                     | MainPage.tsx                                    |
@@ -388,61 +354,5 @@ So, it's hard to identify which 3 markers make up the targeted cluster, especial
 ### <ins>Dependency Graph for index.js (on firebase functions server)</ins>
 
 | ![](/markdownImages/dI/depIndex.js.png) |
-
----
-
-temp.push({
-
-ASSETLABEL: "CHAIR-064",
-
-BEACH: "WEST PALM BEACH",
-
-key: "f8ff9b66a6",
-
-CELLACCURACY: "0",
-
-DEVICEID: "11705",
-
-FNAME: "CHAIR064_2020-05-05.csv",
-
-GPS_MPH: "",
-
-ID: "f8ff9b66a6",
-
-IMEI: "013108002623037",
-
-LATITUDE: "360",
-
-LONGITUDE: "360",
-
-RENTALAGENT: "SAND HELPER",
-
-STATE: "Florida",
-
-UPDATETIME: "2020-05-02T02:53:01Z",
-
-UPLOADFBTIME: "2020-05-14T19:09:12.791Z",
-
-uid: "f8ff9b66a6",
-
-\_visible: "true",
-
-});
-
----
-
-CHAIR064_2020-05-05.csv
-
-CHAIR066_2020-05-05.csv: For [CHAIR-066], uploading to Firebase 174 records, each containing 14 parameters.
-
-CHAIR068_2020-05-05.csv: For [CHAIR-068], uploading to Firebase 141 records, each containing 14 parameters.
-
-CHAIR070_2020-05-05.csv: For [CHAIR-070], uploading to Firebase 95 records, each containing 14 parameters.
-
-CHAIR072_2020-05-05_1.csv: For [CHAIR-072], uploading to Firebase 314 records, each containing 14 parameters.
-
-CHAIR078_2020-05-05.csv: For [CHAIR-078], uploading to Firebase 289 records, each containing 14 parameters.
-
-CHAIR088_2020-05-05.csv: For [CHAIR-088], uploading to Firebase 179 records, each containing 14 parameters.
 
 ---
