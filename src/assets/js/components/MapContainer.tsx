@@ -26,7 +26,7 @@ const optionsMarkerCluster = {
    imagePath: "/images/m",
 };
 
-const MapContainer = (inputObj: Array<IWLocObj>) => {
+const MapContainer = (inputObj: Array<IWLocObj>, myPanel: any) => {
    const [mapRef, setMapRef] = useState<any>();
    const [selected, setSelected] = useState<any>();
    const [added, setAdded] = useState<boolean>(false);

@@ -32,7 +32,7 @@ class ChairResultsSide extends Component<{
             </div>
          );
       }
-      return <h4>Query for chair and time to see results.</h4>;
+      return <h4>Query for chair and time period to see results.</h4>;
    }
    render() {
       return <>{this.getChairResultsContent()}</>;

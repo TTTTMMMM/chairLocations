@@ -139,6 +139,18 @@ class HeaderComponent extends Component<
                            </li>
                            <li>
                               <NavLink
+                                 to="/reporting"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Report'em
+                              </NavLink>
+                           </li>
+                           <li>
+                              <NavLink
                                  to="/maintenance"
                                  activeStyle={{
                                     border: "solid rgb(250, 245, 198) 2px ",
@@ -190,6 +202,18 @@ class HeaderComponent extends Component<
                                  }}
                               >
                                  Map'em
+                              </NavLink>
+                           </li>
+                           <li>
+                              <NavLink
+                                 to="/reporting"
+                                 activeStyle={{
+                                    border: "solid rgb(250, 245, 198) 2px ",
+                                    paddingTop: "3px",
+                                    paddingLeft: "3px",
+                                 }}
+                              >
+                                 Report'em
                               </NavLink>
                            </li>
                            <li>

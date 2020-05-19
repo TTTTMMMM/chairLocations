@@ -592,15 +592,15 @@ class ShowChairData extends React.PureComponent<
       let theKeys = Object.keys(jsr);
       let prepend = `temp.push({`;
       this.props.myPanel.current!.append(
-         `<br style="color:#389304 ; font-size:10px;">${prepend}`
+         `<p style="color:#286107 ; font-size:11px;">${prepend}</p>`
       );
       theKeys.forEach((x) => {
          this.props.myPanel.current!.append(
-            `<br style="color:#389304 ; font-size:10px;">${x}: "${jsr[x]}",`
+            `<p style="color:#286107 ; font-size:11px;">${x}: "${jsr[x]}",</p>`
          );
       });
       this.props.myPanel.current!.append(
-         `<br style="color:#389304 ; font-size:10px;">});`
+         `<p style="color:#286107 ; font-size:11px;">});</p>`
       );
    }
 
@@ -711,7 +711,7 @@ class ShowChairData extends React.PureComponent<
       } else {
          this.myCheckBox.current!.uncheck();
          this.props.myPanel.current!.append(
-            `<p style="color:#F61D21 ; font-size:11px;"> Select row(s), then check 'Map Selection Button.'</p>`
+            `<p style="color:#F61D21 ; font-size:11px;"> Select row(s), then check 'Map Selection' button.</p>`
          );
       }
    }
