@@ -660,7 +660,7 @@ class ShowChairData extends React.PureComponent<
             };
          } else {
             this.props.myPanel.current!.append(
-               `<p style="color:#310DF3 ; font-size:10px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+               `<p style="color:#310DF3 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
             );
             prevGeoPoint = {
                lat: endGeoPoint.lat,

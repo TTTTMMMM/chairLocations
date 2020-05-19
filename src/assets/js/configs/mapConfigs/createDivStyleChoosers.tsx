@@ -6,5 +6,6 @@ export const divStyleMaker = (imageFile: string): any => {
    divStyle.style.height = "70px";
    divStyle.style.borderRadius = "50%";
    divStyle.style.margin = "6px";
+   divStyle.style.cursor = "pointer";
    return divStyle;
 };
