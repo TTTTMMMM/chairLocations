@@ -307,7 +307,7 @@ export interface UserObj {
 2. Maintenance
 3. Consider moving to useContext API to eliminate all the authentication props drilling
 4. consider implementing an ErrorBoundary on CleanAndUpload
-5. Develop API input
+5. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
 6. Report Tab
 
 #### <ins>TODO Physical World</ins>
