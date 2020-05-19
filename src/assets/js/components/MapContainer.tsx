@@ -111,8 +111,7 @@ const MapContainer = (inputObj: Array<IWLocObj>, myPanel: any) => {
                         key={x.id}
                         position={x.location}
                         onClick={() => onMarkerSelect(x)}
-                        // icon={"./images/xIcon20.png"}
-                        icon={"/images/xIcon20.png"}
+                        icon={"/images/m1.png"}
                         clusterer={clusterer}
                      />
                   ))

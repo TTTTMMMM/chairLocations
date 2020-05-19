@@ -681,6 +681,9 @@ class ShowChairData extends React.PureComponent<
             };
          }
       });
+      this.props.myPanel.current!.append(
+         `<p style="color:#310DF3 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+      );
    }
 
    private checkedEvent() {
