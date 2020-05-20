@@ -19,7 +19,6 @@ class ConfigBody extends Component<
       auth2: any;
       loggedInWithGoogle: boolean;
       googleToken: any;
-      emailAddress: any;
       userObject: UserObj;
    },
    MyState
@@ -28,7 +27,6 @@ class ConfigBody extends Component<
       auth2: any;
       loggedInWithGoogle: boolean;
       googleToken: any;
-      emailAddress: any;
       userObject: any;
    }) {
       super(props);

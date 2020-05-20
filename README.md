@@ -309,6 +309,7 @@ export interface UserObj {
 4. consider implementing an ErrorBoundary on CleanAndUpload
 5. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
 6. Report Tab
+7. Disable Calculate Distance Button in UploadBody path
 
 #### <ins>TODO Physical World</ins>
 

@@ -338,11 +338,11 @@ class ShowChairData extends React.PureComponent<
          ];
          this.columns = [
             {
-               text: "Chair",
-               width: columnWidths[0][1],
-               datafield: "ASSETLABEL",
+               text: "ID",
+               datafield: "ID",
+               width: columnWidths[5][1],
                align: "center",
-               cellclassname: "ASSETLABELClass",
+               cellsalign: "center",
                editable: false,
             },
             {
@@ -393,17 +393,17 @@ class ShowChairData extends React.PureComponent<
                editable: false,
             },
             {
-               text: "Rental Agent",
-               datafield: "RENTALAGENT",
-               width: columnWidths[9][1],
+               text: "Chair",
+               width: columnWidths[0][1],
+               datafield: "ASSETLABEL",
                align: "center",
-               cellsalign: "center",
+               cellclassname: "ASSETLABELClass",
                editable: false,
             },
             {
-               text: "ID",
-               datafield: "ID",
-               width: columnWidths[5][1],
+               text: "Rental Agent",
+               datafield: "RENTALAGENT",
+               width: columnWidths[9][1],
                align: "center",
                cellsalign: "center",
                editable: false,

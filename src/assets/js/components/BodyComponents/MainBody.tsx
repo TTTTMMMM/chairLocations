@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import "../../../styles/index.css";
-import { UserObj, Roles } from "../../misc/chairLocTypes";
+import { Roles } from "../../misc/chairLocTypes";
+import { AuthContext } from "../../contexts/AuthContext";
 
-class MainBody extends Component<{
-   userObject: UserObj;
-}> {
-   constructor(props: { userObject: any }) {
+class MainBody extends Component<{}> {
+   constructor(props: {}) {
       super(props);
    }
+   static contextType = AuthContext;
 
    getMainBodyContent() {
-      switch (this.props.userObject.role) {
+      const { userObjFmServer } = this.context;
+      console.log(
+         `       MainBody, userObjFmServer.role[${userObjFmServer.role}]`
+      );
+      switch (userObjFmServer.role) {
          case Roles.notloggedin:
             return <img src={"../../../images/cherry.jpeg"} />;
             break;

@@ -97,3 +97,12 @@ export interface CumDistDaily {
    dailyDate: string;
    distObj: DistanceObj;
 }
+
+export interface AuthProps {
+   auth2: string;
+   googleToken: string;
+   isSignedIn: boolean;
+   isLoggedInToFirebase: boolean;
+   usrObjFmServer: UserObj;
+   changeGoogleLoginStatus: any;
+}

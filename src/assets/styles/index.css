@@ -486,12 +486,27 @@ body
    color: white;
 }
 
-/* formatting in myPanel */
+/* formatting in myapping myPanel */
 body
    > div:nth-of-type(1)
    > div
    > section:nth-of-type(1)
    > div:nth-of-type(2)
+   > div:nth-of-type(1)
+   > div
+   > div:nth-of-type(1)
+   > p {
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+
+/* formatting in upload myPanel */
+body
+   > div:nth-of-type(1)
+   > div
+   > section:nth-of-type(1)
+   > fieldset
+   > div:nth-of-type(5)
    > div:nth-of-type(1)
    > div
    > div:nth-of-type(1)

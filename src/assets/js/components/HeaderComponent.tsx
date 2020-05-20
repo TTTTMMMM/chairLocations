@@ -3,44 +3,34 @@
 import React, { Component } from "react";
 import LoginLogout from "./LoginLogout";
 import { NavLink } from "react-router-dom";
-import { UserObj } from "../misc/chairLocTypes";
 import { Roles } from "../misc/chairLocTypes";
+import { AuthContext } from "../contexts/AuthContext";
 
 class HeaderComponent extends Component<
    {
-      isSignedIn: boolean;
       logout: any;
-      photoURL: any;
-      userObject: UserObj;
    },
    {}
 > {
-   constructor(props: {
-      isSignedIn: boolean;
-      logout: any;
-      photoURL: any;
-      userObject: UserObj;
-   }) {
+   constructor(props: { logout: any }) {
       super(props);
       this.state = {};
       this.getHeader = this.getHeader.bind(this);
    }
-
-   componentDidMount() {}
+   static contextType = AuthContext;
 
    getHeader() {
-      switch (this.props.userObject.role) {
+      const { userObjFmServer } = this.context;
+      console.log(
+         `       HeaderComponent, userObjFmServer.role[${userObjFmServer.role}]`
+      );
+      switch (userObjFmServer.role) {
          case Roles.notloggedin:
             return (
                <header>
                   <section></section>
                   <section></section>
-                  <LoginLogout
-                     isSignedIn={this.props.isSignedIn}
-                     logout={this.props.logout}
-                     photoURL={this.props.photoURL}
-                     userObject={this.props.userObject}
-                  ></LoginLogout>
+                  <LoginLogout logout={this.props.logout}></LoginLogout>
                </header>
             );
             break;
@@ -66,12 +56,7 @@ class HeaderComponent extends Component<
                         </ul>
                      </nav>
                   </section>
-                  <LoginLogout
-                     isSignedIn={this.props.isSignedIn}
-                     logout={this.props.logout}
-                     photoURL={this.props.photoURL}
-                     userObject={this.props.userObject}
-                  ></LoginLogout>
+                  <LoginLogout logout={this.props.logout}></LoginLogout>
                </header>
             );
             break;
@@ -97,12 +82,7 @@ class HeaderComponent extends Component<
                         </ul>
                      </nav>
                   </section>
-                  <LoginLogout
-                     isSignedIn={this.props.isSignedIn}
-                     logout={this.props.logout}
-                     photoURL={this.props.photoURL}
-                     userObject={this.props.userObject}
-                  ></LoginLogout>
+                  <LoginLogout logout={this.props.logout}></LoginLogout>
                </header>
             );
             break;
@@ -164,12 +144,7 @@ class HeaderComponent extends Component<
                         </ul>
                      </nav>
                   </section>
-                  <LoginLogout
-                     isSignedIn={this.props.isSignedIn}
-                     logout={this.props.logout}
-                     photoURL={this.props.photoURL}
-                     userObject={this.props.userObject}
-                  ></LoginLogout>
+                  <LoginLogout logout={this.props.logout}></LoginLogout>
                </header>
             );
             break;
@@ -231,12 +206,7 @@ class HeaderComponent extends Component<
                         </ul>
                      </nav>
                   </section>
-                  <LoginLogout
-                     isSignedIn={this.props.isSignedIn}
-                     logout={this.props.logout}
-                     photoURL={this.props.photoURL}
-                     userObject={this.props.userObject}
-                  ></LoginLogout>
+                  <LoginLogout logout={this.props.logout}></LoginLogout>
                </header>
             );
             break;
@@ -245,12 +215,7 @@ class HeaderComponent extends Component<
                <header>
                   <section></section>
                   <section></section>
-                  <LoginLogout
-                     isSignedIn={this.props.isSignedIn}
-                     logout={this.props.logout}
-                     photoURL={this.props.photoURL}
-                     userObject={this.props.userObject}
-                  ></LoginLogout>
+                  <LoginLogout logout={this.props.logout}></LoginLogout>
                </header>
             );
       }

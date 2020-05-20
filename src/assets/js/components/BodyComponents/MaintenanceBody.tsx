@@ -8,7 +8,6 @@ class MaintenanceBody extends Component<
       auth2: any;
       loggedInWithGoogle: boolean;
       googleToken: any;
-      emailAddress: any;
       userObject: UserObj;
    },
    {}
@@ -17,7 +16,6 @@ class MaintenanceBody extends Component<
       auth2: any;
       loggedInWithGoogle: boolean;
       googleToken: any;
-      emailAddress: any;
       userObject: UserObj;
    }) {
       super(props);

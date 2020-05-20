@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { Route } from "react-router-dom";
 import "../../../styles/index.css";
-import { UserObj } from "../../misc/chairLocTypes";
 import MappingSubheader from "../MapEmComponents/MappingSubheader";
 import ChairQueryComponent from "../MapEmComponents/ChairQueryComponent";
 import RentalAgentQueryComponent from "../MapEmComponents/RentalAgentQueryComponent";
@@ -11,33 +10,17 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
-class MappingBody extends Component<
-   {
-      match: any;
-      auth2: any;
-      loggedInWithGoogle: boolean;
-      googleToken: any;
-      emailAddress: any;
-      userObject: UserObj;
-   },
-   { isLoggedInToFirebase: boolean }
-> {
-   constructor(props: {
-      match: any;
-      auth2: any;
-      loggedInWithGoogle: boolean;
-      googleToken: any;
-      emailAddress: any;
-      userObject: UserObj;
-   }) {
+import { AuthContext } from "../../contexts/AuthContext";
+import { Roles } from "../../misc/chairLocTypes";
+class MappingBody extends Component<{ match: any }, {}> {
+   constructor(props: { match: any }) {
       super(props);
-      this.state = {
-         isLoggedInToFirebase: false,
-      };
       this.getMappingBodyContent = this.getMappingBodyContent.bind(this);
    }
+   static contextType = AuthContext;
 
    signInToFirebase(googleUserToken: any) {
+      const { setIsLoggedInToFirebase } = this.context;
       if (!firebase.auth().currentUser) {
          const fbCred = firebase.auth.GoogleAuthProvider.credential(
             googleUserToken
@@ -46,24 +29,24 @@ class MappingBody extends Component<
             .auth()
             .signInWithCredential(fbCred)
             .then(() => {
-               this.setState({ isLoggedInToFirebase: true });
+               setIsLoggedInToFirebase(true);
             })
             .catch((err) => {
                const firstLine = "C0111: Error signing into firebase:\n";
                console.error(`${firstLine} error<${err.message}>`);
             });
       } else {
-         this.setState({ isLoggedInToFirebase: true });
+         setIsLoggedInToFirebase(true);
       }
    }
 
    signOutOfFirebase() {
-      console.log(`signing out of firebase in MappingBody`);
+      const { setIsLoggedInToFirebase } = this.context;
       firebase
          .auth()
          .signOut()
          .then(() => {
-            this.setState({ isLoggedInToFirebase: false });
+            setIsLoggedInToFirebase(false);
          })
          .catch((err) => {
             const firstLine =
@@ -75,7 +58,7 @@ class MappingBody extends Component<
    }
 
    getMappingBodyContent() {
-      console.log(`MappingBody`);
+      const { isSignedIn, isLoggedInToFirebase } = this.context;
       return (
          <>
             <Router>
@@ -84,11 +67,9 @@ class MappingBody extends Component<
                   <Route
                      path={`${this.props.match.path}/bychair`}
                      render={(props) =>
-                        this.props.loggedInWithGoogle ? (
+                        isSignedIn ? (
                            <ChairQueryComponent
-                              loggedInToFirebase={
-                                 this.state.isLoggedInToFirebase
-                              }
+                              loggedInToFirebase={isLoggedInToFirebase}
                            ></ChairQueryComponent>
                         ) : (
                            <Redirect to="/" />
@@ -98,7 +79,7 @@ class MappingBody extends Component<
                   <Route
                      path={`${this.props.match.path}/byrentalagent`}
                      render={(props) =>
-                        this.props.loggedInWithGoogle ? (
+                        isSignedIn ? (
                            <RentalAgentQueryComponent></RentalAgentQueryComponent>
                         ) : (
                            <Redirect to="/" />
@@ -112,11 +93,17 @@ class MappingBody extends Component<
       );
    }
    render() {
-      if (!this.props.loggedInWithGoogle && this.state.isLoggedInToFirebase) {
+      const {
+         isSignedIn,
+         isLoggedInToFirebase,
+         googleToken,
+         userObjFmServer,
+      } = this.context;
+      if (userObjFmServer.role === Roles.notloggedin && isLoggedInToFirebase) {
          this.signOutOfFirebase();
       }
-      if (this.props.loggedInWithGoogle && !this.state.isLoggedInToFirebase) {
-         this.signInToFirebase(this.props.googleToken);
+      if (isSignedIn && !isLoggedInToFirebase) {
+         this.signInToFirebase(googleToken);
       }
       return <>{this.getMappingBodyContent()}</>;
    }
