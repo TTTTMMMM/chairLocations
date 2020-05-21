@@ -406,16 +406,19 @@ const { auth2, setAuth2, setIsSignedIn } = this.context; <-- get any property yo
 
 ### [Hooks API](https://www.youtube.com/watch?v=JgYRBCRHfHE)
 
+(in the series, #10 and #11 talk about useState(), #12 -- useEffect(), and #13 -- )
+
 1. Hooks let you use state inside a functional component
 2. Three "special" functions or "hooks" (useState(), useEffect() and useXxx()):
 
 ```
     const [songs, setSongs] = useState([initial_list]) -- returns an array of two objects:
-                                                           the first being the state property
+                                                           the first being the state property (songs)
                                                            the second being a function that sets the
-                                                           new value of the first property
+                                                           new value of the first property (songs)
 
     useEffect() -- lets functional components have access to life cycle events (componentDidMount, updates, etc.)
-                   runs everytime the component renders or re-renders
+                   runs everytime the component renders or re-renders; there is a way to limit
+                   when useEffect runs based on the data that you're "watching," not when any data changes
 
 ```
