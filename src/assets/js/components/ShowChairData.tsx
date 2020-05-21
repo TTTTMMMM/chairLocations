@@ -13,12 +13,13 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import "../../styles/index.css";
 
 import MapContainer from "./MapContainer";
+import { AuthContext } from "../contexts/AuthContext";
 
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
-// import "../configs/firebaseInit";
+
 import { divFlexRow } from "../../styles/reactStyling";
 import { IWLocObj } from "../configs/mapConfigs/mapTypes";
 import {
@@ -41,7 +42,6 @@ interface MyState extends IDataTableProps {
 }
 class ShowChairData extends React.PureComponent<
    {
-      loggedInToFirebase: boolean;
       myPanel: any;
       asset: string | undefined;
       range: RangeObject;
@@ -61,6 +61,7 @@ class ShowChairData extends React.PureComponent<
    chairY: Array<IWLocObj> = [];
    chairYBackup: Array<IWLocObj> = [];
    selectedMappings: Array<IWLocObj> = [];
+   static contextType = AuthContext;
 
    private myChairLocTable = React.createRef<JqxDataTable>();
    private tableModeButton = React.createRef<JqxButton>();
@@ -69,7 +70,6 @@ class ShowChairData extends React.PureComponent<
    // private mapSelectionButton = React.createRef<JqxButton>();
 
    constructor(props: {
-      loggedInToFirebase: boolean;
       myPanel: any;
       asset: string;
       range: RangeObject;
@@ -266,8 +266,9 @@ class ShowChairData extends React.PureComponent<
    };
 
    getChairLocContent() {
+      const { isLoggedInToFirebase } = this.context;
       if (
-         this.props.loggedInToFirebase &&
+         isLoggedInToFirebase &&
          this.chairY.length > 0 &&
          this.state.displayTableMode
       ) {
@@ -326,7 +327,7 @@ class ShowChairData extends React.PureComponent<
             ["CELLACCURACY", 50],
             ["DEVICEID", 70],
             ["FNAME", 100],
-            ["ID", 80],
+            ["ID", 83],
             ["IMEI", 80],
             ["LATITUDE", 100],
             ["LONGITUDE", 100],
@@ -511,7 +512,7 @@ class ShowChairData extends React.PureComponent<
             </>
          );
       } else if (
-         this.props.loggedInToFirebase &&
+         isLoggedInToFirebase &&
          this.chairY.length > 0 &&
          !this.state.displayTableMode
       ) {
@@ -557,30 +558,23 @@ class ShowChairData extends React.PureComponent<
       }
    }
    render() {
+      const { isLoggedInToFirebase } = this.context;
+
       if (this.props.callingFrom === CallingFrom.cleanAndUploadFiles) {
          let changeInAsset = this.props.asset != this.state.asset;
-         if (this.props.loggedInToFirebase && changeInAsset) {
+         if (isLoggedInToFirebase && changeInAsset) {
             this.subscribeToAssetUploadedToday();
          }
-         if (
-            !this.props.loggedInToFirebase &&
-            this.state.subscribedLabelSpecific
-         ) {
+         if (!isLoggedInToFirebase && this.state.subscribedLabelSpecific) {
             this.unsubscribeFromAssetLabelSpecific();
          }
       } else if (this.props.callingFrom === CallingFrom.chairResultsSide) {
          let changeInAsset = this.props.asset != this.state.asset;
          let changeInRange = this.props.range != this.state.range;
-         if (
-            this.props.loggedInToFirebase &&
-            (changeInAsset || changeInRange)
-         ) {
+         if (isLoggedInToFirebase && (changeInAsset || changeInRange)) {
             this.subscribeToAssetBeaconingWithinDateRange();
          }
-         if (
-            !this.props.loggedInToFirebase &&
-            this.state.subscribedWithinRange
-         ) {
+         if (!isLoggedInToFirebase && this.state.subscribedWithinRange) {
             this.unsubscribeFromAssetWithinRange();
          }
       }

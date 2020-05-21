@@ -20,6 +20,7 @@ import { divFlexRowLazyMan } from "../../../styles/reactStyling";
 import { fieldsetRangePicker } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
 import { RangeObject, AssetRangeQO } from "../../misc/chairLocTypes";
+import { AuthContext } from "../../contexts/AuthContext";
 
 interface MyState extends ICalendarProps {
    sourceChair: Array<string>;
@@ -27,7 +28,6 @@ interface MyState extends ICalendarProps {
 }
 class ChairQuerySide extends Component<
    {
-      loggedInToFirebase: boolean;
       chairQueryComponentCallback: any;
       myPanel: any;
    },
@@ -51,12 +51,9 @@ class ChairQuerySide extends Component<
 
    private thisYear = React.createRef<JqxButton>();
    private lastYear = React.createRef<JqxButton>();
+   static contextType = AuthContext; // it's a law that you must call it contextType!
 
-   constructor(props: {
-      loggedInToFirebase: boolean;
-      chairQueryComponentCallback: any;
-      myPanel: any;
-   }) {
+   constructor(props: { chairQueryComponentCallback: any; myPanel: any }) {
       super(props);
       this.getChairQueryContent = this.getChairQueryContent.bind(this);
       this.chairCollection = "";
@@ -395,7 +392,9 @@ class ChairQuerySide extends Component<
    }
 
    render() {
-      if (this.props.loggedInToFirebase && !this.state.alreadyGotInfo) {
+      const { isLoggedInToFirebase } = this.context;
+
+      if (isLoggedInToFirebase && !this.state.alreadyGotInfo) {
          this.getChairAssetInfo();
       }
       return <>{this.getChairQueryContent()}</>;

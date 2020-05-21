@@ -18,6 +18,7 @@ import storeChairLocsOnFirebase from "../fetches/storeChairLocsOnFirebase";
 import addValuesForAdditionalHeaders from "./componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
 import ShowChairHeaders from "./ShowChairHeaders";
 import ShowChairData from "./ShowChairData";
+import { AuthContext } from "../contexts/AuthContext";
 
 import PopoverContents from "./PopoverContents";
 import {
@@ -28,13 +29,7 @@ import {
 } from "../misc/chairLocTypes";
 
 class CleanAndUploadFiles extends Component<
-   {
-      loggedInWithGoogle: boolean;
-      auth2: any;
-      idToken: any;
-      loggedInToFirebase: boolean;
-      userObject: any;
-   },
+   {},
    {
       value: string;
       additionalPropValues: AdditionalPropsType;
@@ -51,6 +46,7 @@ class CleanAndUploadFiles extends Component<
 
    // private someDiv = React.createRef<HTMLDivElement>();
    private additionalPropsPopover = React.createRef<JqxPopover>();
+   static contextType = AuthContext;
 
    private fileInput: any;
    private extendedFatArray: Array<any> = [];
@@ -69,13 +65,7 @@ class CleanAndUploadFiles extends Component<
       endDate: "2099-12-31",
    }; // never used by CleanAndUploadFiles
 
-   constructor(props: {
-      loggedInWithGoogle: boolean;
-      auth2: any;
-      idToken: any;
-      loggedInToFirebase: boolean;
-      userObject: any;
-   }) {
+   constructor(props: {}) {
       super(props);
 
       this.fileInput = React.createRef();
@@ -103,6 +93,7 @@ class CleanAndUploadFiles extends Component<
    // this function is called (technically a callback) from PopoverContents.tsx
    // -- it's the way data is passed from child component to parent component
    myCallBack = (objectFromPopoverContents: AdditionalPropsType) => {
+      const { auth2, googleToken } = this.context;
       if (
          // check if additional properties are valid
          objectFromPopoverContents.BEACH!.length > 2 &&
@@ -120,7 +111,7 @@ class CleanAndUploadFiles extends Component<
          // console.log(`extendedExtendedFatArray below:`);
          // console.dir(this.extendedExtendedFatArray);
          let skinnyObjTemplate: any = {};
-         getKeptChairHeaders(this.props.auth2, this.props.idToken)
+         getKeptChairHeaders(auth2, googleToken)
             .then((data: any) => {
                this.myPanel.current!.append(
                   `<p style="font-style: normal; color:blue; font-size:12px;">${data.length} kept parameters: </p>`
@@ -161,6 +152,7 @@ class CleanAndUploadFiles extends Component<
    }
 
    render() {
+      const { isLoggedInToFirebase } = this.context;
       return (
          <div>
             <section>
@@ -205,7 +197,7 @@ class CleanAndUploadFiles extends Component<
                            myPanel={this.myPanel}
                            additionalPropsPopover={this.additionalPropsPopover}
                            callbackFromCleanAndLoadFiles={this.myCallBack}
-                           loggedInToFirebase={this.props.loggedInToFirebase}
+                           loggedInToFirebase={isLoggedInToFirebase}
                            asset={this.state.asset}
                         ></PopoverContents>
                      </JqxPopover>
@@ -249,10 +241,6 @@ class CleanAndUploadFiles extends Component<
                   </JqxButton>
                   <div>
                      <ShowChairHeaders
-                        loggedInWithGoogle={this.props.loggedInWithGoogle}
-                        auth2={this.props.auth2}
-                        idToken={this.props.idToken}
-                        loggedInToFirebase={this.props.loggedInToFirebase}
                         myPanel={this.myPanel}
                      ></ShowChairHeaders>
                   </div>
@@ -279,7 +267,6 @@ class CleanAndUploadFiles extends Component<
             <section>
                <div>
                   <ShowChairData
-                     loggedInToFirebase={this.props.loggedInToFirebase}
                      myPanel={this.myPanel}
                      asset={this.state.asset}
                      range={this.range}
@@ -292,7 +279,8 @@ class CleanAndUploadFiles extends Component<
    }
 
    private fileInputHandler(event: any) {
-      let uO_role: string = this.props.userObject.role;
+      const { auth2, googleToken, userObjFmServer } = this.context;
+      let uO_role: string = userObjFmServer.role;
       let isAdmin: number = uO_role.localeCompare(Roles.admin);
       let isUploader: number = uO_role.localeCompare(Roles.uploader);
       if (isAdmin === 0 || isUploader === 0) {
@@ -320,11 +308,11 @@ class CleanAndUploadFiles extends Component<
             // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
             headers.forEach((x: HeaderMapping) => {
                headerMappingArray.push(x);
-               const randomTime = Math.floor(Math.random() * 3000);
+               const randomTime = Math.floor(Math.random() * 4000);
                setTimeout(() => {
                   storeHeadersOnFirebase(
-                     this.props.auth2,
-                     this.props.idToken,
+                     auth2,
+                     googleToken,
                      x.newHdr,
                      this.myPanel
                   );
@@ -369,7 +357,7 @@ class CleanAndUploadFiles extends Component<
          });
       } else {
          this.myPanel.current!.append(
-            `<p style="color:#738108;font-size:12px;">${this.props.userObject.role.toUpperCase()} does not have upload rights.</p>`
+            `<p style="color:#738108;font-size:12px;">${userObjFmServer.role.toUpperCase()} does not have upload rights.</p>`
          );
       }
    }
@@ -381,6 +369,7 @@ class CleanAndUploadFiles extends Component<
    private additionalPropertiesClick() {}
 
    private cleanRowsAndUploadClicked() {
+      const { auth2, googleToken } = this.context;
       // this.additionalPropsPopover.current!.close();
       if (!this.state.disabledSetAdditionalPropertiesButton) {
          this.setState({ disabledSetAdditionalPropertiesButton: true });
@@ -433,12 +422,7 @@ class CleanAndUploadFiles extends Component<
          this.shortAndSkinnyArray.forEach((x: any) => {
             const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
             setTimeout(() => {
-               storeChairLocsOnFirebase(
-                  this.props.auth2,
-                  this.props.idToken,
-                  x,
-                  this.myPanel
-               );
+               storeChairLocsOnFirebase(auth2, googleToken, x, this.myPanel);
             }, randomTime);
          });
          this.setState({ fileChooserLabel: "Choose File" });

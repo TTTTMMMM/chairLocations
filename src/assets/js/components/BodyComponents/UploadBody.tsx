@@ -71,22 +71,7 @@ class UploadBody extends React.PureComponent<{}, {}> {
    }
 
    getBodyUploadContent() {
-      const {
-         auth2,
-         isSignedIn,
-         isLoggedInToFirebase,
-         googleToken,
-         userObjFmServer,
-      } = this.context;
-      return (
-         <CleanAndUploadFiles
-            loggedInWithGoogle={isSignedIn}
-            auth2={auth2}
-            idToken={googleToken}
-            loggedInToFirebase={isLoggedInToFirebase!}
-            userObject={userObjFmServer}
-         ></CleanAndUploadFiles>
-      );
+      return <CleanAndUploadFiles></CleanAndUploadFiles>;
    }
 
    public render() {

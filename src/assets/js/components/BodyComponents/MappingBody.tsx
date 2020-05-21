@@ -58,7 +58,7 @@ class MappingBody extends Component<{ match: any }, {}> {
    }
 
    getMappingBodyContent() {
-      const { isSignedIn, isLoggedInToFirebase } = this.context;
+      const { isSignedIn } = this.context;
       return (
          <>
             <Router>
@@ -68,9 +68,7 @@ class MappingBody extends Component<{ match: any }, {}> {
                      path={`${this.props.match.path}/bychair`}
                      render={(props) =>
                         isSignedIn ? (
-                           <ChairQueryComponent
-                              loggedInToFirebase={isLoggedInToFirebase}
-                           ></ChairQueryComponent>
+                           <ChairQueryComponent></ChairQueryComponent>
                         ) : (
                            <Redirect to="/" />
                         )

@@ -12,14 +12,11 @@ import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
-class ChairQueryComponent extends Component<
-   { loggedInToFirebase: boolean },
-   { arqo: AssetRangeQO }
-> {
+class ChairQueryComponent extends Component<{}, { arqo: AssetRangeQO }> {
    private clearConsoleButton = React.createRef<JqxButton>();
    private myPanel = React.createRef<JqxPanel>();
 
-   constructor(props: { loggedInToFirebase: boolean }) {
+   constructor(props: {}) {
       super(props);
       this.getChairQueryBodyContent = this.getChairQueryBodyContent.bind(this);
       this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
@@ -44,7 +41,6 @@ class ChairQueryComponent extends Component<
             <div style={divFlexRowL}>
                <section className={"queryside"} style={querySideStyling}>
                   <ChairQuerySide
-                     loggedInToFirebase={this.props.loggedInToFirebase}
                      chairQueryComponentCallback={this.myCallBack}
                      myPanel={this.myPanel}
                   ></ChairQuerySide>
@@ -72,7 +68,6 @@ class ChairQueryComponent extends Component<
                </section>
                <section className={"resultsside"} style={resultsSideStyling}>
                   <ChairResultsSide
-                     loggedInToFirebase={this.props.loggedInToFirebase}
                      arqo={this.state.arqo}
                      myPanel={this.myPanel}
                   ></ChairResultsSide>

@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
-
 const getLoggedInUser = (auth2: any, id_token: any): any => {
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);

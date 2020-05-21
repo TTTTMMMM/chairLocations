@@ -13,13 +13,12 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
-import "../configs/firebaseInit";
 
 import cellRendererKeep from "../renderers/cellRendererKeep";
 import cellRendererMandatory from "../renderers/cellRendererMandatory";
 import updateKeepChairHdr from "../fetches/updateKeepChairHdr";
+import { AuthContext } from "../contexts/AuthContext";
 
-// class ShowTableHeaders extends Component<{ auth2: any; idToken: any }, {}>
 interface MyState extends IDataTableProps {
    chairHeadersWatch?: any;
    keepEditorRenderer?: any;
@@ -27,10 +26,6 @@ interface MyState extends IDataTableProps {
 }
 class ShowChairHeaders extends React.PureComponent<
    {
-      loggedInWithGoogle: boolean;
-      auth2: any;
-      idToken: any;
-      loggedInToFirebase: boolean;
       myPanel: any;
    },
    MyState
@@ -46,14 +41,9 @@ class ShowChairHeaders extends React.PureComponent<
 
    private myChairHeadersTable = React.createRef<JqxDataTable>();
    private keepDropDownList = React.createRef<JqxDropDownList>();
+   static contextType = AuthContext;
 
-   constructor(props: {
-      loggedInWithGoogle: boolean;
-      auth2: any;
-      idToken: any;
-      loggedInToFirebase: boolean;
-      myPanel: any;
-   }) {
+   constructor(props: { auth2: any; idToken: any; myPanel: any }) {
       super(props);
       this.headerCollection = "";
       this.numRows = 0;
@@ -162,7 +152,8 @@ class ShowChairHeaders extends React.PureComponent<
    };
 
    getChairHeadersContent() {
-      if (this.props.loggedInToFirebase) {
+      const { isLoggedInToFirebase } = this.context;
+      if (isLoggedInToFirebase) {
          const source = {
             datafields: [
                { name: "chairHeader", type: "string" },
@@ -316,22 +307,24 @@ class ShowChairHeaders extends React.PureComponent<
       }
    }
    render() {
-      if (this.props.loggedInToFirebase && !this.state.subscribed) {
+      const { isLoggedInToFirebase } = this.context;
+      if (isLoggedInToFirebase && !this.state.subscribed) {
          this.subscribeToChairHeaders();
       }
-      if (!this.props.loggedInToFirebase && this.state.subscribed) {
+      if (!isLoggedInToFirebase && this.state.subscribed) {
          this.unsubscribeFromChairHeadersTable();
       }
       return <div>{this.getChairHeadersContent()}</div>;
    }
 
    private keepOnSelect(e: any): void {
+      const { auth2, googleToken } = this.context;
       const index = e.args.item.index;
       this.keepDropDownList.current!.close();
       let keeper = index === 0 ? true : false;
       updateKeepChairHdr(
-         this.props.auth2,
-         this.props.idToken,
+         auth2,
+         googleToken,
          this.modifyKey,
          keeper,
          this.props.myPanel
