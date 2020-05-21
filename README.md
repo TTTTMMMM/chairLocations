@@ -376,9 +376,9 @@ const { setAuth2, setIsSignedIn } = this.context; <-- get any property you want 
 
 ```
     <AuthContext.Consumer>{(context) => {
-    const { setAuth2, setIsSignedIn } = context; <-- get any property you want from context
-     return(All_of_the_JSX_you_want_to_Display)
-    </AuthContext.Consumer>
+       const { setAuth2, setIsSignedIn } = context; <-- get any property you want from context
+       return(All_of_the_JSX_you_want_to_Display)
+    }}</AuthContext.Consumer>
 ```
 
 ```
