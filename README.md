@@ -410,7 +410,9 @@ const { auth2, setAuth2, setIsSignedIn } = this.context; <-- get any property yo
 2. Three "special" functions or hooks:
 
 ```
-    useState() -- returns an array of two objects: the first being the state property, the second being a function to alter the first
+    const [songs, setSongs] = useState([initial_list]) -- returns an array of two objects:
+                                                           the first being the state property
+                                                           the second being a function to alter the first
     useEffect() --
 
 ```
