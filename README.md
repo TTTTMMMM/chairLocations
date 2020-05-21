@@ -366,6 +366,8 @@ There are two ways to "consume" the contexts inside a <ins>class</ins> component
 
 ```
 static contextType = AuthContext; <-- this method cannot be used in a functional component
+const { setAuth2, setIsSignedIn } = this.context; <-- get any property you want from this.context
+
 ```
 
 2. [using a contextConsumer](https://www.youtube.com/watch?v=1bsvh_0HRwA) -- in other words, in the consumer, use:
