@@ -403,3 +403,5 @@ const { auth2, setAuth2, setIsSignedIn } = this.context; <-- get any property yo
 ```
 
 ---
+
+### [Hooks API](https://www.youtube.com/watch?v=JgYRBCRHfHE)
