@@ -360,6 +360,8 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ### [Context API](https://www.youtube.com/watch?v=Yps_QrUvluQ)
 
+Create the context file and Context.Provider (see AuthContext.js)
+
 There are two ways to "consume" the contexts inside a <ins>class</ins> component:
 
 1. [Define a static variable](https://www.youtube.com/watch?v=WkBXRQfpifc):
