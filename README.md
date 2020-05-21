@@ -414,8 +414,8 @@ const { auth2, setAuth2, setIsSignedIn } = this.context; <-- get any property yo
 ```
     const [songs, setSongs] = useState([initial_list]) -- returns an array of two objects:
                                                            the first being the state property (songs)
-                                                           the second being a function that sets the
-                                                           new value of the first property (songs)
+                                                           the second (setSongs) being a function that
+                                                           sets the new value of the first property (songs)
 
     useEffect() -- lets functional components have access to life cycle events (componentDidMount, updates, etc.)
                    runs everytime the component renders or re-renders; there is a way to limit
