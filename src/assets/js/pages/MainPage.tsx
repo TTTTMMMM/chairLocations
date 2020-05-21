@@ -131,7 +131,7 @@ class MainPage extends Component<{}, {}> {
    }
 
    public render() {
-      const { auth2, isSignedIn, googleToken, userObjFmServer } = this.context;
+      const { isSignedIn, userObjFmServer } = this.context;
       return (
          <Router>
             <HeaderComponent logout={this.logout}></HeaderComponent>
@@ -167,12 +167,7 @@ class MainPage extends Component<{}, {}> {
                   path="/maintenance"
                   render={(props) =>
                      isSignedIn ? (
-                        <MaintenanceBody
-                           auth2={auth2}
-                           loggedInWithGoogle={isSignedIn}
-                           googleToken={googleToken}
-                           userObject={userObjFmServer}
-                        ></MaintenanceBody>
+                        <MaintenanceBody></MaintenanceBody>
                      ) : (
                         <Redirect to="/" />
                      )
@@ -183,12 +178,7 @@ class MainPage extends Component<{}, {}> {
                   path="/configuration"
                   render={(match) =>
                      isSignedIn && userObjFmServer.role === clt.Roles.admin ? (
-                        <ConfigBody
-                           auth2={this.auth2}
-                           loggedInWithGoogle={isSignedIn}
-                           googleToken={googleToken}
-                           userObject={userObjFmServer}
-                        ></ConfigBody>
+                        <ConfigBody></ConfigBody>
                      ) : (
                         <Redirect to="/401" />
                      )

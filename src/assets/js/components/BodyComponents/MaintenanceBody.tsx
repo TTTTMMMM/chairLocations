@@ -1,30 +1,20 @@
 import React, { Component } from "react";
 import { divFlexRow } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
-import { UserObj } from "../../misc/chairLocTypes";
+import { AuthContext } from "../../contexts/AuthContext";
 
-class MaintenanceBody extends Component<
-   {
-      auth2: any;
-      loggedInWithGoogle: boolean;
-      googleToken: any;
-      userObject: UserObj;
-   },
-   {}
-> {
-   constructor(props: {
-      auth2: any;
-      loggedInWithGoogle: boolean;
-      googleToken: any;
-      userObject: UserObj;
-   }) {
+class MaintenanceBody extends Component<{}, {}> {
+   constructor(props: {}) {
       super(props);
       this.getMaintenanceBodyContent = this.getMaintenanceBodyContent.bind(
          this
       );
    }
+   static contextType = AuthContext;
 
    getMaintenanceBodyContent() {
+      console.log(`         MaintenanceBody, this.context`);
+      console.dir(this.context);
       return (
          <>
             <div style={divFlexRow}>Body Maintenance Component</div>

@@ -2,43 +2,27 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
 import "../../../styles/index.css";
-import { UserObj } from "../../misc/chairLocTypes";
 import { Roles } from "../../misc/chairLocTypes";
 import ConfigContainer from "../ConfigContainer";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 
-interface MyState {
-   isLoggedInToFirebase?: boolean | false;
-}
-class ConfigBody extends Component<
-   {
-      auth2: any;
-      loggedInWithGoogle: boolean;
-      googleToken: any;
-      userObject: UserObj;
-   },
-   MyState
-> {
-   constructor(props: {
-      auth2: any;
-      loggedInWithGoogle: boolean;
-      googleToken: any;
-      userObject: any;
-   }) {
+interface MyState {}
+class ConfigBody extends Component<{}, MyState> {
+   constructor(props: {}) {
       super(props);
-
-      this.state = {
-         isLoggedInToFirebase: false,
-      };
+      this.state = {};
 
       this.getConfigBodyContent = this.getConfigBodyContent.bind(this);
    }
+   static contextType = AuthContext;
 
    signInToFirebase(googleUserToken: any) {
+      const { setIsLoggedInToFirebase } = this.context;
       if (!firebase.auth().currentUser) {
          const fbCred = firebase.auth.GoogleAuthProvider.credential(
             googleUserToken
@@ -47,23 +31,25 @@ class ConfigBody extends Component<
             .auth()
             .signInWithCredential(fbCred)
             .then(() => {
-               this.setState({ isLoggedInToFirebase: true });
+               setIsLoggedInToFirebase(true);
             })
             .catch((err) => {
-               const firstLine = "C0111: Error signing into firebase:\n";
+               const firstLine = "C0311: Error signing into firebase:\n";
                console.error(`${firstLine} error<${err.message}>`);
             });
       } else {
-         this.setState({ isLoggedInToFirebase: true });
+         setIsLoggedInToFirebase(true);
       }
    }
 
    signOutOfFirebase() {
+      console.log(`in ConfigBody, signOutOfFirebase()`);
+      const { setIsLoggedInToFirebase } = this.context;
       firebase
          .auth()
          .signOut()
          .then(() => {
-            this.setState({ isLoggedInToFirebase: false });
+            setIsLoggedInToFirebase(false);
          })
          .catch((err) => {
             const firstLine =
@@ -75,23 +61,24 @@ class ConfigBody extends Component<
    }
 
    getConfigBodyContent() {
-      if (!this.state.isLoggedInToFirebase) {
+      const {
+         auth2,
+         isSignedIn,
+         isLoggedInToFirebase,
+         googleToken,
+         userObjFmServer,
+      } = this.context;
+      if (!isLoggedInToFirebase) {
          return <h3>Not Authorized</h3>;
-      } else if (
-         this.state.isLoggedInToFirebase &&
-         this.props.userObject.role === Roles.admin
-      ) {
+      } else if (isLoggedInToFirebase && userObjFmServer.role === Roles.admin) {
          return (
             <ConfigContainer
-               auth2={this.props.auth2}
-               idToken={this.props.googleToken}
-               loggedInToFirebase={this.state.isLoggedInToFirebase}
+               auth2={auth2}
+               idToken={googleToken}
+               loggedInToFirebase={isLoggedInToFirebase}
             ></ConfigContainer>
          );
-      } else if (
-         this.props.loggedInWithGoogle &&
-         this.props.userObject.role === Roles.notloggedin
-      ) {
+      } else if (isSignedIn && userObjFmServer.role === Roles.notloggedin) {
          return <h3>Not Authorized</h3>;
       } else {
          <Redirect to="/401" />;
@@ -99,11 +86,17 @@ class ConfigBody extends Component<
       }
    }
    render() {
-      if (!this.props.loggedInWithGoogle && this.state.isLoggedInToFirebase) {
+      const {
+         isSignedIn,
+         isLoggedInToFirebase,
+         googleToken,
+         userObjFmServer,
+      } = this.context;
+      if (userObjFmServer.role === Roles.notloggedin && isLoggedInToFirebase) {
          this.signOutOfFirebase();
       }
-      if (this.props.loggedInWithGoogle && !this.state.isLoggedInToFirebase) {
-         this.signInToFirebase(this.props.googleToken);
+      if (isSignedIn && !isLoggedInToFirebase) {
+         this.signInToFirebase(googleToken);
       }
       return <div>{this.getConfigBodyContent()}</div>;
    }

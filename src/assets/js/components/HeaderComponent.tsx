@@ -21,9 +21,6 @@ class HeaderComponent extends Component<
 
    getHeader() {
       const { userObjFmServer } = this.context;
-      console.log(
-         `       HeaderComponent, userObjFmServer.role[${userObjFmServer.role}]`
-      );
       switch (userObjFmServer.role) {
          case Roles.notloggedin:
             return (
