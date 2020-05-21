@@ -428,5 +428,6 @@ const { auth2, setAuth2, setIsSignedIn } = this.context; <-- get any property yo
 ```
 
 After all this, I'm not sure this applies to class components, which is what my project is made of.
+Answer: [No, you can't use Hooks inside a class component...](https://reactjs.org/docs/hooks-faq.html#should-i-use-hooks-classes-or-a-mix-of-both)
 
 ---
