@@ -152,7 +152,6 @@ class CleanAndUploadFiles extends Component<
    }
 
    render() {
-      const { isLoggedInToFirebase } = this.context;
       return (
          <div>
             <section>
@@ -197,7 +196,6 @@ class CleanAndUploadFiles extends Component<
                            myPanel={this.myPanel}
                            additionalPropsPopover={this.additionalPropsPopover}
                            callbackFromCleanAndLoadFiles={this.myCallBack}
-                           loggedInToFirebase={isLoggedInToFirebase}
                            asset={this.state.asset}
                         ></PopoverContents>
                      </JqxPopover>

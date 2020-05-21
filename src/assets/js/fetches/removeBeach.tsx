@@ -5,7 +5,7 @@ interface BeachObj {
    beach: string;
 }
 
-const removeBeach = (auth2: any, id_token: any, theBeach: string) => {
+const removeBeach = (id_token: any, theBeach: string) => {
    let myHeaders = new Headers();
    let beachObj: BeachObj = { beach: theBeach };
 

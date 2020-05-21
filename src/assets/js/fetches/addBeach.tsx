@@ -6,12 +6,7 @@ interface BeachObj {
    rentalagent: string;
 }
 
-const addBeach = (
-   auth2: any,
-   id_token: any,
-   theBeach: string,
-   rentalAgent: string
-) => {
+const addBeach = (id_token: any, theBeach: string, rentalAgent: string) => {
    let myHeaders = new Headers();
    let beachObj: BeachObj = { beach: theBeach, rentalagent: rentalAgent };
 

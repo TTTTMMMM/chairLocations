@@ -11,20 +11,12 @@ import { divFlexRow } from "../../styles/reactStyling";
 import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 
-class ConfigContainer extends Component<
-   { auth2: any; idToken: any; loggedInToFirebase: boolean },
-   {}
-> {
+class ConfigContainer extends Component<{}, {}> {
    private myPanel = React.createRef<JqxPanel>();
    private clearConsoleButton = React.createRef<JqxButton>();
 
-   constructor(props: {
-      auth2: any;
-      idToken: any;
-      loggedInToFirebase: boolean;
-   }) {
+   constructor(props: {}) {
       super(props);
-
       this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
          this
       );
@@ -35,11 +27,7 @@ class ConfigContainer extends Component<
          <>
             <div style={divFlexRow}>
                <div style={flexColContainer} className={"configContainerDiv"}>
-                  <AddDropUser
-                     auth2={this.props.auth2}
-                     idToken={this.props.idToken}
-                     myPanel={this.myPanel}
-                  ></AddDropUser>
+                  <AddDropUser myPanel={this.myPanel}></AddDropUser>
                   <div style={flexRowSplit}></div>
                   <JqxPanel
                      ref={this.myPanel}
@@ -60,12 +48,7 @@ class ConfigContainer extends Component<
                </div>
                <div style={flexRowSplit}></div>
                <div style={divFlexRow} className={"configContainerDiv"}>
-                  <ShowBeaches
-                     auth2={this.props.auth2}
-                     idToken={this.props.idToken}
-                     loggedInToFirebase={this.props.loggedInToFirebase}
-                     myPanel={this.myPanel}
-                  ></ShowBeaches>
+                  <ShowBeaches myPanel={this.myPanel}></ShowBeaches>
                </div>
             </div>
          </>

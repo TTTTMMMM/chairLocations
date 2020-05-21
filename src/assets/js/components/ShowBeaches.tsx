@@ -24,19 +24,13 @@ import removeBeach from "../fetches/removeBeach";
 
 import cellRendererDelete from "../renderers/cellRendererDelete";
 
+import { AuthContext } from "../contexts/AuthContext";
+
 interface MyState extends IDataTableProps {
    beachesWatch?: any;
    subscribed?: boolean;
 }
-class ShowBeaches extends React.PureComponent<
-   {
-      auth2: any;
-      idToken: any;
-      loggedInToFirebase: boolean;
-      myPanel: any;
-   },
-   MyState
-> {
+class ShowBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
    beachesCollection: any;
    numUpdates: number | undefined;
    unsubscribe: any | undefined;
@@ -44,20 +38,14 @@ class ShowBeaches extends React.PureComponent<
    columns: any[] | undefined;
    dataAdapter: null;
    modifyKey: string | undefined;
+   static contextType = AuthContext;
 
    private myBeachesTable = React.createRef<JqxDataTable>();
    private addBeachButton = React.createRef<JqxButton>();
    private beachInput = React.createRef<JqxInput>();
    private rentalAgentInput = React.createRef<JqxInput>();
 
-   constructor(props: {
-      loggedInWithGoogle: boolean;
-      auth2: any;
-      idToken: any;
-      loggedInToFirebase: boolean;
-      myPanel: any;
-      asset: string;
-   }) {
+   constructor(props: { myPanel: any }) {
       super(props);
       this.beachesCollection = "";
       this.numRows = 0;
@@ -138,7 +126,8 @@ class ShowBeaches extends React.PureComponent<
    };
 
    getBeachesContent() {
-      if (this.props.loggedInToFirebase) {
+      const { isLoggedInToFirebase } = this.context;
+      if (isLoggedInToFirebase) {
          const source = {
             datafields: [
                { name: "beach", type: "string" },
@@ -262,17 +251,19 @@ class ShowBeaches extends React.PureComponent<
       }
    }
    render() {
-      if (this.props.loggedInToFirebase && !this.state.subscribed) {
+      const { isLoggedInToFirebase } = this.context;
+
+      if (isLoggedInToFirebase && !this.state.subscribed) {
          this.subscribeToBeaches();
       }
-      if (!this.props.loggedInToFirebase && this.state.subscribed) {
+      if (!isLoggedInToFirebase && this.state.subscribed) {
          this.unsubscribeFromBeaches();
       }
       return <div>{this.getBeachesContent()}</div>;
    }
 
    private onRowDoubleClick(e: any): void {
-      // console.dir(e.args);
+      const { googleToken } = this.context;
       const rowIndex = e.args.index;
       const columnSelected = e.args.dataField;
 
@@ -281,7 +272,7 @@ class ShowBeaches extends React.PureComponent<
             rowIndex,
             "key"
          );
-         removeBeach(this.props.auth2, this.props.idToken, theKey)
+         removeBeach(googleToken, theKey)
             .then((retVal: any) => {
                const msg = retVal.message;
                this.props.myPanel.current!.append(
@@ -314,13 +305,15 @@ class ShowBeaches extends React.PureComponent<
    }
 
    private addBeachButtonClicked() {
+      const { googleToken } = this.context;
+
       const beachName = escapeHTML(
          this.beachInput.current!.val().trim().substring(0, 59)
       );
       const rentalAgent = escapeHTML(
          this.rentalAgentInput.current!.val().trim().substring(0, 59)
       );
-      addBeach(this.props.auth2, this.props.idToken, beachName, rentalAgent)
+      addBeach(googleToken, beachName, rentalAgent)
          .then((retVal: any) => {
             const msg = retVal.message;
             this.props.myPanel.current!.append(

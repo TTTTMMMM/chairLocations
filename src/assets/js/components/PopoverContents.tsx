@@ -3,6 +3,7 @@ import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 import additionalHeaders from "../configs/additionalTableHeaders";
 import { statesArray } from "../configs/additionalTableHeaders";
 import { AdditionalPropsType } from "../misc/chairLocTypes";
+import { AuthContext } from "../contexts/AuthContext";
 
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 
@@ -20,7 +21,6 @@ class PopoverContents extends React.PureComponent<
       myPanel: any;
       additionalPropsPopover: any;
       callbackFromCleanAndLoadFiles: any; // this is the function in the parent component to callback with the values entered for STATE, BEACH and RENTALAGENT
-      loggedInToFirebase: boolean;
       asset: string;
    },
    {
@@ -35,12 +35,12 @@ class PopoverContents extends React.PureComponent<
    private beachInput = React.createRef<JqxInput>();
    private rentalAgentInput = React.createRef<JqxInput>();
    private enterButton = React.createRef<JqxButton>();
+   static contextType = AuthContext;
 
    constructor(props: {
       myPanel: any;
       additionalPropsPopover: any;
       callbackFromCleanAndLoadFiles: any;
-      loggedInToFirebase: boolean;
       asset: string;
    }) {
       super(props);
@@ -79,7 +79,8 @@ class PopoverContents extends React.PureComponent<
    componentDidMount() {}
 
    render() {
-      if (this.props.loggedInToFirebase && !this.state.alreadyGotInfo) {
+      const { isLoggedInToFirebase } = this.context;
+      if (isLoggedInToFirebase && !this.state.alreadyGotInfo) {
          this.getBeachAndRentalInfo();
       }
       return (

@@ -62,22 +62,14 @@ class ConfigBody extends Component<{}, MyState> {
 
    getConfigBodyContent() {
       const {
-         auth2,
          isSignedIn,
          isLoggedInToFirebase,
-         googleToken,
          userObjFmServer,
       } = this.context;
       if (!isLoggedInToFirebase) {
          return <h3>Not Authorized</h3>;
       } else if (isLoggedInToFirebase && userObjFmServer.role === Roles.admin) {
-         return (
-            <ConfigContainer
-               auth2={auth2}
-               idToken={googleToken}
-               loggedInToFirebase={isLoggedInToFirebase}
-            ></ConfigContainer>
-         );
+         return <ConfigContainer></ConfigContainer>;
       } else if (isSignedIn && userObjFmServer.role === Roles.notloggedin) {
          return <h3>Not Authorized</h3>;
       } else {

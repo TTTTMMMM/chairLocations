@@ -4,6 +4,8 @@ import JqxInput, {
    IInputProps,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 
+import { AuthContext } from "../contexts/AuthContext";
+
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
@@ -24,18 +26,12 @@ interface MyState extends IInputProps {
    // isAnAdmin: boolean;
    sourceRoles: Array<string>;
 }
-class AddDropUser extends React.PureComponent<
-   {
-      auth2: any;
-      idToken: any;
-      myPanel: any;
-   },
-   MyState
-> {
+class AddDropUser extends React.PureComponent<{ myPanel: any }, MyState> {
    private usernameInput = React.createRef<JqxInput>();
    private userRoleInput = React.createRef<JqxInput>();
+   static contextType = AuthContext;
 
-   constructor(props: { auth2: any; idToken: any; myPanel: any }) {
+   constructor(props: { myPanel: any }) {
       super(props);
       this.state = {
          sourceRoles: [...rolesArray],
@@ -106,6 +102,8 @@ class AddDropUser extends React.PureComponent<
    }
 
    private addUserButtonClicked() {
+      const { auth2, googleToken } = this.context;
+
       const userName = escapeHTML(
          this.usernameInput.current!.val().trim().substring(0, 49)
       );
@@ -122,7 +120,7 @@ class AddDropUser extends React.PureComponent<
             `<p style="font-style: normal; color:red; font-size:12px;">Cannot set user role to 'admin.'</p>`
          );
       } else {
-         addUser(this.props.auth2, this.props.idToken, userName, indexOfRole)
+         addUser(auth2, googleToken, userName, indexOfRole)
             .then((retVal: any) => {
                const msg = retVal.message;
                this.props.myPanel.current!.append(
@@ -138,10 +136,11 @@ class AddDropUser extends React.PureComponent<
    }
 
    private removeUserButtonClicked() {
+      const { auth2, googleToken } = this.context;
       const userName = escapeHTML(
          this.usernameInput.current!.val().substring(0, 49)
       );
-      removeUser(this.props.auth2, this.props.idToken, userName)
+      removeUser(auth2, googleToken, userName)
          .then((retVal: any) => {
             const msg = retVal.message;
             this.props.myPanel.current!.append(
