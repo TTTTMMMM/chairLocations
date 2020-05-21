@@ -405,3 +405,9 @@ const { auth2, setAuth2, setIsSignedIn } = this.context; <-- get any property yo
 ---
 
 ### [Hooks API](https://www.youtube.com/watch?v=JgYRBCRHfHE)
+
+1. Hooks let you use state inside a functional component
+2. Three "special" functions or hooks:
+   a. useState() -- returns an array of two objects: the first being the state property, the second being a function to alter the first
+   b.
+   c.
