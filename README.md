@@ -360,7 +360,7 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ### [Context API](https://www.youtube.com/watch?v=Yps_QrUvluQ)
 
-Create the context file and Context.Provider (see AuthContext.js)
+Create the context file and Context.Provider (see[AuthContext.js](https://github.com/TTTTMMMM/chairLocations/blob/master/src/assets/js/contexts/AuthContext.js))
 
 There are two ways to "consume" the contexts inside a <ins>class</ins> component (see MainPage.tsx):
 
