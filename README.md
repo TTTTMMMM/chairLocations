@@ -391,7 +391,8 @@ const { setAuth2, setIsSignedIn } = this.context; <-- get any property you want 
       d) also put all the properties and functions in the value object, which makes them
          available in the this.context object in the consumer
   2. Put the context provider in the appropriate place in the component tree
-     All the components under the context provider (known as consumers) will/     be able to use the Context Provider
+     All the components under the context provider (known as consumers) will be able to
+     use the Context Provider
   3. In the consumers:
       a) import the context file
       b) after the constructor, static contextType = AuthContext;
