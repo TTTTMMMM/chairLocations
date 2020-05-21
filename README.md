@@ -362,7 +362,7 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 Create the context file and Context.Provider (see AuthContext.js)
 
-There are two ways to "consume" the contexts inside a <ins>class</ins> component:
+There are two ways to "consume" the contexts inside a <ins>class</ins> component (see MainPage.tsx):
 
 1. [Define a static variable](https://www.youtube.com/watch?v=WkBXRQfpifc):
 
