@@ -372,7 +372,7 @@ const { setAuth2, setIsSignedIn } = this.context; <-- get any property you want 
 
 ```
 
-2. [using a contextConsumer](https://www.youtube.com/watch?v=1bsvh_0HRwA) -- in other words, in the consumer, use:
+2. [using a contextConsumer](https://www.youtube.com/watch?v=1bsvh_0HRwA) -- in other words, in the consumer, use: (BTWs: this works in a functional component, as well as in a class component)
 
 ```
     <AuthContext.Consumer>{(context) => {
