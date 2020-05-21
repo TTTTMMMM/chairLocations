@@ -136,6 +136,7 @@ class ShowChairData extends React.PureComponent<
 
    // this subscription is used by ChairResultSide Component and defined in ChairQuerySide Component
    subscribeToAssetBeaconingWithinDateRange() {
+      console.dir(this.props.range);
       if (this.props.asset!.length > 0) {
          this.unsubscribeFromAssetLabelSpecific();
          this.unsubscribeFromAssetWithinRange();
@@ -187,6 +188,7 @@ class ShowChairData extends React.PureComponent<
       let chairDataWatch: any[] = [];
       this.numRows = 0;
       this.chairY.length = 0;
+      this.chairYBackup.length = 0;
       querySnapshot.forEach(
          (doc: {
             data: () => {
@@ -559,7 +561,6 @@ class ShowChairData extends React.PureComponent<
    }
    render() {
       const { isLoggedInToFirebase } = this.context;
-
       if (this.props.callingFrom === CallingFrom.cleanAndUploadFiles) {
          let changeInAsset = this.props.asset != this.state.asset;
          if (isLoggedInToFirebase && changeInAsset) {

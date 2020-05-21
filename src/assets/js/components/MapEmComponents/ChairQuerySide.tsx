@@ -402,7 +402,7 @@ class ChairQuerySide extends Component<
 
    private enterButtonClicked() {
       let chairAsset: string = this.chairInput.current!.val();
-      if (chairAsset.length <= 7) {
+      if (chairAsset.length <= 6) {
          this.props.myPanel.current!.append(
             `<p style="color: red; font-size:15px;"> Choose a chair from dropdown list.</p>`
          );
@@ -412,6 +412,7 @@ class ChairQuerySide extends Component<
             startDate: moment(range.from).format("YYYY-MM-DD"),
             endDate: moment(range.to).format("YYYY-MM-DD"),
          };
+         rangeObj.endDate = rangeObj.endDate.concat("T23:59:59Z");
          let arqo: AssetRangeQO = { asset: chairAsset, range: rangeObj };
          this.props.chairQueryComponentCallback(arqo);
       }

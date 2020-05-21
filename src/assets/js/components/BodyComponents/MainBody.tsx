@@ -12,9 +12,6 @@ class MainBody extends Component<{}> {
 
    getMainBodyContent() {
       const { userObjFmServer } = this.context;
-      console.log(
-         `       MainBody, userObjFmServer.role[${userObjFmServer.role}]`
-      );
       switch (userObjFmServer.role) {
          case Roles.notloggedin:
             return <img src={"../../../images/cherry.jpeg"} />;
