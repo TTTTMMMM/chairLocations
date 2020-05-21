@@ -368,7 +368,7 @@ There are two ways to "consume" the contexts inside a <ins>class</ins> component
 static contextType = AuthContext; <-- this method cannot be used in a functional component
 ```
 
-2. [using a contextConsumer](https://www.youtube.com/watch?v=1bsvh_0HRwA), i.e., in the consumer, use:
+2. [using a contextConsumer](https://www.youtube.com/watch?v=1bsvh_0HRwA) -- in other words, in the consumer, use:
 
 ```
     <AuthContext.Consumer>{(context) => {
