@@ -36,6 +36,8 @@ class MainPage extends Component<{}, {}> {
    static contextType = AuthContext; // it's a law that you must call it contextType!
 
    componentDidMount() {
+      // get access to the individual properties in the context object
+      // (which is made available after you execute the static line above)
       const { setAuth2, setIsSignedIn } = this.context;
       window.gapi.load("auth2", () => {
          this.auth2 = gapi.auth2.init({

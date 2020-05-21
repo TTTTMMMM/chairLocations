@@ -58,6 +58,8 @@ export class AuthContextProvider extends Component {
       });
    };
 
+   // The values object below holds all the properties/data that is shared with the consumers
+   // The consumers will destructure the this.context object to obtain access to the individual properties
    render() {
       return (
          <AuthContext.Provider
@@ -76,3 +78,20 @@ export class AuthContextProvider extends Component {
       );
    }
 }
+
+// Boilerplate for context API:
+//  1. create the Context Component (this file)
+//      a) create the properties you want to share across the app
+//      b) create the functions that will modify the properties
+//      c) in the render() function, create the <AuthContext.Provider> component,
+//         making sure to sandwich  (this.props.children) between the beginning
+//         and end tags; also put all the properties and functions in the value object
+//  2. Put the context provider in the appropriate place in the component tree
+//     All the components under the context provider (known as consumers) will
+//     be able to use the Context Provider
+//  3. In the consumers:
+//      a) import the context file
+//      b) after the constructor, static contextType = AuthContext;
+//      c) access all the properties in the context by destructuring the this.context object
+//        (e.g., const { setAuth2, setIsSignedIn } = this.context; gets access to those
+//        two properties (which happnen to be functions, which can be used to change the props)
