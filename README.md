@@ -301,22 +301,18 @@ export interface UserObj {
 #### TODO:
 
 1. Develop map analytics!
-
-   [Cluster click](https://stackoverflow.com/questions/5710568/markerclusterer-on-click-zoom)
-
 2. Maintenance
-3. Consider moving to useContext API to eliminate all the authentication props drilling
-4. consider implementing an ErrorBoundary on CleanAndUpload
-5. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
-6. Report Tab
-7. Disable Calculate Distance Button in UploadBody path
+3. Consider implementing an ErrorBoundary on CleanAndUpload
+4. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
+5. Report Tab
+6. Disable Calculate Distance Button in UploadBody path
 
 #### <ins>TODO Physical World</ins>
 
 1. Change oil in John Deere
-2. Split wood
-3. Mount engine on splitter
-4.
+2. Saw wood down to size
+3. Split wood
+4. Mount engine on splitter
 
 ---
 
