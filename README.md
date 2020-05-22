@@ -301,11 +301,10 @@ export interface UserObj {
 #### TODO:
 
 1. Develop map analytics!
-2. Maintenance
+2. Report Tab
 3. Consider implementing an ErrorBoundary on CleanAndUpload
 4. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
-5. Report Tab
-6. Disable Calculate Distance Button in UploadBody path
+5. Maintenance Tab
 
 #### <ins>TODO Physical World</ins>
 
