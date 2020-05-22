@@ -111,21 +111,24 @@ class MainPage extends Component<{}, {}> {
                   maintenance: false,
                },
             });
-            setIsSignedIn(this.auth2!.isSignedIn.get());
+            // setIsSignedIn(this.auth2!.isSignedIn.get());
             setAuth2({});
             setGoogleToken("dummyValue");
          })
          .then(() => {
-            window.gapi.load("signin2", () => {
-               var opts = {
-                  width: 100,
-                  height: 30,
-                  onsuccess: this.onSuccess,
-                  theme: "dark",
-               };
-               gapi.signin2.render("loginButton", opts);
-            });
-            <Redirect to="/" />;
+            setTimeout(() => {
+               setIsSignedIn(this.auth2!.isSignedIn.get());
+               window.gapi.load("signin2", () => {
+                  var opts = {
+                     width: 100,
+                     height: 30,
+                     onsuccess: this.onSuccess,
+                     theme: "dark",
+                  };
+                  gapi.signin2.render("loginButton", opts);
+               });
+               <Redirect to="/" />;
+            }, 50);
          })
          .catch((err: any) => {
             console.error(`C0016: ${err}`);

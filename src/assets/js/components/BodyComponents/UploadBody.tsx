@@ -42,6 +42,7 @@ class UploadBody extends React.PureComponent<{}, {}> {
             .signInWithCredential(fbCred)
             .then(() => {
                setIsLoggedInToFirebase(true);
+               console.log(`Logged in to firebase.`);
             })
             .catch((err) => {
                const firstLine = "C0211: Error signing into firebase:\n";
@@ -53,13 +54,13 @@ class UploadBody extends React.PureComponent<{}, {}> {
    }
 
    signOutOfFirebase() {
-      console.log(`in UploadBody, signOutOfFirebase()`);
       const { setIsLoggedInToFirebase } = this.context;
       firebase
          .auth()
          .signOut()
          .then(() => {
             setIsLoggedInToFirebase(false);
+            console.log(`Logged out of firebase.`);
          })
          .catch((err) => {
             const firstLine =
@@ -84,7 +85,11 @@ class UploadBody extends React.PureComponent<{}, {}> {
       if (userObjFmServer.role === Roles.notloggedin && isLoggedInToFirebase) {
          this.signOutOfFirebase();
       }
-      if (isSignedIn && !isLoggedInToFirebase) {
+      if (
+         isSignedIn &&
+         !isLoggedInToFirebase &&
+         userObjFmServer.role !== Roles.notloggedin
+      ) {
          this.signInToFirebase(googleToken);
       }
       return <>{this.getBodyUploadContent()}</>;

@@ -13,8 +13,6 @@ class MaintenanceBody extends Component<{}, {}> {
    static contextType = AuthContext;
 
    getMaintenanceBodyContent() {
-      console.log(`         MaintenanceBody, this.context`);
-      console.dir(this.context);
       return (
          <>
             <div style={divFlexRow}>Body Maintenance Component</div>

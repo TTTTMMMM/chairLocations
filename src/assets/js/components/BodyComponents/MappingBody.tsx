@@ -30,6 +30,7 @@ class MappingBody extends Component<{ match: any }, {}> {
             .signInWithCredential(fbCred)
             .then(() => {
                setIsLoggedInToFirebase(true);
+               console.log(`Logged in to firebase.`);
             })
             .catch((err) => {
                const firstLine = "C0111: Error signing into firebase:\n";
@@ -47,6 +48,7 @@ class MappingBody extends Component<{ match: any }, {}> {
          .signOut()
          .then(() => {
             setIsLoggedInToFirebase(false);
+            console.log(`Logged out of firebase.`);
          })
          .catch((err) => {
             const firstLine =
@@ -100,7 +102,11 @@ class MappingBody extends Component<{ match: any }, {}> {
       if (userObjFmServer.role === Roles.notloggedin && isLoggedInToFirebase) {
          this.signOutOfFirebase();
       }
-      if (isSignedIn && !isLoggedInToFirebase) {
+      if (
+         isSignedIn &&
+         !isLoggedInToFirebase &&
+         userObjFmServer.role !== Roles.notloggedin
+      ) {
          this.signInToFirebase(googleToken);
       }
       return <>{this.getMappingBodyContent()}</>;

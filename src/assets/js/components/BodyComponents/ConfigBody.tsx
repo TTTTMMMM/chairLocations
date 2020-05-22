@@ -32,6 +32,7 @@ class ConfigBody extends Component<{}, MyState> {
             .signInWithCredential(fbCred)
             .then(() => {
                setIsLoggedInToFirebase(true);
+               console.log(`Logged in to firebase.`);
             })
             .catch((err) => {
                const firstLine = "C0311: Error signing into firebase:\n";
@@ -43,13 +44,13 @@ class ConfigBody extends Component<{}, MyState> {
    }
 
    signOutOfFirebase() {
-      console.log(`in ConfigBody, signOutOfFirebase()`);
       const { setIsLoggedInToFirebase } = this.context;
       firebase
          .auth()
          .signOut()
          .then(() => {
             setIsLoggedInToFirebase(false);
+            console.log(`Logged out of firebase.`);
          })
          .catch((err) => {
             const firstLine =
@@ -87,7 +88,11 @@ class ConfigBody extends Component<{}, MyState> {
       if (userObjFmServer.role === Roles.notloggedin && isLoggedInToFirebase) {
          this.signOutOfFirebase();
       }
-      if (isSignedIn && !isLoggedInToFirebase) {
+      if (
+         isSignedIn &&
+         !isLoggedInToFirebase &&
+         userObjFmServer.role !== Roles.notloggedin
+      ) {
          this.signInToFirebase(googleToken);
       }
       return <div>{this.getConfigBodyContent()}</div>;
