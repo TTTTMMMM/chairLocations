@@ -67,7 +67,7 @@ class UploadBody extends React.PureComponent<{}, {}> {
                "Couldn't log client-side firebase user out: " +
                err.message.split("\n")[0];
             const errCode = err.code;
-            console.log(`${firstLine} ${errCode}`);
+            console.error(`${firstLine} ${errCode}`);
          });
    }
 

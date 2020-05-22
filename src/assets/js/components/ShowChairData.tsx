@@ -484,6 +484,10 @@ class ShowChairData extends React.PureComponent<
                      height={30}
                      theme={"fresh"}
                      textPosition={"center"}
+                     disabled={
+                        this.props.callingFrom ===
+                        CallingFrom.cleanAndUploadFiles
+                     }
                   >
                      Calculate Distance
                   </JqxButton>
@@ -528,6 +532,10 @@ class ShowChairData extends React.PureComponent<
                      height={30}
                      theme={"fresh"}
                      textPosition={"center"}
+                     disabled={
+                        this.props.callingFrom ===
+                        CallingFrom.cleanAndUploadFiles
+                     }
                   >
                      Calculate Distance
                   </JqxButton>
@@ -607,77 +615,79 @@ class ShowChairData extends React.PureComponent<
    }
 
    private calcDistButtonClicked() {
-      let prevGeoPoint: GeoPoint = {
-         lat: this.chairYBackup[0].location.lat,
-         lng: this.chairYBackup[0].location.lng,
-      };
-      let geo1: DateGeoObj = {
-         geoDate: this.chairYBackup[0].updatetime.slice(0, 10),
-         geo: prevGeoPoint,
-      };
-      let cumulativeDistanceObj: DistanceObj = {
-         inMeters: 0,
-         inFeet: 0,
-         inMiles: 0,
-      };
-      let cumDistDaily: CumDistDaily = {
-         dailyDate: this.chairYBackup[0].updatetime.slice(0, 10),
-         distObj: cumulativeDistanceObj,
-      };
-      // ---- loop through each document in resultset from firebase
-      this.chairYBackup.forEach((x) => {
-         let endGeoPoint: GeoPoint = {
-            lat: x.location.lat,
-            lng: x.location.lng,
+      if (this.props.callingFrom === CallingFrom.chairResultsSide) {
+         let prevGeoPoint: GeoPoint = {
+            lat: this.chairYBackup[0].location.lat,
+            lng: this.chairYBackup[0].location.lng,
          };
-         let geo2: DateGeoObj = {
-            geoDate: x.updatetime.slice(0, 10),
-            geo: endGeoPoint,
+         let geo1: DateGeoObj = {
+            geoDate: this.chairYBackup[0].updatetime.slice(0, 10),
+            geo: prevGeoPoint,
          };
-         let pointToPointDist: DistanceObj = calculateDistance(
-            geo1.geo,
-            geo2.geo
-         );
-         cumulativeDistanceObj = sumDistance(
-            cumulativeDistanceObj,
-            pointToPointDist
-         );
-         cumDistDaily.distObj = Object.assign({}, cumulativeDistanceObj);
-         if (cumDistDaily.dailyDate === geo2.geoDate) {
-            prevGeoPoint = {
-               lat: endGeoPoint.lat,
-               lng: endGeoPoint.lng,
+         let cumulativeDistanceObj: DistanceObj = {
+            inMeters: 0,
+            inFeet: 0,
+            inMiles: 0,
+         };
+         let cumDistDaily: CumDistDaily = {
+            dailyDate: this.chairYBackup[0].updatetime.slice(0, 10),
+            distObj: cumulativeDistanceObj,
+         };
+         // ---- loop through each document in resultset from firebase
+         this.chairYBackup.forEach((x) => {
+            let endGeoPoint: GeoPoint = {
+               lat: x.location.lat,
+               lng: x.location.lng,
             };
-            geo1 = {
-               geoDate: geo2.geoDate,
-               geo: prevGeoPoint,
+            let geo2: DateGeoObj = {
+               geoDate: x.updatetime.slice(0, 10),
+               geo: endGeoPoint,
             };
-         } else {
-            this.props.myPanel.current!.append(
-               `<p style="color:#310DF3 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+            let pointToPointDist: DistanceObj = calculateDistance(
+               geo1.geo,
+               geo2.geo
             );
-            prevGeoPoint = {
-               lat: endGeoPoint.lat,
-               lng: endGeoPoint.lng,
-            };
-            geo1 = {
-               geoDate: geo2.geoDate,
-               geo: prevGeoPoint,
-            };
-            cumulativeDistanceObj = {
-               inMeters: 0,
-               inFeet: 0,
-               inMiles: 0,
-            };
-            cumDistDaily = {
-               dailyDate: geo2.geoDate,
-               distObj: cumulativeDistanceObj,
-            };
-         }
-      });
-      this.props.myPanel.current!.append(
-         `<p style="color:#310DF3 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
-      );
+            cumulativeDistanceObj = sumDistance(
+               cumulativeDistanceObj,
+               pointToPointDist
+            );
+            cumDistDaily.distObj = Object.assign({}, cumulativeDistanceObj);
+            if (cumDistDaily.dailyDate === geo2.geoDate) {
+               prevGeoPoint = {
+                  lat: endGeoPoint.lat,
+                  lng: endGeoPoint.lng,
+               };
+               geo1 = {
+                  geoDate: geo2.geoDate,
+                  geo: prevGeoPoint,
+               };
+            } else {
+               this.props.myPanel.current!.append(
+                  `<p style="color:#310DF3 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+               );
+               prevGeoPoint = {
+                  lat: endGeoPoint.lat,
+                  lng: endGeoPoint.lng,
+               };
+               geo1 = {
+                  geoDate: geo2.geoDate,
+                  geo: prevGeoPoint,
+               };
+               cumulativeDistanceObj = {
+                  inMeters: 0,
+                  inFeet: 0,
+                  inMiles: 0,
+               };
+               cumDistDaily = {
+                  dailyDate: geo2.geoDate,
+                  distObj: cumulativeDistanceObj,
+               };
+            }
+         });
+         this.props.myPanel.current!.append(
+            `<p style="color:#310DF3 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+         );
+      }
    }
 
    private checkedEvent() {

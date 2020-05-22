@@ -111,7 +111,6 @@ class MainPage extends Component<{}, {}> {
                   maintenance: false,
                },
             });
-            // setIsSignedIn(this.auth2!.isSignedIn.get());
             setAuth2({});
             setGoogleToken("dummyValue");
          })
