@@ -307,10 +307,8 @@ export interface UserObj {
    Time arrow step-by-step
 
 2. Report Tab
-3. Fix Editing of Columns
-4. Consider implementing an ErrorBoundary on CleanAndUpload
-5. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
-6. Maintenance Tab
+3. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
+4. Maintenance Tab
 
 #### <ins>TODO Physical World</ins>
 
