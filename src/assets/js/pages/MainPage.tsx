@@ -127,6 +127,7 @@ class MainPage extends Component<{}, {}> {
                   gapi.signin2.render("loginButton", opts);
                });
                <Redirect to="/" />;
+               window.location.reload(); // this logs out of firebase, fo sho
             }, 50);
          })
          .catch((err: any) => {

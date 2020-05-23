@@ -34,6 +34,7 @@ class ChairQuerySide extends Component<
    MyState
 > {
    chairCollection: any;
+
    private chairInput = React.createRef<JqxInput>();
    private enterButton = React.createRef<JqxButton>();
    private myCalendar = React.createRef<JqxCalendar>();
@@ -139,6 +140,7 @@ class ChairQuerySide extends Component<
 
    getChairAssetInfo() {
       let sourceChair: Array<string> = [];
+
       this.chairCollection = firebase
          .firestore()
          .collection("uniqueAssetLabels");
@@ -397,6 +399,7 @@ class ChairQuerySide extends Component<
       if (isLoggedInToFirebase && !this.state.alreadyGotInfo) {
          this.getChairAssetInfo();
       }
+
       return <>{this.getChairQueryContent()}</>;
    }
 

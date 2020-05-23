@@ -304,7 +304,7 @@ export interface UserObj {
 
    What other chairs are near this location?
 
-   Time arrow step-by=step
+   Time arrow step-by-step
 
 2. Report Tab
 3. Fix Editing of Columns

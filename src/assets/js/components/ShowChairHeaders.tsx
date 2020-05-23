@@ -109,6 +109,7 @@ class ShowChairHeaders extends React.PureComponent<
          this.unsubscribe();
          this.setState({ subscribed: false });
          this.numUpdates = 0;
+         console.log(`unsubscribeFromChairHeadersTable()`);
       }
    }
 

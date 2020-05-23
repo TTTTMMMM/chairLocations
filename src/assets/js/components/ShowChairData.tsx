@@ -29,6 +29,7 @@ import {
    DateGeoObj,
    DistanceObj,
    CumDistDaily,
+   Roles,
 } from "../misc/chairLocTypes";
 import { calculateDistance, sumDistance } from "../misc/calculateDistance";
 
@@ -581,7 +582,7 @@ class ShowChairData extends React.PureComponent<
       }
    }
    render() {
-      const { isLoggedInToFirebase } = this.context;
+      const { isLoggedInToFirebase, userObjFmServer } = this.context;
       if (this.props.callingFrom === CallingFrom.cleanAndUploadFiles) {
          let changeInAsset = this.props.asset != this.state.asset;
          if (isLoggedInToFirebase && changeInAsset) {
@@ -599,6 +600,10 @@ class ShowChairData extends React.PureComponent<
          if (!isLoggedInToFirebase && this.state.subscribedWithinRange) {
             this.unsubscribeFromAssetWithinRange();
          }
+      }
+      if (userObjFmServer.role === Roles.notloggedin && isLoggedInToFirebase) {
+         this.subscribeToAssetUploadedToday();
+         this.unsubscribeFromAssetWithinRange();
       }
       return <div>{this.getChairLocContent()}</div>;
    }
