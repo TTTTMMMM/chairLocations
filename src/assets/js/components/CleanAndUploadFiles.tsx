@@ -21,6 +21,7 @@ import ShowChairData from "./ShowChairData";
 import { AuthContext } from "../contexts/AuthContext";
 
 import PopoverContents from "./PopoverContents";
+import ErrorBoundary from "./ErrorBoundary";
 import {
    AdditionalPropsType,
    Roles,
@@ -153,126 +154,130 @@ class CleanAndUploadFiles extends Component<
 
    render() {
       return (
-         <div>
-            <section>
-               <fieldset>
-                  <legend>Cleanse and Upload Data</legend>
-                  <div>
-                     <label>
-                        {this.state.fileChooserLabel}
-                        <input
-                           ref={this.fileInput}
-                           type="file"
-                           accept=".csv"
-                           onChange={this.fileInputHandler}
-                           value={this.state.value}
+         <ErrorBoundary>
+            <div>
+               <section>
+                  <fieldset>
+                     <legend>Cleanse and Upload Data</legend>
+                     <div>
+                        <label>
+                           {this.state.fileChooserLabel}
+                           <input
+                              ref={this.fileInput}
+                              type="file"
+                              accept=".csv"
+                              onChange={this.fileInputHandler}
+                              value={this.state.value}
+                              style={{
+                                 width: "0.1px",
+                                 height: "0.1px",
+                                 opacity: "0",
+                                 overflow: "hidden",
+                                 position: "absolute",
+                                 zIndex: -1,
+                              }}
+                           ></input>
+                        </label>
+                     </div>
+                     <div>
+                        <JqxPopover
+                           ref={this.additionalPropsPopover}
+                           offset={{ left: 0, top: 0 }}
+                           isModal={false}
+                           autoClose={false}
+                           arrowOffsetValue={0}
+                           position={"right"}
+                           title={"Where is Chair Deployed?"}
+                           showCloseButton={true}
+                           selector={".addPropsButton"}
+                           theme={"fresh"}
+                           height={155}
+                           width={285}
+                        >
+                           <PopoverContents
+                              myPanel={this.myPanel}
+                              additionalPropsPopover={
+                                 this.additionalPropsPopover
+                              }
+                              callbackFromCleanAndLoadFiles={this.myCallBack}
+                              asset={this.state.asset}
+                           ></PopoverContents>
+                        </JqxPopover>
+                        <JqxButton
+                           ref={this.setAdditionalPropertiesButton}
                            style={{
-                              width: "0.1px",
-                              height: "0.1px",
-                              opacity: "0",
-                              overflow: "hidden",
-                              position: "absolute",
-                              zIndex: -1,
+                              marginLeft: "0px",
+                              marginBottom: "2px",
+                              position: "relative",
+                              padding: "3px",
+                              paddingTop: "9px",
+                              borderRadius: "2px",
                            }}
-                        ></input>
-                     </label>
-                  </div>
-                  <div>
-                     <JqxPopover
-                        ref={this.additionalPropsPopover}
-                        offset={{ left: 0, top: 0 }}
-                        isModal={false}
-                        autoClose={false}
-                        arrowOffsetValue={0}
-                        position={"right"}
-                        title={"Where is Chair Deployed?"}
-                        showCloseButton={true}
-                        selector={".addPropsButton"}
-                        theme={"fresh"}
-                        height={155}
-                        width={285}
-                     >
-                        <PopoverContents
-                           myPanel={this.myPanel}
-                           additionalPropsPopover={this.additionalPropsPopover}
-                           callbackFromCleanAndLoadFiles={this.myCallBack}
-                           asset={this.state.asset}
-                        ></PopoverContents>
-                     </JqxPopover>
+                           disabled={
+                              this.state.disabledSetAdditionalPropertiesButton
+                           }
+                           width={318}
+                           height={20}
+                           theme={"fresh"}
+                           className="addPropsButton"
+                           onClick={this.additionalPropertiesClick}
+                        ></JqxButton>
+                     </div>
                      <JqxButton
-                        ref={this.setAdditionalPropertiesButton}
+                        ref={this.cleanRowsAndUploadButton}
                         style={{
                            marginLeft: "0px",
-                           marginBottom: "2px",
+                           marginBottom: "7px",
                            position: "relative",
                            padding: "3px",
                            paddingTop: "9px",
                            borderRadius: "2px",
                         }}
-                        disabled={
-                           this.state.disabledSetAdditionalPropertiesButton
-                        }
+                        disabled={this.state.disabledCleanRowsButton}
+                        onClick={this.cleanRowsAndUploadClicked}
                         width={318}
                         height={20}
                         theme={"fresh"}
-                        className="addPropsButton"
-                        onClick={this.additionalPropertiesClick}
-                     ></JqxButton>
-                  </div>
-                  <JqxButton
-                     ref={this.cleanRowsAndUploadButton}
-                     style={{
-                        marginLeft: "0px",
-                        marginBottom: "7px",
-                        position: "relative",
-                        padding: "3px",
-                        paddingTop: "9px",
-                        borderRadius: "2px",
-                     }}
-                     disabled={this.state.disabledCleanRowsButton}
-                     onClick={this.cleanRowsAndUploadClicked}
-                     width={318}
-                     height={20}
-                     theme={"fresh"}
-                  >
-                     Clean Rows and Upload
-                  </JqxButton>
-                  <div>
-                     <ShowChairHeaders
-                        myPanel={this.myPanel}
-                     ></ShowChairHeaders>
-                  </div>
-                  <div>
-                     <JqxPanel
-                        ref={this.myPanel}
-                        width={325}
-                        height={150}
-                        theme={"fresh"}
-                     />
-                     <JqxButton
-                        ref={this.clearConsoleButton}
-                        onClick={this.clearConsoleButtonClicked}
-                        width={325}
-                        height={30}
-                        theme={"fresh"}
-                        textPosition={"center"}
                      >
-                        Clear Console
+                        Clean Rows and Upload
                      </JqxButton>
+                     <div>
+                        <ShowChairHeaders
+                           myPanel={this.myPanel}
+                        ></ShowChairHeaders>
+                     </div>
+                     <div>
+                        <JqxPanel
+                           ref={this.myPanel}
+                           width={325}
+                           height={150}
+                           theme={"fresh"}
+                        />
+                        <JqxButton
+                           ref={this.clearConsoleButton}
+                           onClick={this.clearConsoleButtonClicked}
+                           width={325}
+                           height={30}
+                           theme={"fresh"}
+                           textPosition={"center"}
+                        >
+                           Clear Console
+                        </JqxButton>
+                     </div>
+                  </fieldset>
+               </section>
+               <section>
+                  <div>
+                     <ShowChairData
+                        myPanel={this.myPanel}
+                        asset={this.state.asset}
+                        range={this.range}
+                        callingFrom={CallingFrom.cleanAndUploadFiles}
+                     ></ShowChairData>
                   </div>
-               </fieldset>
-            </section>
-            <section>
-               <div>
-                  <ShowChairData
-                     myPanel={this.myPanel}
-                     asset={this.state.asset}
-                     range={this.range}
-                     callingFrom={CallingFrom.cleanAndUploadFiles}
-                  ></ShowChairData>
-               </div>
-            </section>
-         </div>
+               </section>
+            </div>
+         </ErrorBoundary>
       );
    }
 

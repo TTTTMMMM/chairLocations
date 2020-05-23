@@ -197,6 +197,7 @@ class ShowChairData extends React.PureComponent<
                DEVICEID: string;
                FNAME: string;
                GPS_MPH: number;
+               GPS_ISCELLTOWER: boolean;
                ID: string;
                IMEI: string;
                LATITUDE: string;
@@ -215,6 +216,7 @@ class ShowChairData extends React.PureComponent<
                DEVICEID,
                FNAME,
                GPS_MPH,
+               GPS_ISCELLTOWER,
                ID,
                IMEI,
                LATITUDE,
@@ -245,6 +247,7 @@ class ShowChairData extends React.PureComponent<
                DEVICEID,
                FNAME,
                GPS_MPH,
+               GPS_ISCELLTOWER,
                ID,
                IMEI,
                LATITUDE,
@@ -282,6 +285,7 @@ class ShowChairData extends React.PureComponent<
                { name: "DEVICEID", type: "string" },
                { name: "FNAME", type: "string" },
                { name: "GPS_MPH", type: "number" },
+               { name: "GPS_ISCELLTOWER", type: "boolean" },
                { name: "ID", type: "string" },
                { name: "IMEI", type: "string" },
                { name: "LATITUDE", type: "string" },
@@ -306,6 +310,7 @@ class ShowChairData extends React.PureComponent<
                      DEVICEID: val.DEVICEID,
                      FNAME: val.FNAME,
                      GPS_MPH: val.GPS_MPH,
+                     GPS_ISCELLTOWER: val.GPS_ISCELLTOWER,
                      ID: val.ID,
                      IMEI: val.IMEI,
                      LATITUDE: val.LATITUDE,
@@ -330,13 +335,14 @@ class ShowChairData extends React.PureComponent<
             ["FNAME", 100],
             ["ID", 83],
             ["IMEI", 80],
-            ["LATITUDE", 100],
-            ["LONGITUDE", 100],
+            ["LATITUDE", 90],
+            ["LONGITUDE", 90],
             ["RENTALAGENT", 250],
             ["STATE", 100],
-            ["UPDATETIME", 170],
-            ["UPLOADFBTIME", 110],
+            ["UPDATETIME", 150],
+            ["UPLOADFBTIME", 150],
             ["GPS_MPH", 79],
+            ["GPS_ISCELLTOWER", 80],
          ];
          this.columns = [
             {
@@ -390,6 +396,14 @@ class ShowChairData extends React.PureComponent<
                text: "GPS MPH",
                datafield: "GPS_MPH",
                width: columnWidths[13][1],
+               align: "center",
+               cellsalign: "center",
+               editable: false,
+            },
+            {
+               text: "CELL TOW.",
+               datafield: "GPS_ISCELLTOWER",
+               width: columnWidths[14][1],
                align: "center",
                cellsalign: "center",
                editable: false,
@@ -458,7 +472,7 @@ class ShowChairData extends React.PureComponent<
             <>
                <JqxDataTable
                   ref={this.myChairLocTable}
-                  width={880}
+                  width={920}
                   theme={"fresh"}
                   source={this.dataAdapter}
                   columns={this.columns}

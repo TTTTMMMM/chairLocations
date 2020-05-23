@@ -301,10 +301,16 @@ export interface UserObj {
 #### TODO:
 
 1. Develop map analytics!
+
+   What other chairs are near this location?
+
+   Time arrow step-by=step
+
 2. Report Tab
-3. Consider implementing an ErrorBoundary on CleanAndUpload
-4. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
-5. Maintenance Tab
+3. Fix Editing of Columns
+4. Consider implementing an ErrorBoundary on CleanAndUpload
+5. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
+6. Maintenance Tab
 
 #### <ins>TODO Physical World</ins>
 
