@@ -266,11 +266,13 @@ The user has to have logged in before a Firebase user object exists, therefore g
 
 ---
 
-#### Two Good Playgrounds
+#### Two Good Playgrounds + a Calculate Great Circle Distance Web App
 
 [Typescript Playground](https://www.typescriptlang.org/play)
 
 [moment.js Playground](http://jsfiddle.net/brandonscript/rLjQx/)
+
+[Great Circle Distance](https://www.movable-type.co.uk/scripts/latlong.html)
 
 ---
 
