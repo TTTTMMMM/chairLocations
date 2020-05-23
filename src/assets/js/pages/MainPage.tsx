@@ -115,20 +115,18 @@ class MainPage extends Component<{}, {}> {
             setGoogleToken("dummyValue");
          })
          .then(() => {
-            setTimeout(() => {
-               setIsSignedIn(this.auth2!.isSignedIn.get());
-               window.gapi.load("signin2", () => {
-                  var opts = {
-                     width: 100,
-                     height: 30,
-                     onsuccess: this.onSuccess,
-                     theme: "dark",
-                  };
-                  gapi.signin2.render("loginButton", opts);
-               });
-               <Redirect to="/" />;
-               window.location.reload(); // this logs out of firebase, fo sho
-            }, 50);
+            setIsSignedIn(this.auth2!.isSignedIn.get());
+            window.gapi.load("signin2", () => {
+               var opts = {
+                  width: 100,
+                  height: 30,
+                  onsuccess: this.onSuccess,
+                  theme: "dark",
+               };
+               gapi.signin2.render("loginButton", opts);
+            });
+            <Redirect to="/" />;
+            window.location.reload(); // this logs out of firebase, fo sho
          })
          .catch((err: any) => {
             console.error(`C0016: ${err}`);

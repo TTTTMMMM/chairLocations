@@ -94,6 +94,7 @@ class ShowChairHeaders extends React.PureComponent<
          },
       };
       this.getChairHeadersContent = this.getChairHeadersContent.bind(this);
+      this.bindingComplete = this.bindingComplete.bind(this);
    }
 
    subscribeToChairHeaders() {
@@ -113,7 +114,11 @@ class ShowChairHeaders extends React.PureComponent<
       }
    }
 
-   componentDidMount() {}
+   bindingComplete() {
+      setTimeout(() => {
+         this.myChairHeadersTable.current!.sortBy("chairHeader", "asc");
+      }, 2000);
+   }
 
    onCollectionUpdate = (querySnapshot: any) => {
       // console.log(`In onCollectionUpdate() <${util.inspect(querySnapshot)}>`);
@@ -256,7 +261,7 @@ class ShowChairHeaders extends React.PureComponent<
                   height: any
                ): void => {
                   let theKey = this.myChairHeadersTable.current!.getCellValue(
-                     row,
+                     row + 1,
                      "key"
                   );
                   this.modifyKey = theKey;
@@ -298,6 +303,7 @@ class ShowChairHeaders extends React.PureComponent<
                columnsReorder={true}
                columnsResize={true}
                editable={true}
+               onBindingComplete={this.bindingComplete}
                key={this.numUpdates} // this forces a re-render of the table!
                editSettings={this.state.editSettings}
                pageSize={100}
@@ -339,14 +345,9 @@ class ShowChairHeaders extends React.PureComponent<
          this.myChairHeadersTable.current!.removeFilter("chairHeader");
          this.boundIndex = e.args.boundIndex;
          setTimeout(() => {
-            this.myChairHeadersTable.current!.ensureRowVisible(
-               e.args.boundIndex
-            );
+            this.myChairHeadersTable.current!.ensureRowVisible(e.args.index);
          }, 300);
-         this.myChairHeadersTable.current!.beginCellEdit(
-            e.args.boundIndex,
-            "keep"
-         );
+         this.myChairHeadersTable.current!.beginCellEdit(e.args.index, "keep");
       } else {
          this.props.myPanel.current!.append(
             `<p style="color:red;font-size:10px;">${e.args.row.chairHeader} is mandatory; it cannot be edited.</p>`
