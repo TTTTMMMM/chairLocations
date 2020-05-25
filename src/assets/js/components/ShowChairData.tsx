@@ -200,7 +200,7 @@ class ShowChairData extends React.PureComponent<
                DEVICEID: string;
                FNAME: string;
                GPS_MPH: number;
-               GPS_ISCELLTOWER: boolean;
+               GPS_ISCELLTOWER: string;
                ID: string;
                IMEI: string;
                LATITUDE: string;
@@ -288,7 +288,7 @@ class ShowChairData extends React.PureComponent<
                { name: "DEVICEID", type: "string" },
                { name: "FNAME", type: "string" },
                { name: "GPS_MPH", type: "number" },
-               { name: "GPS_ISCELLTOWER", type: "boolean" },
+               { name: "GPS_ISCELLTOWER", type: "string" },
                { name: "ID", type: "string" },
                { name: "IMEI", type: "string" },
                { name: "LATITUDE", type: "string" },
