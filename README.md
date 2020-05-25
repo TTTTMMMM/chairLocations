@@ -319,7 +319,7 @@ export interface UserObj {
 1. Change oil in John Deere
 2. Saw wood down to size
 3. Split wood
-4. Mount engine on splitter
+4. Change oil in truck
 
 ---
 
@@ -399,9 +399,9 @@ const { auth2, setAuth2, setIsSignedIn } = this.context; <-- get any property yo
      use the Context Provider
   3. In the consumers:
       a) import the context file
-      b) after the constructor, static contextType = AuthContext;
-      c) access all the properties in the context by destructuring the this.context object
-        (e.g., const { setAuth2, setIsSignedIn } = this.context; gets access to those
+      b) in the body of the consumer, declare a static variable named contextType: static contextType = AuthContext;
+      c) access all the properties in the context by destructuring the 'this.context' object
+        (e.g., by saying 'const { setAuth2, setIsSignedIn } = this.context', you get access to those
         two properties (which happnen to be functions, which can be used to change the props)
 ```
 

@@ -25,7 +25,11 @@ class HeaderComponent extends Component<
          case Roles.notloggedin:
             return (
                <header>
-                  <section></section>
+                  <section>
+                     <a href={"https://www.sandhelper.com/"} target={"_blank"}>
+                        <img src={"../../../images/longMascot.png"} />
+                     </a>
+                  </section>
                   <section></section>
                   <LoginLogout logout={this.props.logout}></LoginLogout>
                </header>
@@ -34,7 +38,11 @@ class HeaderComponent extends Component<
          case Roles.maintenance:
             return (
                <header>
-                  <section></section>
+                  <section>
+                     <a href={"https://www.sandhelper.com/"} target={"_blank"}>
+                        <img src={"../../../images/longMascot.png"} />
+                     </a>
+                  </section>
                   <section>
                      <nav>
                         <ul>
@@ -60,7 +68,11 @@ class HeaderComponent extends Component<
          case Roles.lurker:
             return (
                <header>
-                  <section></section>
+                  <section>
+                     <a href={"https://www.sandhelper.com/"} target={"_blank"}>
+                        <img src={"../../../images/longMascot.png"} />
+                     </a>
+                  </section>
                   <section>
                      <nav>
                         <ul>
@@ -86,7 +98,11 @@ class HeaderComponent extends Component<
          case Roles.uploader:
             return (
                <header>
-                  <section></section>
+                  <section>
+                     <a href={"https://www.sandhelper.com/"} target={"_blank"}>
+                        <img src={"../../../images/longMascot.png"} />
+                     </a>
+                  </section>
                   <section>
                      <nav>
                         <ul>
@@ -148,7 +164,11 @@ class HeaderComponent extends Component<
          case Roles.admin:
             return (
                <header>
-                  <section></section>
+                  <section>
+                     <a href={"https://www.sandhelper.com/"} target={"_blank"}>
+                        <img src={"../../../images/longMascot.png"} />
+                     </a>
+                  </section>
                   <section>
                      <nav>
                         <ul>
@@ -210,7 +230,11 @@ class HeaderComponent extends Component<
          default:
             return (
                <header>
-                  <section></section>
+                  <section>
+                     <a href={"https://www.sandhelper.com/"} target={"_blank"}>
+                        <img src={"../../../images/longMascot.png"} />
+                     </a>
+                  </section>
                   <section></section>
                   <LoginLogout logout={this.props.logout}></LoginLogout>
                </header>

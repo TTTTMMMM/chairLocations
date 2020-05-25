@@ -1,6 +1,11 @@
 // Server-side code follows:
 // this video says it all: Controlling Data Access Using Firebase Auth Custom Claims (Firecasts) https://www.youtube.com/watch?v=3hj_r_N0qMs
 // Bottom line: you can set a user to be a superuser via the code below. You have to call the admin.auth().setCustomUserClaims() function from a firebase function, not from the client. So, I made this function, called it from Postman (after grabbing my googlecredential), and successfully deemed junque135 as a superuser. Then I removed access to this app by "turning off" the route so no one else could use it. If I need to make someone else a superuser, I'll need to "turn on" the route and call it from Postman once more, with the would-be superuser's email address. You can use the saved Postman function call, saved under grantCustomClaims. You just need to get a current google credential (via Google Chrome dev console > network > sniff any call to the chairLoc api and copy and paste the googlecred into the Headers section of grantCustomClaims fetch.) After setting this custom claim on the user, I can restrict data access from within Firebase rules, since the custom claim is available there. Look at the Firebase rules for the chairLoc project to see how it's implemented. And it works!
+// BTW, this has been overtaken by events. I now use specify a user's access levels when I create the user, and I
+// assign them to his customClaims when he logs in. The "problem" with this approach is that you can't set the
+// claim until he's a firebase user (you need his firebase uid), so I set them each time he logs in,
+// which isn't the greatest, but at least I don't have to wait for him to login, then set them.
+// (This happens in testTicket.js)
 
 // eslint-disable-next-line consistent-return
 exports.grantCustomClaims = async (req, res, functions, admin) => {

@@ -1,3 +1,5 @@
+// https://react-google-maps-api-docs.netlify.app/
+
 import React, { useState, useEffect } from "react";
 import {
    GoogleMap,
@@ -90,7 +92,7 @@ const MapContainer = (inputObj: Array<IWLocObj>, myPanel: any) => {
             onLoad={(map) => onMapLoad(map)}
             options={{
                streetViewControl: false,
-               mapTypeControl: false,
+               mapTypeControl: true,
             }}
             onBoundsChanged={() => {
                mapRef && mapRef.panToBounds(EAST_COAST_BOUNDS, 20);

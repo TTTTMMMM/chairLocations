@@ -13,6 +13,8 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import "../../styles/index.css";
 
 import MapContainer from "./MapContainer";
+import cellRendererCellTower from "../renderers/cellRendererCellTower";
+
 import { AuthContext } from "../contexts/AuthContext";
 
 import firebase from "firebase/app";
@@ -402,12 +404,13 @@ class ShowChairData extends React.PureComponent<
                editable: false,
             },
             {
-               text: "CELL TOW.",
+               text: "Fm. Sat.",
                datafield: "GPS_ISCELLTOWER",
                width: columnWidths[14][1],
                align: "center",
                cellsalign: "center",
                editable: false,
+               cellsrenderer: cellRendererCellTower,
             },
             {
                text: "Chair",
