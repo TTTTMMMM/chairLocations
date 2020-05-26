@@ -44,6 +44,7 @@ body > div > header:nth-of-type(1) > section:nth-of-type(1) {
    justify-content: space-around;
    width: 15vw;
    margin-top: -10px;
+   margin-left: 15px;
 }
 
 /* header 1 > section 2  */

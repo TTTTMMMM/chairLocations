@@ -24,16 +24,8 @@ import "firebase/auth";
 
 import { divFlexRow } from "../../styles/reactStyling";
 import { IWLocObj } from "../configs/mapConfigs/mapTypes";
-import {
-   CallingFrom,
-   RangeObject,
-   GeoPoint,
-   DateGeoObj,
-   DistanceObj,
-   CumDistDaily,
-   Roles,
-} from "../misc/chairLocTypes";
-import { calculateDistance, sumDistance } from "../misc/calculateDistance";
+import { CallingFrom, RangeObject, Roles } from "../misc/chairLocTypes";
+import calcDist from "../components/componentHandlers/calcDist";
 
 interface MyState extends IDataTableProps {
    chairDataWatch?: any;
@@ -64,6 +56,8 @@ class ShowChairData extends React.PureComponent<
    chairY: Array<IWLocObj> = [];
    chairYBackup: Array<IWLocObj> = [];
    selectedMappings: Array<IWLocObj> = [];
+   calcDistArray: Array<IWLocObj> = [];
+   myCheckBoxIsChecked: boolean = false;
    static contextType = AuthContext;
 
    private myChairLocTable = React.createRef<JqxDataTable>();
@@ -637,79 +631,19 @@ class ShowChairData extends React.PureComponent<
    }
 
    private calcDistButtonClicked() {
-      if (this.props.callingFrom === CallingFrom.chairResultsSide) {
-         let prevGeoPoint: GeoPoint = {
-            lat: this.chairYBackup[0].location.lat,
-            lng: this.chairYBackup[0].location.lng,
-         };
-         let geo1: DateGeoObj = {
-            geoDate: this.chairYBackup[0].updatetime.slice(0, 10),
-            geo: prevGeoPoint,
-         };
-         let cumulativeDistanceObj: DistanceObj = {
-            inMeters: 0,
-            inFeet: 0,
-            inMiles: 0,
-         };
-         let cumDistDaily: CumDistDaily = {
-            dailyDate: this.chairYBackup[0].updatetime.slice(0, 10),
-            distObj: cumulativeDistanceObj,
-         };
-         // ---- loop through each document in resultset from firebase
-         this.chairYBackup.forEach((x) => {
-            let endGeoPoint: GeoPoint = {
-               lat: x.location.lat,
-               lng: x.location.lng,
-            };
-            let geo2: DateGeoObj = {
-               geoDate: x.updatetime.slice(0, 10),
-               geo: endGeoPoint,
-            };
-            let pointToPointDist: DistanceObj = calculateDistance(
-               geo1.geo,
-               geo2.geo
-            );
-            cumulativeDistanceObj = sumDistance(
-               cumulativeDistanceObj,
-               pointToPointDist
-            );
-            cumDistDaily.distObj = Object.assign({}, cumulativeDistanceObj);
-            if (cumDistDaily.dailyDate === geo2.geoDate) {
-               prevGeoPoint = {
-                  lat: endGeoPoint.lat,
-                  lng: endGeoPoint.lng,
-               };
-               geo1 = {
-                  geoDate: geo2.geoDate,
-                  geo: prevGeoPoint,
-               };
-            } else {
-               this.props.myPanel.current!.append(
-                  `<p style="color:#310DF3 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
-               );
-               prevGeoPoint = {
-                  lat: endGeoPoint.lat,
-                  lng: endGeoPoint.lng,
-               };
-               geo1 = {
-                  geoDate: geo2.geoDate,
-                  geo: prevGeoPoint,
-               };
-               cumulativeDistanceObj = {
-                  inMeters: 0,
-                  inFeet: 0,
-                  inMiles: 0,
-               };
-               cumDistDaily = {
-                  dailyDate: geo2.geoDate,
-                  distObj: cumulativeDistanceObj,
-               };
-            }
-         });
+      this.calcDistArray.length = 0;
+      if (this.myCheckBoxIsChecked) {
+         this.calcDistArray.push(...this.selectedMappings);
          this.props.myPanel.current!.append(
-            `<p style="color:#310DF3 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+            `<p style="color:#286107 ; font-size:11px;">Calculating distance of selectedMappings, containing ${this.calcDistArray.length} geo points.</p>`
+         );
+      } else {
+         this.calcDistArray.push(...this.chairYBackup);
+         this.props.myPanel.current!.append(
+            `<p style="color:#286107 ; font-size:11px;">Calculating distance of entire geo pull, containing ${this.calcDistArray.length} points.</p>`
          );
       }
+      calcDist(this.calcDistArray, this.props.callingFrom, this.props.myPanel);
    }
 
    private checkedEvent() {
@@ -737,8 +671,10 @@ class ShowChairData extends React.PureComponent<
             };
             this.selectedMappings.push(oneLoc);
          });
+         this.myCheckBoxIsChecked = true;
       } else {
          this.myCheckBox.current!.uncheck();
+         this.myCheckBoxIsChecked = false;
          this.props.myPanel.current!.append(
             `<p style="color:#F61D21 ; font-size:11px;"> Select row(s), then check 'Map Selection' button.</p>`
          );
@@ -746,7 +682,7 @@ class ShowChairData extends React.PureComponent<
    }
 
    private uncheckedEvent(event: any): void {
-      console.log("in uncheckedEvent()");
+      this.myCheckBoxIsChecked = false;
    }
 }
 
