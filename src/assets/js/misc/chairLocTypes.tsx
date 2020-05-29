@@ -12,7 +12,7 @@ export interface AssetRangeQO {
    asset: string | undefined;
    range: RangeObject;
 }
-export interface WeekReportRangeQO {
+export interface ViewReportRangeQO {
    assets: Array<string>;
    range: RangeObject;
 }

@@ -3,27 +3,27 @@ import { divFlexRowL } from "../../../styles/reactStyling";
 import { querySideStyling } from "../../../styles/reactStyling";
 import { resultsSideStyling } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
-import WeekQuerySide from "./WeekQuerySide";
-import WeekResultsSide from "./WeekResultsSide";
-import { WeekReportRangeQO } from "../../misc/chairLocTypes";
+import ViewQuerySide from "./ViewQuerySide";
+import ViewResultsSide from "./ViewResultsSide";
+import { ViewReportRangeQO } from "../../misc/chairLocTypes";
 
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
-class WeekQueryComponent extends Component<{}, { wrrqo: WeekReportRangeQO }> {
+class ViewQueryComponent extends Component<{}, { vrrqo: ViewReportRangeQO }> {
    private clearConsoleButton = React.createRef<JqxButton>();
    private myPanel = React.createRef<JqxPanel>();
 
    constructor(props: {}) {
       super(props);
-      this.getWeekQueryBodyContent = this.getWeekQueryBodyContent.bind(this);
+      this.getViewQueryBodyContent = this.getViewQueryBodyContent.bind(this);
       this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
          this
       );
       this.state = {
-         wrrqo: {
+         vrrqo: {
             assets: [],
             range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          },
@@ -31,28 +31,28 @@ class WeekQueryComponent extends Component<{}, { wrrqo: WeekReportRangeQO }> {
    }
 
    // function callback from WeekQuerySide.tsx, which is used to pass back the assetRangeQueryObject
-   myCallBack = (wrrqo: WeekReportRangeQO) => {
-      this.setState({ wrrqo: wrrqo });
+   myCallBack = (vrrqo: ViewReportRangeQO) => {
+      this.setState({ vrrqo: vrrqo });
       this.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">${wrrqo.assets[0]}</p>`
+         `<p style="color:#286107 ; font-size:11px;">${vrrqo.assets[0]}</p>`
       );
       this.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">${wrrqo.range.startDate}</p>`
+         `<p style="color:#286107 ; font-size:11px;">${vrrqo.range.startDate}</p>`
       );
       this.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">${wrrqo.range.endDate}</p>`
+         `<p style="color:#286107 ; font-size:11px;">${vrrqo.range.endDate}</p>`
       );
    };
 
-   getWeekQueryBodyContent() {
+   getViewQueryBodyContent() {
       return (
          <>
             <div style={divFlexRowL}>
                <section className={"queryside"} style={querySideStyling}>
-                  <WeekQuerySide
-                     weekQueryComponentCallback={this.myCallBack}
+                  <ViewQuerySide
+                     viewQueryComponentCallback={this.myCallBack}
                      myPanel={this.myPanel}
-                  ></WeekQuerySide>
+                  ></ViewQuerySide>
                   <div>
                      <JqxPanel
                         ref={this.myPanel}
@@ -76,17 +76,17 @@ class WeekQueryComponent extends Component<{}, { wrrqo: WeekReportRangeQO }> {
                   </div>
                </section>
                <section className={"resultsside"} style={resultsSideStyling}>
-                  <WeekResultsSide
-                     wrrqo={this.state.wrrqo}
+                  <ViewResultsSide
+                     vrrqo={this.state.vrrqo}
                      myPanel={this.myPanel}
-                  ></WeekResultsSide>
+                  ></ViewResultsSide>
                </section>
             </div>
          </>
       );
    }
    render() {
-      return <>{this.getWeekQueryBodyContent()}</>;
+      return <>{this.getViewQueryBodyContent()}</>;
    }
 
    private clearConsoleButtonClicked() {
@@ -94,4 +94,4 @@ class WeekQueryComponent extends Component<{}, { wrrqo: WeekReportRangeQO }> {
    }
 }
 
-export default WeekQueryComponent;
+export default ViewQueryComponent;

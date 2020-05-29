@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { Route } from "react-router-dom";
 import "../../../styles/index.css";
 import ReportingSubheader from "../ReportEmComponents/ReportingSubheader";
-import WeekQueryComponent from "../ReportEmComponents/WeekQueryComponent";
-import MonthQueryComponent from "../ReportEmComponents/MonthQueryComponent";
+import ViewQueryComponent from "../ReportEmComponents/ViewQueryComponent";
+import GenerateQueryComponent from "../ReportEmComponents/GenerateQueryComponent";
 
 import firebase from "firebase/app";
 import "firebase/database";
@@ -69,26 +69,28 @@ class ReportingBody extends Component<{ match: any }, {}> {
                ></ReportingSubheader>
                <Switch>
                   <Route
-                     path={`${this.props.match.path}/fortheweek`}
+                     exact
+                     path={`${this.props.match.path}/view`}
                      render={(props) =>
                         isSignedIn ? (
-                           <WeekQueryComponent></WeekQueryComponent>
+                           <ViewQueryComponent></ViewQueryComponent>
                         ) : (
                            <Redirect to="/" />
                         )
                      }
                   />
                   <Route
-                     path={`${this.props.match.path}/forthemonth`}
+                     exact
+                     path={`${this.props.match.path}/generate`}
                      render={(props) =>
                         isSignedIn ? (
-                           <MonthQueryComponent></MonthQueryComponent>
+                           <GenerateQueryComponent></GenerateQueryComponent>
                         ) : (
                            <Redirect to="/" />
                         )
                      }
                   />
-                  <Redirect to="/" />
+                  <Redirect to="/401" />
                </Switch>
             </Router>
          </>

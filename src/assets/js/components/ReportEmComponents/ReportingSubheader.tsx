@@ -21,26 +21,26 @@ class ReportingSubheader extends Component<{ match: any }, {}> {
                   <ul>
                      <li>
                         <NavLink
-                           to={`${this.props.match.url}/fortheweek`}
+                           to={`${this.props.match.url}/view`}
                            activeStyle={{
                               border: "solid hsla(12, 95%, 47%, 0.98) 2px ",
                               paddingTop: "3px",
                               paddingLeft: "3px",
                            }}
                         >
-                           For the Week
+                           View
                         </NavLink>
                      </li>
                      <li>
                         <NavLink
-                           to={`${this.props.match.url}/forthemonth`}
+                           to={`${this.props.match.url}/generate`}
                            activeStyle={{
                               border: "solid hsla(12, 95%, 47%, 0.98) 2px ",
                               paddingTop: "3px",
                               paddingLeft: "3px",
                            }}
                         >
-                           For the Month
+                           Generate
                         </NavLink>
                      </li>
                   </ul>

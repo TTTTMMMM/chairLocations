@@ -6,7 +6,7 @@ import "../../../styles/index.css";
 import MonthQuerySide from "./MonthQuerySide";
 import MonthResultsSide from "./MonthResultsSide";
 
-class MonthQueryComponent extends Component<{}, {}> {
+class GenerateQueryComponent extends Component<{}, {}> {
    constructor(props: {}) {
       super(props);
       this.getRentalAgentQueryBodyContent = this.getRentalAgentQueryBodyContent.bind(
@@ -34,4 +34,4 @@ class MonthQueryComponent extends Component<{}, {}> {
    }
 }
 
-export default MonthQueryComponent;
+export default GenerateQueryComponent;

@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
-// import JqxCalendar, {
-//    ICalendarProps,
-// } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxcalendar";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
+import moment from "moment";
 
 import firebase from "firebase/app";
 import "firebase/database";
@@ -15,17 +13,13 @@ import "firebase/auth";
 
 import { divFlexCol } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
-import { RangeObject, WeekReportRangeQO } from "../../misc/chairLocTypes";
+import { RangeObject, ViewReportRangeQO } from "../../misc/chairLocTypes";
 import { AuthContext } from "../../contexts/AuthContext";
 import { months } from "../../misc/months";
 
-// interface MyState extends ICalendarProps {
-//    sourceChair: Array<string>;
-//    alreadyGotInfo: boolean;
-// }
-class WeekQuerySide extends Component<
+class ViewQuerySide extends Component<
    {
-      weekQueryComponentCallback: any;
+      viewQueryComponentCallback: any;
       myPanel: any;
    },
    // MyState
@@ -43,11 +37,10 @@ class WeekQuerySide extends Component<
    private monthInput = React.createRef<JqxInput>();
    private yearInput = React.createRef<JqxInput>();
    private enterButton = React.createRef<JqxButton>();
-   // private myCalendar = React.createRef<JqxCalendar>();
 
    static contextType = AuthContext; // it's a law that you must call it contextType!
 
-   constructor(props: { weekQueryComponentCallback: any; myPanel: any }) {
+   constructor(props: { viewQueryComponentCallback: any; myPanel: any }) {
       super(props);
       this.getWeekQueryContent = this.getWeekQueryContent.bind(this);
       this.chairCollection = "";
@@ -62,17 +55,11 @@ class WeekQuerySide extends Component<
    }
 
    public componentDidMount() {
-      // let startOf1WeekBack = moment().day(-5).startOf("day");
-      // let today = moment();
-      // this.myCalendar.current!.setRange(
-      //    startOf1WeekBack.toDate(),
-      //    today.toDate()
-      // );
-      // this.myCalendar.current!.setMinDate(new Date("March 1, 2020"));
-      // this.myCalendar.current!.setMaxDate(new Date());
       this.setState({ sourceMonth: months });
+
       let year = 2019;
-      while (year++ <= 2070) {
+      var now = parseInt(moment().format("YYYY"));
+      while (year++ < now) {
          this.years.push(year.toString());
       }
       this.setState({ sourceYear: this.years });
@@ -181,7 +168,6 @@ class WeekQuerySide extends Component<
                      theme={"fresh"}
                   />
                </div>
-
                <JqxButton
                   ref={this.enterButton}
                   onClick={this.enterButtonClicked}
@@ -196,7 +182,7 @@ class WeekQuerySide extends Component<
                      cursor: "pointer",
                   }}
                >
-                  Generate Distance Report
+                  View Distance Report
                </JqxButton>
             </div>
          </>
@@ -205,20 +191,17 @@ class WeekQuerySide extends Component<
 
    render() {
       const { isLoggedInToFirebase } = this.context;
-
       if (isLoggedInToFirebase && !this.state.alreadyGotInfo) {
          this.getChairAssetsInfo();
       }
-
       return <>{this.getWeekQueryContent()}</>;
    }
 
    private enterButtonClicked() {
-      // let range: any = this.myCalendar.current!.getRange();
       let chairAsset: string = this.chairInput.current!.val();
       let chairAssetArray: Array<string> = [];
 
-      chairAsset.length > 0
+      chairAsset.length > 5
          ? chairAssetArray.push(chairAsset)
          : chairAssetArray.splice(
               0,
@@ -234,31 +217,12 @@ class WeekQuerySide extends Component<
          endDate: `${year}-${month}-31`,
       };
       rangeObj.endDate = rangeObj.endDate.concat("T23:59:59Z");
-      let wrrqo: WeekReportRangeQO = {
+      let vrrqo: ViewReportRangeQO = {
          assets: chairAssetArray,
          range: rangeObj,
       };
-      this.props.weekQueryComponentCallback(wrrqo);
+      this.props.viewQueryComponentCallback(vrrqo);
    }
-
-   // private thisWeekClicked() {
-   //    let thisWeekStart = moment().startOf("week");
-   //    let thisWeekEnd = moment();
-
-   //    this.myCalendar.current!.setRange(
-   //       thisWeekStart.toDate(),
-   //       thisWeekEnd.toDate()
-   //    );
-   // }
 }
 
-export default WeekQuerySide;
-
-// <JqxCalendar
-// ref={this.myCalendar}
-// showOtherMonthDays={true}
-// showWeekNumbers={true}
-// theme={"fresh"}
-// width={270}
-// height={270}
-// />
+export default ViewQuerySide;
