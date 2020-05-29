@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ConfigGear from "./ConfigGear";
+import ConfigGear from "./ConfigComponents/ConfigGear";
 import { AuthContext } from "../contexts/AuthContext";
 
 class LoginLogout extends Component<{ logout: any }, {}> {

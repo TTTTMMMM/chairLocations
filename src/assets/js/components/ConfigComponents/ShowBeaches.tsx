@@ -15,16 +15,16 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
-import "../configs/firebaseInit";
+import "../../configs/firebaseInit";
 
-import * as rs from "../../styles/reactStyling";
+import * as rs from "../../../styles/reactStyling";
 
-import addBeach from "../fetches/addBeach";
-import removeBeach from "../fetches/removeBeach";
+import addBeach from "../../fetches/addBeach";
+import removeBeach from "../../fetches/removeBeach";
 
-import cellRendererDelete from "../renderers/cellRendererDelete";
+import cellRendererDelete from "../../renderers/cellRendererDelete";
 
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 interface MyState extends IDataTableProps {
    beachesWatch?: any;

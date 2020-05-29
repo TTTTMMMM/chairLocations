@@ -14,6 +14,7 @@ import FourOOnePage from "./FourOOnePage";
 
 import UploadBody from "../components/BodyComponents/UploadBody";
 import MappingBody from "../components/BodyComponents/MappingBody";
+import ReportingBody from "../components/BodyComponents/ReportingBody";
 import MaintenanceBody from "../components/BodyComponents/MaintenanceBody";
 import ConfigBody from "../components/BodyComponents/ConfigBody";
 import { AuthContext } from "../contexts/AuthContext";
@@ -160,6 +161,16 @@ class MainPage extends Component<{}, {}> {
                   render={(props) =>
                      isSignedIn ? (
                         <MappingBody match={props.match}></MappingBody>
+                     ) : (
+                        <Redirect to="/" />
+                     )
+                  }
+               />
+               <Route
+                  path="/reporting"
+                  render={(props) =>
+                     isSignedIn ? (
+                        <ReportingBody match={props.match}></ReportingBody>
                      ) : (
                         <Redirect to="/" />
                      )

@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import "../../../styles/index.css";
 import { Roles } from "../../misc/chairLocTypes";
-import ConfigContainer from "../ConfigContainer";
+import ConfigContainer from "../ConfigComponents/ConfigContainer";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import firebase from "firebase/app";

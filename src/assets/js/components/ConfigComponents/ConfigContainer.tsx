@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import AddDropUser from "./AddDropUser";
+import AddDropUser from "../AddDropUser";
 import ShowBeaches from "./ShowBeaches";
 // @ts-ignore
-import { flexColContainer } from "../../styles/reactStyling";
+import { flexColContainer } from "../../../styles/reactStyling";
 // @ts-ignore
-import { flexRowContainer } from "../../styles/reactStyling";
+import { flexRowContainer } from "../../../styles/reactStyling";
 
-import { flexRowSplit } from "../../styles/reactStyling";
-import { divFlexRow } from "../../styles/reactStyling";
+import { flexRowSplit } from "../../../styles/reactStyling";
+import { divFlexRow } from "../../../styles/reactStyling";
 import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 

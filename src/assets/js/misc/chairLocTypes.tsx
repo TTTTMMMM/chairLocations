@@ -12,6 +12,10 @@ export interface AssetRangeQO {
    asset: string | undefined;
    range: RangeObject;
 }
+export interface WeekReportRangeQO {
+   assets: Array<string>;
+   range: RangeObject;
+}
 
 export interface AssetLabelQueryType {
    ASSETLABEL?: string | undefined;
@@ -71,6 +75,8 @@ export let accessPrivsObj: any = {
 export enum CallingFrom {
    cleanAndUploadFiles = "cleanAndUploadFiles",
    chairResultsSide = "chairResultsSide",
+   weekResultsSide = "weekResultsSide",
+   monthResultsSide = "monthResultsSide",
 }
 
 export interface RangeObject {
