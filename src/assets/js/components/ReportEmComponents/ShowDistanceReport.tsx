@@ -27,9 +27,8 @@ import {
 } from "../../misc/chairLocTypes";
 
 interface MyState extends IDataTableProps {
-   weeklyReportWatch?: any;
+   reportWatch?: any;
    subscribedToDistanceReport: boolean;
-   displayTableMode?: boolean;
    assets: Array<string>;
    range: RangeObject;
 }
@@ -71,7 +70,7 @@ class ShowDistanceReport extends React.PureComponent<
 
       this.state = {
          subscribedToDistanceReport: false,
-         weeklyReportWatch: [],
+         reportWatch: [],
          editSettings: {
             cancelOnEsc: true,
             editOnDoubleClick: false,
@@ -82,7 +81,6 @@ class ShowDistanceReport extends React.PureComponent<
             saveOnPageChange: true,
             saveOnSelectionChange: true,
          },
-         displayTableMode: true,
          range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          assets: [],
       };
@@ -90,19 +88,22 @@ class ShowDistanceReport extends React.PureComponent<
 
    subscribeToDistanceReport() {
       if (this.props.assets.length > 0) {
-         // this.setState({ assets: this.props.assets });
-         // this.setState({ range: this.props.range });
-         console.log(`subscribeToDistanceReport()`);
-         console.dir(this.props.assets);
-         console.dir(this.props.range);
+         this.setState({ assets: this.props.assets });
+         this.setState({ range: this.props.range });
+         this.setState({ reportWatch: [] });
+         this.numUpdates = 0;
+         // console.dir(this.props.assets);
+         // console.dir(this.props.range);
+         let period = this.props.range.startDate
+            .split("-")[0]
+            .concat(this.props.range.startDate.split("-")[1]);
          this.props.assets.forEach((asset) => {
+            // this.unsubFromDistanceReport();
             this.distReport = firebase
                .firestore()
-               .collection(
-                  `distReport_${this.props.range.startDate.split("-")[0]}`
-               )
+               .collection(`distReport`)
                .where("assetlabel", "==", asset)
-               .where("month", "==", this.props.range.startDate.split("-")[1]);
+               .where("period", "==", period);
             this.unsubFromDistanceReport = this.distReport.onSnapshot(
                this.onCollectionUpdate
             );
@@ -123,13 +124,13 @@ class ShowDistanceReport extends React.PureComponent<
    onCollectionUpdate = (querySnapshot: any) => {
       // console.log(`In onCollectionUpdate() <${util.inspect(querySnapshot)}>`);
       this.numUpdates!++;
-      let weeklyReportWatch: any[] = [];
+      let reportWatch: any[] = [];
       this.numRows = 0;
       querySnapshot.forEach(
          (doc: {
             data: () => {
                assetlabel: string;
-               month: string;
+               period: string;
                d01: DistanceObj;
                d02: DistanceObj;
                d03: DistanceObj;
@@ -166,7 +167,7 @@ class ShowDistanceReport extends React.PureComponent<
          }) => {
             const {
                assetlabel,
-               month,
+               period,
                d01,
                d02,
                d03,
@@ -199,11 +200,11 @@ class ShowDistanceReport extends React.PureComponent<
                d30,
                d31,
             } = doc.data();
-            weeklyReportWatch.push({
+            reportWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
                assetlabel,
-               month,
+               period,
                d01,
                d02,
                d03,
@@ -239,25 +240,22 @@ class ShowDistanceReport extends React.PureComponent<
          }
       );
       this.setState({
-         weeklyReportWatch: weeklyReportWatch,
+         reportWatch: this.state.reportWatch.concat(reportWatch),
       });
       this.numRows++;
       // console.log(
-      //    `%c ChairDataWatch<${this.numUpdates}>`,
-      //    "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
+      //    `%c reportWatch<${this.numUpdates}>`,
+      //    "background:white; border: 3px solid #7713AD; margin: 2px; padding: 3px; color: #7713AD;"
       // );
    };
 
    showReportContent() {
       const { isLoggedInToFirebase } = this.context;
-      console.log(
-         `showReportContent(), isLoggedInToFirebase[${isLoggedInToFirebase}]`
-      );
       if (isLoggedInToFirebase) {
          const source = {
             datafields: [
                { name: "assetlabel", type: "string" },
-               { name: "month", type: "string" },
+               { name: "period", type: "string" },
                { name: "d01", type: "string" },
                { name: "d02", type: "string" },
                { name: "d03", type: "string" },
@@ -294,43 +292,49 @@ class ShowDistanceReport extends React.PureComponent<
             dataType: "json",
             localData: () => {
                let data: any[] = [];
+               this.columns!.length = 0;
                let i = 0;
-               console.log(`in localData()`);
-               this.state.weeklyReportWatch.forEach((val: any) => {
+               this.state.reportWatch.forEach((val: any) => {
                   data[i++] = {
                      key: val.key,
                      assetlabel: val.assetlabel,
-                     d01: val.d01.feet,
-                     d02: val.d02.feet,
-                     d03: val.d03.feet,
-                     d04: val.d04.feet,
-                     d05: val.d05.feet,
-                     d06: val.d06.feet,
-                     d07: val.d07.feet,
-                     d08: val.d08.feet,
-                     d09: val.d09.feet,
-                     d10: val.d10.feet,
-                     d11: val.d11.feet,
-                     d12: val.d12.feet,
-                     d13: val.d13.feet,
-                     d14: val.d14.feet,
-                     d15: val.d15.feet,
-                     d16: val.d16.feet,
-                     d17: val.d17.feet,
-                     d18: val.d18.feet,
-                     d19: val.d19.feet,
-                     d20: val.d20.feet,
-                     d21: val.d21.feet,
-                     d22: val.d22.feet,
-                     d23: val.d23.feet,
-                     d24: val.d24.feet,
-                     d25: val.d25.feet,
-                     d26: val.d26.feet,
-                     d27: val.d27.feet,
-                     d28: val.d28.feet,
-                     d29: val.d29.feet,
-                     d30: val.d30.feet,
-                     d31: val.d31.feet,
+                     period: val.period,
+                     d01:
+                        val.d01 &&
+                        val.d01.inFeet.concat(` (${val.d01.inMiles})`),
+                     d02:
+                        val.d02 &&
+                        val.d02.inFeet.concat(` (${val.d02.inMiles})`),
+
+                     d03: val.d03 && val.d03.inFeet,
+                     d04: val.d04 && val.d04.inFeet,
+                     d05: val.d05 && val.d05.inFeet,
+                     d06: val.d06 && val.d06.inFeet,
+                     d07: val.d07 && val.d07.inFeet,
+                     d08: val.d08 && val.d08.inFeet,
+                     d09: val.d09 && val.d09.inFeet,
+                     d10: val.d10 && val.d10.inFeet,
+                     d11: val.d11 && val.d11.inFeet,
+                     d12: val.d12 && val.d12.inFeet,
+                     d13: val.d13 && val.d13.inFeet,
+                     d14: val.d14 && val.d14.inFeet,
+                     d15: val.d15 && val.d15.inFeet,
+                     d16: val.d16 && val.d16.inFeet,
+                     d17: val.d17 && val.d17.inFeet,
+                     d18: val.d18 && val.d18.inFeet,
+                     d19: val.d19 && val.d19.inFeet,
+                     d20: val.d20 && val.d20.inFeet,
+                     d21: val.d21 && val.d21.inFeet,
+                     d22: val.d22 && val.d22.inFeet,
+                     d23: val.d23 && val.d23.inFeet,
+                     d24: val.d24 && val.d24.inFeet,
+                     d25: val.d25 && val.d25.inFeet,
+                     d26: val.d26 && val.d26.inFeet,
+                     d27: val.d27 && val.d27.inFeet,
+                     d28: val.d28 && val.d28.inFeet,
+                     d29: val.d29 && val.d29.inFeet,
+                     d30: val.d30 && val.d30.inFeet,
+                     d31: val.d31 && val.d31.inFeet,
                   };
                   this.numRows!++;
                });
@@ -341,44 +345,22 @@ class ShowDistanceReport extends React.PureComponent<
          // --
          const columnWidths = [
             ["ASSETLABEL", 80],
-            ["d01", 20],
-            // ["02", 20],
-            // ["03", 20],
-            // ["04", 20],
-            // ["05", 20],
-            // ["06", 20],
-            // ["07", 20],
-            // ["08", 20],
-            // ["09", 20],
-            // ["10", 20],
-            // ["11", 20],
-            // ["12", 20],
-            // ["13", 20],
-            // ["14", 20],
-            // ["15", 20],
-            // ["16", 20],
-            // ["17", 20],
-            // ["18", 20],
-            // ["19", 20],
-            // ["20", 20],
-            // ["21", 20],
-            // ["22", 20],
-            // ["23", 20],
-            // ["24", 20],
-            // ["25", 20],
-            // ["26", 20],
-            // ["27", 20],
-            // ["28", 20],
-            // ["29", 20],
-            // ["30", 20],
-            // ["31", 20],
+            ["d01", 56],
          ];
          this.columns!.push({
             text: "Chair",
             width: columnWidths[0][1],
-            datafield: "ASSETLABEL",
+            datafield: "assetlabel",
             align: "center",
-            cellclassname: "ASSETLABELClass",
+            cellclassname: "assetlabelClass",
+            editable: false,
+         });
+         this.columns!.push({
+            text: "Period",
+            width: columnWidths[0][1],
+            datafield: "period",
+            align: "center",
+            hidden: true,
             editable: false,
          });
          let i = 0;
@@ -396,8 +378,6 @@ class ShowDistanceReport extends React.PureComponent<
                editable: false,
             });
          }
-         console.log(`this.columns:`);
-         console.dir(this.columns);
          return (
             <>
                <JqxDataTable
@@ -429,7 +409,7 @@ class ShowDistanceReport extends React.PureComponent<
                      theme={"fresh"}
                      textPosition={"center"}
                   >
-                     Output CSV
+                     Output CSV File
                   </JqxButton>
                </div>
             </>
@@ -441,10 +421,12 @@ class ShowDistanceReport extends React.PureComponent<
 
    render() {
       const { isLoggedInToFirebase, userObjFmServer } = this.context;
-      console.log(
-         `render(), isLoggedInToFirebase[${isLoggedInToFirebase}], subscribedToDistanceReport[${this.state.subscribedToDistanceReport}]`
-      );
-      if (isLoggedInToFirebase && !this.state.subscribedToDistanceReport) {
+      let changeInAssets = false;
+      changeInAssets =
+         JSON.stringify(this.props.assets) != JSON.stringify(this.state.assets);
+      let changeInRange =
+         this.props.range.startDate !== this.state.range.startDate;
+      if (isLoggedInToFirebase && (changeInAssets || changeInRange)) {
          this.subscribeToDistanceReport();
       }
       if (!isLoggedInToFirebase && this.state.subscribedToDistanceReport) {
@@ -461,21 +443,21 @@ class ShowDistanceReport extends React.PureComponent<
       let theKeys = Object.keys(jsr);
       let prepend = `temp.push({`;
       this.props.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">${prepend}</p>`
+         `<p style="color:#7713AD ; font-size:11px;">${prepend}</p>`
       );
       theKeys.forEach((x) => {
          this.props.myPanel.current!.append(
-            `<p style="color:#286107 ; font-size:11px;">${x}: "${jsr[x]}",</p>`
+            `<p style="color:#7713AD ; font-size:11px;">${x}: "${jsr[x]}",</p>`
          );
       });
       this.props.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">});</p>`
+         `<p style="color:#7713AD ; font-size:11px;">});</p>`
       );
    }
 
    private csvButtonClicked() {
       this.props.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">CSV Button Clicked</p>`
+         `<p style="color:#7713AD ; font-size:11px;">CSV Button Clicked</p>`
       );
    }
 }
