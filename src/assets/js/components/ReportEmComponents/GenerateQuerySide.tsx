@@ -17,9 +17,9 @@ import { RangeObject, ViewReportRangeQO } from "../../misc/chairLocTypes";
 import { AuthContext } from "../../contexts/AuthContext";
 import { months } from "../../misc/months";
 
-class ViewQuerySide extends Component<
+class GenerateQuerySide extends Component<
    {
-      viewQueryComponentCallback: any;
+      generateQueryComponentCallback: any;
       myPanel: any;
    },
    // MyState
@@ -40,9 +40,9 @@ class ViewQuerySide extends Component<
 
    static contextType = AuthContext; // it's a law that you must call it contextType!
 
-   constructor(props: { viewQueryComponentCallback: any; myPanel: any }) {
+   constructor(props: { generateQueryComponentCallback: any; myPanel: any }) {
       super(props);
-      this.getViewQueryContent = this.getViewQueryContent.bind(this);
+      this.getGenerateQueryContent = this.getGenerateQueryContent.bind(this);
       this.chairCollection = "";
       this.enterButtonClicked = this.enterButtonClicked.bind(this);
 
@@ -82,13 +82,13 @@ class ViewQuerySide extends Component<
          })
          .catch((err: any) => {
             console.log(
-               "C0135: Error getting chairs documents from 'uniqueAssetLabels'",
+               "C0435: Error getting chairs documents from 'uniqueAssetLabels'",
                err
             );
          });
    }
 
-   getViewQueryContent() {
+   getGenerateQueryContent() {
       return (
          <>
             <div style={divFlexCol}>
@@ -194,7 +194,7 @@ class ViewQuerySide extends Component<
       if (isLoggedInToFirebase && !this.state.alreadyGotInfo) {
          this.getChairAssetsInfo();
       }
-      return <>{this.getViewQueryContent()}</>;
+      return <>{this.getGenerateQueryContent()}</>;
    }
 
    private enterButtonClicked() {
@@ -231,7 +231,7 @@ class ViewQuerySide extends Component<
             assets: chairAssetArray,
             range: rangeObj,
          };
-         this.props.viewQueryComponentCallback(vrrqo);
+         this.props.generateQueryComponentCallback(vrrqo);
       } else {
          this.props.myPanel.current!.append(
             `<p style="color: red ; font-size:11px;">Invalid input for month or year.</p>`
@@ -240,4 +240,4 @@ class ViewQuerySide extends Component<
    }
 }
 
-export default ViewQuerySide;
+export default GenerateQuerySide;

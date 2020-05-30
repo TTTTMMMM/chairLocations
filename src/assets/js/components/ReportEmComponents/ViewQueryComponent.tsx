@@ -30,17 +30,18 @@ class ViewQueryComponent extends Component<{}, { vrrqo: ViewReportRangeQO }> {
       };
    }
 
-   // function callback from WeekQuerySide.tsx, which is used to pass back the assetRangeQueryObject
+   // function callback from ViewQuerySide.tsx, which is used to pass back the assetRangeQueryObject
    myCallBack = (vrrqo: ViewReportRangeQO) => {
       this.setState({ vrrqo: vrrqo });
+      let verbiage: string = "";
+      if (vrrqo.assets.length === 1) {
+         verbiage = `Viewing distance report for ${vrrqo.assets[0]} for `;
+      } else {
+         verbiage = `Viewing distance report for ${vrrqo.assets.length} chairs for `;
+      }
+      const reportPeriod = vrrqo.range.startDate.split("-");
       this.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">${vrrqo.assets[0]}</p>`
-      );
-      this.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">${vrrqo.range.startDate}</p>`
-      );
-      this.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:11px;">${vrrqo.range.endDate}</p>`
+         `<p style="color:#286107 ; font-size:12px;">${verbiage} ${reportPeriod[1]} ${reportPeriod[0]}. </p>`
       );
    };
 

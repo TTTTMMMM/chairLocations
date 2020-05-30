@@ -27,7 +27,7 @@ interface MyState extends IDataTableProps {
    assets: Array<string>;
    range: RangeObject;
 }
-class ShowDistanceReport extends React.PureComponent<
+class GenerateDistanceReport extends React.PureComponent<
    {
       myPanel: any;
       assets: Array<string>;
@@ -454,4 +454,4 @@ class ShowDistanceReport extends React.PureComponent<
    }
 }
 
-export default ShowDistanceReport;
+export default GenerateDistanceReport;

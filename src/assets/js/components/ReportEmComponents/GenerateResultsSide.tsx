@@ -2,37 +2,41 @@ import React, { Component } from "react";
 import { divFlexCol } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
 
-import ShowDistanceReport from "./ShowDistanceReport";
+import GenerateDistanceReport from "./GenerateDistanceReport";
 import { ViewReportRangeQO } from "../../misc/chairLocTypes";
 
-class ViewResultsSide extends Component<{
+class GenerateResultsSide extends Component<{
    vrrqo: ViewReportRangeQO;
    myPanel: any;
 }> {
    constructor(props: { vrrqo: ViewReportRangeQO; myPanel: any }) {
       super(props);
-      this.getViewResultsContent = this.getViewResultsContent.bind(this);
+      this.getGenerateResultsContent = this.getGenerateResultsContent.bind(
+         this
+      );
    }
 
-   getViewResultsContent() {
+   getGenerateResultsContent() {
       if (this.props.vrrqo.assets.length > 0) {
          return (
             <div style={divFlexCol}>
-               <ShowDistanceReport
+               <GenerateDistanceReport
                   myPanel={this.props.myPanel}
                   assets={this.props.vrrqo.assets}
                   range={this.props.vrrqo.range}
-               ></ShowDistanceReport>
+               ></GenerateDistanceReport>
             </div>
          );
       }
       return (
-         <h4>Select a chair, month and year to see the distance report.</h4>
+         <h4>
+            Select a chair, month and year to generate the distance report.
+         </h4>
       );
    }
    render() {
-      return <>{this.getViewResultsContent()}</>;
+      return <>{this.getGenerateResultsContent()}</>;
    }
 }
 
-export default ViewResultsSide;
+export default GenerateResultsSide;
