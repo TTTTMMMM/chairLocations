@@ -115,8 +115,11 @@ const calcDist = (
       myPanel.current!.append(
          `<p style="color:#994883 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
       );
-      console.log(`cumDistDaily:`);
-      console.dir(cumDistDaily);
+      if (callingFrom === CallingFrom.generateDistanceReport) {
+         storeReportEntryOnFirebase(auth2, googleToken, cumDistDaily, myPanel);
+      }
+      // console.log(`cumDistDaily:`);
+      // console.dir(cumDistDaily);
    }
 };
 

@@ -294,10 +294,14 @@ class ShowDistanceReport extends React.PureComponent<
                      period: val.period,
                      d01:
                         val.d01 &&
-                        val.d01.inFeet.concat(` (${val.d01.inMiles})`),
+                        val.d01.inFeet
+                           .toString()
+                           .concat(` (${val.d01.inMiles})`),
                      d02:
                         val.d02 &&
-                        val.d02.inFeet.concat(` (${val.d02.inMiles})`),
+                        val.d02.inFeet
+                           .toString()
+                           .concat(` (${val.d02.inMiles})`),
                      d03: val.d03 && val.d03.inFeet,
                      d04: val.d04 && val.d04.inFeet,
                      d05: val.d05 && val.d05.inFeet,
@@ -346,6 +350,7 @@ class ShowDistanceReport extends React.PureComponent<
             align: "center",
             cellclassname: "assetlabelClass",
             editable: false,
+            pinned: true,
          });
          this.columns!.push({
             text: "Period",

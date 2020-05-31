@@ -39,48 +39,75 @@ exports.addReportEntry = async (req, res, admin) => {
             b.push(valid_Asset[0]);
             b.push("_");
             b.push(v_DD[0].substring(0, 4));
+            b.push("_");
             b.push(v_DD[0].substring(5, 7));
             let docName = b.join("");
-            // let docName = valid_Asset
-            //    .concat("_")
-            //    .concat(v_DD[0].substring(0, 4))
-            //    .concat(v_DD[0].substring(5, 7));
-            console.log(`docName[${docName}]`);
             let reportEntryObj = {};
             reportEntryObj.assetlabel = valid_Asset[0];
             reportEntryObj.period = v_P[0];
             let dO = "d".concat(v_DD[0].substring(8, 10));
             reportEntryObj[dO] = distObj;
+            let repEntry = undefined;
             try {
-               await admin
+               repEntry = await admin
                   .firestore()
                   .collection("distReport")
                   .doc(docName)
-                  .update(reportEntryObj);
+                  .get();
+            } catch (err) {
+               const msg = `0902 Error: Checking for existence of [${docName}] in distReport collection`;
+               console.log(msg);
+               res.status(500).json({
+                  message: `${msg}`,
+               });
+            }
+            if (!repEntry.exists) {
                try {
-                  await firebaseApp.auth().signOut();
-                  let msg = `Added ${docName}`;
-                  console.log(msg);
-                  console.log(`Logged out`);
-                  res.append("Cache-Control", "no-cache, must-revalidate");
-                  return res.status(200).json({
-                     message: `${msg}`,
-                  });
+                  await admin
+                     .firestore()
+                     .collection("distReport")
+                     .doc(docName)
+                     .set(reportEntryObj);
                } catch (err) {
-                  const firstLine =
-                     "0195: Couldn't log user out: " +
-                     err.message.split("\n")[0];
+                  const firstLine = `0190: Couldn't add ${docName}: ${
+                     err.message.split("\n")[0]
+                  }`;
                   const errCode = err.code;
                   res.status(500).render("500", { firstLine, errCode });
                   console.log(`${firstLine} ${err}`);
                }
-            } catch (err) {
-               const firstLine = `0321 Error: ${docName} couldn't be added to distReport collection`;
-               console.log(`${firstLine} ${err}`);
-               // res.status(500).json({
-               //    message: `${msg} \n${err}`,
-               // });
-               res.status(500).render("500", { firstLine, errCode });
+            } else {
+               try {
+                  await admin
+                     .firestore()
+                     .collection("distReport")
+                     .doc(docName)
+                     .update(reportEntryObj);
+                  try {
+                     await firebaseApp.auth().signOut();
+                     let msg = `${valid_Asset[0]}: ${distObj.inFeet}' on ${v_DD[0]}`;
+                     console.log(msg);
+                     console.log(`Logged out`);
+                     res.append("Cache-Control", "no-cache, must-revalidate");
+                     return res.status(200).json({
+                        message: `${msg}`,
+                     });
+                  } catch (err) {
+                     const firstLine =
+                        "0195: Couldn't log user out: " +
+                        err.message.split("\n")[0];
+                     const errCode = err.code;
+                     res.status(500).render("500", { firstLine, errCode });
+                     console.log(`${firstLine} ${err}`);
+                  }
+               } catch (err) {
+                  const firstLine = `0321 Error: ${docName} couldn't be added to distReport collection`;
+                  console.log(`${firstLine} ${err}`);
+                  // res.status(500).json({
+                  //    message: `${msg} \n${err}`,
+                  // });
+                  res.status(500).render("500", { firstLine, errCode });
+               }
             }
          } else {
             firstLine = `0994: Invalid asset [${reportEntry.asset}] [${valid_Asset}] or dailyDate [${reportEntry.dailyDate}] [${v_DD}] or period [${reportEntry.period}] [${v_P}]`;
