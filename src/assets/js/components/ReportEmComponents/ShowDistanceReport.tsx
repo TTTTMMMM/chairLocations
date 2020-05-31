@@ -10,6 +10,7 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
 import "../../../styles/index.css";
+import cellsRendererDist from "../../renderers/cellRendererDist";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -249,37 +250,37 @@ class ShowDistanceReport extends React.PureComponent<
             datafields: [
                { name: "assetlabel", type: "string" },
                { name: "period", type: "string" },
-               { name: "d01", type: "string" },
-               { name: "d02", type: "string" },
-               { name: "d03", type: "string" },
-               { name: "d04", type: "string" },
-               { name: "d05", type: "string" },
-               { name: "d06", type: "string" },
-               { name: "d07", type: "string" },
-               { name: "d08", type: "string" },
-               { name: "d09", type: "string" },
-               { name: "d10", type: "string" },
-               { name: "d11", type: "string" },
-               { name: "d12", type: "string" },
-               { name: "d13", type: "string" },
-               { name: "d14", type: "string" },
-               { name: "d15", type: "string" },
-               { name: "d16", type: "string" },
-               { name: "d17", type: "string" },
-               { name: "d18", type: "string" },
-               { name: "d19", type: "string" },
-               { name: "d20", type: "string" },
-               { name: "d21", type: "string" },
-               { name: "d22", type: "string" },
-               { name: "d23", type: "string" },
-               { name: "d24", type: "string" },
-               { name: "d25", type: "string" },
-               { name: "d26", type: "string" },
-               { name: "d27", type: "string" },
-               { name: "d28", type: "string" },
-               { name: "d29", type: "string" },
-               { name: "d30", type: "string" },
-               { name: "d31", type: "string" },
+               { name: "d01", type: "number" },
+               { name: "d02", type: "number" },
+               { name: "d03", type: "number" },
+               { name: "d04", type: "number" },
+               { name: "d05", type: "number" },
+               { name: "d06", type: "number" },
+               { name: "d07", type: "number" },
+               { name: "d08", type: "number" },
+               { name: "d09", type: "number" },
+               { name: "d10", type: "number" },
+               { name: "d11", type: "number" },
+               { name: "d12", type: "number" },
+               { name: "d13", type: "number" },
+               { name: "d14", type: "number" },
+               { name: "d15", type: "number" },
+               { name: "d16", type: "number" },
+               { name: "d17", type: "number" },
+               { name: "d18", type: "number" },
+               { name: "d19", type: "number" },
+               { name: "d20", type: "number" },
+               { name: "d21", type: "number" },
+               { name: "d22", type: "number" },
+               { name: "d23", type: "number" },
+               { name: "d24", type: "number" },
+               { name: "d25", type: "number" },
+               { name: "d26", type: "number" },
+               { name: "d27", type: "number" },
+               { name: "d28", type: "number" },
+               { name: "d29", type: "number" },
+               { name: "d30", type: "number" },
+               { name: "d31", type: "number" },
             ],
             id: "key",
             dataType: "json",
@@ -288,20 +289,12 @@ class ShowDistanceReport extends React.PureComponent<
                this.columns!.length = 0;
                let i = 0;
                this.state.reportWatch.forEach((val: any) => {
-                  data[i++] = {
+                  data[i] = {
                      key: val.key,
                      assetlabel: val.assetlabel,
                      period: val.period,
-                     d01:
-                        val.d01 &&
-                        val.d01.inFeet
-                           .toString()
-                           .concat(` (${val.d01.inMiles})`),
-                     d02:
-                        val.d02 &&
-                        val.d02.inFeet
-                           .toString()
-                           .concat(` (${val.d02.inMiles})`),
+                     d01: val.d01 && val.d01.inFeet,
+                     d02: val.d02 && val.d02.inFeet,
                      d03: val.d03 && val.d03.inFeet,
                      d04: val.d04 && val.d04.inFeet,
                      d05: val.d05 && val.d05.inFeet,
@@ -332,7 +325,28 @@ class ShowDistanceReport extends React.PureComponent<
                      d30: val.d30 && val.d30.inFeet,
                      d31: val.d31 && val.d31.inFeet,
                   };
+                  let j = 0;
+                  while (j++ <= 31) {
+                     if (
+                        typeof data[i][
+                           "d".concat(
+                              j.toLocaleString("en-US", {
+                                 minimumIntegerDigits: 2,
+                              })
+                           )
+                        ] === "undefined"
+                     ) {
+                        data[i][
+                           "d".concat(
+                              j.toLocaleString("en-US", {
+                                 minimumIntegerDigits: 2,
+                              })
+                           )
+                        ] = -1;
+                     }
+                  }
                   this.numRows!++;
+                  i++;
                });
                return data;
             },
@@ -341,7 +355,7 @@ class ShowDistanceReport extends React.PureComponent<
          // --
          const columnWidths = [
             ["ASSETLABEL", 80],
-            ["d01", 56],
+            ["d01", 59],
          ];
          this.columns!.push({
             text: "Chair",
@@ -373,6 +387,7 @@ class ShowDistanceReport extends React.PureComponent<
                align: "center",
                cellsalign: "center",
                editable: false,
+               cellsrenderer: cellsRendererDist,
             });
          }
          return (

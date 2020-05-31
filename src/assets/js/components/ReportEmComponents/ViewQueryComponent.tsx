@@ -41,7 +41,25 @@ class ViewQueryComponent extends Component<{}, { vrrqo: ViewReportRangeQO }> {
       }
       const reportPeriod = vrrqo.range.startDate.split("-");
       this.myPanel.current!.append(
-         `<p style="color:#286107 ; font-size:12px;">${verbiage} ${reportPeriod[1]} ${reportPeriod[0]}. </p>`
+         `<p style="color:#7713AD ; font-size:12px;">${verbiage} ${reportPeriod[1]} ${reportPeriod[0]}. </p>`
+      );
+      this.myPanel.current!.append(
+         `<p style="color:#7713AD ; font-size:12px;">--------------- Legend ------------ </p>`
+      );
+      this.myPanel.current!.append(
+         `<p style="color: green ; font-size:12px;"> Possible revenue movement </p>`
+      );
+      this.myPanel.current!.append(
+         `<p style="color: black ; font-size:12px;"> Unlikely revenue movement </p>`
+      );
+      this.myPanel.current!.append(
+         `<p style="color: red ; font-size:12px;"> GPS indicated no movement </p>`
+      );
+      this.myPanel.current!.append(
+         `<p style="color: blue ; font-size:12px;"> Blank cell: No GPS report </p>`
+      );
+      this.myPanel.current!.append(
+         `<p style="color:#7713AD ; font-size:12px;">----------------------------------------- </p>`
       );
    };
 

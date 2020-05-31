@@ -311,6 +311,9 @@ export interface UserObj {
    Make last location a big icon on the map
 
 2. Report Tab
+
+   Mileage Check Box
+
 3. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
 4. Maintenance Tab
 
