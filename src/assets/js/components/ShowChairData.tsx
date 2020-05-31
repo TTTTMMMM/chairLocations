@@ -631,6 +631,7 @@ class ShowChairData extends React.PureComponent<
    }
 
    private calcDistButtonClicked() {
+      const { auth2, googleToken } = this.context;
       this.calcDistArray.length = 0;
       if (this.myCheckBoxIsChecked) {
          this.calcDistArray.push(...this.selectedMappings);
@@ -643,7 +644,13 @@ class ShowChairData extends React.PureComponent<
             `<p style="color:#286107 ; font-size:11px;">Calculating distance of entire geo pull, containing ${this.calcDistArray.length} points.</p>`
          );
       }
-      calcDist(this.calcDistArray, this.props.callingFrom, this.props.myPanel);
+      calcDist(
+         this.calcDistArray,
+         this.props.callingFrom,
+         this.props.myPanel,
+         auth2,
+         googleToken
+      );
    }
 
    private checkedEvent() {

@@ -33,6 +33,8 @@ const { addChairLoc } = require("./public/lib/js/handlers/addChairLoc");
 const { addBeach } = require("./public/lib/js/handlers/addBeach");
 const { removeBeach } = require("./public/lib/js/handlers/removeBeach");
 
+const { addReportEntry } = require("./public/lib/js/handlers/addReportEntry");
+
 const { render404 } = require("./public/lib/js/renderings/render404");
 
 // -----------------------------------------------------------------------
@@ -92,6 +94,10 @@ api.post("/beaches", (req, res) => {
 
 api.delete("/beaches", (req, res) => {
    removeBeach(req, res, admin);
+});
+
+api.post("/reportentry", (req, res) => {
+   addReportEntry(req, res, admin);
 });
 
 api.get("*", (req, res) => {

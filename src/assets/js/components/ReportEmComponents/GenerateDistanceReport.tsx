@@ -18,8 +18,20 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 
+// import calcDist from "../componentHandlers/calcDist";
+
 import { divFlexRow } from "../../../styles/reactStyling";
-import { RangeObject, Roles, DistanceObj } from "../../misc/chairLocTypes";
+import {
+   RangeObject,
+   Roles,
+   DistanceObj,
+   AssetGeoLocs,
+   CallingFrom,
+} from "../../misc/chairLocTypes";
+import { IWLocObj } from "../../configs/mapConfigs/mapTypes";
+
+import { months } from "../../misc/months";
+import calcDist from "../componentHandlers/calcDist";
 
 interface MyState extends IDataTableProps {
    reportWatch?: any;
@@ -37,8 +49,14 @@ class GenerateDistanceReport extends React.PureComponent<
 > {
    distReport: any;
    numUpdates: number | undefined;
+   numUpdatesGeo: number;
    unsubFromDistanceReport: any | undefined;
+   unsubscribeWithinRange: any | undefined;
+   chairY: Array<IWLocObj> = [];
+   assetGeoLocs: AssetGeoLocs;
+
    numRows: number | undefined;
+   numRowsGeo: number;
    columns: any[] | undefined;
    dataAdapter: null;
    static contextType = AuthContext;
@@ -54,8 +72,11 @@ class GenerateDistanceReport extends React.PureComponent<
       super(props);
       this.distReport = "";
       this.numRows = 0;
+      this.numRowsGeo = 0;
       this.columns = [];
       this.numUpdates = 0;
+      this.numUpdatesGeo = 0;
+      this.assetGeoLocs = {};
       this.csvButtonClicked = this.csvButtonClicked.bind(this);
 
       this.onRowSelect = this.onRowSelect.bind(this);
@@ -78,6 +99,70 @@ class GenerateDistanceReport extends React.PureComponent<
          assets: [],
       };
    }
+
+   onGeoPullsUpdate = (querySnapshot: any) => {
+      const { auth2, googleToken } = this.context;
+      this.numUpdatesGeo++;
+      this.numRowsGeo = 0;
+      querySnapshot.forEach(
+         (doc: {
+            data: () => {
+               ASSETLABEL: string;
+               BEACH: string;
+               CELLACCURACY: string;
+               DEVICEID: string;
+               FNAME: string;
+               GPS_MPH: number;
+               GPS_ISCELLTOWER: string;
+               ID: string;
+               IMEI: string;
+               LATITUDE: string;
+               LONGITUDE: string;
+               RENTALAGENT: string;
+               STATE: string;
+               UPDATETIME: string;
+               UPLOADFBTIME: string;
+            };
+            id: any;
+         }) => {
+            let oneLoc: IWLocObj = {
+               id: doc.data().ID,
+               assetlabel: doc.data().ASSETLABEL,
+               beach: doc.data().BEACH,
+               updatetime: doc.data().UPDATETIME,
+               location: {
+                  lat: parseFloat(doc.data().LATITUDE),
+                  lng: parseFloat(doc.data().LONGITUDE),
+               },
+            };
+            // this.chairY.push(oneLoc);
+            this.assetGeoLocs[doc.data().ASSETLABEL].push(oneLoc);
+            this.numRowsGeo++;
+         }
+      );
+      // this.numRowsGeo++;
+      // console.log(
+      //    `%c onGeoPullsUpdate<${this.numUpdatesGeo}>`,
+      //    "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
+      // );
+      if (this.numUpdatesGeo >= this.props.assets.length) {
+         this.props.assets.forEach((asset) => {
+            let numGeoPoints = this.assetGeoLocs[asset].length;
+            console.log(
+               `calling calcDist with ${numGeoPoints} geoLocs from ${asset}.`
+            );
+            numGeoPoints > 1
+               ? calcDist(
+                    this.assetGeoLocs[asset],
+                    CallingFrom.generateDistanceReport,
+                    this.props.myPanel,
+                    auth2,
+                    googleToken
+                 )
+               : null;
+         });
+      }
+   };
 
    subscribeToDistanceReport() {
       if (this.props.assets.length > 0) {
@@ -105,10 +190,47 @@ class GenerateDistanceReport extends React.PureComponent<
       }
    }
 
+   subscribeToAssetBeaconingWithinDateRange() {
+      if (this.props.assets.length > 0) {
+         this.setState({ assets: this.props.assets });
+         this.setState({ range: this.props.range });
+         let monthNumber = (
+            "0" +
+            (months.indexOf(this.props.range.startDate.split("-")[1]) + 1)
+         ).slice(-2);
+         let year = this.props.range.startDate.split("-")[0];
+         let startDay = "01";
+         let endDay = "31";
+         let endTime = endDay.concat("T23:59:59Z");
+         let beginDate = year.concat(`-${monthNumber}-${startDay}`);
+         let endDate = year.concat(`-${monthNumber}-${endTime}`);
+         this.props.assets.forEach((asset) => {
+            let assetWithinRange = firebase
+               .firestore()
+               .collection("chairLocs")
+               .where("ASSETLABEL", "==", asset)
+               .where("UPDATETIME", ">=", beginDate)
+               .where("UPDATETIME", "<=", endDate);
+            this.unsubscribeWithinRange = assetWithinRange.onSnapshot(
+               this.onGeoPullsUpdate
+            );
+            this.assetGeoLocs[asset] = new Array();
+         });
+      }
+   }
+
    unsubscribeFromDistanceReport() {
       if (typeof this.unsubFromDistanceReport != "undefined") {
          this.setState({ subscribedToDistanceReport: false });
          this.numUpdates = 0;
+      }
+   }
+
+   unsubscribeFromAssetWithinRange() {
+      if (typeof this.unsubscribeWithinRange != "undefined") {
+         this.unsubscribeWithinRange();
+         this.numUpdates = 0;
+         this.chairY.length = 0;
       }
    }
 
@@ -420,12 +542,15 @@ class GenerateDistanceReport extends React.PureComponent<
          this.props.range.startDate !== this.state.range.startDate;
       if (isLoggedInToFirebase && (changeInAssets || changeInRange)) {
          this.subscribeToDistanceReport();
+         this.subscribeToAssetBeaconingWithinDateRange();
       }
       if (!isLoggedInToFirebase && this.state.subscribedToDistanceReport) {
          this.unsubscribeFromDistanceReport();
+         this.unsubscribeWithinRange();
       }
       if (userObjFmServer.role === Roles.notloggedin && isLoggedInToFirebase) {
          this.unsubscribeFromDistanceReport();
+         this.unsubscribeWithinRange();
       }
       return <div>{this.showReportContent()}</div>;
    }

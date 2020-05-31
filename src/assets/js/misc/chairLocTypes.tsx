@@ -1,3 +1,5 @@
+import { IWLocObj } from "../configs/mapConfigs/mapTypes";
+
 export interface HeaderMapping {
    origHdr: string | undefined;
    newHdr: string;
@@ -75,8 +77,7 @@ export let accessPrivsObj: any = {
 export enum CallingFrom {
    cleanAndUploadFiles = "cleanAndUploadFiles",
    chairResultsSide = "chairResultsSide",
-   weekResultsSide = "weekResultsSide",
-   monthResultsSide = "monthResultsSide",
+   generateDistanceReport = "generateDistanceReport",
 }
 
 export interface RangeObject {
@@ -100,8 +101,10 @@ export interface DistanceObj {
    inMiles: number;
 }
 export interface CumDistDaily {
+   asset: string;
    dailyDate: string;
    distObj: DistanceObj;
+   period: string;
 }
 
 export interface AuthProps {
@@ -111,4 +114,8 @@ export interface AuthProps {
    isLoggedInToFirebase: boolean;
    usrObjFmServer: UserObj;
    changeGoogleLoginStatus: any;
+}
+
+export interface AssetGeoLocs {
+   [asset: string]: Array<IWLocObj>;
 }

@@ -182,7 +182,7 @@ class GenerateQuerySide extends Component<
                      cursor: "pointer",
                   }}
                >
-                  View Distance Report
+                  Generate Distance Report
                </JqxButton>
             </div>
          </>

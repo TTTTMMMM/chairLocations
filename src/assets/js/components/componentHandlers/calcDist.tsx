@@ -8,13 +8,28 @@ import {
 } from "../../misc/chairLocTypes";
 import { IWLocObj } from "../../configs/mapConfigs/mapTypes";
 import { calculateDistance, sumDistance } from "../../misc/calculateDistance";
+import { months } from "../../misc/months";
+import storeReportEntryOnFirebase from "../../fetches/storeReportEntryOnFirebase";
 
 const calcDist = (
    geoPointsArray: Array<IWLocObj>,
    callingFrom: CallingFrom,
-   myPanel: any
+   myPanel: any,
+   auth2: any,
+   googleToken: any
 ) => {
-   if (callingFrom === CallingFrom.chairResultsSide) {
+   let x: IWLocObj = geoPointsArray[0];
+   const asset = x.assetlabel!;
+   const period = x.updatetime
+      .substring(0, 4)
+      .concat(months[parseInt(x.updatetime.substring(5, 7)) - 1]);
+   if (
+      callingFrom === CallingFrom.chairResultsSide ||
+      callingFrom === CallingFrom.generateDistanceReport
+   ) {
+      myPanel.current!.append(
+         `<p style="color:#994883 ; font-size:15px;">${asset}</p>`
+      );
       let prevGeoPoint: GeoPoint = {
          lat: geoPointsArray[0].location.lat,
          lng: geoPointsArray[0].location.lng,
@@ -29,8 +44,10 @@ const calcDist = (
          inMiles: 0,
       };
       let cumDistDaily: CumDistDaily = {
+         asset: asset,
          dailyDate: geoPointsArray[0].updatetime.slice(0, 10),
          distObj: cumulativeDistanceObj,
+         period: period,
       };
       // ---- loop through each document in resultset from firebase
       geoPointsArray.forEach((x) => {
@@ -64,6 +81,16 @@ const calcDist = (
             myPanel.current!.append(
                `<p style="color:#994883 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
             );
+            // console.log(`cumDistDaily:`);
+            // console.dir(cumDistDaily);
+            if (callingFrom === CallingFrom.generateDistanceReport) {
+               storeReportEntryOnFirebase(
+                  auth2,
+                  googleToken,
+                  cumDistDaily,
+                  myPanel
+               );
+            }
             prevGeoPoint = {
                lat: endGeoPoint.lat,
                lng: endGeoPoint.lng,
@@ -78,14 +105,18 @@ const calcDist = (
                inMiles: 0,
             };
             cumDistDaily = {
+               asset: asset,
                dailyDate: geo2.geoDate,
                distObj: cumulativeDistanceObj,
+               period: period,
             };
          }
       });
       myPanel.current!.append(
          `<p style="color:#994883 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
       );
+      console.log(`cumDistDaily:`);
+      console.dir(cumDistDaily);
    }
 };
 
