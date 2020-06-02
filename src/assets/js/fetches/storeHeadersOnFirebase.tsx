@@ -33,6 +33,7 @@ const storeHeadersOnFirebase = (
          switch (res.status) {
             case 500:
                auth2.signOut().then(() => {
+                  console.log(`in storeHeadersOnFirebase(), 500 error reached`);
                   res.text().then((thePage) => {
                      document.open();
                      document.write(thePage);

@@ -311,7 +311,7 @@ class CleanAndUploadFiles extends Component<
             // headers[] looks like: [0:{origHdr: "ReportID", newHdr: "ReportID"}, etc.]
             headers.forEach((x: HeaderMapping) => {
                headerMappingArray.push(x);
-               const randomTime = Math.floor(Math.random() * 4000);
+               // const randomTime = Math.floor(Math.random() * 12000);
                setTimeout(() => {
                   storeHeadersOnFirebase(
                      auth2,
@@ -319,7 +319,7 @@ class CleanAndUploadFiles extends Component<
                      x.newHdr,
                      this.myPanel
                   );
-               }, randomTime);
+               }, 333); // 3 writes/sec to Firestore db
             });
 
             Object.keys(filesListObject).forEach((fileIndex: any) => {
@@ -421,12 +421,11 @@ class CleanAndUploadFiles extends Component<
          this.myPanel.current!.append(
             `<p style="color:#738108;font-size:12px;">For [${asset}], uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
          );
-         let lengthOfTimeIn_mSec = numRowsSurvived * 0.25 * 1000; // 1/.25 = 4 writes/second to the Firestore collection
          this.shortAndSkinnyArray.forEach((x: any) => {
-            const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
+            // const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
             setTimeout(() => {
                storeChairLocsOnFirebase(auth2, googleToken, x, this.myPanel);
-            }, randomTime);
+            }, 500); // 500ms = 2 writes/sec. to firestore db
          });
          this.setState({ fileChooserLabel: "Choose File" });
       }

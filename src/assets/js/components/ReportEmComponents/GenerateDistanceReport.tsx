@@ -150,13 +150,15 @@ class GenerateDistanceReport extends React.PureComponent<
          this.props.assets.forEach((asset) => {
             let numGeoPoints = this.assetGeoLocs[asset].length;
             numGeoPoints > 1
-               ? calcDist(
-                    this.assetGeoLocs[asset],
-                    CallingFrom.generateDistanceReport,
-                    this.props.myPanel,
-                    auth2,
-                    googleToken
-                 )
+               ? setTimeout(() => {
+                    calcDist(
+                       this.assetGeoLocs[asset],
+                       CallingFrom.generateDistanceReport,
+                       this.props.myPanel,
+                       auth2,
+                       googleToken
+                    );
+                 }, 500)
                : null;
          });
       }

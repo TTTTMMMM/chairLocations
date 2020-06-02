@@ -10,6 +10,7 @@ const storeReportEntryOnFirebase = (
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
    myHeaders.append("Content-Type", "application/json");
+   console.dir(reportEntry);
    const myInit = {
       method: "POST",
       headers: myHeaders,
