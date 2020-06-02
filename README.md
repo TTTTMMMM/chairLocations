@@ -312,6 +312,8 @@ export interface UserObj {
 
 2. Report Tab
 
+   Add rental agent to distReport collection to be displayed on Report View
+
    Mileage Check Box
 
 3. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
@@ -325,7 +327,6 @@ export interface UserObj {
 3. Split wood
 4. Change oil in truck
 5. Submit FSAFEDS claim for wisdom teeth removal
-6. Pay A/C Bill to Parker
 
 ---
 
