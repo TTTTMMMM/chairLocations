@@ -312,8 +312,6 @@ export interface UserObj {
 
 2. Report Tab
 
-   Add rental agent to distReport collection to be displayed on Report View
-
    Mileage Check Box
 
 3. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
