@@ -226,6 +226,7 @@ class ShowChairData extends React.PureComponent<
             let oneLoc: IWLocObj = {
                id: doc.data().ID,
                assetlabel: doc.data().ASSETLABEL,
+               rentalAgent: doc.data().RENTALAGENT,
                beach: doc.data().BEACH,
                updatetime: doc.data().UPDATETIME,
                location: {
@@ -661,6 +662,7 @@ class ShowChairData extends React.PureComponent<
             const {
                ID,
                ASSETLABEL,
+               RENTALAGENT,
                BEACH,
                UPDATETIME,
                LATITUDE,
@@ -669,6 +671,7 @@ class ShowChairData extends React.PureComponent<
             let oneLoc: IWLocObj = {
                id: ID,
                assetlabel: ASSETLABEL,
+               rentalAgent: RENTALAGENT,
                beach: BEACH,
                updatetime: UPDATETIME,
                location: {

@@ -102,6 +102,7 @@ export interface DistanceObj {
 }
 export interface CumDistDaily {
    asset: string;
+   rentalAgent: string;
    dailyDate: string;
    distObj: DistanceObj;
    period: string;

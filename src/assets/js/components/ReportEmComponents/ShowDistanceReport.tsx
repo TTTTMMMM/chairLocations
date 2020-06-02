@@ -124,6 +124,7 @@ class ShowDistanceReport extends React.PureComponent<
          (doc: {
             data: () => {
                assetlabel: string;
+               rentalAgent: string;
                period: string;
                d01: DistanceObj;
                d02: DistanceObj;
@@ -161,6 +162,7 @@ class ShowDistanceReport extends React.PureComponent<
          }) => {
             const {
                assetlabel,
+               rentalAgent,
                period,
                d01,
                d02,
@@ -198,6 +200,7 @@ class ShowDistanceReport extends React.PureComponent<
                key: doc.id,
                doc, // DocumentSnapshot
                assetlabel,
+               rentalAgent,
                period,
                d01,
                d02,
@@ -249,6 +252,7 @@ class ShowDistanceReport extends React.PureComponent<
          const source = {
             datafields: [
                { name: "assetlabel", type: "string" },
+               { name: "rentalAgent", type: "string" },
                { name: "period", type: "string" },
                { name: "d01", type: "number" },
                { name: "d02", type: "number" },
@@ -292,6 +296,7 @@ class ShowDistanceReport extends React.PureComponent<
                   data[i] = {
                      key: val.key,
                      assetlabel: val.assetlabel,
+                     rentalAgent: val.rentalAgent,
                      period: val.period,
                      d01: val.d01 && val.d01.inFeet,
                      d02: val.d02 && val.d02.inFeet,
@@ -356,6 +361,7 @@ class ShowDistanceReport extends React.PureComponent<
          const columnWidths = [
             ["ASSETLABEL", 80],
             ["d01", 59],
+            ["RENTALAGENT", 160],
          ];
          this.columns!.push({
             text: "Chair",
@@ -367,8 +373,17 @@ class ShowDistanceReport extends React.PureComponent<
             pinned: true,
          });
          this.columns!.push({
+            text: "Rental Agent",
+            width: columnWidths[2][1],
+            datafield: "rentalAgent",
+            align: "center",
+            cellclassname: "rentalAgentClass",
+            editable: false,
+            hidden: true,
+         });
+         this.columns!.push({
             text: "Period",
-            width: columnWidths[0][1],
+            width: columnWidths[2][1],
             datafield: "period",
             align: "center",
             hidden: true,
@@ -398,6 +413,7 @@ class ShowDistanceReport extends React.PureComponent<
                   theme={"fresh"}
                   source={this.dataAdapter}
                   columns={this.columns}
+                  groups={["rentalAgent"]}
                   filterable={true}
                   pageable={true}
                   altRows={true}

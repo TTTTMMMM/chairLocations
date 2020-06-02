@@ -18,8 +18,9 @@ const calcDist = (
    auth2: any,
    googleToken: any
 ) => {
-   let x: IWLocObj = geoPointsArray[0];
+   let x: IWLocObj = geoPointsArray[geoPointsArray.length - 1]; // pick the last value for the asset and rentalAgent
    const asset = x.assetlabel!;
+   const rentalAgent = x.rentalAgent;
    const period = x.updatetime
       .substring(0, 4)
       .concat(months[parseInt(x.updatetime.substring(5, 7)) - 1]);
@@ -28,7 +29,7 @@ const calcDist = (
       callingFrom === CallingFrom.generateDistanceReport
    ) {
       myPanel.current!.append(
-         `<p style="color:#994883 ; font-size:15px;">${asset}</p>`
+         `<p style="color:#994883 ; font-size:13px;">${asset} -- ${rentalAgent}</p>`
       );
       let prevGeoPoint: GeoPoint = {
          lat: geoPointsArray[0].location.lat,
@@ -45,6 +46,7 @@ const calcDist = (
       };
       let cumDistDaily: CumDistDaily = {
          asset: asset,
+         rentalAgent: rentalAgent,
          dailyDate: geoPointsArray[0].updatetime.slice(0, 10),
          distObj: cumulativeDistanceObj,
          period: period,
@@ -79,7 +81,7 @@ const calcDist = (
             };
          } else {
             myPanel.current!.append(
-               `<p style="color:#994883 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+               `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
             );
             // console.log(`cumDistDaily:`);
             // console.dir(cumDistDaily);
@@ -106,6 +108,7 @@ const calcDist = (
             };
             cumDistDaily = {
                asset: asset,
+               rentalAgent: rentalAgent,
                dailyDate: geo2.geoDate,
                distObj: cumulativeDistanceObj,
                period: period,
@@ -113,7 +116,7 @@ const calcDist = (
          }
       });
       myPanel.current!.append(
-         `<p style="color:#994883 ; font-size:12px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+         `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
       );
       if (callingFrom === CallingFrom.generateDistanceReport) {
          storeReportEntryOnFirebase(auth2, googleToken, cumDistDaily, myPanel);

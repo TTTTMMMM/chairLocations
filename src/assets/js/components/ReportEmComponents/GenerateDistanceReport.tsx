@@ -129,6 +129,7 @@ class GenerateDistanceReport extends React.PureComponent<
             let oneLoc: IWLocObj = {
                id: doc.data().ID,
                assetlabel: doc.data().ASSETLABEL,
+               rentalAgent: doc.data().RENTALAGENT,
                beach: doc.data().BEACH,
                updatetime: doc.data().UPDATETIME,
                location: {

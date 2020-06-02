@@ -37,7 +37,23 @@ exports.addReportEntry = async (req, res, admin) => {
          const validPeriodRegex = /^\d{4}[a-zA-Z]{3,9}$/;
          let v_P = period.match(validPeriodRegex);
          // --
-         if (valid_Asset != null && v_DD != null && v_P != null) {
+         let rentalAgent = escapeHTML(
+            reportEntry.rentalAgent.trim().substring(0, 59).toUpperCase()
+         );
+         const validRentalAgentRegex = /^[A-Z39'&#;,.\- \(\)]{3,50}$/gi;
+         let v_RA = rentalAgent.match(validRentalAgentRegex);
+         let rentalAgentPart = v_RA[0]
+            // .replace(/\s+/g, "")
+            .replace("&amp;", "&")
+            .replace("&AMP;", "&")
+            .replace("&#39;", "'"); // eliminate whitespace and correct for ampersand and apostrophe
+         // --
+         if (
+            valid_Asset != null &&
+            v_DD != null &&
+            v_P != null &&
+            v_RA != null
+         ) {
             let b = [];
             b.push(valid_Asset[0]);
             b.push("_");
@@ -47,6 +63,7 @@ exports.addReportEntry = async (req, res, admin) => {
             let docName = b.join("");
             let reportEntryObj = {};
             reportEntryObj.assetlabel = valid_Asset[0];
+            reportEntryObj.rentalAgent = rentalAgentPart;
             reportEntryObj.period = v_P[0];
             let dO = "d".concat(v_DD[0].substring(8, 10));
             reportEntryObj[dO] = distObj;
