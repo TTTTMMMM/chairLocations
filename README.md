@@ -312,7 +312,7 @@ export interface UserObj {
 
 2. Report Tab
 
-   Mileage Check Box
+   CSV Button
 
 3. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
 

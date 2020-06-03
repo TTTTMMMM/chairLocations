@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const cellsRendererDist = (
+const cellsRendererFeet = (
    _row: any,
    _columnfield: any,
    value: any,
@@ -7,7 +7,7 @@ const cellsRendererDist = (
    _columnproperties: any,
    _rowdata: any
 ) => {
-   const drivingBound = 10560; // 2 miles
+   const drivingBound = 13200; // 2.5 miles
    const rentalBound = { lower: 199, upper: drivingBound };
    const relocatingBound = { lower: 1, upper: rentalBound.lower };
    if (value > drivingBound) {
@@ -28,4 +28,4 @@ const cellsRendererDist = (
    }
 };
 
-export default cellsRendererDist;
+export default cellsRendererFeet;

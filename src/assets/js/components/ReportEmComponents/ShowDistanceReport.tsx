@@ -11,7 +11,8 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
 import "../../../styles/index.css";
-import cellsRendererDist from "../../renderers/cellRendererDist";
+import cellsRendererFeet from "../../renderers/cellRendererFeet";
+import cellsRendererMiles from "../../renderers/cellRendererMiles";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -510,19 +511,35 @@ class ShowDistanceReport extends React.PureComponent<
          });
          let i = 0;
          while (i++ < 31) {
-            this.columns!.push({
-               text: `${i.toLocaleString("en-US", {
-                  minimumIntegerDigits: 2,
-               })}`,
-               datafield: `d${i.toLocaleString("en-US", {
-                  minimumIntegerDigits: 2,
-               })}`,
-               width: columnWidths[1][1],
-               align: "center",
-               cellsalign: "center",
-               editable: false,
-               cellsrenderer: cellsRendererDist,
-            });
+            if (!this.state.milesCheckBoxIsChecked) {
+               this.columns!.push({
+                  text: `${i.toLocaleString("en-US", {
+                     minimumIntegerDigits: 2,
+                  })}`,
+                  datafield: `d${i.toLocaleString("en-US", {
+                     minimumIntegerDigits: 2,
+                  })}`,
+                  width: columnWidths[1][1],
+                  align: "center",
+                  cellsalign: "center",
+                  editable: false,
+                  cellsrenderer: cellsRendererFeet,
+               });
+            } else {
+               this.columns!.push({
+                  text: `${i.toLocaleString("en-US", {
+                     minimumIntegerDigits: 2,
+                  })}`,
+                  datafield: `d${i.toLocaleString("en-US", {
+                     minimumIntegerDigits: 2,
+                  })}`,
+                  width: columnWidths[1][1],
+                  align: "center",
+                  cellsalign: "center",
+                  editable: false,
+                  cellsrenderer: cellsRendererMiles,
+               });
+            }
          }
          return (
             <>
@@ -613,8 +630,6 @@ class ShowDistanceReport extends React.PureComponent<
       this.props.myPanel.current!.append(
          `<p style="color:#7713AD ; font-size:11px;">});</p>`
       );
-      console.log(`this.state.reportWatch:`);
-      console.dir(this.state.reportWatch);
    }
 
    private csvButtonClicked() {

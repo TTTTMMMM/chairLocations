@@ -10,7 +10,7 @@ import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
 import "../../../styles/index.css";
-import cellsRendererDist from "../../renderers/cellRendererDist";
+import cellsRendererFeet from "../../renderers/cellRendererFeet";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -509,7 +509,7 @@ class GenerateDistanceReport extends React.PureComponent<
                align: "center",
                cellsalign: "center",
                editable: false,
-               cellsrenderer: cellsRendererDist,
+               cellsrenderer: cellsRendererFeet,
             });
          }
          return (

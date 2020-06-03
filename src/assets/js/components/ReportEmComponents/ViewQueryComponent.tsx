@@ -47,7 +47,7 @@ class ViewQueryComponent extends Component<{}, { vrrqo: ViewReportRangeQO }> {
          `<p style="color:#7713AD ; font-size:12px;">--------------- Legend ------------ </p>`
       );
       this.myPanel.current!.append(
-         `<p style="color: green ; font-size:12px;"> Possible revenue movement </p>`
+         `<p style="color: green ; font-size:12px;"> Possible revenue movement (200' -- 2.5 miles) </p>`
       );
       this.myPanel.current!.append(
          `<p style="color: black ; font-size:12px;"> Unlikely revenue movement </p>`
