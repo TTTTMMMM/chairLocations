@@ -360,7 +360,7 @@ class ShowDistanceReport extends React.PureComponent<
          // --
          const columnWidths = [
             ["ASSETLABEL", 80],
-            ["d01", 59],
+            ["d01", 62],
             ["RENTALAGENT", 160],
          ];
          this.columns!.push({
@@ -481,6 +481,8 @@ class ShowDistanceReport extends React.PureComponent<
       this.props.myPanel.current!.append(
          `<p style="color:#7713AD ; font-size:11px;">});</p>`
       );
+      console.log(`this.state.reportWatch:`);
+      console.dir(this.state.reportWatch);
    }
 
    private csvButtonClicked() {
