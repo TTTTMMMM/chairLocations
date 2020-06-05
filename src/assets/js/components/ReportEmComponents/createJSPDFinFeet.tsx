@@ -2,10 +2,12 @@ import "./fonts/JosefinSans-Light-normal"; // 300 weight
 import "./fonts/JosefinSans-Regular-normal"; // 400 weight
 import "./fonts/JosefinSans-Medium-normal.js"; // 500 weight
 
+import { rentalBound } from "../../configs/rentalDistanceConfigs";
+
 import imgData from "./sh_icon";
 import jsPDF from "jspdf";
 
-export const createJSPDF = (
+export const createJSPDFinFeet = (
    period: string,
    filename: string,
    reportData: any
@@ -23,13 +25,17 @@ export const createJSPDF = (
 
    const widthOfRect = 24;
    const heightOfRect = 16;
-   //    const width50 = widthOfRect * 0.5;
+   // const width50 = widthOfRect * 0.5;
+   const width40 = widthOfRect * 0.4;
    const width33 = widthOfRect * 0.33;
+   const width30 = widthOfRect * 0.3;
    const width20 = widthOfRect * 0.2;
-   //    const height50 = heightOfRect *.5;
+   const width10 = widthOfRect * 0.1;
+   const width02 = widthOfRect * 0.02;
+   // const height50 = heightOfRect *.5;
    //    const height75 = heightOfRect * 0.75;
    const height80 = heightOfRect * 0.8;
-   const height60 = heightOfRect * 0.6;
+   const height79 = heightOfRect * 0.79;
    const startingXPoint = 40 - widthOfRect;
    const startingYPoint = 75;
    const chairWidth = 68;
@@ -39,7 +45,7 @@ export const createJSPDF = (
 
    // write "chair" column header
    pdf.setDrawColor(0, 0, 0);
-   pdf.setFillColor(252, 153, 52);
+   pdf.setFillColor(250, 245, 198);
    pdf.rect(
       chairStartingXPoint,
       startingYPoint,
@@ -53,9 +59,9 @@ export const createJSPDF = (
    let i = 1;
    while (i < 32) {
       pdf.setDrawColor(0, 0, 0);
-      pdf.setFillColor(252, 153, 52);
+      pdf.setFillColor(250, 245, 198);
       pdf.rect(
-         startingXPoint + chairWidth + (i - 1) * widthOfRect,
+         startingXPoint + chairWidth - 1 + (i - 1) * widthOfRect,
          startingYPoint,
          widthOfRect,
          heightOfRect,
@@ -79,14 +85,15 @@ export const createJSPDF = (
       //   write out the rental agent as a  grouping parameter
       if (newRentalAgent !== oldRentalAgent) {
          oldRentalAgent = newRentalAgent;
+         pdf.setTextColor(250, 245, 198);
          pdf.setDrawColor(0, 0, 0);
+         pdf.setFillColor(234, 52, 6);
          pdf.setFont("JosefinSans-Regular");
          pdf.setFontSize(11);
-         pdf.setFillColor(104, 217, 205);
          pdf.rect(
             chairStartingXPoint,
             beginYData + rowNum * heightOfRect,
-            widthOfTable + 1,
+            widthOfTable,
             heightOfRect,
             "FD"
          );
@@ -99,8 +106,9 @@ export const createJSPDF = (
       }
       //   next row: write out the chair (assetlabel)
       const chair = x.assetlabel;
+      pdf.setTextColor(250, 245, 198);
       pdf.setDrawColor(0, 0, 0);
-      pdf.setFillColor(104, 217, 205);
+      pdf.setFillColor(234, 52, 6);
       pdf.rect(
          chairStartingXPoint,
          beginYData + rowNum * heightOfRect,
@@ -116,7 +124,7 @@ export const createJSPDF = (
          beginYData + rowNum * heightOfRect + height80
       );
       let j = 0;
-      //   write the number of feet in the cellwidth20
+      //   write the number of feet in the cell
       while (j++ <= 30) {
          if (
             x[
@@ -127,6 +135,7 @@ export const createJSPDF = (
                )
             ] == -1
          ) {
+            pdf.setTextColor(0, 0, 0);
             pdf.setDrawColor(0, 0, 0);
             pdf.setFillColor(225, 225, 225);
             pdf.setFontSize(7);
@@ -137,12 +146,8 @@ export const createJSPDF = (
                heightOfRect,
                "FD"
             );
-            // pdf.text(
-            //    `${j}`,
-            //    startingXPoint + chairWidth + width20 + (j - 1) * widthOfRect,
-            //    beginYData + rowNum * heightOfRect + height60
-            // );
          } else {
+            pdf.setTextColor(0, 0, 0);
             pdf.setDrawColor(0, 0, 0);
             pdf.setFillColor(255, 255, 255);
             pdf.setFontSize(7);
@@ -159,11 +164,58 @@ export const createJSPDF = (
                      j.toLocaleString("en-US", { minimumIntegerDigits: 2 })
                   )
                ];
-            pdf.text(
-               `${numFeet}`,
-               startingXPoint + chairWidth + width20 + (j - 1) * widthOfRect,
-               beginYData + rowNum * heightOfRect + height60
-            );
+            if (numFeet < 10) {
+               if (numFeet === 0) {
+                  pdf.setTextColor(255, 0, 0); //red
+               }
+               pdf.setFontSize(9);
+               pdf.text(
+                  `${numFeet}`,
+                  startingXPoint + chairWidth + width40 + (j - 1) * widthOfRect,
+                  beginYData + rowNum * heightOfRect + height79
+               );
+            } else if (numFeet < 100) {
+               pdf.setFontSize(9);
+               pdf.text(
+                  `${numFeet}`,
+                  startingXPoint + chairWidth + width30 + (j - 1) * widthOfRect,
+                  beginYData + rowNum * heightOfRect + height79
+               );
+            } else if (numFeet < 1000) {
+               if (numFeet >= rentalBound.lower) {
+                  pdf.setTextColor(0, 128, 0); //green
+               }
+               pdf.setFontSize(8);
+               pdf.text(
+                  `${numFeet}`,
+                  startingXPoint + chairWidth + width20 + (j - 1) * widthOfRect,
+                  beginYData + rowNum * heightOfRect + height79
+               );
+            } else if (numFeet < 10000) {
+               if (numFeet <= rentalBound.lower) {
+                  pdf.setTextColor(0, 128, 0); //green
+               }
+               pdf.setFontSize(7);
+               pdf.text(
+                  `${numFeet}`,
+                  startingXPoint + chairWidth + width10 + (j - 1) * widthOfRect,
+                  beginYData + rowNum * heightOfRect + height79
+               );
+            } else if (numFeet < 100000) {
+               pdf.setFontSize(7);
+               pdf.text(
+                  `${numFeet}`,
+                  startingXPoint + chairWidth + width02 + (j - 1) * widthOfRect,
+                  beginYData + rowNum * heightOfRect + height79
+               );
+            } else {
+               pdf.setFontSize(6);
+               pdf.text(
+                  `${numFeet}`,
+                  startingXPoint + chairWidth + width02 + (j - 1) * widthOfRect,
+                  beginYData + rowNum * heightOfRect + height79
+               );
+            }
          }
       }
       rowNum++;

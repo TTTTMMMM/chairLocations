@@ -1,4 +1,10 @@
 /* eslint-disable no-unused-vars */
+import {
+   drivingBound,
+   rentalBound,
+   relocatingBound,
+} from "../configs/rentalDistanceConfigs";
+
 const cellsRendererFeet = (
    _row: any,
    _columnfield: any,
@@ -7,9 +13,6 @@ const cellsRendererFeet = (
    _columnproperties: any,
    _rowdata: any
 ) => {
-   const drivingBound = 13200; // 2.5 miles
-   const rentalBound = { lower: 199, upper: drivingBound };
-   const relocatingBound = { lower: 1, upper: rentalBound.lower };
    if (value > drivingBound) {
       return `<span style="color: black; font-weight: 600;">${value}'
       </span>`;
