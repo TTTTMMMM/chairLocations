@@ -139,6 +139,7 @@ class GenerateQuerySide extends Component<
                      height={20}
                      placeHolder={"Choose a month"}
                      source={this.state.sourceMonth}
+                     value={"May"}
                      theme={"fresh"}
                   />
                </div>
@@ -165,6 +166,7 @@ class GenerateQuerySide extends Component<
                      items={10}
                      placeHolder={"Choose a year"}
                      source={this.state.sourceYear}
+                     value={"2020"}
                      theme={"fresh"}
                   />
                </div>

@@ -26,7 +26,7 @@ class MainBody extends Component<{}> {
             return <Redirect to="/upload" />;
             break;
          case Roles.admin:
-            return <Redirect to="/mapping/bychair" />;
+            return <Redirect to="/reporting/view" />;
             break;
          default:
             return <img src={"../../../images/cherry.jpeg"} />;

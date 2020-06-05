@@ -23,6 +23,7 @@ import "firebase/auth";
 
 import { divFlexRow } from "../../../styles/reactStyling";
 import { RangeObject, Roles, DistanceObj } from "../../misc/chairLocTypes";
+import { createJSPDF } from "./createJSPDF";
 
 interface MyState extends IDataTableProps {
    reportWatch?: any;
@@ -50,7 +51,7 @@ class ShowDistanceReport extends React.PureComponent<
    static contextType = AuthContext;
 
    private feetReportTable = React.createRef<JqxDataTable>();
-   private csvButton = React.createRef<JqxButton>();
+   private pdfButton = React.createRef<JqxButton>();
    private milesCheckBox = React.createRef<JqxCheckBox>();
 
    constructor(props: {
@@ -63,7 +64,7 @@ class ShowDistanceReport extends React.PureComponent<
       this.numRows = 0;
       this.columns = [];
       this.numUpdates = 0;
-      this.csvButtonClicked = this.csvButtonClicked.bind(this);
+      this.pdfButtonClicked = this.pdfButtonClicked.bind(this);
 
       this.onRowSelect = this.onRowSelect.bind(this);
       this.showReportContent = this.showReportContent.bind(this);
@@ -568,14 +569,14 @@ class ShowDistanceReport extends React.PureComponent<
                </div>
                <div style={divFlexRow}>
                   <JqxButton
-                     ref={this.csvButton}
-                     onClick={this.csvButtonClicked}
+                     ref={this.pdfButton}
+                     onClick={this.pdfButtonClicked}
                      width={325}
                      height={30}
                      theme={"fresh"}
                      textPosition={"center"}
                   >
-                     Output CSV File
+                     Output PDF File
                   </JqxButton>
                   <JqxCheckBox
                      ref={this.milesCheckBox}
@@ -632,9 +633,15 @@ class ShowDistanceReport extends React.PureComponent<
       );
    }
 
-   private csvButtonClicked() {
+   private pdfButtonClicked() {
+      const filename = `distReport_${this.state.reportWatch[0].period}.pdf`;
+      createJSPDF(
+         this.state.reportWatch[0].period,
+         filename,
+         this.feetReportTable.current!.getRows()
+      );
       this.props.myPanel.current!.append(
-         `<p style="color:#7713AD ; font-size:11px;">CSV Button Clicked</p>`
+         `<p style="color:#7713AD ; font-size:11px;">${filename}</p>`
       );
    }
 
@@ -642,15 +649,12 @@ class ShowDistanceReport extends React.PureComponent<
       this.setState({ milesCheckBoxIsChecked: true });
       let flipDiv = document.querySelector(".animateDiv") as HTMLDivElement;
       flipDiv.style.animation = "scaleyBird 5s";
-      // flipDiv.style.transform = "rotateY(360deg)";
    }
 
    private unCheckedEvent() {
       this.setState({ milesCheckBoxIsChecked: false });
       let flipDiv = document.querySelector(".animateDiv") as HTMLDivElement;
       flipDiv.style.animation = "scaleyBirdR 5s";
-      // flipDiv.style.transition = "transform 4s";
-      // flipDiv.style.transform = "rotateY(-360deg)";
    }
 }
 
