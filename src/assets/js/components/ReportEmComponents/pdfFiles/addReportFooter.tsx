@@ -19,6 +19,7 @@ export const addReportFooter = (
    const boxXStart = legendXStart - 50;
    const boxYStart = legendYStart;
    const width20 = widthOfRect * 0.2;
+   const width40 = widthOfRect * 0.4;
    const height70 = heightOfRect * 0.7;
 
    // output "Legend" in bottom left corner
@@ -61,7 +62,7 @@ export const addReportFooter = (
    pdf.rect(boxXStart, startY, widthOfRect, heightOfRect, "FD");
    pdf.setFontSize(9);
    pdf.setTextColor(255, 0, 0);
-   pdf.text(`0`, boxXStart + width20, startY + height70);
+   pdf.text(`0`, boxXStart + width40, startY + height70);
    pdf.setTextColor(0, 0, 0);
    pdf.setFontSize(9);
    pdf.text(

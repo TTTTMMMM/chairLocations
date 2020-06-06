@@ -2,7 +2,7 @@ import "./fonts/JosefinSans-Light-normal"; // 300 weight
 import "./fonts/JosefinSans-Regular-normal"; // 400 weight
 import "./fonts/JosefinSans-Medium-normal.js"; // 500 weight
 
-// import imgData from "./sh_icon";
+import imgData from "./sh_icon";
 
 export const addReportHeader = (
    pdf: any,
@@ -11,7 +11,7 @@ export const addReportHeader = (
    heightOfRect: number
 ): any => {
    // console.dir(reportData);
-   // pdf.addImage(imgData, "png", 15, 15, 75, 47); // sandhelper icon in upper left corner
+   pdf.addImage(imgData, "png", 15, 15, 75, 47); // sandhelper icon in upper left corner
    let month = period.substring(4, period.length);
    let year = period.substring(0, 4);
 
