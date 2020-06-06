@@ -23,7 +23,7 @@ import "firebase/auth";
 
 import { divFlexRow } from "../../../styles/reactStyling";
 import { RangeObject, Roles, DistanceObj } from "../../misc/chairLocTypes";
-import { createJSPDFinFeet } from "./createJSPDFinFeet";
+import { createJSPDFinFeet } from "./pdfFiles/createJSPDFinFeet";
 
 interface MyState extends IDataTableProps {
    reportWatch?: any;
@@ -641,7 +641,7 @@ class ShowDistanceReport extends React.PureComponent<
          this.feetReportTable.current!.getRows()
       );
       this.props.myPanel.current!.append(
-         `<p style="color:#7713AD ; font-size:11px;">Generating ${filename} in feet.</p>`
+         `<p style="color:#7713AD ; font-size:11px;">Generating ${filename} in feet (2-pages).</p>`
       );
    }
 
