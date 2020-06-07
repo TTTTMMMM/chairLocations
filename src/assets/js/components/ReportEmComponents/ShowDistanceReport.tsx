@@ -635,10 +635,7 @@ class ShowDistanceReport extends React.PureComponent<
    }
 
    private pdfButtonClicked() {
-      console.log(
-         `this.milesCheckBoxIsChecked[${this.milesCheckBoxIsChecked}]`
-      );
-      if (this.milesCheckBoxIsChecked) {
+      if (!this.state.milesCheckBoxIsChecked) {
          const fnameFeet = `distReport_${this.state.reportWatch[0].period}_feet.pdf`;
          this.props.myPanel.current!.append(
             `<p style="color:#7713AD ; font-size:11px;">Generating ${fnameFeet}.</p>`

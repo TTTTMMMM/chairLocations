@@ -310,13 +310,9 @@ export interface UserObj {
 
    Make last location a big icon on the map
 
-2. Report Tab
+2. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
 
-   CSV Button
-
-3. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
-
-4. Maintenance Tab
+3. Maintenance Tab
 
 #### <ins>TODO Physical World</ins>
 
@@ -324,8 +320,7 @@ export interface UserObj {
 2. Saw wood down to size
 3. Split wood
 4. Change oil in truck
-5. Submit FSAFEDS claim for wisdom teeth removal
-6. Change air filter in A/C.
+5. Change air filter in A/C.
 
 ---
 
