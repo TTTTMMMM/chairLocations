@@ -1,4 +1,10 @@
 /* eslint-disable no-unused-vars */
+import {
+   drivingBoundMiles,
+   rentalBoundMiles,
+   relocatingBoundMiles,
+} from "../configs/rentalDistanceConfigs";
+
 const cellsRendererMiles = (
    _row: any,
    _columnfield: any,
@@ -7,28 +13,31 @@ const cellsRendererMiles = (
    _columnproperties: any,
    _rowdata: any
 ) => {
-   const drivingBound = 2.5; // 2.5 miles -- above this amount, it was probably driven somewhere
-   const rentalBound = { lower: 0.038, upper: drivingBound }; // approximate 200' to 2 miles sounds like rental distance
-   const relocatingBound = { lower: 0.001, upper: rentalBound.lower }; // distances outside legit rental distances are ports
-   if (value > drivingBound) {
+   if (value > drivingBoundMiles) {
       if (value > 9.99) {
          return `<span style="color: black; font-weight: 600;">${value.toFixed(
             0
          )} </span>`;
       }
-      if (value > rentalBound.upper) {
+      if (value > rentalBoundMiles.upper) {
          return `<span style="color: black; font-weight: 600;">${value.toFixed(
             1
          )} </span>`;
       }
       return `<span style="color: black; font-weight: 600;">${value} </span>`;
-   } else if (value > rentalBound.lower && value <= rentalBound.upper) {
+   } else if (
+      value > rentalBoundMiles.lower &&
+      value <= rentalBoundMiles.upper
+   ) {
       return `<span style="color: green; font-weight: 600;">${value}
       </span>`;
-   } else if (value > relocatingBound.lower && value <= relocatingBound.upper) {
+   } else if (
+      value > relocatingBoundMiles.lower &&
+      value <= relocatingBoundMiles.upper
+   ) {
       return `<span style="color: black; font-weight: 600;">${value}
       </span>`;
-   } else if (value >= 0 && value < relocatingBound.lower) {
+   } else if (value >= 0 && value < relocatingBoundMiles.lower) {
       //just in case there is some fractional number above 0
       return `<span style="color: red; font-weight: 600;">${value}
          </span>`;

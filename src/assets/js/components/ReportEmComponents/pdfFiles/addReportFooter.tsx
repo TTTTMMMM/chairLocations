@@ -2,11 +2,19 @@ import "./fonts/JosefinSans-Light-normal"; // 300 weight
 import "./fonts/JosefinSans-Regular-normal"; // 400 weight
 import "./fonts/JosefinSans-Medium-normal.js"; // 500 weight
 
+import {
+   rentalBound,
+   drivingBoundMiles,
+} from "../../../configs/rentalDistanceConfigs";
+
 export const addReportFooter = (
    pdf: any,
    pageNum: number,
    widthOfRect: number,
-   heightOfRect: number
+   heightOfRect: number,
+   distanceUnits: string,
+   exemplar1: number,
+   exemplar2: number
 ): any => {
    // output page number in bottom right corner
    pdf.setFont("JosefinSans-Regular");
@@ -23,20 +31,22 @@ export const addReportFooter = (
    const height70 = heightOfRect * 0.7;
 
    // output "Legend" in bottom left corner
-   // pdf.setFont("JosefinSans-Regular");
-   // pdf.setFontSize(10);
-   // pdf.setTextColor(0, 0, 0);
-   // pdf.text(`Legend`, legendXStart, legendYStart);
+   pdf.setFont("JosefinSans-Regular");
+   pdf.setFontSize(9);
+   pdf.setTextColor(0, 0, 0);
+   pdf.text(`All distances in ${distanceUnits}`, legendXStart, legendYStart);
 
    // output revenue (green) box
    pdf.setDrawColor(0, 0, 0);
    pdf.setFillColor(0, 128, 0);
    pdf.rect(boxXStart, boxYStart, widthOfRect, heightOfRect, "FD");
    pdf.setFontSize(9);
-   pdf.text(`500`, boxXStart + width20, boxYStart + height70);
+   pdf.text(`${exemplar1}`, boxXStart + width20, boxYStart + height70);
    pdf.setFontSize(9);
    pdf.text(
-      `Possible revenue movement (200' -- 2.5 miles)`,
+      `Possible revenue movement (${
+         rentalBound.lower + 1
+      }' -- ${drivingBoundMiles} miles)`,
       boxXStart + 1.2 * widthOfRect,
       boxYStart + height70
    );
@@ -47,7 +57,7 @@ export const addReportFooter = (
    pdf.setFillColor(255, 255, 255);
    pdf.rect(boxXStart, startY, widthOfRect, heightOfRect, "FD");
    pdf.setFontSize(9);
-   pdf.text(`100`, boxXStart + width20, startY + height70);
+   pdf.text(`${exemplar2}`, boxXStart + width20, startY + height70);
    pdf.setFontSize(9);
    pdf.text(
       `Unlikely revenue movement`,
@@ -74,7 +84,7 @@ export const addReportFooter = (
    // output non-reporting box
    startY = boxYStart + 3 * heightOfRect;
    pdf.setDrawColor(0, 0, 0);
-   pdf.setFillColor(235, 235, 235);
+   pdf.setFillColor(230, 230, 230);
    pdf.rect(boxXStart, startY, widthOfRect, heightOfRect, "FD");
    pdf.setFontSize(9);
    pdf.setTextColor(0, 0, 0);

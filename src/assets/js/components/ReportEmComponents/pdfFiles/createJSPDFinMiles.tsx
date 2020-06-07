@@ -2,7 +2,7 @@ import "./fonts/JosefinSans-Light-normal"; // 300 weight
 import "./fonts/JosefinSans-Regular-normal"; // 400 weight
 import "./fonts/JosefinSans-Medium-normal.js"; // 500 weight
 
-import { rentalBound } from "../../../configs/rentalDistanceConfigs";
+import { rentalBoundMiles } from "../../../configs/rentalDistanceConfigs";
 
 import { addReportHeader } from "./addReportHeader";
 import { addReportFooter } from "./addReportFooter";
@@ -10,22 +10,21 @@ import { numDaysInMonth } from "../../../misc/months";
 
 import jsPDF from "jspdf";
 
-export const createJSPDFinFeet = (
+export const createJSPDFinMiles = (
    period: string,
    filename: string,
    reportData: any
 ): any => {
-   // console.dir(reportData);
    let pdf = new jsPDF({ orientation: "l", unit: "pt", lineHeight: 1.2 }); // l = landscape, p would be portrait
    const widthOfRect = 24;
    const heightOfRect = 16;
    pdf = addReportHeader(pdf, period, widthOfRect, heightOfRect);
 
    const width40 = widthOfRect * 0.4;
-   const width30 = widthOfRect * 0.3;
+   // const width30 = widthOfRect * 0.3;
    const width20 = widthOfRect * 0.2;
    const width10 = widthOfRect * 0.1;
-   const width02 = widthOfRect * 0.02;
+   // const width02 = widthOfRect * 0.02;
    const height80 = heightOfRect * 0.8;
    const height66 = heightOfRect * 0.66;
    const startingXPoint = 40 - widthOfRect;
@@ -88,7 +87,7 @@ export const createJSPDFinFeet = (
 
       let month = period.substring(4, period.length);
       let numDays: number = numDaysInMonth.get(month);
-      //   write the number of feet in the cell
+      //   write the number of miles in the cell
       let j = 0;
       while (j++ <= numDays - 1) {
          if (
@@ -124,50 +123,79 @@ export const createJSPDFinFeet = (
                heightOfRect,
                "FD"
             );
-            let numFeet =
+            let numMiles =
                x[
                   "d".concat(
                      j.toLocaleString("en-US", { minimumIntegerDigits: 2 })
                   )
                ];
-            if (numFeet < 10) {
-               if (numFeet === 0) {
+            if (numMiles < 10) {
+               if (numMiles === 0) {
+                  pdf.setFontSize(9);
                   pdf.setTextColor(255, 0, 0); //red
-               }
-               pdf.setFontSize(9);
-               pdf.text(
-                  `${numFeet}`,
-                  startingXPoint + chairWidth + width40 + (j - 1) * widthOfRect,
-                  beginYData + rowNum * heightOfRect + height66
-               );
-            } else if (numFeet < 100) {
-               pdf.setFontSize(9);
-               pdf.text(
-                  `${numFeet}`,
-                  startingXPoint + chairWidth + width30 + (j - 1) * widthOfRect,
-                  beginYData + rowNum * heightOfRect + height66
-               );
-            } else if (numFeet < 1000) {
-               if (numFeet >= rentalBound.lower) {
-                  pdf.setFont("JosefinSans-Medium");
-                  pdf.setFillColor(0, 128, 0); //green
-                  pdf.rect(
-                     chairStartingXPoint + chairWidth + (j - 1) * widthOfRect,
-                     beginYData + rowNum * heightOfRect,
-                     widthOfRect,
-                     heightOfRect,
-                     "FD"
+                  pdf.text(
+                     `${numMiles}`,
+                     startingXPoint +
+                        chairWidth +
+                        width40 +
+                        (j - 1) * widthOfRect,
+                     beginYData + rowNum * heightOfRect + height66
+                  );
+               } else {
+                  if (
+                     numMiles >= rentalBoundMiles.lower &&
+                     numMiles <= rentalBoundMiles.upper
+                  ) {
+                     pdf.setFontSize(9);
+                     pdf.setFont("JosefinSans-Medium");
+                     pdf.setFillColor(0, 128, 0); // green
+                     pdf.rect(
+                        chairStartingXPoint +
+                           chairWidth +
+                           (j - 1) * widthOfRect,
+                        beginYData + rowNum * heightOfRect,
+                        widthOfRect,
+                        heightOfRect,
+                        "FD"
+                     );
+                  } else {
+                     pdf.setFontSize(9);
+                     pdf.setFillColor(255, 255, 255); // white
+                     pdf.setTextColor(0, 0, 0); //black
+                     pdf.setFont("JosefinSans-Regular");
+                  }
+                  pdf.text(
+                     `${numMiles.toFixed(2)}`,
+                     startingXPoint +
+                        chairWidth +
+                        width10 +
+                        (j - 1) * widthOfRect,
+                     beginYData + rowNum * heightOfRect + height66
                   );
                }
+            } else if (numMiles < 100) {
                pdf.setFontSize(9);
+               pdf.setFont("JosefinSans-Regular");
+               pdf.setFillColor(255, 255, 255); // white
+               pdf.setTextColor(0, 0, 0); //black
                pdf.text(
-                  `${numFeet}`,
+                  `${numMiles.toFixed(1)}`,
                   startingXPoint + chairWidth + width20 + (j - 1) * widthOfRect,
                   beginYData + rowNum * heightOfRect + height66
                );
-            } else if (numFeet < 10000) {
-               pdf.setFont("JosefinSans-Medium");
-               pdf.setFillColor(0, 128, 0); //green
+            } else if (numMiles < 1000) {
+               pdf.setFillColor(255, 255, 255); // white
+               pdf.setFont("JosefinSans-Regular");
+               pdf.setFontSize(8);
+               pdf.text(
+                  `${numMiles.toFixed(0)}`,
+                  startingXPoint + chairWidth + width20 + (j - 1) * widthOfRect,
+                  beginYData + rowNum * heightOfRect + height66
+               );
+            } else {
+               pdf.setFontSize(8);
+               pdf.setFont("JosefinSans-Regular");
+               pdf.setFillColor(255, 255, 255); //white
                pdf.rect(
                   chairStartingXPoint + chairWidth + (j - 1) * widthOfRect,
                   beginYData + rowNum * heightOfRect,
@@ -175,35 +203,9 @@ export const createJSPDFinFeet = (
                   heightOfRect,
                   "FD"
                );
-               pdf.setFontSize(8.6);
                pdf.text(
-                  `${numFeet}`,
+                  `${numMiles.toFixed(0)}`,
                   startingXPoint + chairWidth + width10 + (j - 1) * widthOfRect,
-                  beginYData + rowNum * heightOfRect + height66
-               );
-            } else if (numFeet < 100000) {
-               if (numFeet <= rentalBound.upper) {
-                  pdf.setFont("JosefinSans-Medium");
-                  pdf.setFillColor(0, 128, 0); //green
-                  pdf.rect(
-                     chairStartingXPoint + chairWidth + (j - 1) * widthOfRect,
-                     beginYData + rowNum * heightOfRect,
-                     widthOfRect,
-                     heightOfRect,
-                     "FD"
-                  );
-               }
-               pdf.setFontSize(7.3);
-               pdf.text(
-                  `${numFeet}`,
-                  startingXPoint + chairWidth + width10 + (j - 1) * widthOfRect,
-                  beginYData + rowNum * heightOfRect + height66
-               );
-            } else {
-               pdf.setFontSize(6);
-               pdf.text(
-                  `${numFeet}`,
-                  startingXPoint + chairWidth + width02 + (j - 1) * widthOfRect,
                   beginYData + rowNum * heightOfRect + height66
                );
             }
@@ -216,9 +218,9 @@ export const createJSPDFinFeet = (
             pageNum,
             widthOfRect,
             heightOfRect,
-            "feet",
-            500,
-            100
+            "miles",
+            1.25,
+            15.5
          );
          pageNum++;
          pdf.addPage();
@@ -228,7 +230,15 @@ export const createJSPDFinFeet = (
          oldRentalAgent = "";
       }
    });
-   addReportFooter(pdf, pageNum, widthOfRect, heightOfRect, "feet", 500, 100);
+   addReportFooter(
+      pdf,
+      pageNum,
+      widthOfRect,
+      heightOfRect,
+      "miles",
+      1.25,
+      15.5
+   );
    pdf.save(filename);
    return pdf;
 };

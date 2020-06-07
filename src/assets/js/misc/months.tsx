@@ -27,4 +27,18 @@ monsMap.set("Oct", "10");
 monsMap.set("Nov", "11");
 monsMap.set("Dec", "12");
 
+export const numDaysInMonth = new Map();
+numDaysInMonth.set("January", 31);
+numDaysInMonth.set("February", 28);
+numDaysInMonth.set("March", 31);
+numDaysInMonth.set("April", 30);
+numDaysInMonth.set("May", 31);
+numDaysInMonth.set("June", 30);
+numDaysInMonth.set("July", 31);
+numDaysInMonth.set("August", 30);
+numDaysInMonth.set("September", 30);
+numDaysInMonth.set("October", 31);
+numDaysInMonth.set("November", 30);
+numDaysInMonth.set("December", 31);
+
 export default monsMap;

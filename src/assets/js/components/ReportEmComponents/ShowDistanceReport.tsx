@@ -24,6 +24,7 @@ import "firebase/auth";
 import { divFlexRow } from "../../../styles/reactStyling";
 import { RangeObject, Roles, DistanceObj } from "../../misc/chairLocTypes";
 import { createJSPDFinFeet } from "./pdfFiles/createJSPDFinFeet";
+import { createJSPDFinMiles } from "./pdfFiles/createJSPDFinMiles";
 
 interface MyState extends IDataTableProps {
    reportWatch?: any;
@@ -50,7 +51,7 @@ class ShowDistanceReport extends React.PureComponent<
 
    static contextType = AuthContext;
 
-   private feetReportTable = React.createRef<JqxDataTable>();
+   private distReportTable = React.createRef<JqxDataTable>();
    private pdfButton = React.createRef<JqxButton>();
    private milesCheckBox = React.createRef<JqxCheckBox>();
 
@@ -546,7 +547,7 @@ class ShowDistanceReport extends React.PureComponent<
             <>
                <div className="animateDiv">
                   <JqxDataTable
-                     ref={this.feetReportTable}
+                     ref={this.distReportTable}
                      width={920}
                      theme={"fresh"}
                      source={this.dataAdapter}
@@ -634,15 +635,30 @@ class ShowDistanceReport extends React.PureComponent<
    }
 
    private pdfButtonClicked() {
-      const filename = `distReport_${this.state.reportWatch[0].period}.pdf`;
-      createJSPDFinFeet(
-         this.state.reportWatch[0].period,
-         filename,
-         this.feetReportTable.current!.getRows()
+      console.log(
+         `this.milesCheckBoxIsChecked[${this.milesCheckBoxIsChecked}]`
       );
-      this.props.myPanel.current!.append(
-         `<p style="color:#7713AD ; font-size:11px;">Generating ${filename} in feet (2-pages).</p>`
-      );
+      if (this.milesCheckBoxIsChecked) {
+         const fnameFeet = `distReport_${this.state.reportWatch[0].period}_feet.pdf`;
+         this.props.myPanel.current!.append(
+            `<p style="color:#7713AD ; font-size:11px;">Generating ${fnameFeet}.</p>`
+         );
+         createJSPDFinFeet(
+            this.state.reportWatch[0].period,
+            fnameFeet,
+            this.distReportTable.current!.getRows()
+         );
+      } else {
+         const fnameMiles = `distReport_${this.state.reportWatch[0].period}_miles.pdf`;
+         this.props.myPanel.current!.append(
+            `<p style="color:#7713AD ; font-size:11px;">Generating ${fnameMiles}.</p>`
+         );
+         createJSPDFinMiles(
+            this.state.reportWatch[0].period,
+            fnameMiles,
+            this.distReportTable.current!.getRows()
+         );
+      }
    }
 
    private checkedEvent() {
