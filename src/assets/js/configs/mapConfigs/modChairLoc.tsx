@@ -13,3 +13,8 @@ export const modChairLoc = (cLo: IWLocObj): ModifiedIWLocObj => {
       .toLocaleString("en-US", { minimumIntegerDigits: 2 })}`;
    return mClo;
 };
+
+export interface LatestUpdateObj {
+   id: string;
+   latestUpdate: string;
+}

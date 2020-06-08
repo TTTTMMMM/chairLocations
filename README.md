@@ -308,8 +308,6 @@ export interface UserObj {
 
    Time arrow step-by-step
 
-   Make last location a big icon on the map
-
 2. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
 
 3. Maintenance Tab

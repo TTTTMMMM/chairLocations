@@ -15,7 +15,10 @@ import { EAST_COAST_BOUNDS } from "../configs/mapConfigs/eastCoastRestrictions";
 import { IWLocObj } from "../configs/mapConfigs/mapTypes";
 import { apiKey } from "../configs/apiKey";
 import { divStyleMaker } from "../configs/mapConfigs/createDivStyleChoosers";
-import { modChairLoc } from "../configs/mapConfigs/modChairLoc";
+import {
+   modChairLoc,
+   // LatestUpdateObj,
+} from "../configs/mapConfigs/modChairLoc";
 import {
    iwLocStyle,
    pStyle,
@@ -28,7 +31,9 @@ const optionsMarkerCluster = {
    imagePath: "/images/m",
 };
 
-const MapContainer = (inputObj: Array<IWLocObj>, myPanel: any) => {
+// let latestUpdateObj: LatestUpdateObj = { latestUpdate: "2019-01-01", id: "" };
+
+const MapContainer = (inputObj: Array<IWLocObj>) => {
    const [mapRef, setMapRef] = useState<any>();
    const [selected, setSelected] = useState<any>();
    const [added, setAdded] = useState<boolean>(false);
@@ -82,6 +87,8 @@ const MapContainer = (inputObj: Array<IWLocObj>, myPanel: any) => {
    };
 
    let chairLocs: Array<IWLocObj> = Object.values(inputObj);
+   let lastMarkerID: string = chairLocs[chairLocs.length - 1].id!;
+   let firstMarkerID: string = chairLocs[0].id!;
 
    return (
       <LoadScript googleMapsApiKey={apiKey}>
@@ -108,15 +115,38 @@ const MapContainer = (inputObj: Array<IWLocObj>, myPanel: any) => {
          >
             <MarkerClusterer options={optionsMarkerCluster} gridSize={35}>
                {(clusterer) =>
-                  chairLocs.map((x) => (
-                     <Marker
-                        key={x.id}
-                        position={x.location}
-                        onClick={() => onMarkerSelect(x)}
-                        icon={"/images/m1.png"}
-                        clusterer={clusterer}
-                     />
-                  ))
+                  chairLocs.map((x) => {
+                     if (x.id === lastMarkerID) {
+                        return (
+                           <Marker
+                              key={x.id}
+                              position={x.location}
+                              onClick={() => onMarkerSelect(x)}
+                              icon={"/images/moon.png"}
+                              clusterer={clusterer}
+                           />
+                        );
+                     } else if (x.id === firstMarkerID) {
+                        return (
+                           <Marker
+                              key={x.id}
+                              position={x.location}
+                              onClick={() => onMarkerSelect(x)}
+                              icon={"/images/sun.png"}
+                              clusterer={clusterer}
+                           />
+                        );
+                     } else
+                        return (
+                           <Marker
+                              key={x.id}
+                              position={x.location}
+                              onClick={() => onMarkerSelect(x)}
+                              icon={"/images/m1.png"}
+                              clusterer={clusterer}
+                           />
+                        );
+                  })
                }
             </MarkerClusterer>
             {selected && selected.location && (
