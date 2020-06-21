@@ -312,13 +312,13 @@ export interface UserObj {
 
 3. Maintenance Tab
 
+4. Add identification of days to report.
+
 #### <ins>TODO Physical World</ins>
 
 1. Change oil in John Deere
-2. Saw wood down to size
-3. Split wood
-4. Change oil in truck
-5. Change air filter in A/C.
+2. Change oil in truck
+3. Change air filter in A/C.
 
 ---
 

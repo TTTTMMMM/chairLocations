@@ -68,9 +68,9 @@ exports.testTicket = async (ticket, requestToken, admin) => {
       try {
          let accObj = authUser.data().canAccess;
          user = await admin.auth().getUserByEmail(email);
-         // admin.auth().setCustomUserClaims(user.uid, {
-         //    canAccess: accObj,
-         // });                   // all of a sudden, doing this exceeds the "authentication quotas"  ooa 6/1/2020
+         admin.auth().setCustomUserClaims(user.uid, {
+            canAccess: accObj,
+         }); // all of a sudden, doing this exceeds the "authentication quotas"  ooa 6/1/2020
          retRes.errCode = 8;
          return retRes;
       } catch (err) {
