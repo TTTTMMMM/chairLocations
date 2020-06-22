@@ -312,8 +312,6 @@ export interface UserObj {
 
 3. Maintenance Tab
 
-4. Add identification of days to report.
-
 #### <ins>TODO Physical World</ins>
 
 1. Change oil in John Deere

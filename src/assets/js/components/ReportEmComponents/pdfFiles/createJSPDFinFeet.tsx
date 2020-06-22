@@ -20,6 +20,8 @@ export const createJSPDFinFeet = (
    const widthOfRect = 24;
    const heightOfRect = 16;
    pdf = addReportHeader(pdf, period, widthOfRect, heightOfRect);
+   let month = period.substring(4, period.length);
+   let numDays: number = numDaysInMonth.get(month);
 
    const width40 = widthOfRect * 0.4;
    const width30 = widthOfRect * 0.3;
@@ -28,15 +30,17 @@ export const createJSPDFinFeet = (
    const width02 = widthOfRect * 0.02;
    const height80 = heightOfRect * 0.8;
    const height66 = heightOfRect * 0.66;
-   const startingXPoint = 40 - widthOfRect;
-   const startingYPoint = 75;
+   const startingXPoint = numDays === 31 ? 40 - widthOfRect : 49 - widthOfRect;
+   const chairStartingXPoint = numDays === 31 ? 15 : 24;
+   const startingYPoint = 81;
    const chairWidth = 68;
-   const chairStartingXPoint = 15;
+
    pdf.setFont("JosefinSans-Light");
    pdf.setFontSize(12);
 
    const beginYData = startingYPoint + heightOfRect;
-   const widthOfTable = chairWidth + 31 * widthOfRect;
+
+   const widthOfTable = chairWidth + numDays * widthOfRect;
 
    // Fill in the table with distances
    let oldRentalAgent: string = "";
@@ -86,8 +90,6 @@ export const createJSPDFinFeet = (
          beginYData + rowNum * heightOfRect + height80
       );
 
-      let month = period.substring(4, period.length);
-      let numDays: number = numDaysInMonth.get(month);
       //   write the number of feet in the cell
       let j = 0;
       while (j++ <= numDays - 1) {

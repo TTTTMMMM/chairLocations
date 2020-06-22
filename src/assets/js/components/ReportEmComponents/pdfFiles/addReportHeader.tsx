@@ -1,6 +1,8 @@
 import "./fonts/JosefinSans-Light-normal"; // 300 weight
 import "./fonts/JosefinSans-Regular-normal"; // 400 weight
 import "./fonts/JosefinSans-Medium-normal.js"; // 500 weight
+import moment from "moment";
+import { numDaysInMonth } from "../../../misc/months";
 
 import imgData from "./sh_icon";
 
@@ -14,6 +16,7 @@ export const addReportHeader = (
    pdf.addImage(imgData, "png", 15, 15, 75, 47); // sandhelper icon in upper left corner
    let month = period.substring(4, period.length);
    let year = period.substring(0, 4);
+   let numDays: number = numDaysInMonth.get(month);
 
    //    Report Title
    pdf.setFont("JosefinSans-Regular");
@@ -23,10 +26,14 @@ export const addReportHeader = (
 
    const width33 = widthOfRect * 0.33;
    const height80 = heightOfRect * 0.8;
-   const startingXPoint = 40 - widthOfRect;
-   const startingYPoint = 75;
+   const startingXPoint = numDays === 31 ? 40 - widthOfRect : 49 - widthOfRect;
+   const chairStartingXPoint = numDays === 31 ? 15 : 24;
+   const startingYPoint = 81;
    const chairWidth = 68;
-   const chairStartingXPoint = 15;
+   const heightOfDay = heightOfRect - 3;
+   const heightDay90 = heightOfDay * 0.9;
+   const startingYDayPoint = startingYPoint - heightOfDay;
+
    pdf.setFont("JosefinSans-Light");
    pdf.setFontSize(12);
 
@@ -42,11 +49,30 @@ export const addReportHeader = (
    );
    pdf.text(`CHAIR`, chairStartingXPoint + 15, startingYPoint + height80);
 
-   //    write "date" column headers
+   //    write "day" and "date" column headers
    let i = 1;
-   while (i < 32) {
+   while (i < numDays + 1) {
+      var theDate = moment(`${year}-${month}-${i}`).toString();
+      let theDay = theDate.substring(0, 1);
+      pdf.setFontSize(10);
       pdf.setDrawColor(0, 0, 0);
       pdf.setFillColor(250, 245, 198);
+
+      pdf.rect(
+         startingXPoint + chairWidth - 1 + (i - 1) * widthOfRect,
+         startingYDayPoint,
+         widthOfRect,
+         heightOfDay,
+         "FD"
+      );
+      pdf.text(
+         `${theDay}`,
+         startingXPoint + chairWidth + width33 + (i - 1) * widthOfRect,
+         startingYDayPoint + heightDay90
+      );
+
+      pdf.setFillColor(250, 245, 198);
+      pdf.setFontSize(12);
       pdf.rect(
          startingXPoint + chairWidth - 1 + (i - 1) * widthOfRect,
          startingYPoint,
