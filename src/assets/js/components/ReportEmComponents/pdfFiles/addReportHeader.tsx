@@ -31,7 +31,7 @@ export const addReportHeader = (
    const startingYPoint = 81;
    const chairWidth = 68;
    const heightOfDay = heightOfRect - 3;
-   const heightDay90 = heightOfDay * 0.9;
+   const heightDay90 = heightOfDay * 0.85;
    const startingYDayPoint = startingYPoint - heightOfDay;
 
    pdf.setFont("JosefinSans-Light");

@@ -312,6 +312,8 @@ export interface UserObj {
 
 3. Maintenance Tab
 
+4. Animate the home page with flying Sand Helper icons ( [a' la](https://www.youtube.com/watch?v=EO6OkltgudE) )
+
 #### <ins>TODO Physical World</ins>
 
 1. Change oil in John Deere
