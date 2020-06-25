@@ -14,7 +14,7 @@ exports.addChairLoc = async (req, res, admin) => {
          newChairLoc[x] = escapeHTML(chairLoc[x].trim().substring(0, 59));
       });
       // grab the assetlabel field to eventually store in the "uniqueAssetLabels" collection
-      // grab the rentalagent field to eventually store in the "uniquerentalagents" collection
+      // grab the rentalagent field to eventually store in the "uniqueRentalAgents" collection
       const { ASSETLABEL, FNAME, UPLOADFBTIME, RENTALAGENT } = newChairLoc;
       theAssetLabel = { ASSETLABEL, FNAME, UPLOADFBTIME };
       theRentalAgent = { RENTALAGENT, FNAME, UPLOADFBTIME };
@@ -62,11 +62,15 @@ exports.addChairLoc = async (req, res, admin) => {
          console.log(`${firstLine} ${err}`);
       }
       // if this rentalagent does not already exist, then store it in "uniquerentalagents"
+      let rentalAgent = theRentalAgent.RENTALAGENT.replace("&amp;", "&")
+         .replace("&AMP;", "&")
+         .replace("&#39;", "'"); // correct for ampersand and apostrophe
+      theRentalAgent.RENTALAGENT = rentalAgent;
       try {
          const theRental = await admin
             .firestore()
             .collection("uniqueRentalAgents")
-            .get(theRentalAgent.RENTALAGENT);
+            .get(rentalAgent);
          if (!theRental.exists) {
             try {
                await admin

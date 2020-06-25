@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import AddDropUser from "../AddDropUser";
-import ShowBeaches from "./ShowBeaches";
+import AddDropUser from "./AddDropUser";
+import ShowBeaches from "./AddDropBeaches";
 // @ts-ignore
 import { flexColContainer } from "../../../styles/reactStyling";
 // @ts-ignore

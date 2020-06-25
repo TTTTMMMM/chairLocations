@@ -92,6 +92,7 @@ class MappingBody extends Component<{ match: any }, {}> {
          </>
       );
    }
+
    render() {
       const {
          isSignedIn,

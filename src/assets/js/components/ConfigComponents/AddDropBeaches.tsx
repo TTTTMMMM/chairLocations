@@ -30,7 +30,7 @@ interface MyState extends IDataTableProps {
    beachesWatch?: any;
    subscribed?: boolean;
 }
-class ShowBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
+class AddDropBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
    beachesCollection: any;
    numUpdates: number | undefined;
    unsubscribe: any | undefined;
@@ -53,7 +53,6 @@ class ShowBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
       this.modifyKey = "";
       this.numUpdates = 0;
       this.dataAdapter = null;
-      // this.mapModeButtonClicked = this.mapModeButtonClicked.bind(this);
 
       this.onRowSelect = this.onRowSelect.bind(this);
       this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
@@ -94,7 +93,6 @@ class ShowBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
    componentDidMount() {}
 
    onCollectionUpdate = (querySnapshot: any) => {
-      // console.log(`In onCollectionUpdate() <${util.inspect(querySnapshot)}>`);
       this.numUpdates!++;
       let beachesWatch: any[] = [];
       this.numRows = 0;
@@ -238,7 +236,7 @@ class ShowBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
                      height={50}
                      theme={"fresh"}
                      textImageRelation={"imageAboveText"}
-                     imgSrc={"./images/beach1.png"}
+                     imgSrc={"../images/beach1.png"}
                      textPosition={"center"}
                   >
                      Add Rental/Beach
@@ -328,4 +326,4 @@ class ShowBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
    }
 }
 
-export default ShowBeaches;
+export default AddDropBeaches;

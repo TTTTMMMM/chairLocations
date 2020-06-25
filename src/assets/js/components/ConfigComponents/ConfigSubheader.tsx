@@ -28,31 +28,31 @@ class ConfigSubheader extends Component<{ match: any }, {}> {
                               paddingLeft: "3px",
                            }}
                         >
-                           User Management
+                           Users
                         </NavLink>
                      </li>
                      <li>
                         <NavLink
-                           to={`${this.props.match.url}/rentalagentmanagement`}
+                           to={`${this.props.match.url}/rentalagentbeaches`}
                            activeStyle={{
                               border: "solid hsla(12, 95%, 47%, 0.98) 2px ",
                               paddingTop: "3px",
                               paddingLeft: "3px",
                            }}
                         >
-                           Rental Agent Management
+                           Rental Agent - Beaches
                         </NavLink>
                      </li>
                      <li>
                         <NavLink
-                           to={`${this.props.match.url}/reportgeneration`}
+                           to={`${this.props.match.url}/rentalagentchairs`}
                            activeStyle={{
                               border: "solid hsla(12, 95%, 47%, 0.98) 2px ",
                               paddingTop: "3px",
                               paddingLeft: "3px",
                            }}
                         >
-                           Generate Distance Reports
+                           Chair Deployments
                         </NavLink>
                      </li>
                   </ul>

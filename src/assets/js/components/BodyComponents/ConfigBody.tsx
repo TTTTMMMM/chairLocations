@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import "../../../styles/index.css";
 import { Roles } from "../../misc/chairLocTypes";
-import ConfigContainer from "../ConfigComponents/ConfigContainer";
+// import ConfigContainer from "../ConfigComponents/ConfigContainer";
 import { AuthContext } from "../../contexts/AuthContext";
+
+import ConfigSubheader from "../ConfigComponents/ConfigSubheader";
+import UserManagementComponent from "../ConfigComponents/UserManagementComponent";
+import RentalAgentBeachesManagementComponent from "../ConfigComponents/RentalAgentBeachesManagementComponent";
+import RentalAgentChairsManagementComponent from "../ConfigComponents/RentalAgentChairsManagementComponent";
 
 import firebase from "firebase/app";
 import "firebase/database";
@@ -12,8 +18,8 @@ import "firebase/firestore";
 import "firebase/auth";
 
 interface MyState {}
-class ConfigBody extends Component<{}, MyState> {
-   constructor(props: {}) {
+class ConfigBody extends Component<{ match: any }, MyState> {
+   constructor(props: { match: any }) {
       super(props);
       this.state = {};
 
@@ -70,7 +76,46 @@ class ConfigBody extends Component<{}, MyState> {
       if (!isLoggedInToFirebase) {
          return <h3>Not Authorized</h3>;
       } else if (isLoggedInToFirebase && userObjFmServer.role === Roles.admin) {
-         return <ConfigContainer></ConfigContainer>;
+         return (
+            <>
+               <Router>
+                  <ConfigSubheader match={this.props.match}></ConfigSubheader>
+                  <Switch>
+                     <Route
+                        path={`${this.props.match.path}/usermanagement`}
+                        render={(props) =>
+                           isSignedIn ? (
+                              <UserManagementComponent></UserManagementComponent>
+                           ) : (
+                              <Redirect to="/" />
+                           )
+                        }
+                     />
+                     <Route
+                        path={`${this.props.match.path}/rentalagentbeaches`}
+                        render={(props) =>
+                           isSignedIn ? (
+                              <RentalAgentBeachesManagementComponent></RentalAgentBeachesManagementComponent>
+                           ) : (
+                              <Redirect to="/" />
+                           )
+                        }
+                     />
+                     <Route
+                        path={`${this.props.match.path}/rentalagentchairs`}
+                        render={(props) =>
+                           isSignedIn ? (
+                              <RentalAgentChairsManagementComponent></RentalAgentChairsManagementComponent>
+                           ) : (
+                              <Redirect to="/" />
+                           )
+                        }
+                     />
+                     <Redirect to="/" />
+                  </Switch>
+               </Router>
+            </>
+         );
       } else if (isSignedIn && userObjFmServer.role === Roles.notloggedin) {
          return <h3>Not Authorized</h3>;
       } else {
@@ -95,7 +140,7 @@ class ConfigBody extends Component<{}, MyState> {
       ) {
          this.signInToFirebase(googleToken);
       }
-      return <div>{this.getConfigBodyContent()}</div>;
+      return <>{this.getConfigBodyContent()}</>;
    }
 }
 

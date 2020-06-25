@@ -80,6 +80,8 @@ body > div > header:nth-of-type(2) > section:nth-of-type(2) {
    margin-top: -6px;
 }
 
+/* body/div/header[2]/section[2]/nav/ul/li[1]/a
+body/div/div/header/section[2]/nav/ul/li[1]/a */
 /* BodyMappingSubheader > section 3  */
 body > div > header:nth-of-type(2) > section:nth-of-type(3) {
    display: flex;
@@ -487,7 +489,7 @@ body
    color: white;
 }
 
-/* formatting in myapping myPanel */
+/* formatting in map 'em myPanel */
 body
    > div:nth-of-type(1)
    > div
@@ -516,6 +518,21 @@ body
    margin-bottom: 0px;
 }
 
+/* formatting in config myPanel */
+body
+   > div:nth-of-type(1)
+   > div
+   > section:nth-of-type(1)
+   > div
+   > div:nth-of-type(1)
+   > div
+   > div:nth-of-type(1)
+   > p {
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+
+/* keyframes used in transition from feet to miles and vice versa in Report 'em tab */
 @keyframes scaleyBird {
    0% {
       transform: scale(1);
@@ -538,27 +555,3 @@ body
       transform: scale(1);
    }
 }
-
-/* https://color.adobe.com/ */
-/* color pallete: Fiestaware */
-/* #beach #bright #fiesta #fiestaware #summer #tropical */
-/* Color Theme Swatches in Hex */
-/* .Fiestaware-1-hex { color: #C9D44C; }
-.Fiestaware-2-hex { color: #FC9934; }
-.Fiestaware-3-hex { color: #BF0126; }
-.Fiestaware-4-hex { color: #FDDA69; }
-.Fiestaware-5-hex { color: #68D9CD; } */
-
-/* Color Theme Swatches in RGBA */
-/* .Fiestaware-1-rgba { color: rgba(200, 212, 75, 1); }
-.Fiestaware-2-rgba { color: rgba(252, 152, 51, 1); }
-.Fiestaware-3-rgba { color: rgba(191, 1, 38, 1); }
-.Fiestaware-4-rgba { color: rgba(252, 218, 105, 1); }
-.Fiestaware-5-rgba { color: rgba(103, 216, 204, 1); } */
-
-/* Color Theme Swatches in HSLA */
-/* .Fiestaware-1-hsla { color: hsla(64, 61, 56, 1); }
-.Fiestaware-2-hsla { color: hsla(30, 97, 59, 1); }
-.Fiestaware-3-hsla { color: hsla(348, 98, 37, 1); }
-.Fiestaware-4-hsla { color: hsla(45, 96, 70, 1); }
-.Fiestaware-5-hsla { color: hsla(173, 59, 62, 1); }  */

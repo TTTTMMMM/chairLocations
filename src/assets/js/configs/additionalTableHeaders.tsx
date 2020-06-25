@@ -10,15 +10,16 @@ const additionalHeaders = [
 
 export const mandatoryHeaders = [
    "AssetLabel",
-   "Beach",
+   // "Beach",
    "Fname",
    "ID",
    "Latitude",
    "Longitude",
    "RentalAgent",
-   "State",
+   // "State",
    "UpdateTime",
    "UploadFBTime",
+   "GPS_IsCellTower",
 ];
 
 export const statesArray = [

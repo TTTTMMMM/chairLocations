@@ -188,11 +188,10 @@ class MainPage extends Component<{}, {}> {
                   }
                />
                <Route
-                  exact
                   path="/configuration"
-                  render={(match) =>
+                  render={(props) =>
                      isSignedIn && userObjFmServer.role === clt.Roles.admin ? (
-                        <ConfigBody></ConfigBody>
+                        <ConfigBody match={props.match}></ConfigBody>
                      ) : (
                         <Redirect to="/401" />
                      )

@@ -33,6 +33,9 @@ const { addChairLoc } = require("./public/lib/js/handlers/addChairLoc");
 const { addBeach } = require("./public/lib/js/handlers/addBeach");
 const { removeBeach } = require("./public/lib/js/handlers/removeBeach");
 
+const { addChair } = require("./public/lib/js/handlers/addChair");
+const { removeChair } = require("./public/lib/js/handlers/removeChair");
+
 const { addReportEntry } = require("./public/lib/js/handlers/addReportEntry");
 
 const { render404 } = require("./public/lib/js/renderings/render404");
@@ -90,6 +93,14 @@ api.put("/chairheaders/keep/:id", (req, res) => {
 
 api.post("/beaches", (req, res) => {
    addBeach(req, res, admin);
+});
+
+api.delete("/chairs", (req, res) => {
+   removeChair(req, res, admin);
+});
+
+api.post("/chairs", (req, res) => {
+   addChair(req, res, admin);
 });
 
 api.delete("/beaches", (req, res) => {

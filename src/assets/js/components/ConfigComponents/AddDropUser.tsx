@@ -4,23 +4,23 @@ import JqxInput, {
    IInputProps,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
-import { rolesArray } from "../misc/chairLocTypes";
-import { Roles } from "../misc/chairLocTypes";
-import addUser from "../fetches/addUser";
-import removeUser from "../fetches/removeUser";
-import { flexRowTop } from "../../styles/reactStyling";
-import { flexRowBottom } from "../../styles/reactStyling";
-import { flexRowButtons } from "../../styles/reactStyling";
-import { flexCol } from "../../styles/reactStyling";
-import { flexUnk } from "../../styles/reactStyling";
-import { fieldsetStyle } from "../../styles/reactStyling";
-import { labelStyleTop } from "../../styles/reactStyling";
-import { labelStyleBottom } from "../../styles/reactStyling";
+import { rolesArray } from "../../misc/chairLocTypes";
+import { Roles } from "../../misc/chairLocTypes";
+import addUser from "../../fetches/addUser";
+import removeUser from "../../fetches/removeUser";
+import { flexRowTop } from "../../../styles/reactStyling";
+import { flexRowBottom } from "../../../styles/reactStyling";
+import { flexRowButtons } from "../../../styles/reactStyling";
+import { flexCol } from "../../../styles/reactStyling";
+import { flexUnk } from "../../../styles/reactStyling";
+import { fieldsetStyle } from "../../../styles/reactStyling";
+import { labelStyleTop } from "../../../styles/reactStyling";
+import { labelStyleBottom } from "../../../styles/reactStyling";
 
 interface MyState extends IInputProps {
    // isAnAdmin: boolean;
@@ -78,7 +78,7 @@ class AddDropUser extends React.PureComponent<{ myPanel: any }, MyState> {
                      imgPosition={"center"}
                      textPosition={"center"}
                      textImageRelation={"imageAboveText"}
-                     imgSrc={"./images/addUser.png"}
+                     imgSrc={"../images/addUser.png"}
                      theme={"fresh"}
                      onClick={this.addUserButtonClicked}
                   >
@@ -89,7 +89,7 @@ class AddDropUser extends React.PureComponent<{ myPanel: any }, MyState> {
                      imgPosition={"center"}
                      textPosition={"center"}
                      textImageRelation={"imageAboveText"}
-                     imgSrc={"./images/removeUser.png"}
+                     imgSrc={"../images/removeUser.png"}
                      theme={"fresh"}
                      onClick={this.removeUserButtonClicked}
                   >
