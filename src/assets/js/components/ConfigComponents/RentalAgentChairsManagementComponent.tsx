@@ -68,7 +68,3 @@ class RentalAgentChairsManagementComponent extends Component<{}, {}> {
 }
 
 export default RentalAgentChairsManagementComponent;
-
-// <RentalAgentChairsManagementResultsSide
-// myPanel={this.myPanel}
-// ></RentalAgentChairsManagementResultsSide>
