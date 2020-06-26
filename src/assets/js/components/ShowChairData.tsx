@@ -358,6 +358,7 @@ class ShowChairData extends React.PureComponent<
                align: "center",
                cellsalign: "center",
                editable: false,
+               hidden: true,
             },
             {
                text: "Beach",
@@ -366,6 +367,7 @@ class ShowChairData extends React.PureComponent<
                align: "center",
                cellsalign: "center",
                editable: false,
+               hidden: true,
             },
             {
                text: "Update Time",

@@ -20,6 +20,12 @@ import ShowChairHeaders from "./ShowChairHeaders";
 import ShowChairData from "./ShowChairData";
 import { AuthContext } from "../contexts/AuthContext";
 
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/firestore";
+import "firebase/auth";
+// import "../configs/firebaseInit";
+
 import PopoverContents from "./PopoverContents";
 import ErrorBoundary from "./ErrorBoundary";
 import {
@@ -65,6 +71,7 @@ class CleanAndUploadFiles extends Component<
       startDate: "2099-01-01",
       endDate: "2099-12-31",
    }; // never used by CleanAndUploadFiles
+   private chairDeployedTo: string = "";
 
    constructor(props: {}) {
       super(props);
@@ -95,11 +102,17 @@ class CleanAndUploadFiles extends Component<
    // -- it's the way data is passed from child component to parent component
    myCallBack = (objectFromPopoverContents: AdditionalPropsType) => {
       const { auth2, googleToken } = this.context;
+      if (objectFromPopoverContents.RENTALAGENT!.length < 3) {
+         objectFromPopoverContents.RENTALAGENT = this.chairDeployedTo;
+         this.myPanel.current!.append(
+            `<p style="color:green; font-size:12px;">Set rentalAgent to ${objectFromPopoverContents.RENTALAGENT}</p>`
+         );
+      }
       if (
          // check if additional properties are valid
-         objectFromPopoverContents.BEACH!.length > 2 &&
-         objectFromPopoverContents.RENTALAGENT!.length > 3 &&
-         objectFromPopoverContents.STATE!.length > 3
+         // objectFromPopoverContents.BEACH!.length > 2 &&
+         objectFromPopoverContents.RENTALAGENT!.length > 3
+         //  && objectFromPopoverContents.STATE!.length > 3
       ) {
          this.setState({ disabledCleanRowsButton: false });
          this.setState({ additionalPropValues: objectFromPopoverContents });
@@ -138,9 +151,7 @@ class CleanAndUploadFiles extends Component<
             });
       } else {
          this.myPanel.current!.append(
-            `<p style="font-style: normal; color:red; font-size:13.2px;">Invalid inputs for ${Object.keys(
-               objectFromPopoverContents
-            )}!</p>`
+            `<p style="font-style: normal; color:red; font-size:13.2px;">Need a rental agent to continue!</p>`
          );
       }
    };
@@ -337,6 +348,33 @@ class CleanAndUploadFiles extends Component<
                      dataRows.forEach((aRow: string) => {
                         createFatChairObject(aRow, headerMappingArray).then(
                            (fatChairObj: any) => {
+                              if (rowNum === 0) {
+                                 let theAssetLabel = fatChairObj.ASSETLABEL;
+                                 let chairDeployment = firebase
+                                    .firestore()
+                                    .collection("chairDeployments")
+                                    .doc(theAssetLabel);
+                                 chairDeployment
+                                    .get()
+                                    .then((doc: any) => {
+                                       if (doc.exists) {
+                                          this.chairDeployedTo = doc.data().rentalagent;
+                                          this.myPanel.current!.append(
+                                             `<p style="text-decoration: underline; color:black; font-size:11px;">${theAssetLabel} is deployed to ${this.chairDeployedTo}. </p>`
+                                          );
+                                       } else {
+                                          this.myPanel.current!.append(
+                                             `<p style="text-decoration: underline; color:black; font-size:13px;">${theAssetLabel} has not been deployed to a rental agent. This needs to be configured by an admin to proceed. </p>`
+                                          );
+                                       }
+                                    })
+                                    .catch((err: any) => {
+                                       console.log(
+                                          "C0345: Error getting chairDeployment",
+                                          err
+                                       );
+                                    });
+                              }
                               extendedFat = addValuesForAdditionalHeaders(
                                  fatChairObj,
                                  aFile.name

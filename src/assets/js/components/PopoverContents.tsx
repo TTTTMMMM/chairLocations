@@ -105,7 +105,7 @@ class PopoverContents extends React.PureComponent<
                   ref={this.stateInput}
                   width={170}
                   height={20}
-                  placeHolder={"Enter a State"}
+                  placeHolder={"optional"}
                   source={this.state.sourceState}
                   theme={"fresh"}
                />
@@ -130,7 +130,7 @@ class PopoverContents extends React.PureComponent<
                   ref={this.beachInput}
                   width={170}
                   height={20}
-                  placeHolder={"Enter a Beach"}
+                  placeHolder={"optional"}
                   source={this.state.sourceBeach}
                   theme={"fresh"}
                />
@@ -155,7 +155,7 @@ class PopoverContents extends React.PureComponent<
                   ref={this.rentalAgentInput}
                   width={200}
                   height={20}
-                  placeHolder={"Enter a Rental Agent"}
+                  placeHolder={"optional"}
                   source={this.state.sourceRentalAgent}
                   theme={"fresh"}
                />
