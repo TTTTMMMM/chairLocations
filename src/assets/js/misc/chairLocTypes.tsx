@@ -18,6 +18,10 @@ export interface ViewReportRangeQO {
    assets: Array<string>;
    range: RangeObject;
 }
+export interface APIRangeQO {
+   assets: Array<string>;
+   range: RangeObject;
+}
 
 export interface AssetLabelQueryType {
    ASSETLABEL?: string | undefined;

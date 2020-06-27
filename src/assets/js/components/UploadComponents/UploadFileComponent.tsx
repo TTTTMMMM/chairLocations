@@ -1,21 +1,33 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
-import { Route } from "react-router-dom";
-import "../../../styles/index.css";
-import UploadSubheader from "../UploadComponents/UploadSubheader";
-import UploadFileComponent from "../UploadComponents/UploadFileComponent";
-import UploadAPIComponent from "../UploadComponents/UploadAPIComponent";
+// // Client-side code follows:
 
+import * as React from "react";
+
+import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
+import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
+import "../../configs/firebaseInit";
+import "../../../styles/index.css";
+import CleanAndUploadFiles from "../CleanAndUploadFiles";
 import { AuthContext } from "../../contexts/AuthContext";
+
 import { Roles } from "../../misc/chairLocTypes";
-class MappingBody extends Component<{ match: any }, {}> {
-   constructor(props: { match: any }) {
+
+class UploadFileComponent extends React.PureComponent<{}, {}> {
+   numUpdates: number;
+   numRows: number;
+
+   constructor(props: {}) {
       super(props);
-      this.getMappingBodyContent = this.getMappingBodyContent.bind(this);
+      this.numUpdates = 0;
+      this.numRows = 0;
+
+      this.state = {};
+      this.signInToFirebase = this.signInToFirebase.bind(this);
+      this.signOutOfFirebase = this.signOutOfFirebase.bind(this);
+      this.getBodyUploadContent = this.getBodyUploadContent.bind(this);
    }
    static contextType = AuthContext;
 
@@ -33,7 +45,7 @@ class MappingBody extends Component<{ match: any }, {}> {
                console.log(`Logged in to firebase.`);
             })
             .catch((err) => {
-               const firstLine = "C0111: Error signing into firebase:\n";
+               const firstLine = "C0211: Error signing into firebase:\n";
                console.error(`${firstLine} error<${err.message}>`);
             });
       } else {
@@ -59,41 +71,11 @@ class MappingBody extends Component<{ match: any }, {}> {
          });
    }
 
-   getMappingBodyContent() {
-      const { isSignedIn } = this.context;
-      return (
-         <>
-            <Router>
-               <UploadSubheader match={this.props.match}></UploadSubheader>
-               <Switch>
-                  <Route
-                     path={`${this.props.match.path}/usingAPI`}
-                     render={(props) =>
-                        isSignedIn ? (
-                           <UploadAPIComponent></UploadAPIComponent>
-                        ) : (
-                           <Redirect to="/" />
-                        )
-                     }
-                  />
-                  <Route
-                     path={`${this.props.match.path}/usingFile`}
-                     render={(props) =>
-                        isSignedIn ? (
-                           <UploadFileComponent></UploadFileComponent>
-                        ) : (
-                           <Redirect to="/" />
-                        )
-                     }
-                  />
-                  <Redirect to="/" />
-               </Switch>
-            </Router>
-         </>
-      );
+   getBodyUploadContent() {
+      return <CleanAndUploadFiles></CleanAndUploadFiles>;
    }
 
-   render() {
+   public render() {
       const {
          isSignedIn,
          isLoggedInToFirebase,
@@ -110,8 +92,8 @@ class MappingBody extends Component<{ match: any }, {}> {
       ) {
          this.signInToFirebase(googleToken);
       }
-      return <>{this.getMappingBodyContent()}</>;
+      return <>{this.getBodyUploadContent()}</>;
    }
 }
 
-export default MappingBody;
+export default UploadFileComponent;

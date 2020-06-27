@@ -146,11 +146,10 @@ class MainPage extends Component<{}, {}> {
                   render={(props) => <MainBody></MainBody>}
                />
                <Route
-                  exact
                   path="/upload"
                   render={(props) =>
                      isSignedIn ? (
-                        <UploadBody></UploadBody>
+                        <UploadBody match={props.match}></UploadBody>
                      ) : (
                         <Redirect to="/" />
                      )
