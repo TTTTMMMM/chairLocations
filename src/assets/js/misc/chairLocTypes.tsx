@@ -18,8 +18,12 @@ export interface ViewReportRangeQO {
    assets: Array<string>;
    range: RangeObject;
 }
+export interface ChairIMEI {
+   chair: string;
+   imei: string;
+}
 export interface APIRangeQO {
-   assets: Array<string>;
+   pairings: Array<ChairIMEI>;
    range: RangeObject;
 }
 

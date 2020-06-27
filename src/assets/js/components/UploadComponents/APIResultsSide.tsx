@@ -16,12 +16,12 @@ class APIResultsSide extends Component<{
    }
 
    getAPIResultsContent() {
-      if (this.props.apirqo.assets.length > 0) {
+      if (this.props.apirqo.pairings.length > 0) {
          return (
             <div style={divFlexCol}>
                <ShowAPIPullStatus
                   myPanel={this.props.myPanel}
-                  assets={this.props.apirqo.assets}
+                  pairings={this.props.apirqo.pairings}
                   range={this.props.apirqo.range}
                ></ShowAPIPullStatus>
             </div>

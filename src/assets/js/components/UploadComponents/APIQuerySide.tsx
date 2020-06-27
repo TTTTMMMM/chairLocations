@@ -8,13 +8,13 @@ import moment from "moment";
 
 import { divFlexCol } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
-import { RangeObject, APIRangeQO } from "../../misc/chairLocTypes";
+import { RangeObject, ChairIMEI, APIRangeQO } from "../../misc/chairLocTypes";
 import { AuthContext } from "../../contexts/AuthContext";
 import { months } from "../../misc/months";
 
 import getAllTrak4Devices from "../../fetches/getAllTrak4Devices";
 
-class ViewQuerySide extends Component<
+class APIQuerySide extends Component<
    {
       apiQueryComponentCallback: any;
       myPanel: any;
@@ -24,11 +24,12 @@ class ViewQuerySide extends Component<
       sourceChair: Array<string>;
       sourceMonth: Array<string>;
       sourceYear: Array<string>;
-      alreadyGotInfo: boolean;
+      // alreadyGotInfo: boolean;
    }
 > {
-   chairCollection: any;
    years: Array<string> = [];
+   pairings: Array<ChairIMEI> = [];
+   alreadyGotInfo: boolean = false;
 
    private chairInput = React.createRef<JqxInput>();
    private monthInput = React.createRef<JqxInput>();
@@ -40,14 +41,13 @@ class ViewQuerySide extends Component<
    constructor(props: { apiQueryComponentCallback: any; myPanel: any }) {
       super(props);
       this.getViewQueryContent = this.getViewQueryContent.bind(this);
-      this.chairCollection = "";
       this.pullAPIButtonClicked = this.pullAPIButtonClicked.bind(this);
 
       this.state = {
          sourceChair: [],
          sourceMonth: [],
          sourceYear: [],
-         alreadyGotInfo: false,
+         // alreadyGotInfo: false,
       };
    }
 
@@ -63,19 +63,30 @@ class ViewQuerySide extends Component<
    }
 
    getChairAssetsInfo() {
-      // let sourceChair: Array<string> = [];
+      let sourceChair: Array<string> = [];
+      let chairIMEIObj: ChairIMEI = { chair: "", imei: "" };
+      this.pairings = [];
       getAllTrak4Devices()
          .then((retVal: any) => {
-            const msg = retVal.message;
-            this.props.myPanel.current!.append(
-               `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-            );
+            let assetArray = retVal.data;
+            assetArray.forEach((element: any) => {
+               chairIMEIObj.chair = element.customerLabel;
+               chairIMEIObj.imei = element.imei;
+               this.pairings.push(chairIMEIObj);
+               sourceChair.push(chairIMEIObj.chair);
+               // this.props.myPanel.current!.append(
+               //    `<p style="font-style: normal; color:blue; font-size:11px;">${chairIMEIObj.chair}</p>`
+               // );
+            });
+            this.setState({ sourceChair: [...new Set(sourceChair)] });
+            this.alreadyGotInfo = true;
          })
          .catch((err: any) => {
             this.props.myPanel.current!.append(
                `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
             );
          });
+      console.dir(this.pairings);
    }
 
    getViewQueryContent() {
@@ -181,7 +192,7 @@ class ViewQuerySide extends Component<
 
    render() {
       const { isLoggedInToFirebase } = this.context;
-      if (isLoggedInToFirebase && !this.state.alreadyGotInfo) {
+      if (isLoggedInToFirebase && !this.alreadyGotInfo) {
          this.getChairAssetsInfo();
       }
       return <>{this.getViewQueryContent()}</>;
@@ -218,7 +229,7 @@ class ViewQuerySide extends Component<
          };
          rangeObj.endDate = rangeObj.endDate.concat("T23:59:59Z");
          let apirqo: APIRangeQO = {
-            assets: chairAssetArray,
+            pairings: this.pairings,
             range: rangeObj,
          };
          this.props.apiQueryComponentCallback(apirqo);
@@ -230,4 +241,4 @@ class ViewQuerySide extends Component<
    }
 }
 
-export default ViewQuerySide;
+export default APIQuerySide;

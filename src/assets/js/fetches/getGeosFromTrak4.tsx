@@ -3,30 +3,39 @@
 import { trak4APIKey } from "../configs/trak4APIConfig";
 // import { trak4URL } from "../configs/trak4APIConfig";
 import { trak4CORSProxyURL } from "../configs/trak4APIConfig";
+import { RangeObject, ChairIMEI } from "../misc/chairLocTypes";
 
-interface PostAllDevicesObj {
+interface PostSingleDeviceReport {
    commandstring: string;
+   identifier: string;
+   datetime_start: string;
+   datetime_end: string;
+   coredataonly: boolean;
    token: string;
 }
 
-const getAllTrak4Devices = (): any => {
+const getGeosFromTrak4 = (pairing: ChairIMEI, range: RangeObject): any => {
    let myHeaders = new Headers();
 
-   let postAllDevicesObj: PostAllDevicesObj = {
-      commandstring: "get_devices",
+   let postSingleDeviceReportObj: PostSingleDeviceReport = {
+      commandstring: "get_reports_single_device",
+      identifier: pairing.imei,
+      datetime_start: range.startDate,
+      datetime_end: range.endDate,
+      coredataonly: false,
       token: trak4APIKey,
    };
    myHeaders.append("Content-Type", "text/plain");
    myHeaders.append("Accept", "*/*");
    myHeaders.append("Connection", "keep-alive");
 
-   const myInit = {
+   const myStuff = {
       method: "POST",
       headers: myHeaders,
-      body: JSON.stringify(postAllDevicesObj),
+      body: JSON.stringify(postSingleDeviceReportObj),
    };
    return new Promise((resolve) => {
-      fetch(trak4CORSProxyURL, myInit).then((res) => {
+      fetch(trak4CORSProxyURL, myStuff).then((res) => {
          switch (res.status) {
             default:
                res.json().then((data: any) => {
@@ -37,4 +46,4 @@ const getAllTrak4Devices = (): any => {
    });
 };
 
-export default getAllTrak4Devices;
+export default getGeosFromTrak4;

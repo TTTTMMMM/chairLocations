@@ -24,7 +24,7 @@ class UploadAPIComponent extends Component<{}, { apirqo: APIRangeQO }> {
       );
       this.state = {
          apirqo: {
-            assets: [],
+            pairings: [],
             range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          },
       };
@@ -34,10 +34,10 @@ class UploadAPIComponent extends Component<{}, { apirqo: APIRangeQO }> {
    myCallBack = (apirqo: APIRangeQO) => {
       this.setState({ apirqo: apirqo });
       let verbiage: string = "";
-      if (apirqo.assets.length === 1) {
-         verbiage = `Pulling geolocs for ${apirqo.assets[0]} for `;
+      if (apirqo.pairings.length === 1) {
+         verbiage = `Pulling geolocs for ${apirqo.pairings[0]} for `;
       } else {
-         verbiage = `Pulling geolocs for ${apirqo.assets.length} chairs for `;
+         verbiage = `Pulling geolocs for ${apirqo.pairings.length} chairs for `;
       }
       const reportPeriod = apirqo.range.startDate.split("-");
       this.myPanel.current!.append(
