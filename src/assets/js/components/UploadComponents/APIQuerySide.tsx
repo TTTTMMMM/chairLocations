@@ -92,16 +92,13 @@ class APIQuerySide extends Component<
                   .then((doc: any) => {
                      if (doc.exists) {
                         this.chairDeployedTo = doc.data().rentalagent;
-                        console.log(
-                           `pushing ${element.customerLabel} ${this.chairDeployedTo} into pairings`
-                        );
                         this.pairings.push({
                            chair: element.customerLabel,
                            imei: element.imei,
                            rentalAgent: this.chairDeployedTo,
                         });
                         this.props.myPanel.current!.append(
-                           `<p style="color:green; font-size:9px;">${element.customerLabel} -> ${this.chairDeployedTo}. </p>`
+                           `<p style="color:green; font-size:8.5px;">${element.customerLabel} -> ${this.chairDeployedTo}</p>`
                         );
                      } else {
                         this.props.myPanel.current!.append(
@@ -114,8 +111,6 @@ class APIQuerySide extends Component<
                   });
             });
             this.setState({ sourceChair: [...new Set(sourceChair)] });
-            console.log(`APIQuerySide(), this.pairings[]:`);
-            console.dir(this.pairings);
          })
          .catch((err: any) => {
             this.props.myPanel.current!.append(
@@ -236,7 +231,8 @@ class APIQuerySide extends Component<
    private pullFromAPIButtonClicked() {
       let chairAsset: string = this.chairInput.current!.val();
       let pairing: ChairIMEIRentalAgent = { chair: chairAsset, imei: "" };
-      let tempPairings: Array<ChairIMEIRentalAgent> = [];
+      let tempPairings: Array<ChairIMEIRentalAgent> = [...this.pairings];
+
       let goodChair: boolean = true;
       let notFound = true;
       if (chairAsset.length > 5) {
