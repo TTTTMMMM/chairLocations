@@ -14,23 +14,17 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 import getGeosFromTrak4 from "../../fetches/getGeosFromTrak4";
 
-// import firebase from "firebase/app";
-// import "firebase/database";
-// import "firebase/firestore";
-// import "firebase/auth";
-
 // import { divFlexRow } from "../../../styles/reactStyling";
-import { RangeObject, ChairIMEI } from "../../misc/chairLocTypes";
+import { RangeObject, ChairIMEIRentalAgent } from "../../misc/chairLocTypes";
 
 interface MyState extends IDataTableProps {
-   reportWatch?: any;
-   pairings: Array<ChairIMEI>;
+   pairings: Array<ChairIMEIRentalAgent>;
    range: RangeObject;
 }
 class ShowAPIPullStatus extends React.PureComponent<
    {
       myPanel: any;
-      pairings: Array<ChairIMEI>;
+      pairings: Array<ChairIMEIRentalAgent>;
       range: RangeObject;
    },
    MyState
@@ -43,7 +37,7 @@ class ShowAPIPullStatus extends React.PureComponent<
 
    constructor(props: {
       myPanel: any;
-      pairings: Array<ChairIMEI>;
+      pairings: Array<ChairIMEIRentalAgent>;
       range: RangeObject;
    }) {
       super(props);
@@ -52,7 +46,6 @@ class ShowAPIPullStatus extends React.PureComponent<
       this.numUpdates = 0;
 
       this.state = {
-         reportWatch: [],
          editSettings: {
             cancelOnEsc: true,
             editOnDoubleClick: false,
@@ -68,49 +61,59 @@ class ShowAPIPullStatus extends React.PureComponent<
       };
    }
 
-   pullGeoReport() {
+   pullGeoDataFromTrak4() {
       if (this.props.pairings.length > 0) {
-         this.setState({ pairings: this.props.pairings });
-         this.setState({ range: this.props.range });
-         this.setState({ reportWatch: [] });
          this.numUpdates = 0;
-         console.log(`ShowAPIPullStatus>pullGeoReport()>this.props.pairings:`);
-         console.dir(this.props.pairings);
-         console.log(`ShowAPIPullStatus>pullGeoReport()>this.props.range:`);
-         console.dir(this.props.range);
-         // let period = this.props.range.startDate
-         //    .split("-")[0]
-         //    .concat(this.props.range.startDate.split("-")[1]);
-         this.props.pairings.forEach((pairing) => {
-            let numRows = 0;
-            getGeosFromTrak4(pairing, this.props.range)
-               .then((retVal: any) => {
-                  let geoLocArray = retVal.data;
-                  geoLocArray.forEach((fatChairObj: any) => {
-                     console.dir(fatChairObj);
-                     numRows++;
-                  });
-                  this.props.myPanel.current!.append(
-                     `<p style="font-style: normal; color:black; font-size:12px;"> pairing[${pairing.chair} ${pairing.imei}], range[${this.props.range.startDate}-${this.props.range.endDate}]: rows[${numRows}]</p>`
-                  );
-               })
-               .catch((err: any) => {
-                  this.props.myPanel.current!.append(
-                     `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
-                  );
-               });
-         });
+         let tempPairings: Array<ChairIMEIRentalAgent> = [];
+         tempPairings.push(this.props.pairings[0]);
+         // limit hitting the trak4API to four times max while I'm debugging; remove when fully debugged
+         if (this.props.pairings.length > 1) {
+            tempPairings.push(this.props.pairings[1]);
+            tempPairings.push(this.props.pairings[12]);
+            tempPairings.push(this.props.pairings[20]);
+         }
+         // replace tempPairings below with this.props.pairings when fully debugged
+         for (var j = 0; j < tempPairings.length; j++) {
+            // execute each iteration of this for loop with some delay
+            (function (
+               j,
+               pairing: ChairIMEIRentalAgent,
+               range: RangeObject,
+               myPanel: any
+            ) {
+               setTimeout(function () {
+                  let numRows = 0;
+                  getGeosFromTrak4(pairing, range)
+                     .then((retVal: any) => {
+                        let geoLocArray = retVal.data;
+                        // console.log(
+                        //    `------------- ${pairing.chair} ------------`
+                        // );
+                        geoLocArray.forEach((fatChairObjAlmost: any) => {
+                           // fatChairObjAlmost doesn't have assetLabel field
+                           // console.dir(fatChairObjAlmost);
+                           numRows++;
+                        });
+                        myPanel.current!.append(
+                           `<p style="font-style: normal; color:black; font-size:12px;">${
+                              j + 1
+                           }. ${pairing.chair} had ${numRows} rows.</p>`
+                        );
+                     })
+                     .catch((err: any) => {
+                        myPanel.current!.append(
+                           `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
+                        );
+                     });
+               }, 15000 * j);
+            })(j, tempPairings[j], this.props.range, this.props.myPanel);
+         }
       }
-   }
-
-   componentDidMount() {}
-
-   showAPIContent() {
-      return <>Hi, from showAPIContent()</>;
+      return <>Hi, from pullGeoDataFromTrak4()</>;
    }
 
    render() {
-      return <>{this.showAPIContent()}</>;
+      return <>{this.pullGeoDataFromTrak4()}</>;
    }
 }
 

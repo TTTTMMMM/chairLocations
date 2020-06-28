@@ -26,14 +26,16 @@ const getAllTrak4Devices = (): any => {
       body: JSON.stringify(postAllDevicesObj),
    };
    return new Promise((resolve) => {
-      fetch(trak4CORSProxyURL, myInit).then((res) => {
-         switch (res.status) {
-            default:
-               res.json().then((data: any) => {
-                  resolve(data);
-               });
-         }
-      });
+      fetch(trak4CORSProxyURL, myInit)
+         .then((res) => {
+            switch (res.status) {
+               default:
+                  res.json().then((data: any) => {
+                     resolve(data);
+                  });
+            }
+         })
+         .catch((err) => alert(err));
    });
 };
 

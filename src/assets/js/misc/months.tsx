@@ -13,7 +13,7 @@ export const months = [
    "December",
 ];
 
-let monsMap = new Map();
+export const monsMap = new Map();
 monsMap.set("Jan", "01");
 monsMap.set("Feb", "02");
 monsMap.set("Mar", "03");

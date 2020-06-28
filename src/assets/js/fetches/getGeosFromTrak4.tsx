@@ -3,7 +3,7 @@
 import { trak4APIKey } from "../configs/trak4APIConfig";
 // import { trak4URL } from "../configs/trak4APIConfig";
 import { trak4CORSProxyURL } from "../configs/trak4APIConfig";
-import { RangeObject, ChairIMEI } from "../misc/chairLocTypes";
+import { RangeObject, ChairIMEIRentalAgent } from "../misc/chairLocTypes";
 
 interface PostSingleDeviceReport {
    commandstring: string;
@@ -14,7 +14,10 @@ interface PostSingleDeviceReport {
    token: string;
 }
 
-const getGeosFromTrak4 = (pairing: ChairIMEI, range: RangeObject): any => {
+const getGeosFromTrak4 = (
+   pairing: ChairIMEIRentalAgent,
+   range: RangeObject
+): any => {
    let myHeaders = new Headers();
 
    let postSingleDeviceReportObj: PostSingleDeviceReport = {

@@ -12,10 +12,10 @@ import "firebase/firestore";
 import "firebase/auth";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Roles } from "../../misc/chairLocTypes";
-class MappingBody extends Component<{ match: any }, {}> {
+class UploadBody extends Component<{ match: any }, {}> {
    constructor(props: { match: any }) {
       super(props);
-      this.getMappingBodyContent = this.getMappingBodyContent.bind(this);
+      this.getUploadBodyContent = this.getUploadBodyContent.bind(this);
    }
    static contextType = AuthContext;
 
@@ -59,7 +59,7 @@ class MappingBody extends Component<{ match: any }, {}> {
          });
    }
 
-   getMappingBodyContent() {
+   getUploadBodyContent() {
       const { isSignedIn } = this.context;
       return (
          <>
@@ -110,8 +110,8 @@ class MappingBody extends Component<{ match: any }, {}> {
       ) {
          this.signInToFirebase(googleToken);
       }
-      return <>{this.getMappingBodyContent()}</>;
+      return <>{this.getUploadBodyContent()}</>;
    }
 }
 
-export default MappingBody;
+export default UploadBody;

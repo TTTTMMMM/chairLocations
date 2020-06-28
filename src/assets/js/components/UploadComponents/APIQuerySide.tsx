@@ -8,15 +8,24 @@ import moment from "moment";
 
 import { divFlexCol } from "../../../styles/reactStyling";
 import "../../../styles/index.css";
-import { RangeObject, ChairIMEI, APIRangeQO } from "../../misc/chairLocTypes";
+import {
+   RangeObject,
+   ChairIMEIRentalAgent,
+   APIRangeQO,
+} from "../../misc/chairLocTypes";
 import { AuthContext } from "../../contexts/AuthContext";
-import { months } from "../../misc/months";
+import { months, monsMap, numDaysInMonth } from "../../misc/months";
 
 import getAllTrak4Devices from "../../fetches/getAllTrak4Devices";
 
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/firestore";
+import "firebase/auth";
+
 class APIQuerySide extends Component<
    {
-      apiQueryComponentCallback: any;
+      uploadAPIComponentCallback: any;
       myPanel: any;
    },
    // MyState
@@ -28,8 +37,9 @@ class APIQuerySide extends Component<
    }
 > {
    years: Array<string> = [];
-   pairings: Array<ChairIMEI> = [];
-   alreadyGotInfo: boolean = false;
+   pairings: Array<ChairIMEIRentalAgent> = [];
+   alreadyCalledTrak4: boolean = false;
+   chairDeployedTo: string = "";
 
    private chairInput = React.createRef<JqxInput>();
    private monthInput = React.createRef<JqxInput>();
@@ -38,7 +48,7 @@ class APIQuerySide extends Component<
 
    static contextType = AuthContext; // it's a law that you must call it contextType!
 
-   constructor(props: { apiQueryComponentCallback: any; myPanel: any }) {
+   constructor(props: { uploadAPIComponentCallback: any; myPanel: any }) {
       super(props);
       this.getViewQueryContent = this.getViewQueryContent.bind(this);
       this.pullAPIButtonClicked = this.pullAPIButtonClicked.bind(this);
@@ -64,29 +74,46 @@ class APIQuerySide extends Component<
 
    getChairAssetsInfo() {
       let sourceChair: Array<string> = [];
-      let chairIMEIObj: ChairIMEI = { chair: "", imei: "" };
+      // let chairIMEIObj: ChairIMEI = { chair: "", imei: "" };
       this.pairings = [];
+      this.alreadyCalledTrak4 = true;
       getAllTrak4Devices()
          .then((retVal: any) => {
             let assetArray = retVal.data;
             assetArray.forEach((element: any) => {
-               chairIMEIObj.chair = element.customerLabel;
-               chairIMEIObj.imei = element.imei;
-               this.pairings.push(chairIMEIObj);
-               sourceChair.push(chairIMEIObj.chair);
-               // this.props.myPanel.current!.append(
-               //    `<p style="font-style: normal; color:blue; font-size:11px;">${chairIMEIObj.chair}</p>`
-               // );
+               sourceChair.push(element.customerLabel);
+               // find where each chair is deployed to next
+               let chairDeployment = firebase
+                  .firestore()
+                  .collection("chairDeployments")
+                  .doc(element.customerLabel);
+               chairDeployment
+                  .get()
+                  .then((doc: any) => {
+                     if (doc.exists) {
+                        this.chairDeployedTo = doc.data().rentalagent;
+                        this.pairings.push({
+                           chair: element.customerLabel,
+                           imei: element.imei,
+                           rentalAgent: this.chairDeployedTo,
+                        });
+                     } else {
+                        this.props.myPanel.current!.append(
+                           `<p style="color:red; font-size:14px;">${element.customerLabel} has not been deployed to a rental agent. This needs to be configured by an admin to proceed. </p>`
+                        );
+                     }
+                  })
+                  .catch((err: any) => {
+                     console.log("C0745: Error getting chairDeployment", err);
+                  });
             });
             this.setState({ sourceChair: [...new Set(sourceChair)] });
-            this.alreadyGotInfo = true;
          })
          .catch((err: any) => {
             this.props.myPanel.current!.append(
                `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
             );
          });
-      console.dir(this.pairings);
    }
 
    getViewQueryContent() {
@@ -192,7 +219,7 @@ class APIQuerySide extends Component<
 
    render() {
       const { isLoggedInToFirebase } = this.context;
-      if (isLoggedInToFirebase && !this.alreadyGotInfo) {
+      if (isLoggedInToFirebase && !this.alreadyCalledTrak4) {
          this.getChairAssetsInfo();
       }
       return <>{this.getViewQueryContent()}</>;
@@ -200,42 +227,63 @@ class APIQuerySide extends Component<
 
    private pullAPIButtonClicked() {
       let chairAsset: string = this.chairInput.current!.val();
-      let chairAssetArray: Array<string> = [];
-
-      chairAsset.length > 5
-         ? chairAssetArray.push(chairAsset)
-         : chairAssetArray.splice(
-              0,
-              this.state.sourceChair.length,
-              ...this.state.sourceChair
-           );
+      let pairing: ChairIMEIRentalAgent = { chair: chairAsset, imei: "" };
+      let tempPairings: Array<ChairIMEIRentalAgent> = [];
+      tempPairings.push(...this.pairings);
+      let goodChair: boolean = true;
+      let notFound = true;
+      if (chairAsset.length > 5) {
+         let i = 0;
+         let imei = "";
+         while (notFound && i < tempPairings.length) {
+            if (tempPairings[i].chair === chairAsset) {
+               notFound = false;
+               imei = tempPairings[i].imei;
+            }
+            i++;
+         }
+         if (notFound) {
+            goodChair = false;
+            this.props.myPanel.current!.append(
+               `<p style="color: red ; font-size:11px;">Invalid input for Chair[${chairAsset}].</p>`
+            );
+         } else {
+            goodChair = true;
+            pairing.imei = imei;
+            tempPairings = [];
+            tempPairings.push(pairing);
+            this.props.myPanel.current!.append(
+               `<p style="color: green ; font-size:11px;">Found pairing: ${tempPairings[0].chair}-${tempPairings[0].imei}.</p>`
+            );
+         }
+      }
+      let proceed: boolean = true;
 
       const thisYear = parseInt(moment().format("YYYY"));
-
       let month: string = this.monthInput.current!.val();
       let year: number = this.yearInput.current!.val();
-
-      let proceed: boolean = false;
 
       months.includes(month) ? (proceed = true) : (proceed = false);
       year >= 2020 && year <= thisYear
          ? (proceed = proceed && true)
          : (proceed = proceed && false);
-
+      proceed = proceed && goodChair;
       if (proceed) {
+         const shortMonth = month.substring(0, 3);
+         const monthNum = monsMap.get(shortMonth);
+         const numDays = numDaysInMonth.get(month);
          let rangeObj: RangeObject = {
-            startDate: `${year}-${month}-01`,
-            endDate: `${year}-${month}-31`,
+            startDate: `${monthNum}/01/${year} 00:00:00`,
+            endDate: `${monthNum}/${numDays}/${year} 23:59:59`,
          };
-         rangeObj.endDate = rangeObj.endDate.concat("T23:59:59Z");
          let apirqo: APIRangeQO = {
-            pairings: this.pairings,
+            pairings: tempPairings,
             range: rangeObj,
          };
-         this.props.apiQueryComponentCallback(apirqo);
+         this.props.uploadAPIComponentCallback(apirqo);
       } else {
          this.props.myPanel.current!.append(
-            `<p style="color: red ; font-size:11px;">Invalid input for month or year.</p>`
+            `<p style="color: red ; font-size:11px;">Invalid input for chair or month or year.</p>`
          );
       }
    }

@@ -18,7 +18,7 @@ class UploadAPIComponent extends Component<{}, { apirqo: APIRangeQO }> {
 
    constructor(props: {}) {
       super(props);
-      this.getAPIQueryBodyContent = this.getAPIQueryBodyContent.bind(this);
+      this.getUploadAPIBodyContent = this.getUploadAPIBodyContent.bind(this);
       this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
          this
       );
@@ -35,23 +35,22 @@ class UploadAPIComponent extends Component<{}, { apirqo: APIRangeQO }> {
       this.setState({ apirqo: apirqo });
       let verbiage: string = "";
       if (apirqo.pairings.length === 1) {
-         verbiage = `Pulling geolocs for ${apirqo.pairings[0]} for `;
+         verbiage = `Pulling geo location data for ${apirqo.pairings[0].chair} for `;
       } else {
-         verbiage = `Pulling geolocs for ${apirqo.pairings.length} chairs for `;
+         verbiage = `Pulling geo location data for ${apirqo.pairings.length} chairs for `;
       }
-      const reportPeriod = apirqo.range.startDate.split("-");
       this.myPanel.current!.append(
-         `<p style="color:#7713AD ; font-size:12px;">${verbiage} ${reportPeriod[1]} ${reportPeriod[0]}. </p>`
+         `<p style="color:#7713AD ; font-size:12px;">${verbiage} ${apirqo.range.startDate} to ${apirqo.range.endDate} </p>`
       );
    };
 
-   getAPIQueryBodyContent() {
+   getUploadAPIBodyContent() {
       return (
          <>
             <div style={divFlexRowL}>
                <section className={"queryside"} style={querySideStyling}>
                   <APIQuerySide
-                     apiQueryComponentCallback={this.myCallBack}
+                     uploadAPIComponentCallback={this.myCallBack}
                      myPanel={this.myPanel}
                   ></APIQuerySide>
                   <div>
@@ -87,7 +86,7 @@ class UploadAPIComponent extends Component<{}, { apirqo: APIRangeQO }> {
       );
    }
    render() {
-      return <>{this.getAPIQueryBodyContent()}</>;
+      return <>{this.getUploadAPIBodyContent()}</>;
    }
 
    private clearConsoleButtonClicked() {
