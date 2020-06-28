@@ -13,6 +13,7 @@ import "../../../styles/index.css";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import getGeosFromTrak4 from "../../fetches/getGeosFromTrak4";
+import createFatChairObjAPI from "../../components/componentHandlers/helpers/createFatChairObjAPI";
 
 // import { divFlexRow } from "../../../styles/reactStyling";
 import { RangeObject, ChairIMEIRentalAgent } from "../../misc/chairLocTypes";
@@ -92,6 +93,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                         geoLocArray.forEach((fatChairObjAlmost: any) => {
                            // fatChairObjAlmost doesn't have assetLabel field
                            // console.dir(fatChairObjAlmost);
+                           createFatChairObjAPI(fatChairObjAlmost, pairing);
                            numRows++;
                         });
                         myPanel.current!.append(

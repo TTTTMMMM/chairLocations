@@ -35,9 +35,9 @@ class UploadAPIComponent extends Component<{}, { apirqo: APIRangeQO }> {
       this.setState({ apirqo: apirqo });
       let verbiage: string = "";
       if (apirqo.pairings.length === 1) {
-         verbiage = `Pulling geo location data for ${apirqo.pairings[0].chair} for `;
+         verbiage = `Pulling geolocation data for ${apirqo.pairings[0].chair} between `;
       } else {
-         verbiage = `Pulling geo location data for ${apirqo.pairings.length} chairs for `;
+         verbiage = `Pulling geolocation data for ${apirqo.pairings.length} chairs between `;
       }
       this.myPanel.current!.append(
          `<p style="color:#7713AD ; font-size:12px;">${verbiage} ${apirqo.range.startDate} to ${apirqo.range.endDate} </p>`

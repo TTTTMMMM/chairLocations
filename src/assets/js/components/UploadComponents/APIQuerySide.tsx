@@ -50,8 +50,8 @@ class APIQuerySide extends Component<
 
    constructor(props: { uploadAPIComponentCallback: any; myPanel: any }) {
       super(props);
-      this.getViewQueryContent = this.getViewQueryContent.bind(this);
-      this.pullAPIButtonClicked = this.pullAPIButtonClicked.bind(this);
+      this.getAPIQuerySideContent = this.getAPIQuerySideContent.bind(this);
+      this.pullFromAPIButtonClicked = this.pullFromAPIButtonClicked.bind(this);
 
       this.state = {
          sourceChair: [],
@@ -92,14 +92,20 @@ class APIQuerySide extends Component<
                   .then((doc: any) => {
                      if (doc.exists) {
                         this.chairDeployedTo = doc.data().rentalagent;
+                        console.log(
+                           `pushing ${element.customerLabel} ${this.chairDeployedTo} into pairings`
+                        );
                         this.pairings.push({
                            chair: element.customerLabel,
                            imei: element.imei,
                            rentalAgent: this.chairDeployedTo,
                         });
+                        this.props.myPanel.current!.append(
+                           `<p style="color:green; font-size:9px;">${element.customerLabel} -> ${this.chairDeployedTo}. </p>`
+                        );
                      } else {
                         this.props.myPanel.current!.append(
-                           `<p style="color:red; font-size:14px;">${element.customerLabel} has not been deployed to a rental agent. This needs to be configured by an admin to proceed. </p>`
+                           `<p style="color:red; font-size:15px;">${element.customerLabel} has not been deployed to a rental agent. This needs to be configured by an admin to proceed!! </p>`
                         );
                      }
                   })
@@ -108,6 +114,8 @@ class APIQuerySide extends Component<
                   });
             });
             this.setState({ sourceChair: [...new Set(sourceChair)] });
+            console.log(`APIQuerySide(), this.pairings[]:`);
+            console.dir(this.pairings);
          })
          .catch((err: any) => {
             this.props.myPanel.current!.append(
@@ -116,7 +124,7 @@ class APIQuerySide extends Component<
          });
    }
 
-   getViewQueryContent() {
+   getAPIQuerySideContent() {
       return (
          <>
             <div style={divFlexCol}>
@@ -198,7 +206,7 @@ class APIQuerySide extends Component<
                </div>
                <JqxButton
                   ref={this.enterButton}
-                  onClick={this.pullAPIButtonClicked}
+                  onClick={this.pullFromAPIButtonClicked}
                   width={250}
                   height={25}
                   theme={"fresh"}
@@ -222,48 +230,53 @@ class APIQuerySide extends Component<
       if (isLoggedInToFirebase && !this.alreadyCalledTrak4) {
          this.getChairAssetsInfo();
       }
-      return <>{this.getViewQueryContent()}</>;
+      return <>{this.getAPIQuerySideContent()}</>;
    }
 
-   private pullAPIButtonClicked() {
+   private pullFromAPIButtonClicked() {
       let chairAsset: string = this.chairInput.current!.val();
       let pairing: ChairIMEIRentalAgent = { chair: chairAsset, imei: "" };
       let tempPairings: Array<ChairIMEIRentalAgent> = [];
-      tempPairings.push(...this.pairings);
       let goodChair: boolean = true;
       let notFound = true;
       if (chairAsset.length > 5) {
          let i = 0;
          let imei = "";
+         let rA = "";
          while (notFound && i < tempPairings.length) {
             if (tempPairings[i].chair === chairAsset) {
                notFound = false;
                imei = tempPairings[i].imei;
+               rA = tempPairings[i].rentalAgent!;
             }
             i++;
          }
          if (notFound) {
             goodChair = false;
             this.props.myPanel.current!.append(
-               `<p style="color: red ; font-size:11px;">Invalid input for Chair[${chairAsset}].</p>`
+               `<p style="color: red ; font-size:14px;">Invalid input for Chair[${chairAsset}]!</p>`
             );
          } else {
             goodChair = true;
             pairing.imei = imei;
+            pairing.rentalAgent = rA;
+            pairing.rentalAgent;
             tempPairings = [];
             tempPairings.push(pairing);
             this.props.myPanel.current!.append(
-               `<p style="color: green ; font-size:11px;">Found pairing: ${tempPairings[0].chair}-${tempPairings[0].imei}.</p>`
+               `<p style="color: green ; font-size:9px;">${tempPairings[0].chair} ${tempPairings[0].imei} ${tempPairings[0].rentalAgent}</p>`
             );
          }
       }
-      let proceed: boolean = true;
+      let proceed: boolean = !notFound;
 
       const thisYear = parseInt(moment().format("YYYY"));
       let month: string = this.monthInput.current!.val();
       let year: number = this.yearInput.current!.val();
 
-      months.includes(month) ? (proceed = true) : (proceed = false);
+      months.includes(month)
+         ? (proceed = true && proceed)
+         : (proceed = false && proceed);
       year >= 2020 && year <= thisYear
          ? (proceed = proceed && true)
          : (proceed = proceed && false);
