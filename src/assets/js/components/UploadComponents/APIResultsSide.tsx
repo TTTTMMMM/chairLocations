@@ -23,6 +23,7 @@ class APIResultsSide extends Component<{
                   myPanel={this.props.myPanel}
                   pairings={this.props.apirqo.pairings}
                   range={this.props.apirqo.range}
+                  keptHeaders={this.props.apirqo.keptHeaders}
                ></ShowAPIPullStatus>
             </div>
          );

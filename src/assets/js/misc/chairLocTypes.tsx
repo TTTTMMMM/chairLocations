@@ -26,6 +26,7 @@ export interface ChairIMEIRentalAgent {
 export interface APIRangeQO {
    pairings: Array<ChairIMEIRentalAgent>;
    range: RangeObject;
+   keptHeaders: Array<string>;
 }
 
 export interface AssetLabelQueryType {

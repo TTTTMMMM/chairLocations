@@ -335,7 +335,7 @@ class ShowChairData extends React.PureComponent<
             ["IMEI", 80],
             ["LATITUDE", 90],
             ["LONGITUDE", 90],
-            ["RENTALAGENT", 250],
+            ["RENTALAGENT", 270],
             ["STATE", 100],
             ["UPDATETIME", 150],
             ["UPLOADFBTIME", 150],

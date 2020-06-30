@@ -459,11 +459,12 @@ class CleanAndUploadFiles extends Component<
          this.myPanel.current!.append(
             `<p style="color:#738108;font-size:12px;">For [${asset}], uploading to Firebase ${numRowsSurvived} records, each containing ${numParameters} parameters.</p>`
          );
+         const lengthOfTimeIn_mSec = 75000;
          this.shortAndSkinnyArray.forEach((x: any) => {
-            // const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
+            const randomTime = Math.floor(Math.random() * lengthOfTimeIn_mSec);
             setTimeout(() => {
-               storeChairLocsOnFirebase(auth2, googleToken, x, this.myPanel);
-            }, 500); // 500ms = 2 writes/sec. to firestore db
+               storeChairLocsOnFirebase(auth2, googleToken, x);
+            }, randomTime); //
          });
          this.setState({ fileChooserLabel: "Choose File" });
       }

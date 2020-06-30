@@ -17,6 +17,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { months, monsMap, numDaysInMonth } from "../../misc/months";
 
 import getAllTrak4Devices from "../../fetches/getAllTrak4Devices";
+import getKeptChairHeaders from "../../fetches/getKeptChairHeaders";
 
 import firebase from "firebase/app";
 import "firebase/database";
@@ -38,6 +39,7 @@ class APIQuerySide extends Component<
 > {
    years: Array<string> = [];
    pairings: Array<ChairIMEIRentalAgent> = [];
+   keptHeaders: Array<string> = [];
    alreadyCalledTrak4: boolean = false;
    chairDeployedTo: string = "";
 
@@ -74,7 +76,6 @@ class APIQuerySide extends Component<
 
    getChairAssetsInfo() {
       let sourceChair: Array<string> = [];
-      // let chairIMEIObj: ChairIMEI = { chair: "", imei: "" };
       this.pairings = [];
       this.alreadyCalledTrak4 = true;
       getAllTrak4Devices()
@@ -116,6 +117,19 @@ class APIQuerySide extends Component<
             this.props.myPanel.current!.append(
                `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
             );
+         });
+   }
+
+   getKeptHeaders() {
+      const { auth2, googleToken } = this.context;
+      getKeptChairHeaders(auth2, googleToken)
+         .then((data: any) => {
+            data.forEach((element: any) => {
+               this.keptHeaders.push(element.chairHeader);
+            });
+         })
+         .catch((err: any) => {
+            console.error(`C0403: ${err}`);
          });
    }
 
@@ -224,6 +238,7 @@ class APIQuerySide extends Component<
       const { isLoggedInToFirebase } = this.context;
       if (isLoggedInToFirebase && !this.alreadyCalledTrak4) {
          this.getChairAssetsInfo();
+         this.getKeptHeaders();
       }
       return <>{this.getAPIQuerySideContent()}</>;
    }
@@ -231,10 +246,11 @@ class APIQuerySide extends Component<
    private pullFromAPIButtonClicked() {
       let chairAsset: string = this.chairInput.current!.val();
       let pairing: ChairIMEIRentalAgent = { chair: chairAsset, imei: "" };
-      let tempPairings: Array<ChairIMEIRentalAgent> = [...this.pairings];
 
       let goodChair: boolean = true;
       let notFound = true;
+      let tempPairings: Array<ChairIMEIRentalAgent> = [...this.pairings];
+
       if (chairAsset.length > 5) {
          let i = 0;
          let imei = "";
@@ -265,7 +281,9 @@ class APIQuerySide extends Component<
          }
       }
       let proceed: boolean = !notFound;
-
+      if (chairAsset.length === 0) {
+         proceed = true;
+      }
       const thisYear = parseInt(moment().format("YYYY"));
       let month: string = this.monthInput.current!.val();
       let year: number = this.yearInput.current!.val();
@@ -288,6 +306,7 @@ class APIQuerySide extends Component<
          let apirqo: APIRangeQO = {
             pairings: tempPairings,
             range: rangeObj,
+            keptHeaders: this.keptHeaders,
          };
          this.props.uploadAPIComponentCallback(apirqo);
       } else {

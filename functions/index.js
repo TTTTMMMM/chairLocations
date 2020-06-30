@@ -29,6 +29,7 @@ const {
 } = require("./public/lib/js/handlers/updateChairHeader");
 
 const { addChairLoc } = require("./public/lib/js/handlers/addChairLoc");
+const { addChairLoc1 } = require("./public/lib/js/handlers/addChairLoc1");
 
 const { addBeach } = require("./public/lib/js/handlers/addBeach");
 const { removeBeach } = require("./public/lib/js/handlers/removeBeach");
@@ -78,6 +79,10 @@ api.delete("/users", (req, res) => {
 api.post("/chairloc", (req, res) => {
    addChairLoc(req, res, admin);
 });
+
+// api.post("/viaAPI", (req, res) => {
+//    addChairLoc1(req, res, admin);
+// });
 
 api.get("/chairheaders", (req, res) => {
    getKeptChairHeaders(req, res, admin);

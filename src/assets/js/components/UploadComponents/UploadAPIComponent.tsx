@@ -26,6 +26,7 @@ class UploadAPIComponent extends Component<{}, { apirqo: APIRangeQO }> {
          apirqo: {
             pairings: [],
             range: { startDate: "2099-01-01", endDate: "2099-12-31" },
+            keptHeaders: [],
          },
       };
    }

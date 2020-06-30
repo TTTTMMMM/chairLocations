@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
 
-const storeChairLocsOnFirebase = (
+const storeChairLocsOnFirebase1 = (
    auth2: any,
    id_token: any,
    chairLoc: any
-   // myPanel: any
 ) => {
    let myHeaders = new Headers();
    myHeaders.append("googlecredential", id_token);
@@ -17,7 +16,7 @@ const storeChairLocsOnFirebase = (
       body: JSON.stringify(chairLoc),
    };
    return new Promise((resolve) => {
-      fetch(`/chairloc`, myInit).then((res) => {
+      fetch(`/viaAPI`, myInit).then((res) => {
          switch (res.status) {
             case 500:
                auth2.signOut().then(() => {
@@ -63,4 +62,4 @@ const storeChairLocsOnFirebase = (
    });
 };
 
-export default storeChairLocsOnFirebase;
+export default storeChairLocsOnFirebase1;
