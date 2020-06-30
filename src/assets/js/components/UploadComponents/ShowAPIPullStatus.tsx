@@ -17,6 +17,7 @@ import storeChairLocsOnFirebase from "../../fetches/storeChairLocsOnFirebase";
 
 import createFatChairObjAPI from "../../components/componentHandlers/helpers/createFatChairObjAPI";
 import addValuesForAdditionalHeaders from "../../components/componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
+import GaugeRendering from "./GaugeRendering";
 
 // import { divFlexRow } from "../../../styles/reactStyling";
 import { RangeObject, ChairIMEIRentalAgent } from "../../misc/chairLocTypes";
@@ -24,6 +25,7 @@ import { RangeObject, ChairIMEIRentalAgent } from "../../misc/chairLocTypes";
 interface MyState extends IDataTableProps {
    pairings: Array<ChairIMEIRentalAgent>;
    range: RangeObject;
+   numSent: Array<number>;
 }
 class ShowAPIPullStatus extends React.PureComponent<
    {
@@ -44,6 +46,7 @@ class ShowAPIPullStatus extends React.PureComponent<
       pairings: Array<ChairIMEIRentalAgent>;
       range: RangeObject;
       keptHeaders: Array<string>;
+      numSent: Array<number>;
    }) {
       super(props);
       this.numRows = 0;
@@ -63,25 +66,32 @@ class ShowAPIPullStatus extends React.PureComponent<
          },
          range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          pairings: [],
+         numSent: [123],
       };
    }
+
+   parentCallback = (chairIndex: number, numSent: number) => {
+      let arr = [];
+      arr[chairIndex] = numSent;
+      console.log(`${chairIndex}: ${numSent}`);
+      this.setState({ numSent: [numSent] });
+   };
 
    pullGeoDataFromTrak4() {
       const { auth2, googleToken } = this.context;
       if (this.props.pairings.length > 0) {
          this.numUpdates = 0;
-         let tempPairings: Array<ChairIMEIRentalAgent> = [];
-         tempPairings.push(this.props.pairings[0]);
+         // let tempPairings: Array<ChairIMEIRentalAgent> = [];
+         // tempPairings.push(this.props.pairings[0]);
          // limit hitting the trak4API to four times max while I'm debugging; remove when fully debugged
-         if (this.props.pairings.length > 1) {
-            tempPairings.push(this.props.pairings[1]);
-            tempPairings.push(this.props.pairings[12]);
-            tempPairings.push(this.props.pairings[20]);
-         }
-         console.log(auth2);
-
+         // if (this.props.pairings.length > 1) {
+         //    tempPairings.push(this.props.pairings[1]);
+         //    tempPairings.push(this.props.pairings[12]);
+         //    tempPairings.push(this.props.pairings[20]);
+         // }
          // replace tempPairings below with this.props.pairings when fully debugged
-         for (var j = 0; j < tempPairings.length; j++) {
+         // for (var j = 0; j < tempPairings.length; j++) {
+         for (var j = 0; j < this.props.pairings.length; j++) {
             // execute each iteration of this for loop with some delay
             (function (
                j,
@@ -90,7 +100,8 @@ class ShowAPIPullStatus extends React.PureComponent<
                myPanel: any,
                keptHeaders: Array<string>,
                auth2: any,
-               googleToken: any
+               googleToken: any,
+               parentCallback: any
             ) {
                // let extendedFatArray: Array<any> = [];
                // let tallAndSkinny: Array<any> = [];
@@ -142,29 +153,19 @@ class ShowAPIPullStatus extends React.PureComponent<
                                     (timeInmillisBetweenEachUpload - 10000)
                               );
                               setTimeout(() => {
+                                 let numSent = 0;
                                  storeChairLocsOnFirebase(
                                     auth2,
                                     googleToken,
                                     x
-                                 );
+                                 ).then((res: any) => {
+                                    numSent++;
+                                    parentCallback(numSent);
+                                 });
                               }, randomTime); //
                            });
                            numRows++;
                         });
-                        // console.log(`ShowAPIPullStatus>extendedFatArray[]:`);
-                        // console.dir(extendedFatArray);
-                        // extendedFatArray.forEach((efobj) => {
-                        //    console.log(efobj.ID);
-                        //    let skinnyObj: any = {};
-                        //    Object.keys(keptHeaders).forEach((property) => {
-                        //       skinnyObj[property] = efobj[property];
-                        //    });
-                        //    console.log(`skinnyObj:`);
-                        //    console.dir(skinnyObj);
-                        //    tallAndSkinny.push(skinnyObj);
-                        // });
-                        // console.log(`ShowAPIPullStatus>tallAndSkinny[]:`);
-                        // console.dir(tallAndSkinny);
                         myPanel.current!.append(
                            `<p style="font-style: normal; color:black; font-size:12px;">${
                               j + 1
@@ -179,16 +180,22 @@ class ShowAPIPullStatus extends React.PureComponent<
                }, timeInmillisBetweenEachUpload * j);
             })(
                j,
-               tempPairings[j],
+               // tempPairings[j],
+               this.props.pairings[j],
                this.props.range,
                this.props.myPanel,
                this.props.keptHeaders,
                auth2,
-               googleToken
+               googleToken,
+               this.parentCallback
             );
          }
       }
-      return <>Hi, from pullGeoDataFromTrak4()</>;
+      return (
+         <>
+            <GaugeRendering maxValue={250} values={[200]}></GaugeRendering>
+         </>
+      );
    }
 
    render() {
