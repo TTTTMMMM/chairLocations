@@ -317,10 +317,9 @@ export interface UserObj {
 #### <ins>TODO Physical World</ins>
 
 1. Change oil in John Deere
-2. Change oil in truck
-3. Rototill compost pile
-4. Replace back of toilet in basement
-5. Get haircut
+2. Rototill compost pile
+3. Replace back of toilet in basement
+4. Get haircut
 
 ---
 
