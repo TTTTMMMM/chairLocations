@@ -29,7 +29,7 @@ exports.addChairLoc = async (req, res, admin) => {
          const firstLine =
             "0194: Adding chairLoc error: " + err.message.split("\n")[0];
          const errCode = err.code;
-         res.status(500).render("500", { firstLine, errCode });
+         res.status(400).render("400", { firstLine, errCode });
          console.log(`${firstLine} ${err}`);
       }
       // if this asset label does not already exist, then store it in "uniqueAssetLabels"

@@ -9,8 +9,8 @@ const createFatChairObjAPI = (
 ) => {
    return new Promise((resolve, reject) => {
       let fatChairObj: any = {};
+      let fail: boolean = false;
       Object.keys(aGeoLocValueFromAPI).forEach((x: string) => {
-         let fail: boolean = false;
          fatChairObj["ASSETLABEL"] = pairing.chair;
          fatChairObj["RENTALAGENT"] = pairing.rentalAgent;
          fatChairObj["BEACH"] = "";
@@ -38,11 +38,11 @@ const createFatChairObjAPI = (
          }
          if (!fail) {
             fatChairObj[x.toUpperCase()] = escapeHTML(theValue);
-         } else {
-            fatChairObj = {};
          }
       });
-      // console.dir(fatChairObj);
+      if (fail) {
+         fatChairObj = {};
+      }
       resolve(fatChairObj);
    });
 };

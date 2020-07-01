@@ -17,7 +17,7 @@ import storeChairLocsOnFirebase from "../../fetches/storeChairLocsOnFirebase";
 
 import createFatChairObjAPI from "../../components/componentHandlers/helpers/createFatChairObjAPI";
 import addValuesForAdditionalHeaders from "../../components/componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
-import GaugeRendering from "./GaugeRendering";
+// import GaugeRendering from "./GaugeRendering";
 
 // import { divFlexRow } from "../../../styles/reactStyling";
 import { RangeObject, ChairIMEIRentalAgent } from "../../misc/chairLocTypes";
@@ -73,7 +73,7 @@ class ShowAPIPullStatus extends React.PureComponent<
    parentCallback = (chairIndex: number, numSent: number) => {
       let arr = [];
       arr[chairIndex] = numSent;
-      console.log(`${chairIndex}: ${numSent}`);
+      console.log(`parentCallback-${chairIndex}: ${numSent}`);
       this.setState({ numSent: [numSent] });
    };
 
@@ -108,6 +108,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                const timeInmillisBetweenEachUpload = 75000; //75000 = 75 secs.
                setTimeout(function () {
                   let numRows = 0;
+                  // let numGood = 0;
                   getGeosFromTrak4(pairing, range)
                      .then((retVal: any) => {
                         let geoLocArray = retVal.data;
@@ -124,52 +125,44 @@ class ShowAPIPullStatus extends React.PureComponent<
                               fatChairObjAlmost,
                               pairing
                            ).then((fatChairObj: any) => {
-                              let extendedFat = addValuesForAdditionalHeaders(
-                                 fatChairObj,
-                                 `API_${timeStamp}`
-                              );
-                              // x ends up being the skinny object
-                              let x = Object.keys(extendedFat)
-                                 .filter((key) => keptHeaders.includes(key))
-                                 .reduce((obj: any, key) => {
-                                    obj[key] = extendedFat[key];
-                                    if (
-                                       obj.LATITUDE === "360" ||
-                                       obj.LONGITUDE === "360" ||
-                                       obj.LATITUDE === "-360" ||
-                                       obj.LONGITUDE === "-360" ||
-                                       typeof obj.LATITUDE === "undefined" ||
-                                       typeof obj.LONGITUDE === "undefined" ||
-                                       typeof obj.ASSETLABEL === "undefined" ||
-                                       typeof obj.UPDATETIME === "undefined"
-                                    ) {
-                                       console.log(`purged ${obj.ID}`);
-                                    }
-                                    return obj;
-                                 }, {});
-                              // console.dir(x);
-                              const randomTime = Math.floor(
-                                 Math.random() *
-                                    (timeInmillisBetweenEachUpload - 10000)
-                              );
-                              setTimeout(() => {
-                                 let numSent = 0;
-                                 storeChairLocsOnFirebase(
-                                    auth2,
-                                    googleToken,
-                                    x
-                                 ).then((res: any) => {
-                                    numSent++;
-                                    parentCallback(numSent);
-                                 });
-                              }, randomTime); //
+                              // only consider non-empty objects (some geolocs got purged in createFatChairObjAPI())
+                              // numGood++;
+                              if (Object.keys(fatChairObj).length > 0) {
+                                 let extendedFat = addValuesForAdditionalHeaders(
+                                    fatChairObj,
+                                    `API_${timeStamp}`
+                                 );
+                                 // x ends up being the skinny object
+                                 let x = Object.keys(extendedFat)
+                                    .filter((key) => keptHeaders.includes(key))
+                                    .reduce((obj: any, key) => {
+                                       obj[key] = extendedFat[key];
+                                       return obj;
+                                    }, {});
+                                 // console.dir(x);
+                                 const randomTime = Math.floor(
+                                    Math.random() *
+                                       (timeInmillisBetweenEachUpload - 10000)
+                                 );
+                                 setTimeout(() => {
+                                    storeChairLocsOnFirebase(
+                                       auth2,
+                                       googleToken,
+                                       x
+                                    );
+                                 }, randomTime);
+                              }
                            });
                            numRows++;
+                           // console.log(`numSent: ${numRows}`);
+                           // parentCallback(numSent);
                         });
                         myPanel.current!.append(
-                           `<p style="font-style: normal; color:black; font-size:12px;">${
+                           `<p style="font-style: normal; color:black; font-size:11px;">${
                               j + 1
-                           }. ${pairing.chair} had ${numRows} rows.</p>`
+                           }. ${
+                              pairing.chair
+                           } reported ${numRows} geolocations.</p>`
                         );
                      })
                      .catch((err: any) => {
@@ -191,11 +184,7 @@ class ShowAPIPullStatus extends React.PureComponent<
             );
          }
       }
-      return (
-         <>
-            <GaugeRendering maxValue={250} values={[200]}></GaugeRendering>
-         </>
-      );
+      return <>hi</>;
    }
 
    render() {
@@ -204,3 +193,8 @@ class ShowAPIPullStatus extends React.PureComponent<
 }
 
 export default ShowAPIPullStatus;
+
+// <GaugeRendering
+// maxValue={250}
+// values={this.state.numSent}
+// ></GaugeRendering>
