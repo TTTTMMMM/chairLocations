@@ -1,14 +1,14 @@
 import * as React from "react";
 // @ts-ignore
-import JqxDataTable, {
-   IDataTableProps,
-   // jqx,
-} from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
+import JqxBarGauge, {
+   IBarGaugeProps,
+} from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbargauge";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 import moment from "moment";
 
 import "../../../styles/index.css";
+import { divFlexCol, divFlexRow } from "../../../styles/reactStyling";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -17,15 +17,14 @@ import storeChairLocsOnFirebase from "../../fetches/storeChairLocsOnFirebase";
 
 import createFatChairObjAPI from "../../components/componentHandlers/helpers/createFatChairObjAPI";
 import addValuesForAdditionalHeaders from "../../components/componentHandlers/helpers/headers/addValuesForAdditionalHeaders";
-// import GaugeRendering from "./GaugeRendering";
 
-// import { divFlexRow } from "../../../styles/reactStyling";
 import { RangeObject, ChairIMEIRentalAgent } from "../../misc/chairLocTypes";
 
-interface MyState extends IDataTableProps {
+interface MyState extends IBarGaugeProps {
    pairings: Array<ChairIMEIRentalAgent>;
    range: RangeObject;
-   numSent: Array<number>;
+   values: Array<number>;
+   chairIDs: Array<string>;
 }
 class ShowAPIPullStatus extends React.PureComponent<
    {
@@ -39,6 +38,16 @@ class ShowAPIPullStatus extends React.PureComponent<
    numUpdates: number | undefined;
    numRows: number | undefined;
    columns: any[] | undefined;
+   myBarGauge = React.createRef<JqxBarGauge>();
+   labels = {
+      connectorColor: "#F03000",
+      connectorWidth: 1,
+      precision: 0,
+      font: {
+         size: 11,
+      },
+   };
+
    static contextType = AuthContext;
 
    constructor(props: {
@@ -47,6 +56,7 @@ class ShowAPIPullStatus extends React.PureComponent<
       range: RangeObject;
       keptHeaders: Array<string>;
       numSent: Array<number>;
+      chairIDs: Array<string>;
    }) {
       super(props);
       this.numRows = 0;
@@ -54,44 +64,48 @@ class ShowAPIPullStatus extends React.PureComponent<
       this.numUpdates = 0;
 
       this.state = {
-         editSettings: {
-            cancelOnEsc: true,
-            editOnDoubleClick: false,
-            editOnF2: true,
-            editSingleCell: true,
-            saveOnBlur: true,
-            saveOnEnter: true,
-            saveOnPageChange: true,
-            saveOnSelectionChange: true,
+         title: {
+            font: {
+               size: 12,
+            },
+            margin: { top: 0, left: 0, right: 0, bottom: 10 },
+            text: "Percent Uploaded",
+            verticalAlignment: "bottom",
+         },
+         customColorScheme: {
+            colors: ["#F03000"],
+            name: "sandhelper",
          },
          range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          pairings: [],
-         numSent: [123],
+         values: [0],
+         chairIDs: ["ZMQ-199"],
       };
    }
 
-   parentCallback = (chairIndex: number, numSent: number) => {
+   parentCallback = (chairIndex: number, numSent: number, chairID: string) => {
       let arr = [];
       arr[chairIndex] = numSent;
-      console.log(`parentCallback-${chairIndex}: ${numSent}`);
-      this.setState({ numSent: [numSent] });
+      console.log(`parentCallback-${chairIndex}: ${chairID} ${numSent} `);
+      this.myBarGauge.current!.val([numSent]);
    };
 
    pullGeoDataFromTrak4() {
       const { auth2, googleToken } = this.context;
+
       if (this.props.pairings.length > 0) {
          this.numUpdates = 0;
-         // let tempPairings: Array<ChairIMEIRentalAgent> = [];
-         // tempPairings.push(this.props.pairings[0]);
+         let tempPairings: Array<ChairIMEIRentalAgent> = [];
+         tempPairings.push(this.props.pairings[0]);
          // limit hitting the trak4API to four times max while I'm debugging; remove when fully debugged
-         // if (this.props.pairings.length > 1) {
-         //    tempPairings.push(this.props.pairings[1]);
-         //    tempPairings.push(this.props.pairings[12]);
-         //    tempPairings.push(this.props.pairings[20]);
-         // }
+         if (this.props.pairings.length > 1) {
+            tempPairings.push(this.props.pairings[1]);
+            tempPairings.push(this.props.pairings[12]);
+            tempPairings.push(this.props.pairings[20]);
+         }
          // replace tempPairings below with this.props.pairings when fully debugged
-         // for (var j = 0; j < tempPairings.length; j++) {
-         for (var j = 0; j < this.props.pairings.length; j++) {
+         for (var j = 0; j < tempPairings.length; j++) {
+            // for (var j = 0; j < this.props.pairings.length; j++) {
             // execute each iteration of this for loop with some delay
             (function (
                j,
@@ -103,15 +117,14 @@ class ShowAPIPullStatus extends React.PureComponent<
                googleToken: any,
                parentCallback: any
             ) {
-               // let extendedFatArray: Array<any> = [];
-               // let tallAndSkinny: Array<any> = [];
                const timeInmillisBetweenEachUpload = 75000; //75000 = 75 secs.
                setTimeout(function () {
                   let numRows = 0;
                   // let numGood = 0;
                   getGeosFromTrak4(pairing, range)
                      .then((retVal: any) => {
-                        let geoLocArray = retVal.data;
+                        let geoLocArray: [] = retVal.data;
+                        let numGeolocs = geoLocArray.length;
                         let timeStamp = moment(retVal.timestamp).format(
                            "YYYYMMDD_HHmm"
                         );
@@ -149,20 +162,27 @@ class ShowAPIPullStatus extends React.PureComponent<
                                        auth2,
                                        googleToken,
                                        x
-                                    );
+                                    ).then((retVal) => {
+                                       numRows++;
+                                       let percentOfUpload = Math.round(
+                                          (numRows / numGeolocs) * 100
+                                       );
+                                       parentCallback(
+                                          0,
+                                          percentOfUpload,
+                                          pairing.chair
+                                       );
+                                    });
                                  }, randomTime);
                               }
                            });
-                           numRows++;
-                           // console.log(`numSent: ${numRows}`);
-                           // parentCallback(numSent);
                         });
                         myPanel.current!.append(
                            `<p style="font-style: normal; color:black; font-size:11px;">${
                               j + 1
                            }. ${
                               pairing.chair
-                           } reported ${numRows} geolocations.</p>`
+                           } reported ${numGeolocs} geolocations.</p>`
                         );
                      })
                      .catch((err: any) => {
@@ -184,7 +204,51 @@ class ShowAPIPullStatus extends React.PureComponent<
             );
          }
       }
-      return <>hi</>;
+      if (this.props.pairings.length > 1) {
+         return (
+            <div style={divFlexRow}>
+               <div style={divFlexCol}>
+                  <JqxBarGauge
+                     // @ts-ignore
+                     ref={this.myBarGauge}
+                     width={250}
+                     height={130}
+                     startAngle={360}
+                     endAngle={0}
+                     max={100}
+                     colorScheme={"sandhelper"}
+                     customColorScheme={this.state.customColorScheme}
+                     values={this.state.values}
+                     labels={this.labels}
+                     title={this.state.title}
+                  />
+                  <div>{this.state.chairIDs[0]}</div>
+               </div>
+            </div>
+         );
+      } else {
+         return (
+            <div style={divFlexRow}>
+               <div style={divFlexCol}>
+                  <JqxBarGauge
+                     // @ts-ignore
+                     ref={this.myBarGauge}
+                     width={250}
+                     height={130}
+                     startAngle={360}
+                     endAngle={0}
+                     max={100}
+                     colorScheme={"sandhelper"}
+                     customColorScheme={this.state.customColorScheme}
+                     values={this.state.values}
+                     labels={this.labels}
+                     title={this.state.title}
+                  />
+                  <div>{this.state.chairIDs[0]}</div>
+               </div>
+            </div>
+         );
+      }
    }
 
    render() {
@@ -197,4 +261,5 @@ export default ShowAPIPullStatus;
 // <GaugeRendering
 // maxValue={250}
 // values={this.state.numSent}
+// chairIDs={this.state.chairIDs}
 // ></GaugeRendering>

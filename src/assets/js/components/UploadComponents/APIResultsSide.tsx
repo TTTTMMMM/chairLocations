@@ -30,8 +30,8 @@ class APIResultsSide extends Component<{
       }
       return (
          <h4>
-            Select a chair (leave blank for all chairs), month and year to pull
-            geolocation data.
+            To pull geolocation data from Trak4, select a chair (leave blank for
+            all chairs), month and year.
          </h4>
       );
    }
