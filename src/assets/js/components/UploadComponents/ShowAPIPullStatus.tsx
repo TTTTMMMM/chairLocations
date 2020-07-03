@@ -87,7 +87,7 @@ class ShowAPIPullStatus extends React.PureComponent<
    parentCallback = (chairIndex: number, numSent: number, chairID: string) => {
       console.log(`${chairIndex}: ${chairID} ${numSent} `);
       this.myBarGaugeArray[chairIndex].current!.val([numSent]);
-      console.dir(this.myBarGaugeArray[chairIndex]);
+      // console.dir(this.myBarGaugeArray[chairIndex]);
    };
 
    pullGeoDataFromTrak4() {
@@ -100,8 +100,9 @@ class ShowAPIPullStatus extends React.PureComponent<
          // limit hitting the trak4API to four times max while I'm debugging; remove when fully debugged
          if (this.props.pairings.length > 1) {
             tempPairings.push(this.props.pairings[1]);
-            // tempPairings.push(this.props.pairings[12]);
-            // tempPairings.push(this.props.pairings[20]);
+            tempPairings.push(this.props.pairings[2]);
+            tempPairings.push(this.props.pairings[3]);
+            tempPairings.push(this.props.pairings[4]);
          }
          // replace tempPairings below with this.props.pairings when fully debugged
          for (var j = 0; j < tempPairings.length; j++) {
@@ -213,6 +214,10 @@ class ShowAPIPullStatus extends React.PureComponent<
          let barGaugeRowArray = [];
          let barGaugeRowOutput = 0;
          while (barGaugeRowOutput < numRowsOfBarGauges) {
+            this.myBarGaugeArray.push(React.createRef<JqxBarGauge>());
+            this.myBarGaugeArray.push(React.createRef<JqxBarGauge>());
+            this.myBarGaugeArray.push(React.createRef<JqxBarGauge>());
+            this.myBarGaugeArray.push(React.createRef<JqxBarGauge>());
             barGaugeRowArray.push(
                <div style={divFlexRow} className={"classRowbargauge"}>
                   <div style={divFlexCol} className="classColbargauge">

@@ -560,6 +560,9 @@ body
 body > div:nth-of-type(1) > div > section:nth-of-type(2) > div > ul {
    list-style-type: none;
 }
+body > div:nth-of-type(1) > div > section:nth-of-type(2) > div > ul > li {
+   margin-bottom: 30px;
+}
 /* div holding the barGauge */
 body
    > div:nth-of-type(1)
