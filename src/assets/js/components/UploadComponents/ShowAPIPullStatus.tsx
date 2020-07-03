@@ -114,11 +114,11 @@ class ShowAPIPullStatus extends React.PureComponent<
                parentCallback: any
             ) {
                let numDaysInRange: number;
+               let timeBias = 14; //time between successive chair downloads from trak4 and uploads to firebase (in seconds)
                let diffBeginOfRange = moment(range.startDate).diff(
                   moment(),
                   "minutes"
                );
-               let timeBias = 14; //time between successive chair downloads from trak4 and uploads to firebase (in seconds)
                let diffEndOfRange = moment(range.endDate).diff(
                   moment(),
                   "minutes"
@@ -130,14 +130,16 @@ class ShowAPIPullStatus extends React.PureComponent<
                   // today's date is in the month you're pulling (e.g., In July 2020, you're pulling July 2020)
                   numDaysInRange = parseInt(moment().format("D"));
                } else if (diffBeginOfRange > 0 && diffEndOfRange > 0) {
+                  // you're pulling in the future (e.g., In July 2020, you're pulling August 2020)
                   numDaysInRange = 0;
                   timeBias = 1;
                } else {
+                  // just for completeness (this is an impossible condition)
                   numDaysInRange = 0;
                   timeBias = 1;
                }
                let timeInmillisBetweenEachUpload =
-                  (Math.floor(numDaysInRange / 8) * 20 + timeBias) * 1000; // results in 1, 14, 34, 54 or 74 seconds.
+                  (Math.floor(numDaysInRange / 8) * 20 + timeBias) * 1000; // results in 1, 14, 34, 54 or 74 seconds between pulls and uploads
                setTimeout(function () {
                   let numRows = 0;
                   // let numGood = 0;
