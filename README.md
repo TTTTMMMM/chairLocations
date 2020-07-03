@@ -312,11 +312,9 @@ For some inexplicable reason, Firebase sometimes gives me [this error](https://c
 
    Time arrow step-by-step
 
-2. Develop [GPS Tracking API](https://maingps.com/api/v2/Docs#RateLimits) input
+2. Maintenance Tab
 
-3. Maintenance Tab
-
-4. Animate the home page with flying Sand Helper icons ( [a' la](https://www.youtube.com/watch?v=EO6OkltgudE) )
+3. Animate the home page with flying Sand Helper icons ( [a' la](https://www.youtube.com/watch?v=EO6OkltgudE) )
 
 #### <ins>TODO Physical World</ins>
 
