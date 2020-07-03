@@ -23,8 +23,6 @@ import { RangeObject, ChairIMEIRentalAgent } from "../../misc/chairLocTypes";
 interface MyState extends IBarGaugeProps {
    pairings: Array<ChairIMEIRentalAgent>;
    range: RangeObject;
-   // values: Array<number>;
-   // chairIDs: Array<string>;
 }
 class ShowAPIPullStatus extends React.PureComponent<
    {
@@ -79,15 +77,12 @@ class ShowAPIPullStatus extends React.PureComponent<
          },
          range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          pairings: [],
-         // values: [0],
-         // chairIDs: ["ZMQ-199"],
       };
    }
 
    parentCallback = (chairIndex: number, numSent: number, chairID: string) => {
-      console.log(`${chairIndex}: ${chairID} ${numSent} `);
+      // console.log(`${chairIndex}: ${chairID} ${numSent} `);
       this.myBarGaugeArray[chairIndex].current!.val([numSent]);
-      // console.dir(this.myBarGaugeArray[chairIndex]);
    };
 
    pullGeoDataFromTrak4() {
@@ -205,12 +200,12 @@ class ShowAPIPullStatus extends React.PureComponent<
             );
          }
       }
-      if (this.props.pairings.length > 1) {
+      if (this.props.pairings.length >= 1) {
          let numGaugesPerRow = 4;
          let numRowsOfBarGauges = Math.floor(
             this.props.pairings.length / numGaugesPerRow
          );
-         // let numBarGaugesLastRow = this.props.pairings.length % numGaugesPerRow;
+         let numBarGaugesLastRow = this.props.pairings.length % numGaugesPerRow;
          let barGaugeRowArray = [];
          let barGaugeRowOutput = 0;
          while (barGaugeRowOutput < numRowsOfBarGauges) {
@@ -332,6 +327,44 @@ class ShowAPIPullStatus extends React.PureComponent<
             );
             barGaugeRowOutput++;
          }
+         let barGaugeIndividualOutput = 0;
+         while (barGaugeIndividualOutput < numBarGaugesLastRow) {
+            this.myBarGaugeArray.push(React.createRef<JqxBarGauge>());
+            barGaugeRowArray.push(
+               <div style={divFlexRow} className={"classRowbargauge"}>
+                  <div style={divFlexCol} className="classColbargauge">
+                     <JqxBarGauge
+                        // @ts-ignore
+                        ref={
+                           this.myBarGaugeArray[
+                              barGaugeRowOutput * numGaugesPerRow +
+                                 barGaugeIndividualOutput
+                           ]
+                        }
+                        width={250}
+                        height={130}
+                        startAngle={360}
+                        endAngle={0}
+                        max={100}
+                        colorScheme={"sandhelper"}
+                        customColorScheme={this.state.customColorScheme}
+                        values={[0]}
+                        labels={this.labels}
+                        title={this.state.title}
+                     />
+                     <div>
+                        {
+                           this.props.pairings[
+                              barGaugeRowOutput * numGaugesPerRow +
+                                 barGaugeIndividualOutput
+                           ].chair
+                        }
+                     </div>
+                  </div>
+               </div>
+            );
+            barGaugeIndividualOutput++;
+         }
          console.log(`barGaugeRowArray:`);
          console.dir(barGaugeRowArray);
          return (
@@ -342,32 +375,7 @@ class ShowAPIPullStatus extends React.PureComponent<
             </ul>
          );
       } else {
-         this.myBarGaugeArray.push(React.createRef<JqxBarGauge>());
-         return (
-            <ul>
-               <li key={0}>
-                  <div style={divFlexRow} className={"classRowbargauge"}>
-                     <div style={divFlexCol} className="classColbargauge">
-                        <JqxBarGauge
-                           // @ts-ignore
-                           ref={this.myBarGaugeArray[0]}
-                           width={250}
-                           height={130}
-                           startAngle={360}
-                           endAngle={0}
-                           max={100}
-                           colorScheme={"sandhelper"}
-                           customColorScheme={this.state.customColorScheme}
-                           values={[0]}
-                           labels={this.labels}
-                           title={this.state.title}
-                        />
-                        <div>{this.props.pairings[0].chair}</div>
-                     </div>
-                  </div>
-               </li>
-            </ul>
-         );
+         return <></>;
       }
    }
 
