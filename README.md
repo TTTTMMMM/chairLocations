@@ -300,7 +300,9 @@ export interface UserObj {
 
 ---
 
-#### TODO:
+For some inexplicable reason, Firebase sometimes gives me [this error](https://console.cloud.google.com/logs/viewer?project=chairlocations&minLogLevel=0&expandAll=false&timestamp=2020-07-03T02%3A36%3A11.686000000Z&customFacets&limitCustomFacetWidth=true&interval=PT1H&resource=cloud_function%2Ffunction_name%2Fapi&scrollTimestamp=2020-07-03T02%3A34%3A34.819469079Z&dateRangeUnbound=forwardInTime&dateRangeStart=2020-07-03T01%3A36%3A11.686Z&advancedFilter=resource.type%3D%22cloud_function%22%0Aresource.labels.function_name%3D%22api%22%0Aresource.labels.project_id%3D%22chairlocations%22%0Aresource.labels.region%3D%22us-central1%22%0Atimestamp%3D%222020-07-03T02%3A34%3A34.078000000Z%22%0AinsertId%3D%22000000-d4782d5b-3bef-4f90-b50b-b1e6d278dc10%22) when uploading chairLocs
+
+#### <ins>TODO</ins>:
 
 1. Develop map analytics!
 

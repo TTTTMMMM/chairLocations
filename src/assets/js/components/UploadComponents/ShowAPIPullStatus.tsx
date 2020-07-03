@@ -23,8 +23,8 @@ import { RangeObject, ChairIMEIRentalAgent } from "../../misc/chairLocTypes";
 interface MyState extends IBarGaugeProps {
    pairings: Array<ChairIMEIRentalAgent>;
    range: RangeObject;
-   values: Array<number>;
-   chairIDs: Array<string>;
+   // values: Array<number>;
+   // chairIDs: Array<string>;
 }
 class ShowAPIPullStatus extends React.PureComponent<
    {
@@ -39,6 +39,7 @@ class ShowAPIPullStatus extends React.PureComponent<
    numRows: number | undefined;
    columns: any[] | undefined;
    myBarGauge = React.createRef<JqxBarGauge>();
+   myBarGaugeArray: Array<any> = [];
    labels = {
       connectorColor: "#F03000",
       connectorWidth: 1,
@@ -78,16 +79,15 @@ class ShowAPIPullStatus extends React.PureComponent<
          },
          range: { startDate: "2099-01-01", endDate: "2099-12-31" },
          pairings: [],
-         values: [0],
-         chairIDs: ["ZMQ-199"],
+         // values: [0],
+         // chairIDs: ["ZMQ-199"],
       };
    }
 
    parentCallback = (chairIndex: number, numSent: number, chairID: string) => {
-      let arr = [];
-      arr[chairIndex] = numSent;
-      // console.log(`parentCallback-${chairIndex}: ${chairID} ${numSent} `);
-      this.myBarGauge.current!.val([numSent]);
+      console.log(`${chairIndex}: ${chairID} ${numSent} `);
+      this.myBarGaugeArray[chairIndex].current!.val([numSent]);
+      console.dir(this.myBarGaugeArray[chairIndex]);
    };
 
    pullGeoDataFromTrak4() {
@@ -168,7 +168,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                                           (numRows / numGeolocs) * 100
                                        );
                                        parentCallback(
-                                          0,
+                                          j,
                                           percentOfUpload,
                                           pairing.chair
                                        );
@@ -212,14 +212,17 @@ class ShowAPIPullStatus extends React.PureComponent<
          // let numBarGaugesLastRow = this.props.pairings.length % numGaugesPerRow;
          let barGaugeRowArray = [];
          let barGaugeRowOutput = 0;
-         console.log(`# of rows of BarGuages: ${numRowsOfBarGauges}`);
          while (barGaugeRowOutput < numRowsOfBarGauges) {
             barGaugeRowArray.push(
                <div style={divFlexRow} className={"classRowbargauge"}>
                   <div style={divFlexCol} className="classColbargauge">
                      <JqxBarGauge
                         // @ts-ignore
-                        ref={this.myBarGauge}
+                        ref={
+                           this.myBarGaugeArray[
+                              barGaugeRowOutput * numGaugesPerRow + 0
+                           ]
+                        }
                         width={250}
                         height={130}
                         startAngle={360}
@@ -227,7 +230,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                         max={100}
                         colorScheme={"sandhelper"}
                         customColorScheme={this.state.customColorScheme}
-                        values={this.state.values}
+                        values={[0]}
                         labels={this.labels}
                         title={this.state.title}
                      />
@@ -242,7 +245,11 @@ class ShowAPIPullStatus extends React.PureComponent<
                   <div style={divFlexCol} className="classColbargauge">
                      <JqxBarGauge
                         // @ts-ignore
-                        ref={this.myBarGauge}
+                        ref={
+                           this.myBarGaugeArray[
+                              barGaugeRowOutput * numGaugesPerRow + 1
+                           ]
+                        }
                         width={250}
                         height={130}
                         startAngle={360}
@@ -250,7 +257,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                         max={100}
                         colorScheme={"sandhelper"}
                         customColorScheme={this.state.customColorScheme}
-                        values={this.state.values}
+                        values={[0]}
                         labels={this.labels}
                         title={this.state.title}
                      />
@@ -265,7 +272,11 @@ class ShowAPIPullStatus extends React.PureComponent<
                   <div style={divFlexCol} className="classColbargauge">
                      <JqxBarGauge
                         // @ts-ignore
-                        ref={this.myBarGauge}
+                        ref={
+                           this.myBarGaugeArray[
+                              barGaugeRowOutput * numGaugesPerRow + 2
+                           ]
+                        }
                         width={250}
                         height={130}
                         startAngle={360}
@@ -273,7 +284,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                         max={100}
                         colorScheme={"sandhelper"}
                         customColorScheme={this.state.customColorScheme}
-                        values={this.state.values}
+                        values={[0]}
                         labels={this.labels}
                         title={this.state.title}
                      />
@@ -288,7 +299,11 @@ class ShowAPIPullStatus extends React.PureComponent<
                   <div style={divFlexCol} className="classColbargauge">
                      <JqxBarGauge
                         // @ts-ignore
-                        ref={this.myBarGauge}
+                        ref={
+                           this.myBarGaugeArray[
+                              barGaugeRowOutput * numGaugesPerRow + 3
+                           ]
+                        }
                         width={250}
                         height={130}
                         startAngle={360}
@@ -296,7 +311,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                         max={100}
                         colorScheme={"sandhelper"}
                         customColorScheme={this.state.customColorScheme}
-                        values={this.state.values}
+                        values={[0]}
                         labels={this.labels}
                         title={this.state.title}
                      />
@@ -322,6 +337,7 @@ class ShowAPIPullStatus extends React.PureComponent<
             </ul>
          );
       } else {
+         this.myBarGaugeArray.push(React.createRef<JqxBarGauge>());
          return (
             <ul>
                <li key={0}>
@@ -329,7 +345,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                      <div style={divFlexCol} className="classColbargauge">
                         <JqxBarGauge
                            // @ts-ignore
-                           ref={this.myBarGauge}
+                           ref={this.myBarGaugeArray[0]}
                            width={250}
                            height={130}
                            startAngle={360}
@@ -337,11 +353,11 @@ class ShowAPIPullStatus extends React.PureComponent<
                            max={100}
                            colorScheme={"sandhelper"}
                            customColorScheme={this.state.customColorScheme}
-                           values={this.state.values}
+                           values={[0]}
                            labels={this.labels}
                            title={this.state.title}
                         />
-                        <div>{this.state.chairIDs[0]}</div>
+                        <div>{this.props.pairings[0].chair}</div>
                      </div>
                   </div>
                </li>
