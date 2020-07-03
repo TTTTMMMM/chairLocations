@@ -90,18 +90,18 @@ class ShowAPIPullStatus extends React.PureComponent<
 
       if (this.props.pairings.length > 0) {
          this.numUpdates = 0;
-         let tempPairings: Array<ChairIMEIRentalAgent> = [];
-         tempPairings.push(this.props.pairings[0]);
+         // let tempPairings: Array<ChairIMEIRentalAgent> = [];
+         // tempPairings.push(this.props.pairings[0]);
          // limit hitting the trak4API to four times max while I'm debugging; remove when fully debugged
-         if (this.props.pairings.length > 1) {
-            tempPairings.push(this.props.pairings[1]);
-            tempPairings.push(this.props.pairings[2]);
-            tempPairings.push(this.props.pairings[3]);
-            tempPairings.push(this.props.pairings[4]);
-         }
+         // if (this.props.pairings.length > 1) {
+         //    tempPairings.push(this.props.pairings[1]);
+         //    tempPairings.push(this.props.pairings[2]);
+         //    tempPairings.push(this.props.pairings[3]);
+         //    tempPairings.push(this.props.pairings[4]);
+         // }
          // replace tempPairings below with this.props.pairings when fully debugged
-         for (var j = 0; j < tempPairings.length; j++) {
-            // for (var j = 0; j < this.props.pairings.length; j++) {
+         // for (var j = 0; j < tempPairings.length; j++) {
+         for (var j = 0; j < this.props.pairings.length; j++) {
             // execute each iteration of this for loop with some delay
             (function (
                j,
@@ -113,7 +113,31 @@ class ShowAPIPullStatus extends React.PureComponent<
                googleToken: any,
                parentCallback: any
             ) {
-               const timeInmillisBetweenEachUpload = 75000; //75000 = 75 secs.
+               let numDaysInRange: number;
+               let diffBeginOfRange = moment(range.startDate).diff(
+                  moment(),
+                  "minutes"
+               );
+               let timeBias = 14; //time between successive chair downloads from trak4 and uploads to firebase (in seconds)
+               let diffEndOfRange = moment(range.endDate).diff(
+                  moment(),
+                  "minutes"
+               );
+               if (diffBeginOfRange < 0 && diffEndOfRange < 0) {
+                  // you're pulling an earlier month range than current month (e.g., In July 2020, you're pulling June 2020)
+                  numDaysInRange = parseInt(moment(range.endDate).format("D"));
+               } else if (diffBeginOfRange < 0 && diffEndOfRange > 0) {
+                  // today's date is in the month you're pulling (e.g., In July 2020, you're pulling July 2020)
+                  numDaysInRange = parseInt(moment().format("D"));
+               } else if (diffBeginOfRange > 0 && diffEndOfRange > 0) {
+                  numDaysInRange = 0;
+                  timeBias = 1;
+               } else {
+                  numDaysInRange = 0;
+                  timeBias = 1;
+               }
+               let timeInmillisBetweenEachUpload =
+                  (Math.floor(numDaysInRange / 8) * 20 + timeBias) * 1000; // results in 1, 14, 34, 54 or 74 seconds.
                setTimeout(function () {
                   let numRows = 0;
                   // let numGood = 0;
@@ -151,7 +175,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                                  // console.dir(x);
                                  const randomTime = Math.floor(
                                     Math.random() *
-                                       (timeInmillisBetweenEachUpload - 10000)
+                                       (timeInmillisBetweenEachUpload - 5000)
                                  );
                                  setTimeout(() => {
                                     storeChairLocsOnFirebase(
@@ -365,8 +389,6 @@ class ShowAPIPullStatus extends React.PureComponent<
             );
             barGaugeIndividualOutput++;
          }
-         console.log(`barGaugeRowArray:`);
-         console.dir(barGaugeRowArray);
          return (
             <ul>
                {barGaugeRowArray.map((value, index) => {
