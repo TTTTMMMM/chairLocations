@@ -86,7 +86,7 @@ class ShowAPIPullStatus extends React.PureComponent<
    parentCallback = (chairIndex: number, numSent: number, chairID: string) => {
       let arr = [];
       arr[chairIndex] = numSent;
-      console.log(`parentCallback-${chairIndex}: ${chairID} ${numSent} `);
+      // console.log(`parentCallback-${chairIndex}: ${chairID} ${numSent} `);
       this.myBarGauge.current!.val([numSent]);
    };
 
@@ -100,8 +100,8 @@ class ShowAPIPullStatus extends React.PureComponent<
          // limit hitting the trak4API to four times max while I'm debugging; remove when fully debugged
          if (this.props.pairings.length > 1) {
             tempPairings.push(this.props.pairings[1]);
-            tempPairings.push(this.props.pairings[12]);
-            tempPairings.push(this.props.pairings[20]);
+            // tempPairings.push(this.props.pairings[12]);
+            // tempPairings.push(this.props.pairings[20]);
          }
          // replace tempPairings below with this.props.pairings when fully debugged
          for (var j = 0; j < tempPairings.length; j++) {
@@ -205,48 +205,147 @@ class ShowAPIPullStatus extends React.PureComponent<
          }
       }
       if (this.props.pairings.length > 1) {
-         return (
-            <div style={divFlexRow}>
-               <div style={divFlexCol}>
-                  <JqxBarGauge
-                     // @ts-ignore
-                     ref={this.myBarGauge}
-                     width={250}
-                     height={130}
-                     startAngle={360}
-                     endAngle={0}
-                     max={100}
-                     colorScheme={"sandhelper"}
-                     customColorScheme={this.state.customColorScheme}
-                     values={this.state.values}
-                     labels={this.labels}
-                     title={this.state.title}
-                  />
-                  <div>{this.state.chairIDs[0]}</div>
+         let numGaugesPerRow = 4;
+         let numRowsOfBarGauges = Math.floor(
+            this.props.pairings.length / numGaugesPerRow
+         );
+         // let numBarGaugesLastRow = this.props.pairings.length % numGaugesPerRow;
+         let barGaugeRowArray = [];
+         let barGaugeRowOutput = 0;
+         console.log(`# of rows of BarGuages: ${numRowsOfBarGauges}`);
+         while (barGaugeRowOutput < numRowsOfBarGauges) {
+            barGaugeRowArray.push(
+               <div style={divFlexRow} className={"classRowbargauge"}>
+                  <div style={divFlexCol} className="classColbargauge">
+                     <JqxBarGauge
+                        // @ts-ignore
+                        ref={this.myBarGauge}
+                        width={250}
+                        height={130}
+                        startAngle={360}
+                        endAngle={0}
+                        max={100}
+                        colorScheme={"sandhelper"}
+                        customColorScheme={this.state.customColorScheme}
+                        values={this.state.values}
+                        labels={this.labels}
+                        title={this.state.title}
+                     />
+                     <div>
+                        {
+                           this.props.pairings[
+                              barGaugeRowOutput * numGaugesPerRow + 0
+                           ].chair
+                        }
+                     </div>
+                  </div>
+                  <div style={divFlexCol} className="classColbargauge">
+                     <JqxBarGauge
+                        // @ts-ignore
+                        ref={this.myBarGauge}
+                        width={250}
+                        height={130}
+                        startAngle={360}
+                        endAngle={0}
+                        max={100}
+                        colorScheme={"sandhelper"}
+                        customColorScheme={this.state.customColorScheme}
+                        values={this.state.values}
+                        labels={this.labels}
+                        title={this.state.title}
+                     />
+                     <div>
+                        {
+                           this.props.pairings[
+                              barGaugeRowOutput * numGaugesPerRow + 1
+                           ].chair
+                        }
+                     </div>
+                  </div>
+                  <div style={divFlexCol} className="classColbargauge">
+                     <JqxBarGauge
+                        // @ts-ignore
+                        ref={this.myBarGauge}
+                        width={250}
+                        height={130}
+                        startAngle={360}
+                        endAngle={0}
+                        max={100}
+                        colorScheme={"sandhelper"}
+                        customColorScheme={this.state.customColorScheme}
+                        values={this.state.values}
+                        labels={this.labels}
+                        title={this.state.title}
+                     />
+                     <div>
+                        {
+                           this.props.pairings[
+                              barGaugeRowOutput * numGaugesPerRow + 2
+                           ].chair
+                        }
+                     </div>
+                  </div>
+                  <div style={divFlexCol} className="classColbargauge">
+                     <JqxBarGauge
+                        // @ts-ignore
+                        ref={this.myBarGauge}
+                        width={250}
+                        height={130}
+                        startAngle={360}
+                        endAngle={0}
+                        max={100}
+                        colorScheme={"sandhelper"}
+                        customColorScheme={this.state.customColorScheme}
+                        values={this.state.values}
+                        labels={this.labels}
+                        title={this.state.title}
+                     />
+                     <div>
+                        {
+                           this.props.pairings[
+                              barGaugeRowOutput * numGaugesPerRow + 3
+                           ].chair
+                        }
+                     </div>
+                  </div>
                </div>
-            </div>
+            );
+            barGaugeRowOutput++;
+         }
+         console.log(`barGaugeRowArray:`);
+         console.dir(barGaugeRowArray);
+         return (
+            <ul>
+               {barGaugeRowArray.map((value, index) => {
+                  return <li key={index}>{value}</li>;
+               })}
+            </ul>
          );
       } else {
          return (
-            <div style={divFlexRow}>
-               <div style={divFlexCol}>
-                  <JqxBarGauge
-                     // @ts-ignore
-                     ref={this.myBarGauge}
-                     width={250}
-                     height={130}
-                     startAngle={360}
-                     endAngle={0}
-                     max={100}
-                     colorScheme={"sandhelper"}
-                     customColorScheme={this.state.customColorScheme}
-                     values={this.state.values}
-                     labels={this.labels}
-                     title={this.state.title}
-                  />
-                  <div>{this.state.chairIDs[0]}</div>
-               </div>
-            </div>
+            <ul>
+               <li key={0}>
+                  <div style={divFlexRow} className={"classRowbargauge"}>
+                     <div style={divFlexCol} className="classColbargauge">
+                        <JqxBarGauge
+                           // @ts-ignore
+                           ref={this.myBarGauge}
+                           width={250}
+                           height={130}
+                           startAngle={360}
+                           endAngle={0}
+                           max={100}
+                           colorScheme={"sandhelper"}
+                           customColorScheme={this.state.customColorScheme}
+                           values={this.state.values}
+                           labels={this.labels}
+                           title={this.state.title}
+                        />
+                        <div>{this.state.chairIDs[0]}</div>
+                     </div>
+                  </div>
+               </li>
+            </ul>
          );
       }
    }
@@ -257,9 +356,3 @@ class ShowAPIPullStatus extends React.PureComponent<
 }
 
 export default ShowAPIPullStatus;
-
-// <GaugeRendering
-// maxValue={250}
-// values={this.state.numSent}
-// chairIDs={this.state.chairIDs}
-// ></GaugeRendering>
