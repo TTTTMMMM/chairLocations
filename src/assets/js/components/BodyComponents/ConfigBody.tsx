@@ -6,6 +6,7 @@ import "../../../styles/index.css";
 import { Roles } from "../../misc/chairLocTypes";
 // import ConfigContainer from "../ConfigComponents/ConfigContainer";
 import { AuthContext } from "../../contexts/AuthContext";
+import * as clt from "../../misc/chairLocTypes";
 
 import ConfigSubheader from "../ConfigComponents/ConfigSubheader";
 import UserManagementComponent from "../ConfigComponents/UserManagementComponent";
@@ -84,34 +85,37 @@ class ConfigBody extends Component<{ match: any }, MyState> {
                      <Route
                         path={`${this.props.match.path}/usermanagement`}
                         render={(props) =>
-                           isSignedIn ? (
+                           isSignedIn &&
+                           userObjFmServer.role === clt.Roles.admin ? (
                               <UserManagementComponent></UserManagementComponent>
                            ) : (
-                              <Redirect to="/" />
+                              <Redirect to="/401" />
                            )
                         }
                      />
                      <Route
                         path={`${this.props.match.path}/rentalagentbeaches`}
                         render={(props) =>
-                           isSignedIn ? (
+                           isSignedIn &&
+                           userObjFmServer.role === clt.Roles.admin ? (
                               <RentalAgentBeachesManagementComponent></RentalAgentBeachesManagementComponent>
                            ) : (
-                              <Redirect to="/" />
+                              <Redirect to="/401" />
                            )
                         }
                      />
                      <Route
                         path={`${this.props.match.path}/rentalagentchairs`}
                         render={(props) =>
-                           isSignedIn ? (
+                           isSignedIn &&
+                           userObjFmServer.role === clt.Roles.admin ? (
                               <RentalAgentChairsManagementComponent></RentalAgentChairsManagementComponent>
                            ) : (
-                              <Redirect to="/" />
+                              <Redirect to="/401" />
                            )
                         }
                      />
-                     <Redirect to="/" />
+                     <Redirect to="/401" />
                   </Switch>
                </Router>
             </>

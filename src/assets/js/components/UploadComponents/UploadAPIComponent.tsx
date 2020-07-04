@@ -31,7 +31,7 @@ class UploadAPIComponent extends Component<{}, { apirqo: APIRangeQO }> {
       };
    }
 
-   // function callback from ViewQuerySide.tsx, which is used to pass back the assetRangeQueryObject
+   // function callback from APIQuerySide.tsx, which is used to pass back the assetRangeQueryObject
    myCallBack = (apirqo: APIRangeQO) => {
       this.setState({ apirqo: apirqo });
       let verbiage: string = "";

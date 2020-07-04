@@ -114,7 +114,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                parentCallback: any
             ) {
                let numDaysInRange: number;
-               let timeBias = 14; //time between successive chair downloads from trak4 and uploads to firebase (in seconds)
+               let timeBias = 13; //time between successive chair downloads from trak4 and uploads to firebase (in seconds)
                let diffBeginOfRange = moment(range.startDate).diff(
                   moment(),
                   "minutes"
@@ -139,7 +139,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                   timeBias = 1;
                }
                let timeInmillisBetweenEachUpload =
-                  (Math.floor(numDaysInRange / 8) * 20 + timeBias) * 1000; // results in 1, 14, 34, 54 or 74 seconds between pulls and uploads
+                  (Math.floor(numDaysInRange / 8) * 20 + timeBias) * 1000; // results in 1, 13, 33, 53 or 73 seconds between pulls and uploads
                setTimeout(function () {
                   let numRows = 0;
                   // let numGood = 0;
@@ -177,7 +177,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                                  // console.dir(x);
                                  const randomTime = Math.floor(
                                     Math.random() *
-                                       (timeInmillisBetweenEachUpload - 5000)
+                                       (timeInmillisBetweenEachUpload - 2000)
                                  );
                                  setTimeout(() => {
                                     storeChairLocsOnFirebase(
