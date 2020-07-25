@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
 import { trak4APIKey } from "../configs/trak4APIConfig";
-// import { trak4URL } from "../configs/trak4APIConfig";
-import { trak4CORSProxyURL } from "../configs/trak4APIConfig";
+import { trak4URL } from "../configs/trak4APIConfig";
+// import { trak4CORSProxyURL } from "../configs/trak4APIConfig";
 import { RangeObject, ChairIMEIRentalAgent } from "../misc/chairLocTypes";
 
 interface PostSingleDeviceReport {
@@ -38,7 +38,7 @@ const getGeosFromTrak4 = (
       body: JSON.stringify(postSingleDeviceReportObj),
    };
    return new Promise((resolve) => {
-      fetch(trak4CORSProxyURL, myStuff).then((res) => {
+      fetch(trak4URL, myStuff).then((res) => {
          switch (res.status) {
             default:
                res.json().then((data: any) => {

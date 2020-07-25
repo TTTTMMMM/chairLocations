@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
 import { trak4APIKey } from "../configs/trak4APIConfig";
-// import { trak4URL } from "../configs/trak4APIConfig";
-import { trak4CORSProxyURL } from "../configs/trak4APIConfig";
+import { trak4URL } from "../configs/trak4APIConfig";
+// import { trak4CORSProxyURL } from "../configs/trak4APIConfig";
 
 interface PostAllDevicesObj {
    commandstring: string;
@@ -26,7 +26,7 @@ const getAllTrak4Devices = (): any => {
       body: JSON.stringify(postAllDevicesObj),
    };
    return new Promise((resolve) => {
-      fetch(trak4CORSProxyURL, myInit)
+      fetch(trak4URL, myInit)
          .then((res) => {
             switch (res.status) {
                default:
