@@ -206,3 +206,11 @@ export const resultsSideStyling: CSSProperties = {
    flexDirection: "column",
    marginLeft: "15px",
 };
+
+export const canvasStyling: CSSProperties = {
+   border: "1px solid black",
+   borderRadius: "6px",
+   margin: "10px",
+   padding: "3px",
+   boxShadow: "0 0 3px #4285f4",
+};

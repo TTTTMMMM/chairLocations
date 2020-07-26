@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import "../../../styles/index.css";
 import { Roles } from "../../misc/chairLocTypes";
 import { AuthContext } from "../../contexts/AuthContext";
+import CanvasAnimationComponent from "../MainComponents/CanvasAnimationComponent";
 
 class MainBody extends Component<{}> {
    constructor(props: {}) {
@@ -14,7 +15,8 @@ class MainBody extends Component<{}> {
       const { userObjFmServer } = this.context;
       switch (userObjFmServer.role) {
          case Roles.notloggedin:
-            return <img src={"../../../images/cherry.jpeg"} />;
+            // return <img src={"../../../images/cherry.jpeg"} />;
+            return <CanvasAnimationComponent />;
             break;
          case Roles.maintenance:
             return <Redirect to="/maintenance" />;
@@ -29,7 +31,7 @@ class MainBody extends Component<{}> {
             return <Redirect to="/upload" />;
             break;
          default:
-            return <img src={"../../../images/cherry.jpeg"} />;
+            return <CanvasAnimationComponent />;
       }
    }
    render() {
