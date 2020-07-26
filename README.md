@@ -318,9 +318,13 @@ For some inexplicable reason, Firebase sometimes gives me [this error](https://c
 
 #### <ins>TODO Physical World</ins>
 
-1. Rototill compost pile
-2. Replace back of toilet in basement
-3. Get haircut
+1. Replace back of toilet in basement
+2. Get haircut
+
+#### <ins>Bring to St. Louis</ins>
+
+1. Mattress Bag
+2. Tool Box
 
 ---
 
