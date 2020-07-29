@@ -130,3 +130,13 @@ export interface AuthProps {
 export interface AssetGeoLocs {
    [asset: string]: Array<IWLocObj>;
 }
+
+export interface ICircle {
+   x: number;
+   y: number;
+   dX: number;
+   dY: number;
+   radius: number;
+   draw: (c: any) => void;
+   update: (cW: number, cH: number, c: any) => void;
+}
