@@ -137,6 +137,7 @@ export interface ICircle {
    dX: number;
    dY: number;
    radius: number;
+   colorBank: number;
    colorIndex: number;
    draw: (c: any, cA: Array<string>) => void;
    update: (cW: number, cH: number, c: any, cA: Array<string>) => void;

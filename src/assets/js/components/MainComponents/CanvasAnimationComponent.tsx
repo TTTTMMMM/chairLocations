@@ -12,6 +12,7 @@ class Circle implements ICircle {
    dX: number;
    dY: number;
    radius: number;
+   colorBank: number;
    colorIndex: number;
 
    constructor(
@@ -20,6 +21,7 @@ class Circle implements ICircle {
       rIn: number,
       dXIn: number,
       dYIn: number,
+      cBIn: number,
       cIIn: number
    ) {
       this.x = xIn;
@@ -27,12 +29,13 @@ class Circle implements ICircle {
       this.radius = rIn;
       this.dX = dXIn;
       this.dY = dYIn;
+      this.colorBank = cBIn;
       this.colorIndex = cIIn;
    }
 
    draw(c: any, cA: Array<string>): void {
       c!.beginPath();
-      c!.strokeStyle = "rgba(0, 0, 255, .38)";
+      c!.strokeStyle = cA[this.colorIndex];
       c!.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
       c!.fillStyle = cA[this.colorIndex];
       c!.fill();
@@ -54,17 +57,44 @@ class Circle implements ICircle {
 class CanvasAnimationComponent extends Component<{}, {}> {
    canvasRef: any;
    circleArray: Array<Circle> = [];
+   numColorBanks: number = 6;
+   colorBank: number = 0;
    colorArray: Array<string> = [
-      // "#0E6542",
-      // "#68E9B5",
-      // "#20E595",
-      // "#2D654E",
-      // "#19B274",
+      "#0E6542",
+      "#68E9B5",
+      "#20E595",
+      "#2D654E",
+      "#19B274",
+
       "#9DF2C5",
       "#FFFDD2",
       "#67AAAD",
       "#009599",
       "#00678B",
+
+      "#1F6426",
+      "#87FF87",
+      "#0EAD00",
+      "#598B47",
+      "#C4E336",
+
+      "#788F87",
+      "#032513",
+      "#335846",
+      "#DBDAD5",
+      "#0D0D0A",
+
+      "#7FBF3F",
+      "#5D8C2E",
+      "#C1F257",
+      "#D6F272",
+      "#EFF299",
+
+      "#A88F82",
+      "#FFFAF7",
+      "#F5E1D5",
+      "#71A8A7",
+      "#D5F5F5",
    ];
 
    constructor(props: {}) {
@@ -86,6 +116,14 @@ class CanvasAnimationComponent extends Component<{}, {}> {
       this.circleArray.forEach((circle) => {
          circle.update(this.cW, this.cH, this.c, this.colorArray);
       });
+      this.c!.beginPath();
+      this.c!.lineWidth = 2;
+      this.c!.moveTo(this.circleArray[0].x, this.circleArray[0].y);
+      this.c!.lineTo(this.circleArray[1].x, this.circleArray[1].y);
+      this.c!.stroke();
+      this.c!.font = "20px Josefin Sans";
+      this.c!.fillStyle = "#000000";
+      this.c!.fillText(`${this.colorBank}`, 20, 20);
    }
 
    componentDidMount() {
@@ -107,7 +145,8 @@ class CanvasAnimationComponent extends Component<{}, {}> {
          let dY: number = 0;
          let radius: number = 0;
          let colorIndex: number = 0;
-         for (let i = 0; i < 179; i++) {
+         this.colorBank = Math.floor(Math.random() * this.numColorBanks);
+         for (let i = 0; i < 209; i++) {
             radius = Math.ceil(Math.random() * (8 - 1) + 1); // random # between 2 and 9
             x = Math.ceil(
                Math.random() * (window.innerWidth - radius * 3) + radius
@@ -123,8 +162,10 @@ class CanvasAnimationComponent extends Component<{}, {}> {
             dX = Math.round(plusOrMinus * dX);
             var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
             dY = Math.round(plusOrMinus * dY);
-            colorIndex = Math.floor(Math.random() * this.colorArray.length);
-            this.circleArray.push(new Circle(x, y, radius, dX, dY, colorIndex));
+            colorIndex = 5 * this.colorBank + Math.floor(Math.random() * 5);
+            this.circleArray.push(
+               new Circle(x, y, radius, dX, dY, this.colorBank, colorIndex)
+            );
          }
          this.animate();
       }
