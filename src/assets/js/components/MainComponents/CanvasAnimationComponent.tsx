@@ -1,5 +1,6 @@
 // animation tutorial: https://www.youtube.com/watch?reload=9&v=EO6OkltgudE
 // animation and React: https://philna.sh/blog/2018/09/27/techniques-for-animating-on-the-canvas-in-react/
+// adobe color pallette: https://color.adobe.com/explore
 
 import React, { Component } from "react";
 import "../../../styles/index.css";
@@ -122,7 +123,21 @@ class CanvasAnimationComponent extends Component<{}, {}> {
       this.c!.stroke();
       this.c!.font = "15px Josefin Sans";
       this.c!.fillStyle = "#000000";
-      this.c!.fillText(`${this.colorBank}`, 8, 20);
+      this.c!.fillText(`${this.colorBank}`, 8, 18);
+      this.c!.font = "7px Josefin Sans";
+      this.c!.fillStyle = "#000000";
+      this.c!.fillText(
+         `${this.circleArray[0].x}${this.circleArray[0].y} ${this.circleArray[2].x}${this.circleArray[2].y}`,
+         8,
+         25
+      );
+      this.c!.font = "8px Josefin Sans";
+      this.c!.fillStyle = "#000000";
+      this.c!.fillText(
+         `${this.circleArray[1].x}${this.circleArray[1].y}`,
+         8,
+         33
+      );
    }
 
    getCanvasContent() {
