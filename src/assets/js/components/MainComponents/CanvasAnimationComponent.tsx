@@ -85,11 +85,15 @@ class CanvasAnimationComponent extends Component<{}, {}> {
          let dY: number = 0;
          let radius: number = 0;
          for (let i = 0; i < 99; i++) {
-            x = Math.ceil(Math.random() * (window.innerWidth - 25) + 25);
-            y = Math.ceil(Math.random() * (window.innerHeight - 25) + 25);
-            x = x > this.cW ? Math.round(this.cW / 1.5) : x;
-            y = y > this.cH ? Math.round(this.cH / 2) : y;
             radius = Math.ceil(Math.random() * (24 - 2) + 2); // random # between 2 and 24
+            x = Math.ceil(
+               Math.random() * (window.innerWidth - radius * 3) + radius
+            );
+            y = Math.ceil(
+               Math.random() * (window.innerHeight - radius * 3) + radius
+            );
+            x = x >= this.cW - radius ? Math.round(this.cW / 1.5) : x;
+            y = y >= this.cH - radius ? Math.round(this.cH / 2) : y;
             dX = Math.round(Math.random() * (8 - 1) + 1);
             dY = Math.round(Math.random() * (8 - 1) + 1);
             var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
