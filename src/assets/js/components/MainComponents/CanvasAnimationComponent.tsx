@@ -101,7 +101,6 @@ class CanvasAnimationComponent extends Component<{}, {}> {
       super(props);
       this.canvasRef = React.createRef();
       this.animate = this.animate.bind(this);
-      this.mousemove = this.mousemove.bind(this);
       this.state = {};
    }
    canvasElement: HTMLCanvasElement | undefined;
@@ -121,13 +120,9 @@ class CanvasAnimationComponent extends Component<{}, {}> {
       this.c!.moveTo(this.circleArray[0].x, this.circleArray[0].y);
       this.c!.lineTo(this.circleArray[1].x, this.circleArray[1].y);
       this.c!.stroke();
-      this.c!.font = "20px Josefin Sans";
+      this.c!.font = "15px Josefin Sans";
       this.c!.fillStyle = "#000000";
-      this.c!.fillText(`${this.colorBank}`, 20, 20);
-   }
-
-   componentDidMount() {
-      // window.addEventListener("mousemove", this.mousemove);
+      this.c!.fillText(`${this.colorBank}`, 8, 20);
    }
 
    getCanvasContent() {
@@ -175,10 +170,6 @@ class CanvasAnimationComponent extends Component<{}, {}> {
 
    render() {
       return <>{this.getCanvasContent()}</>;
-   }
-
-   private mousemove(e: any) {
-      console.log(`x:${e.clientX}  y:${e.clientY}`);
    }
 }
 

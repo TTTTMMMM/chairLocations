@@ -314,8 +314,6 @@ For some inexplicable reason, Firebase sometimes gives me [this error](https://c
 
 2. Maintenance Tab
 
-3. Animate the home page with flying Sand Helper icons ( [a' la](https://www.youtube.com/watch?v=EO6OkltgudE) )
-
 #### <ins>TODO Physical World</ins>
 
 1. Replace back of toilet in basement
