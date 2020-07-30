@@ -58,7 +58,7 @@ class CanvasAnimationComponent extends Component<{}, {}> {
    canvasRef: any;
    shImage: any;
    circleArray: Array<Circle> = [];
-   numColorBanks: number = 6;
+   numColorBanks: number = 10;
    colorBank: number = 0;
    colorArray: Array<string> = [
       "#0E6542",
@@ -96,6 +96,30 @@ class CanvasAnimationComponent extends Component<{}, {}> {
       "#F5E1D5",
       "#71A8A7",
       "#D5F5F5",
+
+      "#F2E205",
+      "#F2CB05",
+      "#736002",
+      "#403501",
+      "#F2B705",
+
+      "#F27781",
+      "#18298C",
+      "#04BF8A",
+      "#F2CF1D",
+      "#F29F05",
+
+      "#751410",
+      "#F7706B",
+      "#F52A21",
+      "#753633",
+      "#C2211A",
+
+      "#F20544",
+      "#F2357B",
+      "#580259",
+      "#2944D9",
+      "#6D8C3F",
    ];
 
    constructor(props: {}) {
@@ -159,7 +183,7 @@ class CanvasAnimationComponent extends Component<{}, {}> {
          let radius: number = 0;
          let colorIndex: number = 0;
          this.colorBank = Math.floor(Math.random() * this.numColorBanks);
-         for (let i = 0; i < 209; i++) {
+         for (let i = 0; i < 259; i++) {
             radius = Math.ceil(Math.random() * (8 - 1) + 1); // random # between 2 and 9
             x = Math.ceil(
                Math.random() * (window.innerWidth - radius * 3) + radius
