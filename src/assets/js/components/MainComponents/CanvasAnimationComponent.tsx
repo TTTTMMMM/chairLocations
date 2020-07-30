@@ -6,7 +6,6 @@ import React, { Component } from "react";
 import "../../../styles/index.css";
 import { canvasStyling } from "../../../styles/reactStyling";
 import { ICircle } from "../../misc/chairLocTypes";
-
 class Circle implements ICircle {
    x: number;
    y: number;
@@ -57,6 +56,7 @@ class Circle implements ICircle {
 }
 class CanvasAnimationComponent extends Component<{}, {}> {
    canvasRef: any;
+   shImage: any;
    circleArray: Array<Circle> = [];
    numColorBanks: number = 6;
    colorBank: number = 0;
@@ -138,10 +138,13 @@ class CanvasAnimationComponent extends Component<{}, {}> {
          8,
          33
       );
+      this.c!.drawImage(this.shImage, 8, 40, 50, 59);
    }
 
    getCanvasContent() {
       this.canvasElement = this.canvasRef.current;
+      this.shImage = new Image();
+      this.shImage.src = "/images/sunstar.png";
       if (this.canvasElement && this.haventCreatedCanvasYet) {
          this.haventCreatedCanvasYet = false;
          this.cW = window.innerWidth - 25;
