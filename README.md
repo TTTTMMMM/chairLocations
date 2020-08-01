@@ -367,6 +367,8 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 | ![](/markdownImages/dI/depReportingBody.png) | ![](/markdownImages/dI/depQueryComp.png)      |
 | GenerateQuerySide.tsx                        | GenerateResultsSide.tsx                       |
 | ![](/markdownImages/dI/depGenQuerySide.png)  | ![](/markdownImages/dI/depGenResultsSide.png) |
+| GenerateDistanceReport.tsx                   | GenerateResultsSide.tsx                       |
+| ![](/markdownImages/dI/depGenDistReport.png) | ![](/markdownImages/dI/depGenResultsSide.png) |
 
 ---
 
