@@ -80,9 +80,6 @@ const calcDist = (
                geo: prevGeoPoint,
             };
          } else {
-            myPanel.current!.append(
-               `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
-            );
             // console.log(`cumDistDaily:`);
             // console.dir(cumDistDaily);
             if (callingFrom === CallingFrom.generateDistanceReport) {
@@ -91,6 +88,10 @@ const calcDist = (
                   googleToken,
                   cumDistDaily,
                   myPanel
+               );
+            } else {
+               myPanel.current!.append(
+                  `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
                );
             }
             prevGeoPoint = {
@@ -115,11 +116,12 @@ const calcDist = (
             };
          }
       });
-      myPanel.current!.append(
-         `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
-      );
       if (callingFrom === CallingFrom.generateDistanceReport) {
          storeReportEntryOnFirebase(auth2, googleToken, cumDistDaily, myPanel);
+      } else {
+         myPanel.current!.append(
+            `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
+         );
       }
       // console.log(`cumDistDaily:`);
       // console.dir(cumDistDaily);

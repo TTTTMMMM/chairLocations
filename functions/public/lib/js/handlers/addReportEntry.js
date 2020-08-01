@@ -105,7 +105,7 @@ exports.addReportEntry = async (req, res, admin) => {
                      .update(reportEntryObj);
                   try {
                      await firebaseApp.auth().signOut();
-                     let msg = `Distance: ${valid_Asset[0]} moved ${distObj.inFeet}' on ${v_DD[0]}`;
+                     let msg = `${valid_Asset[0]} moved ${distObj.inFeet}' on ${v_DD[0]}`;
                      console.log(msg);
                      console.log(`Logged out`);
                      res.append("Cache-Control", "no-cache, must-revalidate");

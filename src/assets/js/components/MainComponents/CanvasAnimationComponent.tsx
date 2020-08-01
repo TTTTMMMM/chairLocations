@@ -176,8 +176,6 @@ class CanvasAnimationComponent extends Component<{}, {}> {
       this.canvasElement = this.canvasRef.current;
       this.shImage = new Image();
       this.shImage.src = "/images/sunstar.png";
-      console.log(`in componentDidMount(), this.canvasElement-> `);
-      console.dir(this.canvasElement);
       this.cW = window.innerWidth - 25;
       this.cH = window.innerHeight - 75;
       this.canvasElement!.setAttribute("height", this.cH.toString());

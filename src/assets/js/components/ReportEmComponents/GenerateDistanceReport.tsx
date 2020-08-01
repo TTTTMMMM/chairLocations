@@ -19,8 +19,6 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 
-// import calcDist from "../componentHandlers/calcDist";
-
 import { divFlexRow } from "../../../styles/reactStyling";
 import {
    RangeObject,
@@ -63,7 +61,6 @@ class GenerateDistanceReport extends React.PureComponent<
    static contextType = AuthContext;
 
    private myReportTable = React.createRef<JqxDataTable>();
-   private csvButton = React.createRef<JqxButton>();
 
    constructor(props: {
       myPanel: any;
@@ -78,7 +75,6 @@ class GenerateDistanceReport extends React.PureComponent<
       this.numUpdates = 0;
       this.numUpdatesGeo = 0;
       this.assetGeoLocs = {};
-      this.csvButtonClicked = this.csvButtonClicked.bind(this);
 
       this.onRowSelect = this.onRowSelect.bind(this);
       this.showReportContent = this.showReportContent.bind(this);
@@ -534,22 +530,10 @@ class GenerateDistanceReport extends React.PureComponent<
                   editSettings={this.state.editSettings}
                   pageSize={100}
                />
-               <div style={divFlexRow}>
-                  <JqxButton
-                     ref={this.csvButton}
-                     onClick={this.csvButtonClicked}
-                     width={325}
-                     height={30}
-                     theme={"fresh"}
-                     textPosition={"center"}
-                  >
-                     Output CSV File
-                  </JqxButton>
-               </div>
             </>
          );
       } else {
-         return <div></div>;
+         return <></>;
       }
    }
 
@@ -589,12 +573,6 @@ class GenerateDistanceReport extends React.PureComponent<
       });
       this.props.myPanel.current!.append(
          `<p style="color:#7713AD ; font-size:11px;">});</p>`
-      );
-   }
-
-   private csvButtonClicked() {
-      this.props.myPanel.current!.append(
-         `<p style="color:#7713AD ; font-size:11px;">CSV Button Clicked</p>`
       );
    }
 }
