@@ -360,11 +360,13 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ### <ins>Dependency Graph for Reporting Branch</ins>
 
-| index.tsx                                    | MainPage.tsx                             |
-| -------------------------------------------- | ---------------------------------------- |
-| ![](/markdownImages/dI/depIndex.tsx.png)     | ![](/markdownImages/dI/depMainPage.png)  |
-| ReportingBody.tsx                            | GenerateQueryComponent.tsx               |
-| ![](/markdownImages/dI/depReportingBody.png) | ![](/markdownImages/dI/depQueryComp.png) |
+| index.tsx                                    | MainPage.tsx                                  |
+| -------------------------------------------- | --------------------------------------------- |
+| ![](/markdownImages/dI/depIndex.tsx.png)     | ![](/markdownImages/dI/depMainPage.png)       |
+| ReportingBody.tsx                            | GenerateQueryComponent.tsx                    |
+| ![](/markdownImages/dI/depReportingBody.png) | ![](/markdownImages/dI/depQueryComp.png)      |
+| GenerateQuerySide.tsx                        | GenerateResultsSide.tsx                       |
+| ![](/markdownImages/dI/depGenQuerySide.png)  | ![](/markdownImages/dI/depGenResultsSide.png) |
 
 ---
 
