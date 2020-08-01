@@ -4,7 +4,7 @@ import JqxDataTable, {
    IDataTableProps,
    jqx,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
-import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
+// import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
@@ -19,7 +19,6 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
 
-import { divFlexRow } from "../../../styles/reactStyling";
 import {
    RangeObject,
    Roles,
