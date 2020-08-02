@@ -213,7 +213,6 @@ class GenerateQuerySide extends Component<
 
       let month: string = this.monthInput.current!.val();
       let year: number = this.yearInput.current!.val();
-      console.log(`enterButtonClicked(), month[${month}] year[${year}]`);
 
       let proceed: boolean = false;
 

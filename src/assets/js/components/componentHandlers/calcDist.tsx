@@ -16,7 +16,8 @@ const calcDist = (
    callingFrom: CallingFrom,
    myPanel: any,
    auth2: any,
-   googleToken: any
+   googleToken: any,
+   barGaugeCallback: any
 ) => {
    let x: IWLocObj = geoPointsArray[geoPointsArray.length - 1]; // pick the last value for the asset and rentalAgent
    const asset = x.assetlabel!;
@@ -88,7 +89,10 @@ const calcDist = (
                   googleToken,
                   cumDistDaily,
                   myPanel
-               );
+               ).then((retVal: any) => {
+                  let asset: string = retVal.message.split(" ")[0];
+                  barGaugeCallback(asset);
+               });
             } else {
                myPanel.current!.append(
                   `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
@@ -117,7 +121,17 @@ const calcDist = (
          }
       });
       if (callingFrom === CallingFrom.generateDistanceReport) {
-         storeReportEntryOnFirebase(auth2, googleToken, cumDistDaily, myPanel);
+         setTimeout(() => {
+            storeReportEntryOnFirebase(
+               auth2,
+               googleToken,
+               cumDistDaily,
+               myPanel
+            ).then((retVal: any) => {
+               let asset: string = retVal.message.split(" ")[0];
+               barGaugeCallback(asset);
+            });
+         }, 300);
       } else {
          myPanel.current!.append(
             `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`
