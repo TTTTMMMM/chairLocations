@@ -198,7 +198,7 @@ class ViewQuerySide extends Component<
    }
 
    private enterButtonClicked() {
-      let chairAsset: string = this.chairInput.current!.val();
+      let chairAsset: string = this.chairInput.current!.val().trim();
       let chairAssetArray: Array<string> = [];
 
       chairAsset.length > 5

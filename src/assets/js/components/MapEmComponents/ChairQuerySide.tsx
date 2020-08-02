@@ -404,7 +404,7 @@ class ChairQuerySide extends Component<
    }
 
    private enterButtonClicked() {
-      let chairAsset: string = this.chairInput.current!.val();
+      let chairAsset: string = this.chairInput.current!.val().trim();
       if (chairAsset.length <= 6) {
          this.props.myPanel.current!.append(
             `<p style="color: red; font-size:15px;"> Choose a chair from dropdown list.</p>`

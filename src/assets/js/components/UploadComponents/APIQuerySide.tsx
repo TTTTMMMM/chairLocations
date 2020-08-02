@@ -244,7 +244,7 @@ class APIQuerySide extends Component<
    }
 
    private pullFromAPIButtonClicked() {
-      let chairAsset: string = this.chairInput.current!.val();
+      let chairAsset: string = this.chairInput.current!.val().trim();
       let pairing: ChairIMEIRentalAgent = { chair: chairAsset, imei: "" };
 
       let goodChair: boolean = true;
