@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
+import JqxDropDownList from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdropdownlist";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
@@ -44,8 +45,8 @@ class APIQuerySide extends Component<
    chairDeployedTo: string = "";
 
    private chairInput = React.createRef<JqxInput>();
-   private monthInput = React.createRef<JqxInput>();
-   private yearInput = React.createRef<JqxInput>();
+   private monthInput = React.createRef<JqxDropDownList>();
+   private yearInput = React.createRef<JqxDropDownList>();
    private enterButton = React.createRef<JqxButton>();
 
    static contextType = AuthContext; // it's a law that you must call it contextType!
@@ -178,12 +179,12 @@ class APIQuerySide extends Component<
                   >
                      Month:
                   </label>
-                  <JqxInput
+                  <JqxDropDownList
                      ref={this.monthInput}
                      width={200}
                      height={20}
-                     placeHolder={"Choose a month"}
                      source={this.state.sourceMonth}
+                     selectedIndex={moment().month()}
                      theme={"fresh"}
                   />
                </div>
@@ -203,14 +204,14 @@ class APIQuerySide extends Component<
                   >
                      Year:
                   </label>
-                  <JqxInput
+                  <JqxDropDownList
                      ref={this.yearInput}
                      width={200}
                      height={20}
-                     items={10}
-                     placeHolder={"Choose a year"}
                      source={this.state.sourceYear}
+                     selectedIndex={moment().year() - 2020}
                      theme={"fresh"}
+                     dropDownHeight={80}
                   />
                </div>
                <JqxButton
