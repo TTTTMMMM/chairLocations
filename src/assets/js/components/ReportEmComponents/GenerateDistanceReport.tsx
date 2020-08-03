@@ -15,6 +15,7 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/auth";
+import moment from "moment";
 
 import {
    RangeObject,
@@ -50,6 +51,7 @@ class GenerateDistanceReport extends React.PureComponent<
    acArr: Array<AssetCount> = [];
    assetGeoLocs: AssetGeoLocs;
    assetCounts: Array<number> = [];
+   maxDaysForBarGauge: number = 31;
 
    numRows: number | undefined;
    numRowsGeo: number;
@@ -108,7 +110,7 @@ class GenerateDistanceReport extends React.PureComponent<
          if (x.asset === chairID) {
             x.numDistances++;
             this.myBarGaugeArray[chairIndex].current!.val([x.numDistances]);
-            console.dir(x);
+            // console.dir(x);
          }
       });
    };
@@ -184,7 +186,7 @@ class GenerateDistanceReport extends React.PureComponent<
                         `<p style="color:#000000 ; font-size:10px;">${assets[j]} had ${numGeoPoints} geos</p>`
                      );
                   }
-               }, 3500 * j); // send reports to firebase 3.5 seconds apart
+               }, 2500 * j); // send reports to firebase 2.5 seconds apart
             })(
                j,
                this.props.assets,
@@ -266,7 +268,7 @@ class GenerateDistanceReport extends React.PureComponent<
                            height={130}
                            startAngle={360}
                            endAngle={0}
-                           max={31}
+                           max={this.maxDaysForBarGauge}
                            colorScheme={"sandhelper"}
                            customColorScheme={this.state.customColorScheme}
                            values={[0]}
@@ -293,7 +295,7 @@ class GenerateDistanceReport extends React.PureComponent<
                            height={130}
                            startAngle={360}
                            endAngle={0}
-                           max={31}
+                           max={this.maxDaysForBarGauge}
                            colorScheme={"sandhelper"}
                            customColorScheme={this.state.customColorScheme}
                            values={[0]}
@@ -320,7 +322,7 @@ class GenerateDistanceReport extends React.PureComponent<
                            height={130}
                            startAngle={360}
                            endAngle={0}
-                           max={31}
+                           max={this.maxDaysForBarGauge}
                            colorScheme={"sandhelper"}
                            customColorScheme={this.state.customColorScheme}
                            values={[0]}
@@ -347,7 +349,7 @@ class GenerateDistanceReport extends React.PureComponent<
                            height={130}
                            startAngle={360}
                            endAngle={0}
-                           max={31}
+                           max={this.maxDaysForBarGauge}
                            colorScheme={"sandhelper"}
                            customColorScheme={this.state.customColorScheme}
                            values={[0]}
@@ -384,7 +386,7 @@ class GenerateDistanceReport extends React.PureComponent<
                            height={130}
                            startAngle={360}
                            endAngle={0}
-                           max={31}
+                           max={this.maxDaysForBarGauge}
                            colorScheme={"sandhelper"}
                            customColorScheme={this.state.customColorScheme}
                            values={[0]}
@@ -431,7 +433,16 @@ class GenerateDistanceReport extends React.PureComponent<
             let ac: AssetCount = { asset: x, numDistances: 0 };
             this.acArr.push(ac);
          });
-         console.dir(this.acArr);
+         // console.dir(this.props.range);
+         //calculate the maximum number of days that could have geoloc entries
+         const now = moment();
+         const beginDate = moment(this.props.range.startDate);
+         const endDate = moment(this.props.range.endDate.split("T")[0]);
+         if (now.isAfter(beginDate) && now.isBefore(endDate)) {
+            this.maxDaysForBarGauge = now.date();
+         } else {
+            this.maxDaysForBarGauge = beginDate.daysInMonth();
+         }
          this.subscribeToAssetBeaconingWithinDateRange();
       }
       if (!isLoggedInToFirebase) {
