@@ -92,7 +92,7 @@ class GenerateDistanceReport extends React.PureComponent<
                size: 12,
             },
             margin: { top: 0, left: 0, right: 0, bottom: 10 },
-            text: "# Days Calculated",
+            text: "# Days Reported",
             verticalAlignment: "bottom",
          },
          customColorScheme: {
@@ -103,14 +103,14 @@ class GenerateDistanceReport extends React.PureComponent<
    }
 
    barGaugeCallback = (chairID: string) => {
-      // console.log(`barGaugeCallback(): chairID: ${chairID}`);
       let chairIndex = this.props.assets.indexOf(chairID);
-      let ac: AssetCount = { asset: "junk", numDistances: -1 };
       this.acArr.forEach((x) => {
-         ac = x.asset === chairID ? x : { asset: "junk", numDistances: -1 };
+         if (x.asset === chairID) {
+            x.numDistances++;
+            this.myBarGaugeArray[chairIndex].current!.val([x.numDistances]);
+            console.dir(x);
+         }
       });
-      ac.numDistances++;
-      this.myBarGaugeArray[chairIndex].current!.val([ac.numDistances]);
    };
 
    onGeoPullsUpdate = (querySnapshot: any) => {
@@ -159,22 +159,41 @@ class GenerateDistanceReport extends React.PureComponent<
       //    "background:white; border: 3px solid blue; margin: 2px; padding: 3px; color:blue;"
       // );
       if (this.numUpdatesGeo >= this.props.assets.length) {
-         this.props.assets.forEach((asset) => {
-            console.log(`calling calcDist() on ${asset}`);
-            let numGeoPoints = this.assetGeoLocs[asset].length;
-            numGeoPoints > 1
-               ? setTimeout(() => {
-                    calcDist(
-                       this.assetGeoLocs[asset],
-                       CallingFrom.generateDistanceReport,
-                       this.props.myPanel,
-                       auth2,
-                       googleToken,
-                       this.barGaugeCallback
-                    );
-                 }, 10000)
-               : null;
-         });
+         for (var j = 0; j < this.props.assets.length; j++) {
+            // execute each iteration of this for loop with some delay
+            (function (
+               j: number,
+               assets: Array<string>,
+               assetGeoLocs: AssetGeoLocs,
+               myPanel: any,
+               barGaugeCallback: any
+            ) {
+               setTimeout(function () {
+                  let numGeoPoints = assetGeoLocs[assets[j]].length;
+                  if (numGeoPoints > 1) {
+                     calcDist(
+                        assetGeoLocs[assets[j]],
+                        CallingFrom.generateDistanceReport,
+                        myPanel,
+                        auth2,
+                        googleToken,
+                        barGaugeCallback
+                     );
+                  } else {
+                     myPanel.current!.append(
+                        `<p style="color:#000000 ; font-size:10px;">${assets[j]} had ${numGeoPoints} geos</p>`
+                     );
+                  }
+               }, 3500 * j); // send reports to firebase 3.5 seconds apart
+            })(
+               j,
+               this.props.assets,
+               this.assetGeoLocs,
+               this.props.myPanel,
+               this.barGaugeCallback
+            );
+         }
+         // });
       }
    };
 

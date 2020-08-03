@@ -30,7 +30,7 @@ const calcDist = (
       callingFrom === CallingFrom.generateDistanceReport
    ) {
       myPanel.current!.append(
-         `<p style="color:#994883 ; font-size:13px;">${asset} -- ${rentalAgent}</p>`
+         `<p style="color:#000000 ; font-size:10px;">--- ${asset} ---</p>`
       );
       let prevGeoPoint: GeoPoint = {
          lat: geoPointsArray[0].location.lat,
@@ -121,17 +121,15 @@ const calcDist = (
          }
       });
       if (callingFrom === CallingFrom.generateDistanceReport) {
-         setTimeout(() => {
-            storeReportEntryOnFirebase(
-               auth2,
-               googleToken,
-               cumDistDaily,
-               myPanel
-            ).then((retVal: any) => {
-               let asset: string = retVal.message.split(" ")[0];
-               barGaugeCallback(asset);
-            });
-         }, 300);
+         storeReportEntryOnFirebase(
+            auth2,
+            googleToken,
+            cumDistDaily,
+            myPanel
+         ).then((retVal: any) => {
+            let asset: string = retVal.message.split(" ")[0];
+            barGaugeCallback(asset);
+         });
       } else {
          myPanel.current!.append(
             `<p style="color:#994883 ; font-size:11.5px;">${cumDistDaily.dailyDate}: ${cumDistDaily.distObj.inFeet} ft. | ${cumDistDaily.distObj.inMiles} miles</p>`

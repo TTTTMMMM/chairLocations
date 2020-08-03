@@ -318,6 +318,8 @@ For some inexplicable reason, Firebase sometimes gives me [this error](https://c
 
 1. Replace back of toilet in basement
 2. Get haircut
+3. Hedge trim the pear tree
+4. Chip and shred
 
 #### <ins>Bring to St. Louis</ins>
 
