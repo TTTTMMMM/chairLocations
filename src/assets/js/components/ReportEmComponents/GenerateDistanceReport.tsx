@@ -186,7 +186,7 @@ class GenerateDistanceReport extends React.PureComponent<
                         `<p style="color:#000000 ; font-size:10px;">${assets[j]} had ${numGeoPoints} geos</p>`
                      );
                   }
-               }, 2500 * j); // send reports to firebase 2.5 seconds apart
+               }, 3000 * j); // send reports to firebase 3 seconds apart
             })(
                j,
                this.props.assets,

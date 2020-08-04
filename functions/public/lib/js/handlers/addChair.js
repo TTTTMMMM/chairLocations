@@ -18,7 +18,7 @@ exports.addChair = async (req, res, admin) => {
          let raName = escapeHTML(
             theChair.rentalagent.trim().substring(0, 59).toUpperCase()
          );
-         const validRentalAgentRegex = /^[A-Z39'&#;,.\- \(\)]{3,50}$/gi;
+         const validRentalAgentRegex = /^[A-Z0-9'&#;,.\- \(\)]{3,50}$/gi;
          let valid_RentalAgent = raName.match(validRentalAgentRegex);
          let created = escapeHTML(theChair.created.trim().substring(0, 10));
          const validCreatedRegex = /^[0-9\-]{10}$/gi;

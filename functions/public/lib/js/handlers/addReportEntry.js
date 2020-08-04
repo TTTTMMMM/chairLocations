@@ -40,7 +40,7 @@ exports.addReportEntry = async (req, res, admin) => {
          let rentalAgent = escapeHTML(
             reportEntry.rentalAgent.trim().substring(0, 59).toUpperCase()
          );
-         const validRentalAgentRegex = /^[A-Z39'&#;,.\- \(\)]{3,50}$/gi;
+         const validRentalAgentRegex = /^[A-Z0-9'&#;,.\- \(\)]{3,50}$/gi;
          let v_RA = rentalAgent.match(validRentalAgentRegex);
          let rentalAgentPart = v_RA[0]
             // .replace(/\s+/g, "")

@@ -18,7 +18,7 @@ exports.addBeach = async (req, res, admin) => {
          let raName = escapeHTML(
             theBeach.rentalagent.trim().substring(0, 59).toUpperCase()
          );
-         const validRentalAgentRegex = /^[A-Z39'&#;,.\- \(\)]{3,50}$/gi;
+         const validRentalAgentRegex = /^[A-Z0-9'&#;,.\- \(\)]{3,50}$/gi;
          let valid_RentalAgent = raName.match(validRentalAgentRegex);
          if (valid_Beach != null && valid_RentalAgent != null) {
             let beachPart = valid_Beach[0]
