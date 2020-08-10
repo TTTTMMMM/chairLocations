@@ -158,7 +158,7 @@ class AddDropBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
          ];
          this.columns = [
             {
-               text: "",
+               text: "2X",
                datafield: "D",
                width: columnWidths[0][1],
                cellsrenderer: cellRendererDelete,
