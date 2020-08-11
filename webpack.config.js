@@ -62,9 +62,11 @@ module.exports = {
          favicon: SRC_DIR + "/assets/images/chairIcon.png",
          title: "404",
       }),
-      new CopyWebpackPlugin([
-         { from: SRC_DIR + "/assets/images", to: DIST_DIR + "/images" },
-      ]),
+      new CopyWebpackPlugin({
+         patterns: [
+            { from: SRC_DIR + "/assets/images", to: DIST_DIR + "/images" },
+         ],
+      }),
       new ForkTsCheckerWebpackPlugin(),
    ],
    mode: "production",
