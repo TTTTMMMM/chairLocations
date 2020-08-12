@@ -370,6 +370,16 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 
 ---
 
+### <ins>Dependency Graph for Maintenance Branch</ins>
+
+| index.tsx                                      | MainPage.tsx                                      |
+| ---------------------------------------------- | ------------------------------------------------- |
+| ![](/markdownImages/dI/depIndex.tsx.png)       | ![](/markdownImages/dI/depMainPage.png)           |
+| Maintenance Body.tsx                           | TaskManagementComponent.tsx                       |
+| ![](/markdownImages/dI/depMaintenanceBody.png) | ![](/markdownImages/dI/depTaskManagementComp.png) |
+
+---
+
 ### <ins>Dependency Graph for index.js (on firebase functions server)</ins>
 
 | ![](/markdownImages/dI/depIndex.js.png) |
