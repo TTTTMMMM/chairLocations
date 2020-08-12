@@ -254,6 +254,7 @@ The user has to have logged in before a Firebase user object exists, therefore g
 | uploader    | true           | true            | true                  |
 | lurker      | true           | false           | false                 |
 | maintenance | false          | false           | true                  |
+| notloggedin | false          | false           | false                 |
 
 **<ins>Role-to-Privilege for Client-side Capabilities Table</ins>**
 
@@ -263,6 +264,7 @@ The user has to have logged in before a Firebase user object exists, therefore g
 | uploader    | false                   | true             | true                 | true                |
 | lurker      | false                   | false            | true                 | false               |
 | maintenance | false                   | false            | false                | true                |
+| notloggedin | false                   | false            | false                | false               |
 
 ---
 
