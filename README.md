@@ -377,6 +377,8 @@ Identifying the two "indivisible" clusters near Ft. Lauderdale:
 | ![](/markdownImages/dI/depIndex.tsx.png)       | ![](/markdownImages/dI/depMainPage.png)           |
 | Maintenance Body.tsx                           | TaskManagementComponent.tsx                       |
 | ![](/markdownImages/dI/depMaintenanceBody.png) | ![](/markdownImages/dI/depTaskManagementComp.png) |
+| AddDropTasks.tsx                               |                                                   |
+| ![](/markdownImages/dI/depAddDropTasks.png)    |                                                   |
 
 ---
 
