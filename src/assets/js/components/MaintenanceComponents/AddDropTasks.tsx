@@ -30,7 +30,7 @@ interface MyState extends IDataTableProps {
    beachesWatch?: any;
    subscribed?: boolean;
 }
-class AddDropBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
+class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    beachesCollection: any;
    numUpdates: number | undefined;
    unsubscribe: any | undefined;
@@ -326,4 +326,4 @@ class AddDropBeaches extends React.PureComponent<{ myPanel: any }, MyState> {
    }
 }
 
-export default AddDropBeaches;
+export default AddDropTasks;

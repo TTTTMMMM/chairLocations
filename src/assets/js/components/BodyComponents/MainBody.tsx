@@ -33,6 +33,7 @@ class MainBody extends Component<{}> {
             return <CanvasAnimationComponent />;
       }
    }
+
    render() {
       return <>{this.getMainBodyContent()}</>;
    }

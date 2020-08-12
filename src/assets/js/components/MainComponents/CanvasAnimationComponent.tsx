@@ -93,7 +93,8 @@ class CanvasAnimationComponent extends Component<{}, {}> {
 
       "#A88F82",
       "#FFFAF7",
-      "#F5E1D5",
+      // "#F5E1D5",
+      "#CE9E81",
       "#71A8A7",
       "#D5F5F5",
 

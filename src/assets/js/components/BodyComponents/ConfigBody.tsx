@@ -4,7 +4,6 @@ import { Route } from "react-router-dom";
 
 import "../../../styles/index.css";
 import { Roles } from "../../misc/chairLocTypes";
-// import ConfigContainer from "../ConfigComponents/ConfigContainer";
 import { AuthContext } from "../../contexts/AuthContext";
 import * as clt from "../../misc/chairLocTypes";
 

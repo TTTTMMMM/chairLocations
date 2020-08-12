@@ -180,7 +180,7 @@ class MainPage extends Component<{}, {}> {
                   path="/maintenance"
                   render={(props) =>
                      isSignedIn ? (
-                        <MaintenanceBody></MaintenanceBody>
+                        <MaintenanceBody match={props.match}></MaintenanceBody>
                      ) : (
                         <Redirect to="/" />
                      )

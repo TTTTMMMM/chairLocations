@@ -10,20 +10,22 @@ import JqxPanel from "jqwidgets-scripts/jqwidgets-react-tsx/jqxpanel";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
-class MaintenanceComponent extends Component<{}, {}> {
+class TaskManagementComponent extends Component<{}, {}> {
    private clearConsoleButton = React.createRef<JqxButton>();
    private myPanel = React.createRef<JqxPanel>();
 
    constructor(props: {}) {
       super(props);
-      this.getChairQueryBodyContent = this.getChairQueryBodyContent.bind(this);
+      this.getMaintenanceBodyContent = this.getMaintenanceBodyContent.bind(
+         this
+      );
       this.clearConsoleButtonClicked = this.clearConsoleButtonClicked.bind(
          this
       );
       this.state = {};
    }
 
-   getChairQueryBodyContent() {
+   getMaintenanceBodyContent() {
       return (
          <>
             <div style={divFlexRowL}>
@@ -58,7 +60,7 @@ class MaintenanceComponent extends Component<{}, {}> {
       );
    }
    render() {
-      return <>{this.getChairQueryBodyContent()}</>;
+      return <>{this.getMaintenanceBodyContent()}</>;
    }
 
    private clearConsoleButtonClicked() {
@@ -66,4 +68,4 @@ class MaintenanceComponent extends Component<{}, {}> {
    }
 }
 
-export default MaintenanceComponent;
+export default TaskManagementComponent;
