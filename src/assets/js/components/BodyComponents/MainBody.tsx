@@ -15,7 +15,6 @@ class MainBody extends Component<{}> {
       const { userObjFmServer } = this.context;
       switch (userObjFmServer.role) {
          case Roles.notloggedin:
-            // return <img src={"../../../images/cherry.jpeg"} />;
             return <CanvasAnimationComponent />;
             break;
          case Roles.maintenance:

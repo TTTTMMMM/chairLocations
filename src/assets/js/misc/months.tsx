@@ -35,7 +35,7 @@ numDaysInMonth.set("April", 30);
 numDaysInMonth.set("May", 31);
 numDaysInMonth.set("June", 30);
 numDaysInMonth.set("July", 31);
-numDaysInMonth.set("August", 30);
+numDaysInMonth.set("August", 31);
 numDaysInMonth.set("September", 30);
 numDaysInMonth.set("October", 31);
 numDaysInMonth.set("November", 30);
