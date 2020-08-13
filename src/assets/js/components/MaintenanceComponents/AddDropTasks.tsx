@@ -19,19 +19,20 @@ import "../../configs/firebaseInit";
 
 import * as rs from "../../../styles/reactStyling";
 
-import addBeach from "../../fetches/addBeach";
-import removeBeach from "../../fetches/removeBeach";
+import addTask from "../../fetches/addTask";
+import removeTask from "../../fetches/removeTask";
+import hashOfTask from "./hashOfTask";
 
 import cellRendererDelete from "../../renderers/cellRendererDelete";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
 interface MyState extends IDataTableProps {
-   beachesWatch?: any;
+   tasksWatch?: any;
    subscribed?: boolean;
 }
 class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
-   beachesCollection: any;
+   tasksCollection: any;
    numUpdates: number | undefined;
    unsubscribe: any | undefined;
    numRows: number | undefined;
@@ -40,14 +41,13 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    modifyKey: string | undefined;
    static contextType = AuthContext;
 
-   private myBeachesTable = React.createRef<JqxDataTable>();
-   private addBeachButton = React.createRef<JqxButton>();
-   private beachInput = React.createRef<JqxInput>();
-   private rentalAgentInput = React.createRef<JqxInput>();
+   private myTasksTable = React.createRef<JqxDataTable>();
+   private addTaskButton = React.createRef<JqxButton>();
+   private taskInput = React.createRef<JqxInput>();
 
    constructor(props: { myPanel: any }) {
       super(props);
-      this.beachesCollection = "";
+      this.tasksCollection = "";
       this.numRows = 0;
       this.columns = [];
       this.modifyKey = "";
@@ -59,7 +59,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
 
       this.state = {
          subscribed: false,
-         beachesWatch: [],
+         tasksWatch: [],
          editSettings: {
             cancelOnEsc: true,
             editOnDoubleClick: false,
@@ -71,19 +71,19 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             saveOnSelectionChange: true,
          },
       };
-      this.getBeachesContent = this.getBeachesContent.bind(this);
-      this.addBeachButtonClicked = this.addBeachButtonClicked.bind(this);
+      this.getTasksContent = this.getTasksContent.bind(this);
+      this.addTaskButtonClicked = this.addTaskButtonClicked.bind(this);
    }
 
-   subscribeToBeaches() {
-      this.beachesCollection = firebase.firestore().collection("beaches");
-      this.unsubscribe = this.beachesCollection.onSnapshot(
+   subscribeToTasks() {
+      this.tasksCollection = firebase.firestore().collection("tasks");
+      this.unsubscribe = this.tasksCollection.onSnapshot(
          this.onCollectionUpdate
       );
       this.setState({ subscribed: true });
    }
 
-   unsubscribeFromBeaches() {
+   unsubscribeFromTasks() {
       if (typeof this.unsubscribe != "undefined") {
          this.unsubscribe();
          this.setState({ subscribed: false });
@@ -94,43 +94,46 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
 
    onCollectionUpdate = (querySnapshot: any) => {
       this.numUpdates!++;
-      let beachesWatch: any[] = [];
+      let tasksWatch: any[] = [];
       this.numRows = 0;
       querySnapshot.forEach(
          (doc: {
             data: () => {
-               beach: string;
-               rentalagent: string;
+               task: string;
+               asset: string;
+               dateDone: string;
             };
             id: any;
          }) => {
-            let { beach, rentalagent } = doc.data();
-            beachesWatch.push({
+            let { task, asset, dateDone } = doc.data();
+            tasksWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
-               beach,
-               rentalagent,
+               task,
+               asset,
+               dateDone,
             });
          }
       );
       this.setState({
-         beachesWatch,
+         tasksWatch,
       });
       this.numRows++;
       console.log(
-         `%c beachesWatch<${this.numUpdates}>`,
-         "background:rgb(250, 245, 198); border: 3px solid hsla(12, 95%, 47%, 0.98); margin: 2px; padding: 3px; color:hsla(12, 95%, 47%, 0.98);"
+         `%c tasksWatch<${this.numUpdates}>`,
+         "background:rgb(206, 197, 129); border: 3px solid hsla(113, 37%, 66%); margin: 2px; padding: 3px; color:hsla(23, 79%, 8%);"
       );
    };
 
-   getBeachesContent() {
+   getTasksContent() {
       const { isLoggedInToFirebase } = this.context;
       if (isLoggedInToFirebase) {
          const source = {
             datafields: [
-               { name: "beach", type: "string" },
+               { name: "task", type: "string" },
                { name: "key", type: "string" },
-               { name: "rentalagent", type: "string" },
+               { name: "asset", type: "string" },
+               { name: "dateDone", type: "string" },
             ],
             id: "key",
             dataType: "json",
@@ -138,11 +141,12 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                let data: any[] = [];
                let i = 0;
 
-               this.state.beachesWatch.forEach((val: any) => {
+               this.state.tasksWatch.forEach((val: any) => {
                   data[i++] = {
                      key: val.key,
-                     beach: val.beach,
-                     rentalagent: val.rentalagent,
+                     task: val.task,
+                     asset: val.asset,
+                     dateDone: val.dateDone,
                   };
                   this.numRows!++;
                });
@@ -153,8 +157,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          // --
          const columnWidths = [
             ["", 33] /* trash can */,
-            ["beach", 200],
-            ["rentalagent", 300],
+            ["task", 200],
+            ["asset", 300],
+            ["dateDone", 400],
          ];
          this.columns = [
             {
@@ -166,28 +171,36 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                cellclassname: "trashcan",
             },
             {
-               text: "Rental Agent",
+               text: "Task",
                width: columnWidths[2][1],
-               datafield: "rentalagent",
+               datafield: "task",
                align: "center",
-               cellclassname: "RentalAgentClass",
+               cellclassname: "TaskClass",
                editable: false,
             },
             {
-               text: "Beach",
+               text: "Asset",
                width: columnWidths[1][1],
-               datafield: "beach",
+               datafield: "asset",
                align: "center",
-               cellclassname: "BeachClass",
+               cellclassname: "AssetClass",
+               editable: false,
+            },
+            {
+               text: "Date",
+               width: columnWidths[2][1],
+               datafield: "dateDone",
+               align: "center",
+               cellclassname: "DateDoneClass",
                editable: false,
             },
          ];
          return (
-            <fieldset style={rs.fieldsetBeachStyle}>
-               <legend>Manage Rental Agents/Beaches</legend>
+            <fieldset style={rs.fieldsetTaskStyle}>
+               <legend>Tasks</legend>
                <JqxDataTable
-                  ref={this.myBeachesTable}
-                  width={500}
+                  ref={this.myTasksTable}
+                  width={1000}
                   theme={"fresh"}
                   source={this.dataAdapter}
                   columns={this.columns}
@@ -195,7 +208,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   pageable={true}
                   altRows={true}
                   autoRowHeight={true}
-                  height={400}
+                  height={500}
                   sortable={true}
                   onRowDoubleClick={this.onRowDoubleClick}
                   onRowSelect={this.onRowSelect}
@@ -206,40 +219,29 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   editSettings={this.state.editSettings}
                   pageSize={100}
                />
-               <div style={rs.divThin}>
-                  <label style={rs.labelStyleRental}>RentalAgent:</label>
+               <div style={rs.divThick}>
+                  <label style={rs.labelStyleRental}>Task:</label>
                   <JqxInput
-                     ref={this.rentalAgentInput}
+                     ref={this.taskInput}
                      minLength={3}
                      maxLength={60}
                      theme={"fresh"}
-                     width={300}
-                     placeHolder={"Rental Agent"}
-                  />
-               </div>
-               <div style={rs.divThin}>
-                  <label style={rs.labelStyleBeach}>Beach:</label>
-                  <JqxInput
-                     ref={this.beachInput}
-                     minLength={3}
-                     maxLength={60}
-                     theme={"fresh"}
-                     width={170}
-                     placeHolder={"Name of Beach"}
+                     width={600}
+                     placeHolder={"New Task"}
                   />
                </div>
                <div style={rs.divFlexRowBeach}>
                   <JqxButton
-                     ref={this.addBeachButton}
-                     onClick={this.addBeachButtonClicked}
+                     ref={this.addTaskButton}
+                     onClick={this.addTaskButtonClicked}
                      width={140}
                      height={50}
                      theme={"fresh"}
-                     textImageRelation={"imageAboveText"}
-                     imgSrc={"../images/beach1.png"}
+                     textImageRelation={"imageBeforeText"}
+                     imgSrc={"../images/work.png"}
                      textPosition={"center"}
                   >
-                     Add Rental/Beach
+                     Add Task
                   </JqxButton>
                </div>
             </fieldset>
@@ -252,12 +254,12 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       const { isLoggedInToFirebase } = this.context;
 
       if (isLoggedInToFirebase && !this.state.subscribed) {
-         this.subscribeToBeaches();
+         this.subscribeToTasks();
       }
       if (!isLoggedInToFirebase && this.state.subscribed) {
-         this.unsubscribeFromBeaches();
+         this.unsubscribeFromTasks();
       }
-      return <div>{this.getBeachesContent()}</div>;
+      return <div>{this.getTasksContent()}</div>;
    }
 
    private onRowDoubleClick(e: any): void {
@@ -266,11 +268,8 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       const columnSelected = e.args.dataField;
 
       if (columnSelected.localeCompare("D") == 0) {
-         let theKey = this.myBeachesTable.current!.getCellValue(
-            rowIndex,
-            "key"
-         );
-         removeBeach(googleToken, theKey)
+         let theKey = this.myTasksTable.current!.getCellValue(rowIndex, "key");
+         removeTask(googleToken, theKey)
             .then((retVal: any) => {
                const msg = retVal.message;
                this.props.myPanel.current!.append(
@@ -302,25 +301,24 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       );
    }
 
-   private addBeachButtonClicked() {
+   private addTaskButtonClicked() {
       const { googleToken } = this.context;
 
-      const beachName = escapeHTML(
-         this.beachInput.current!.val().trim().substring(0, 59)
+      const task = escapeHTML(
+         this.taskInput.current!.val().trim().substring(0, 59)
       );
-      const rentalAgent = escapeHTML(
-         this.rentalAgentInput.current!.val().trim().substring(0, 59)
-      );
-      addBeach(googleToken, beachName, rentalAgent)
+      const taskID = hashOfTask(task);
+
+      addTask(googleToken, task, taskID)
          .then((retVal: any) => {
             const msg = retVal.message;
             this.props.myPanel.current!.append(
-               `<p style="font-style: normal; color:blue; font-size:12px;">${msg}</p>`
+               `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
             );
          })
          .catch((err: any) => {
             this.props.myPanel.current!.append(
-               `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
+               `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
             );
          });
    }

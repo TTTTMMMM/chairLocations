@@ -34,6 +34,9 @@ const { addChairLoc1 } = require("./public/lib/js/handlers/addChairLoc1");
 const { addBeach } = require("./public/lib/js/handlers/addBeach");
 const { removeBeach } = require("./public/lib/js/handlers/removeBeach");
 
+const { addTask } = require("./public/lib/js/handlers/addTask");
+const { removeTask } = require("./public/lib/js/handlers/removeTask");
+
 const { addChair } = require("./public/lib/js/handlers/addChair");
 const { removeChair } = require("./public/lib/js/handlers/removeChair");
 
@@ -100,16 +103,24 @@ api.post("/beaches", (req, res) => {
    addBeach(req, res, admin);
 });
 
+api.delete("/beaches", (req, res) => {
+   removeBeach(req, res, admin);
+});
+
+api.post("/tasks", (req, res) => {
+   addTask(req, res, admin);
+});
+
+api.delete("/tasks", (req, res) => {
+   removeTask(req, res, admin);
+});
+
 api.delete("/chairs", (req, res) => {
    removeChair(req, res, admin);
 });
 
 api.post("/chairs", (req, res) => {
    addChair(req, res, admin);
-});
-
-api.delete("/beaches", (req, res) => {
-   removeBeach(req, res, admin);
 });
 
 api.post("/reportentry", (req, res) => {

@@ -72,6 +72,12 @@ export const divThin: CSSProperties = {
    flexDirection: "row",
 };
 
+export const divThick: CSSProperties = {
+   marginTop: "10px",
+   display: "flex",
+   flexDirection: "row",
+};
+
 export const flexRowButtons: CSSProperties = {
    display: "flex",
    flexDirection: "row",
@@ -124,6 +130,16 @@ export const fieldsetStyle: CSSProperties = {
 
 export const fieldsetBeachStyle: CSSProperties = {
    height: "500px",
+   marginLeft: " 5px",
+   borderRadius: "5px",
+   border: "2px hsla(12, 95%, 47%, 0.93) solid",
+   background: "rgb(250, 245, 198)",
+   color: "black",
+   fontFamily: "Josefin Sans",
+};
+
+export const fieldsetTaskStyle: CSSProperties = {
+   height: "560px",
    marginLeft: " 5px",
    borderRadius: "5px",
    border: "2px hsla(12, 95%, 47%, 0.93) solid",

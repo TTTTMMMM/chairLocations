@@ -20,6 +20,10 @@
             "function": "api"
          },
          {
+            "source": "/tasks{,/**}",
+            "function": "api"
+         },
+         {
             "source": "/chairs{,/**}",
             "function": "api"
          },
