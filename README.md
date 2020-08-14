@@ -316,11 +316,12 @@ For some inexplicable reason, Firebase sometimes gives me [this error](https://c
 
 2. Maintenance Tab
 
+3. Fix Mapping problem of querying for chair locations when Google maps is showing and then toggling display then selecting then mapping selection.
+
 #### <ins>TODO Physical World</ins>
 
 1. Replace back of toilet in basement
-2. Hedge trim the pear tree
-3. Chip and shred
+2. Chip and shred
 
 ---
 
