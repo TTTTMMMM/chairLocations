@@ -147,3 +147,10 @@ export interface AssetCount {
    asset: string;
    numDistances: number;
 }
+export interface TaskObj {
+   docID: string;
+   taskID: string;
+   task: string;
+   asset: string;
+   dateDone: string;
+}

@@ -200,11 +200,11 @@ class ShowAPIPullStatus extends React.PureComponent<
                            });
                         });
                         myPanel.current!.append(
-                           `<p style="font-style: normal; color:black; font-size:11px;">${
+                           `<p style="font-style: normal; color:black; font-size:10px;">${
                               j + 1
-                           }. ${
+                           }. ${moment().format("hh:mm:ss")} - ${
                               pairing.chair
-                           } reported ${numGeolocs} geolocations.</p>`
+                           } : ${numGeolocs} geos.</p>`
                         );
                      })
                      .catch((err: any) => {

@@ -31,6 +31,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 interface MyState extends IDataTableProps {
    tasksWatch?: any;
    subscribed?: boolean;
+   chairAssets?: Array<string>;
 }
 class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    tasksCollection: any;
@@ -40,6 +41,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    columns: any[] | undefined;
    dataAdapter: null;
    modifyKey: string | undefined;
+   chairAssets: any[] = [];
    static contextType = AuthContext;
 
    private myTasksTable = React.createRef<JqxDataTable>();
@@ -59,6 +61,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
 
       this.state = {
+         chairAssets: [],
          subscribed: false,
          tasksWatch: [],
          editSettings: {
@@ -91,7 +94,28 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          this.numUpdates = 0;
       }
    }
-   componentDidMount() {}
+   componentDidMount() {
+      let chairAssets: Array<string> = [];
+
+      firebase
+         .firestore()
+         .collection("uniqueAssetLabels")
+         .get()
+         .then((snapshot: any) => {
+            snapshot.forEach((doc: any) => {
+               chairAssets.push(doc.data().ASSETLABEL);
+            });
+            this.setState({
+               chairAssets: [...new Set(chairAssets)],
+            });
+         })
+         .catch((err: any) => {
+            console.log(
+               "C0735: Error getting chairs documents from 'uniqueAssetLabels'",
+               err
+            );
+         });
+   }
 
    onCollectionUpdate = (querySnapshot: any) => {
       this.numUpdates!++;
@@ -103,16 +127,18 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                task: string;
                asset: string;
                dateDone: string;
+               taskID: string;
             };
             id: any;
          }) => {
-            let { task, asset, dateDone } = doc.data();
+            let { task, asset, dateDone, taskID } = doc.data();
             tasksWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
                task,
                asset,
                dateDone,
+               taskID,
             });
          }
       );
@@ -135,6 +161,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                { name: "key", type: "string" },
                { name: "asset", type: "string" },
                { name: "dateDone", type: "string" },
+               { name: "taskID", type: "string" },
             ],
             id: "key",
             dataType: "json",
@@ -148,6 +175,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                      task: val.task,
                      asset: val.asset,
                      dateDone: val.dateDone,
+                     taskID: val.taskID,
                   };
                   this.numRows!++;
                });
@@ -158,9 +186,10 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          // --
          const columnWidths = [
             ["", 33] /* trash can */,
-            ["task", 200],
-            ["asset", 300],
-            ["dateDone", 400],
+            ["task", 350],
+            ["asset", 100],
+            ["dateDone", 100],
+            ["taskID", 100],
          ];
          this.columns = [
             {
@@ -173,7 +202,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             },
             {
                text: "Task",
-               width: columnWidths[2][1],
+               width: columnWidths[1][1],
                datafield: "task",
                align: "center",
                cellclassname: "TaskClass",
@@ -181,7 +210,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             },
             {
                text: "Asset",
-               width: columnWidths[1][1],
+               width: columnWidths[2][1],
                datafield: "asset",
                align: "center",
                cellclassname: "AssetClass",
@@ -189,10 +218,18 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             },
             {
                text: "Date",
-               width: columnWidths[2][1],
+               width: columnWidths[3][1],
                datafield: "dateDone",
                align: "center",
                cellclassname: "DateDoneClass",
+               editable: false,
+            },
+            {
+               text: "TaskID",
+               width: columnWidths[4][1],
+               datafield: "taskID",
+               align: "center",
+               cellclassname: "TaskIDClass",
                editable: false,
             },
          ];
@@ -310,10 +347,10 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          this.taskInput.current!.val().trim().substring(0, 59)
       );
       task = `${moment().format("YYYY")} - ${task}`;
-      const taskID = hashOfTask(task);
-      const dateDone = "";
+      let taskDefinition: boolean = true;
+      const taskID = hashOfTask(task, taskDefinition);
 
-      addTask(googleToken, task, taskID, dateDone)
+      addTask(googleToken, taskID, taskID, task, "", "")
          .then((retVal: any) => {
             const msg = retVal.message;
             this.props.myPanel.current!.append(
@@ -325,6 +362,23 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
             );
          });
+
+      this.state.chairAssets!.forEach((chair: any) => {
+         taskDefinition = false;
+         const docID = hashOfTask(`${taskID}${chair}`, taskDefinition);
+         addTask(googleToken, docID, taskID, task, chair, "")
+            .then((retVal: any) => {
+               const msg = retVal.message;
+               this.props.myPanel.current!.append(
+                  `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
+               );
+            })
+            .catch((err: any) => {
+               this.props.myPanel.current!.append(
+                  `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
+               );
+            });
+      });
    }
 }
 

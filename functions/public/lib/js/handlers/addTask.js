@@ -13,18 +13,19 @@ exports.addTask = async (req, res, admin) => {
       const theTask = req.body;
       // validate the input!
       if (theTask) {
+         // -- task
          let taskEsc = escapeHTML(
             theTask.task.trim().substring(0, 79).toUpperCase()
          );
          const validTaskRegex = /^[A-Z0-9'&#;,.\- \(\)]{5,79}$/gi;
          let valid_Task = taskEsc.match(validTaskRegex);
-         // --
-         let idEsc = escapeHTML(
+         // -- taskID and/or docID
+         let taskID = escapeHTML(
             theTask.taskID.trim().substring(0, 6).toUpperCase()
          );
-         const validtaskIDRegex = /^[A-F0-9]{6}$/;
-         let valid_taskID = idEsc.match(validtaskIDRegex);
-         // --
+         const validtaskIDRegex = /^[T]{0,1}[A-F0-9]{5}$/;
+         let valid_taskID = taskID.match(validtaskIDRegex);
+         // -- dateDone
          let dateDoneEsc = escapeHTML(
             theTask.dateDone.trim().substring(0, 10).toUpperCase()
          );
@@ -34,15 +35,42 @@ exports.addTask = async (req, res, admin) => {
          if (valid_dateDone !== null) {
             val_dateDone = valid_dateDone[0];
          }
-         // --
-         if (valid_Task != null && valid_taskID != null) {
-            let taskPart = valid_Task[0];
+         // -- docID
+         let docID = escapeHTML(
+            theTask.docID.trim().substring(0, 6).toUpperCase()
+         );
+         const validDocIDRegex = /^[T]{0,1}[A-F0-9]{5,6}$/;
+         let valid_docID = docID.match(validDocIDRegex);
+         // -- asset
+         let asset = escapeHTML(
+            theTask.asset.trim().substring(0, 11).toUpperCase()
+         );
+         const validChairRegex = /^[A-Z0-9_\-]{7,11}$/;
+         let valid_Asset = new Array();
+         if (asset.length > 0) {
+            valid_Asset = asset.match(validChairRegex);
+         } else {
+            console.log(`asset's length was 0 for taskID ${valid_taskID[0]}`);
+            valid_Asset.push("");
+         }
+         if (
+            valid_Task != null &&
+            valid_taskID != null &&
+            valid_docID != null &&
+            valid_Asset != null
+         ) {
+            let docIDPart = valid_docID[0];
             let taskIDPart = valid_taskID[0];
+            let taskPart = valid_Task[0];
+            let assetPart = valid_Asset[0];
             let dateDonePart = val_dateDone;
-            let docName = taskIDPart;
+            let docName = docIDPart;
+
             let taskObj = {};
+            taskObj.docID = docIDPart;
+            taskObj.taskID = taskIDPart;
             taskObj.task = taskPart;
-            taskObj.id = taskIDPart;
+            taskObj.asset = assetPart;
             taskObj.dateDone = dateDonePart;
             try {
                await admin
@@ -52,7 +80,7 @@ exports.addTask = async (req, res, admin) => {
                   .set(taskObj);
                try {
                   await firebaseApp.auth().signOut();
-                  let msg = `Added taskID ${docName}`;
+                  let msg = `Added ${docName} for taskID ${taskIDPart}`;
                   console.log(msg);
                   console.log(`Logged out`);
                   res.append("Cache-Control", "no-cache, must-revalidate");
@@ -77,8 +105,12 @@ exports.addTask = async (req, res, admin) => {
          } else {
             firstLine = `0814: Invalid task [${theTask.task}] [${
                taskEsc.match(validTaskRegex)[0]
-            }] or taskID [${theTask.taskID}] [${idEsc.match(
+            }] or taskID [${theTask.taskID}] [${taskID.match(
                validtaskIDRegex[0]
+            )}] or docID[${theTask.docID}] [${docID.match(
+               validDocIDRegex[0]
+            )}] or asset[${theTask.asset}] [${asset.match(
+               validChairRegex[0]
             )}]`;
             console.log(`${firstLine}`);
             return res.status(400).json({

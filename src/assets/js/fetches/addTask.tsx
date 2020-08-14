@@ -1,20 +1,23 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
-
-interface TaskObj {
-   task: string;
-   taskID: string;
-   dateDone: string;
-}
+import { TaskObj } from "../misc/chairLocTypes";
 
 const addTask = (
    id_token: any,
-   theTask: string,
+   docID: string,
    taskID: string,
+   theTask: string,
+   asset: string,
    dateDone: string
 ) => {
    let myHeaders = new Headers();
-   let taskObj: TaskObj = { task: theTask, taskID: taskID, dateDone: dateDone };
+   let taskObj: TaskObj = {
+      docID: docID,
+      taskID: taskID,
+      task: theTask,
+      asset: asset,
+      dateDone: dateDone,
+   };
 
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
