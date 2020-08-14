@@ -18,18 +18,32 @@ exports.addTask = async (req, res, admin) => {
          );
          const validTaskRegex = /^[A-Z0-9'&#;,.\- \(\)]{5,79}$/gi;
          let valid_Task = taskEsc.match(validTaskRegex);
+         // --
          let idEsc = escapeHTML(
             theTask.taskID.trim().substring(0, 6).toUpperCase()
          );
          const validtaskIDRegex = /^[A-F0-9]{6}$/;
          let valid_taskID = idEsc.match(validtaskIDRegex);
+         // --
+         let dateDoneEsc = escapeHTML(
+            theTask.dateDone.trim().substring(0, 10).toUpperCase()
+         );
+         const validDateRegex = /^20[2-9]{1}[0-9]{1}-[0-1]{1}[0-2]{1}-[0-3]{1}[0-9]{1}$/gi;
+         let valid_dateDone = dateDoneEsc.match(validDateRegex);
+         let val_dateDone = "";
+         if (valid_dateDone !== null) {
+            val_dateDone = valid_dateDone[0];
+         }
+         // --
          if (valid_Task != null && valid_taskID != null) {
             let taskPart = valid_Task[0];
             let taskIDPart = valid_taskID[0];
+            let dateDonePart = val_dateDone;
             let docName = taskIDPart;
             let taskObj = {};
             taskObj.task = taskPart;
             taskObj.id = taskIDPart;
+            taskObj.dateDone = dateDonePart;
             try {
                await admin
                   .firestore()

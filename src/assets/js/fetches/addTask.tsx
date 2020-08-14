@@ -4,10 +4,17 @@
 interface TaskObj {
    task: string;
    taskID: string;
+   dateDone: string;
 }
-const addTask = (id_token: any, theTask: string, taskID: string) => {
+
+const addTask = (
+   id_token: any,
+   theTask: string,
+   taskID: string,
+   dateDone: string
+) => {
    let myHeaders = new Headers();
-   let taskObj: TaskObj = { task: theTask, taskID: taskID };
+   let taskObj: TaskObj = { task: theTask, taskID: taskID, dateDone: dateDone };
 
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");

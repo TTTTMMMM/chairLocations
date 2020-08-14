@@ -27,6 +27,13 @@ export const divFlexRowBeach: CSSProperties = {
    justifyContent: "center",
 };
 
+export const divFlexRowTask: CSSProperties = {
+   marginTop: "5px",
+   display: "flex",
+   flexDirection: "row",
+   justifyContent: "center",
+};
+
 export const divFlexCol: CSSProperties = {
    display: "flex",
    flexDirection: "column",

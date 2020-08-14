@@ -1,5 +1,6 @@
 import * as React from "react";
 var escapeHTML = require("escape-html");
+import moment from "moment";
 
 // @ts-ignore
 import JqxDataTable, {
@@ -218,6 +219,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   key={this.numUpdates} // this forces a re-render of the table!
                   editSettings={this.state.editSettings}
                   pageSize={100}
+                  rowDetails={true}
                />
                <div style={rs.divThick}>
                   <label style={rs.labelStyleRental}>Task:</label>
@@ -230,12 +232,12 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                      placeHolder={"New Task"}
                   />
                </div>
-               <div style={rs.divFlexRowBeach}>
+               <div style={rs.divFlexRowTask}>
                   <JqxButton
                      ref={this.addTaskButton}
                      onClick={this.addTaskButtonClicked}
-                     width={140}
-                     height={50}
+                     width={130}
+                     height={40}
                      theme={"fresh"}
                      textImageRelation={"imageBeforeText"}
                      imgSrc={"../images/work.png"}
@@ -304,12 +306,14 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    private addTaskButtonClicked() {
       const { googleToken } = this.context;
 
-      const task = escapeHTML(
+      let task = escapeHTML(
          this.taskInput.current!.val().trim().substring(0, 59)
       );
+      task = `${moment().format("YYYY")} - ${task}`;
       const taskID = hashOfTask(task);
+      const dateDone = "";
 
-      addTask(googleToken, task, taskID)
+      addTask(googleToken, task, taskID, dateDone)
          .then((retVal: any) => {
             const msg = retVal.message;
             this.props.myPanel.current!.append(
