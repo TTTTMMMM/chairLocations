@@ -321,7 +321,7 @@ For some inexplicable reason, Firebase sometimes gives me [this error](https://c
 #### <ins>TODO Physical World</ins>
 
 1. Replace back of toilet in basement
-2. Chip and shred
+2. Move mailbox
 
 ---
 
