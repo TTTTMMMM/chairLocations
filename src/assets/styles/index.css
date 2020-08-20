@@ -489,7 +489,7 @@ body
    color: white;
 }
 
-/* formatting in map 'em myPanel */
+/* formatting in map myPanel */
 body
    > div:nth-of-type(1)
    > div
@@ -532,7 +532,7 @@ body
    margin-bottom: 0px;
 }
 
-/* keyframes used in transition from feet to miles and vice versa in Report 'em tab */
+/* keyframes used in transition from feet to miles and vice versa in Report tab */
 @keyframes scaleyBird {
    0% {
       transform: scale(1);

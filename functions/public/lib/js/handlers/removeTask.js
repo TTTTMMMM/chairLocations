@@ -6,29 +6,28 @@ var util = require("util");
 // remove task from tasks collection
 // ----------------------------------------------------------------
 exports.removeTask = async (req, res, admin) => {
-   if (res.locals.loggedInUser.role === "admin") {
-      const theBeach = req.body;
+   if (
+      res.locals.loggedInUser.role === "admin" ||
+      res.locals.loggedInUser.role === "uploader"
+   ) {
+      const theTask = req.body;
       // validate the input!
-      if (theBeach) {
-         let bName = escapeHTML(
-            theBeach.beach.trim().substring(0, 59).toUpperCase()
+      if (theTask) {
+         let docID = escapeHTML(
+            theTask.docID.trim().substring(0, 6).toUpperCase()
          );
-         const validBeachRegex = /^[A-Z_39'&#;,.\- \(\)]{3,50}$/gi;
-         let valid_Beach = bName.match(validBeachRegex);
-         if (valid_Beach != null) {
-            let docName = valid_Beach[0]
-               .replace(/\s+/g, "")
-               .replace("&amp;", "&")
-               .replace("&AMP;", "&")
-               .replace("&#39;", "'");
+         const validDocIDRegex = /^T{0,1}[A-F0-9]{5,6}$/gi;
+         let valid_docID = docID.match(validDocIDRegex);
+         if (valid_docID != null) {
+            let docName = valid_docID[0];
             try {
                await admin
                   .firestore()
-                  .collection("beaches")
+                  .collection("tasks")
                   .doc(docName)
                   .delete();
             } catch (err) {
-               let msg = `Error removing beach ${docName}: ${err.code}`;
+               let msg = `Error removing task ${docName}: ${err.code}`;
                console.log(msg);
                return res.status(400).json({
                   message: `${msg}`,
@@ -36,7 +35,7 @@ exports.removeTask = async (req, res, admin) => {
             }
             try {
                await firebaseApp.auth().signOut();
-               let msg = `Removed ${docName}`;
+               let msg = `Removed task with docID: ${docName}`;
                console.log(msg);
                console.log(`Logged out`);
                res.append("Cache-Control", "no-cache, must-revalidate");
@@ -51,14 +50,14 @@ exports.removeTask = async (req, res, admin) => {
                console.log(`${firstLine} ${err}`);
             }
          } else {
-            firstLine = `0792: Invalid beach name [${docName}]`;
+            firstLine = `0753: Invalid task [${docName}]`;
             console.log(`${firstLine}`);
             return res.status(400).json({
-               message: `0792:  Invalid beach name [${docName}]`,
+               message: `0753:  Invalid task [${docName}]`,
             });
          }
       } else {
-         return res.status(400).json({ message: `0791: Invalid beach` });
+         return res.status(400).json({ message: `0754: Invalid task` });
       }
    } else {
       return res.status(401).json({

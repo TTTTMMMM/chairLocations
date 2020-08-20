@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 // Client-side code follows:
 
-interface BeachObj {
-   beach: string;
+interface TObj {
+   docID: string;
 }
 
-const removeBeach = (id_token: any, theBeach: string) => {
+const removeTask = (id_token: any, id: string) => {
    let myHeaders = new Headers();
-   let beachObj: BeachObj = { beach: theBeach };
+   let tObj: TObj = { docID: id };
 
    myHeaders.append("googlecredential", id_token);
    myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -15,10 +15,10 @@ const removeBeach = (id_token: any, theBeach: string) => {
    const myInit = {
       method: "DELETE",
       headers: myHeaders,
-      body: JSON.stringify(beachObj),
+      body: JSON.stringify(tObj),
    };
    return new Promise((resolve) => {
-      fetch(`/beaches`, myInit).then((res) => {
+      fetch(`/tasks`, myInit).then((res) => {
          switch (res.status) {
             case 400:
                res.json().then((data: any) => {
@@ -34,4 +34,4 @@ const removeBeach = (id_token: any, theBeach: string) => {
    });
 };
 
-export default removeBeach;
+export default removeTask;

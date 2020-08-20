@@ -2,7 +2,6 @@
 // Client-side code follows:
 import { trak4APIKey } from "../configs/trak4APIConfig";
 import { trak4URL } from "../configs/trak4APIConfig";
-// import { trak4CORSProxyURL } from "../configs/trak4APIConfig";
 
 interface PostAllDevicesObj {
    commandstring: string;

@@ -85,7 +85,7 @@ class HeaderComponent extends Component<
                                     paddingLeft: "3px",
                                  }}
                               >
-                                 Map'em
+                                 Map
                               </NavLink>
                            </li>
                         </ul>
@@ -127,7 +127,7 @@ class HeaderComponent extends Component<
                                     paddingLeft: "3px",
                                  }}
                               >
-                                 Map'em
+                                 Map
                               </NavLink>
                            </li>
                            <li>
@@ -139,7 +139,7 @@ class HeaderComponent extends Component<
                                     paddingLeft: "3px",
                                  }}
                               >
-                                 Report'em
+                                 Report
                               </NavLink>
                            </li>
                            <li>
@@ -193,7 +193,7 @@ class HeaderComponent extends Component<
                                     paddingLeft: "3px",
                                  }}
                               >
-                                 Map'em
+                                 Map
                               </NavLink>
                            </li>
                            <li>
@@ -205,7 +205,7 @@ class HeaderComponent extends Component<
                                     paddingLeft: "3px",
                                  }}
                               >
-                                 Report'em
+                                 Report
                               </NavLink>
                            </li>
                            <li>

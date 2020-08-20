@@ -17,7 +17,7 @@ exports.addTask = async (req, res, admin) => {
          let taskEsc = escapeHTML(
             theTask.task.trim().substring(0, 79).toUpperCase()
          );
-         const validTaskRegex = /^[A-Z0-9'&#;,.\- \(\)]{5,79}$/gi;
+         const validTaskRegex = /^[A-Z0-9'&#;,.\- \(\)]{15,79}$/gi;
          let valid_Task = taskEsc.match(validTaskRegex);
          // -- taskID and/or docID
          let taskID = escapeHTML(

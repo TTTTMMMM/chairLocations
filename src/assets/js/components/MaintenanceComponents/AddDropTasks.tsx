@@ -307,19 +307,48 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       const columnSelected = e.args.dataField;
 
       if (columnSelected.localeCompare("D") == 0) {
-         let theKey = this.myTasksTable.current!.getCellValue(rowIndex, "key");
+         let theKey: string = this.myTasksTable.current!.getCellValue(
+            rowIndex,
+            "key"
+         );
          removeTask(googleToken, theKey)
             .then((retVal: any) => {
                const msg = retVal.message;
                this.props.myPanel.current!.append(
-                  `<p style="font-style: normal; color:blue; font-size:12px;">${msg}</p>`
+                  `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
                );
             })
             .catch((err: any) => {
                this.props.myPanel.current!.append(
-                  `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
+                  `<p style="font-style: normal; color:red; font-size:11px;">C0228: ${err}</p>`
                );
             });
+         // remove all assets that had the taskID from above
+         if (theKey.startsWith("T")) {
+            const lengthOfTimeIn_mSec = 6000;
+            this.state.tasksWatch.forEach((val: any) => {
+               const randomTime = Math.floor(
+                  Math.random() * lengthOfTimeIn_mSec
+               );
+               let taskID = val.taskID;
+               if (taskID === theKey) {
+                  setTimeout(() => {
+                     removeTask(googleToken, val.key)
+                        .then((retVal: any) => {
+                           const msg = retVal.message;
+                           this.props.myPanel.current!.append(
+                              `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
+                           );
+                        })
+                        .catch((err: any) => {
+                           this.props.myPanel.current!.append(
+                              `<p style="font-style: normal; color:red; font-size:11px;">C0328: ${err}</p>`
+                           );
+                        });
+                  }, randomTime);
+               }
+            });
+         }
       }
    }
 

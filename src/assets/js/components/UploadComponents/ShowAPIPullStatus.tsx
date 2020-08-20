@@ -209,7 +209,7 @@ class ShowAPIPullStatus extends React.PureComponent<
                      })
                      .catch((err: any) => {
                         myPanel.current!.append(
-                           `<p style="font-style: normal; color:red; font-size:12px;">C0028: ${err}</p>`
+                           `<p style="font-style: normal; color:red; font-size:12px;">C0128: ${err}</p>`
                         );
                      });
                }, timeInmillisBetweenEachUpload * j);
