@@ -54,10 +54,10 @@ exports.addTask = async (req, res, admin) => {
             valid_Asset.push("");
          }
          if (
-            valid_Task != null &&
-            valid_taskID != null &&
-            valid_docID != null &&
-            valid_Asset != null
+            valid_Task !== null &&
+            valid_taskID !== null &&
+            valid_docID !== null &&
+            valid_Asset !== null
          ) {
             let docIDPart = valid_docID[0];
             let taskIDPart = valid_taskID[0];
@@ -103,15 +103,13 @@ exports.addTask = async (req, res, admin) => {
                });
             }
          } else {
-            firstLine = `0814: Invalid task [${theTask.task}] [${
-               taskEsc.match(validTaskRegex)[0]
-            }] or taskID [${theTask.taskID}] [${taskID.match(
-               validtaskIDRegex[0]
+            firstLine = `0814: Invalid task [${theTask.task}] [${taskEsc.match(
+               validTaskRegex
+            )}] or taskID [${theTask.taskID}] [${taskID.match(
+               validtaskIDRegex
             )}] or docID[${theTask.docID}] [${docID.match(
-               validDocIDRegex[0]
-            )}] or asset[${theTask.asset}] [${asset.match(
-               validChairRegex[0]
-            )}]`;
+               validDocIDRegex
+            )}] or asset[${theTask.asset}] [${asset.match(validChairRegex)}]`;
             console.log(`${firstLine}`);
             return res.status(400).json({
                message: `${firstLine}`,
