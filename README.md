@@ -322,6 +322,7 @@ For some inexplicable reason, Firebase sometimes gives me [this error](https://c
 
 1. Replace back of toilet in basement
 2. Move mailbox
+3. Edge front yard
 
 ---
 
