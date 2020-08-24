@@ -146,7 +146,7 @@ export const fieldsetBeachStyle: CSSProperties = {
 };
 
 export const fieldsetTaskStyle: CSSProperties = {
-   height: "560px",
+   height: "610px",
    marginLeft: " 5px",
    borderRadius: "5px",
    border: "2px hsla(12, 95%, 47%, 0.93) solid",
