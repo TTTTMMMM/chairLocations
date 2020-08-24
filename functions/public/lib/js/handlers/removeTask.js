@@ -35,7 +35,7 @@ exports.removeTask = async (req, res, admin) => {
             }
             try {
                await firebaseApp.auth().signOut();
-               let msg = `Removed task with docID: ${docName}`;
+               let msg = `Removed task having docID: ${docName}`;
                console.log(msg);
                console.log(`Logged out`);
                res.append("Cache-Control", "no-cache, must-revalidate");

@@ -428,7 +428,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   <label style={rs.labelStyleRental}>Task:</label>
                   <JqxInput
                      ref={this.taskInput}
-                     minLength={3}
+                     minLength={5}
                      maxLength={60}
                      theme={"fresh"}
                      width={570}
@@ -471,14 +471,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
 
    private onRowDoubleClick(e: any): void {
       const { googleToken } = this.context;
-      const rowIndex = e.args.index;
-      const columnSelected = e.args.dataField;
+      const theKey = e.args.key;
 
-      if (columnSelected.localeCompare("D") == 0) {
-         let theKey: string = this.myTasksTable.current!.getCellValue(
-            rowIndex,
-            "key"
-         );
+      if (e.args.dataField.localeCompare("D") == 0) {
          removeTask(googleToken, theKey)
             .then((retVal: any) => {
                const msg = retVal.message;
@@ -494,7 +489,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          // remove all assets that had the taskID from above
          if (theKey.startsWith("T")) {
             const lengthOfTimeIn_mSec = 6000;
-            this.state.tasksWatch.forEach((val: any) => {
+            this.state.detailsWatch.forEach((val: any) => {
                const randomTime = Math.floor(
                   Math.random() * lengthOfTimeIn_mSec
                );
@@ -520,19 +515,11 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       }
    }
 
+   // this handler deletes one asset from the task
    private onRowDoubleClickNested(e: any): void {
-      console.log(`onRowDoubleClickNested:`);
-      console.dir(e.args);
       const { googleToken } = this.context;
-      const rowIndex = e.args.index;
-      const columnSelected = e.args.dataField;
 
-      if (columnSelected.localeCompare("DNested") == 0) {
-         let theKey: string = this.myTasksTable.current!.getCellValue(
-            rowIndex,
-            "key"
-         );
-         console.log(`Cell was trashcan, theKey: ${e.args.key}`);
+      if (e.args.dataField.localeCompare("DNested") == 0) {
          removeTask(googleToken, e.args.key)
             .then((retVal: any) => {
                const msg = retVal.message;
@@ -545,32 +532,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   `<p style="font-style: normal; color:red; font-size:11px;">C0228: ${err}</p>`
                );
             });
-         // remove all assets that had the taskID from above
-         if (e.args.key.startsWith("T")) {
-            const lengthOfTimeIn_mSec = 6000;
-            this.state.tasksWatch.forEach((val: any) => {
-               const randomTime = Math.floor(
-                  Math.random() * lengthOfTimeIn_mSec
-               );
-               let taskID = val.taskID;
-               if (taskID === theKey) {
-                  setTimeout(() => {
-                     removeTask(googleToken, val.key)
-                        .then((retVal: any) => {
-                           const msg = retVal.message;
-                           this.props.myPanel.current!.append(
-                              `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-                           );
-                        })
-                        .catch((err: any) => {
-                           this.props.myPanel.current!.append(
-                              `<p style="font-style: normal; color:red; font-size:11px;">C0328: ${err}</p>`
-                           );
-                        });
-                  }, randomTime);
-               }
-            });
-         }
       }
    }
 
