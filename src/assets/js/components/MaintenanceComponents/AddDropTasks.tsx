@@ -429,7 +429,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   <JqxInput
                      ref={this.taskInput}
                      minLength={5}
-                     maxLength={60}
+                     maxLength={79}
                      theme={"fresh"}
                      width={570}
                      placeHolder={"New Task"}
