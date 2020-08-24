@@ -71,6 +71,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
 
       this.onRowSelect = this.onRowSelect.bind(this);
       this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
+      this.onRowDoubleClickNested = this.onRowDoubleClickNested.bind(this);
 
       this.state = {
          chairAssets: [],
@@ -331,7 +332,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                const columns: IDataTableProps["columns"] = [
                   {
                      text: "2X",
-                     dataField: "D",
+                     dataField: "DNested",
                      cellsRenderer: cellRendererDelete1,
                      width: 33,
                      align: "center",
@@ -344,6 +345,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   },
                   { text: "Task ID", dataField: "taskID", width: 130 },
                ];
+               // nested table
                ReactDOM.render(
                   <JqxDataTable
                      width={438}
@@ -351,6 +353,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                      columns={columns}
                      pageable={false}
                      source={nestedDataTableAdapter}
+                     onRowDoubleClick={this.onRowDoubleClickNested}
                      sortable={true}
                      columnsReorder={true}
                      altRows={true}
@@ -490,6 +493,60 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             });
          // remove all assets that had the taskID from above
          if (theKey.startsWith("T")) {
+            const lengthOfTimeIn_mSec = 6000;
+            this.state.tasksWatch.forEach((val: any) => {
+               const randomTime = Math.floor(
+                  Math.random() * lengthOfTimeIn_mSec
+               );
+               let taskID = val.taskID;
+               if (taskID === theKey) {
+                  setTimeout(() => {
+                     removeTask(googleToken, val.key)
+                        .then((retVal: any) => {
+                           const msg = retVal.message;
+                           this.props.myPanel.current!.append(
+                              `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
+                           );
+                        })
+                        .catch((err: any) => {
+                           this.props.myPanel.current!.append(
+                              `<p style="font-style: normal; color:red; font-size:11px;">C0328: ${err}</p>`
+                           );
+                        });
+                  }, randomTime);
+               }
+            });
+         }
+      }
+   }
+
+   private onRowDoubleClickNested(e: any): void {
+      console.log(`onRowDoubleClickNested:`);
+      console.dir(e.args);
+      const { googleToken } = this.context;
+      const rowIndex = e.args.index;
+      const columnSelected = e.args.dataField;
+
+      if (columnSelected.localeCompare("DNested") == 0) {
+         let theKey: string = this.myTasksTable.current!.getCellValue(
+            rowIndex,
+            "key"
+         );
+         console.log(`Cell was trashcan, theKey: ${e.args.key}`);
+         removeTask(googleToken, e.args.key)
+            .then((retVal: any) => {
+               const msg = retVal.message;
+               this.props.myPanel.current!.append(
+                  `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
+               );
+            })
+            .catch((err: any) => {
+               this.props.myPanel.current!.append(
+                  `<p style="font-style: normal; color:red; font-size:11px;">C0228: ${err}</p>`
+               );
+            });
+         // remove all assets that had the taskID from above
+         if (e.args.key.startsWith("T")) {
             const lengthOfTimeIn_mSec = 6000;
             this.state.tasksWatch.forEach((val: any) => {
                const randomTime = Math.floor(
