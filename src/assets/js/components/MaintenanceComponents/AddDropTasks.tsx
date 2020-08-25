@@ -11,6 +11,8 @@ import JqxDataTable, {
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
 import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
+import JqxDateTimeInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatetimeinput";
+
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.fresh.css";
 
@@ -30,6 +32,8 @@ import cellRendererDelete from "../../renderers/cellRendererDelete";
 import cellRendererDelete1 from "../../renderers/cellRendererDelete1";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import { months } from "../../misc/months";
+import updateTaskCompletion from "../../fetches/updateTaskCompletion";
 
 interface MyState extends IDataTableProps {
    tasksWatch?: any;
@@ -57,8 +61,11 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    static contextType = AuthContext;
 
    private myTasksTable = React.createRef<JqxDataTable>();
+   private myAssetTable = React.createRef<JqxDataTable>();
    private addTaskButton = React.createRef<JqxButton>();
    private taskInput = React.createRef<JqxInput>();
+   private myDateDoneInput = React.createRef<JqxDateTimeInput>();
+
 
    constructor(props: { myPanel: any }) {
       super(props);
@@ -72,6 +79,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.onRowSelect = this.onRowSelect.bind(this);
       this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
       this.onRowDoubleClickNested = this.onRowDoubleClickNested.bind(this);
+      this.onCalendarChange = this.onCalendarChange.bind(this);
 
       this.state = {
          chairAssets: [],
@@ -80,7 +88,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          detailsWatch: [],
          editSettings: {
             cancelOnEsc: true,
-            editOnDoubleClick: false,
+            editOnDoubleClick: true,
             editOnF2: true,
             editSingleCell: true,
             saveOnBlur: true,
@@ -91,6 +99,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       };
       this.getTasksContent = this.getTasksContent.bind(this);
       this.addTaskButtonClicked = this.addTaskButtonClicked.bind(this);
+
    }
 
    subscribeToTasks() {
@@ -338,25 +347,93 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                      align: "center",
                   },
                   { text: "Asset", dataField: "asset", width: 130 },
+                  // {
+                  //    text: "Date Done",
+                  //    dataField: "dateDone",
+                  //    width: 130,
+                  // },
                   {
                      text: "Date Done",
                      dataField: "dateDone",
                      width: 130,
+                     align: "center",
+                     cellsAlign: "center",
+                     columnType: "template",
+                     createEditor: (
+                        row: any,
+                        cellvalue: any,
+                        editor: any,
+                        cellText: any,
+                        width: any,
+                        height: any
+                     ): void => {
+                        ReactDOM.render(
+                           <JqxDateTimeInput
+                              ref={this.myDateDoneInput}
+                              theme={"fresh"}
+                              width={130}
+                              height={40}
+                              showFooter={true}
+                              showCalendarButton={true}
+                              onChange={this.onCalendarChange}
+                              formatString={"M/d/yyyy"}
+                           />,
+                           editor[0]
+                        );
+                     },
+                     initEditor: (
+                        row: any,
+                        cellvalue: any,
+                        editor: any,
+                        celltext: any,
+                        width: any,
+                        height: any
+                     ): void => {
+                        let theKey = this.myAssetTable.current!.getCellValue(
+                           row,
+                           "key"
+                        );
+                        this.modifyKey = theKey;
+                        let doneDate = this.myAssetTable.current!.getCellValue(
+                           row,
+                           "dateDone"
+                        );
+                        let monthOrdinal =
+                           months.indexOf(doneDate.split(" ")[0]) + 1;
+                        let theDay = doneDate.split(" ")[1].split(",")[0];
+                        let theYear = doneDate.split(" ")[2];
+                        this.myDateDoneInput.current!.val(
+                           monthOrdinal + "/" + theDay + "/" + theYear
+                        );
+                     },
+                     getEditorValue: (
+                        row: any,
+                        cellvalue: any,
+                        editor: any
+                     ): void => {
+                        // return the editor's value.
+                        return this.myDateDoneInput.current!.val();
+                     },
                   },
                   { text: "Task ID", dataField: "taskID", width: 130 },
                ];
                // nested table
                ReactDOM.render(
                   <JqxDataTable
+                     ref={this.myAssetTable}
                      width={438}
-                     height={180}
+                     theme={"fresh"}
+                     source={nestedDataTableAdapter}
                      columns={columns}
                      pageable={false}
-                     source={nestedDataTableAdapter}
-                     onRowDoubleClick={this.onRowDoubleClickNested}
+                     altRows={true}
+                     height={180}
                      sortable={true}
                      columnsReorder={true}
-                     altRows={true}
+                     columnsResize={true}
+                     editable={true}
+                     onCellBeginEdit={this.onRowDoubleClickNested}
+                     editSettings={this.state.editSettings}
                      pageSize={250}
                   />,
                   document.querySelector(`#${containerID}`)
@@ -540,11 +617,11 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       let theKeys = Object.keys(jsr);
       theKeys.forEach((x) => {
          this.props.myPanel.current!.append(
-            `<br style="color:#389304 ; font-size:9px;">${x}: "${jsr[x]}",`
+            `<p style="color:black ; font-size:11px;">${x}: "${jsr[x]}",</p>`
          );
       });
       this.props.myPanel.current!.append(
-         `<br style="color:#000000 ; font-size:10px;">------`
+         `<p style="color:#000000 ; font-size:11px;">------</p>`
       );
    }
 
@@ -588,6 +665,21 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             });
       });
    }
+
+   // this handler updates the date of completion of a specific task for a specific asset
+   private onCalendarChange(e: any): void {
+      const { googleToken } = this.context;
+      let dunDt = this.myDateDoneInput.current!.val();
+      let formDate =
+      `${dunDt.split("/")[2]}-${parseInt(dunDt.split("/")[0]).toLocaleString('en', {minimumIntegerDigits:2,})}-${parseInt(dunDt.split("/")[1]).toLocaleString('en', {minimumIntegerDigits:2,})}`;
+         updateTaskCompletion(
+            googleToken,
+            this.modifyKey,
+            formDate,
+            this.props.myPanel
+         ).then(() => {});
+   }
 }
 
 export default AddDropTasks;
+

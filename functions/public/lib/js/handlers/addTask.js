@@ -29,7 +29,7 @@ exports.addTask = async (req, res, admin) => {
          let dateDoneEsc = escapeHTML(
             theTask.dateDone.trim().substring(0, 10).toUpperCase()
          );
-         const validDateRegex = /^20[2-9]{1}[0-9]{1}-[0-1]{1}[0-2]{1}-[0-3]{1}[0-9]{1}$/gi;
+         const validDateRegex = /^(20)[2-9]{1}[0-9]{1}-((0[1-9]{1})|(1[0-2]{1}))-((0[1-9]{1})|([12]{1}[0-9]{1})|(3[01]{1}))$/gi;
          let valid_dateDone = dateDoneEsc.match(validDateRegex);
          let val_dateDone = "";
          if (valid_dateDone !== null) {

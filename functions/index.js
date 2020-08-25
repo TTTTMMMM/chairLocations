@@ -36,6 +36,9 @@ const { removeBeach } = require("./public/lib/js/handlers/removeBeach");
 
 const { addTask } = require("./public/lib/js/handlers/addTask");
 const { removeTask } = require("./public/lib/js/handlers/removeTask");
+const {
+   updateDateTask,
+} = require("./public/lib/js/handlers/updateDateTask");
 
 const { addChair } = require("./public/lib/js/handlers/addChair");
 const { removeChair } = require("./public/lib/js/handlers/removeChair");
@@ -113,6 +116,10 @@ api.post("/tasks", (req, res) => {
 
 api.delete("/tasks", (req, res) => {
    removeTask(req, res, admin);
+});
+
+api.put("/tasks/datecomplete/:id", (req, res) => {
+   updateDateTask(req, res, admin);
 });
 
 api.delete("/chairs", (req, res) => {
