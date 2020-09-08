@@ -24,35 +24,41 @@ const updateTaskCompletion = (
             case 500:
                res.json().then((x) => {
                   myPanel.current!.append(
-                     `<p style="color:red;font-size:10px;">${x.message}</p>`
+                     `<p style="color:red;font-size:9px;">${x.message}</p>`
                   );
                });
                break;
             case 404:
                res.json().then((x) => {
                   myPanel.current!.append(
-                     `<p style="color:red;font-size:10px;">${x.message}</p>`
+                     `<p style="color:red;font-size:9px;">${x.message}</p>`
                   );
                });
                break;
             case 401:
                res.json().then((x) => {
                   myPanel.current!.append(
-                     `<p style="color:red;font-size:10px;">${x.message}</p>`
+                     `<p style="color:red;font-size:9px;">${x.message}</p>`
                   );
                });
                break;
             case 400:
                res.json().then((x) => {
                   myPanel.current!.append(
-                     `<p style="color:red;font-size:10px;">${x.message}</p>`
+                     `<p style="color:red;font-size:9px;">${x.message}</p>`
                   );
                });
                break;
             default:
                res.json().then((x) => {
                   myPanel.current!.append(
-                     `<p style="color:green;font-size:10px;">${x.message}</p>`
+                     `<p style="color:green;font-size:9px;">${x.message}</p>`
+                  );
+                  myPanel.current!.append(
+                     `<p style="color:green;font-size:9px;"> </p>`
+                  );
+                  myPanel.current!.append(
+                     `<p style="color:green;font-size:9px;"> </p>`
                   );
                });
                resolve(true);

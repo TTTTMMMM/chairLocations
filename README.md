@@ -318,6 +318,8 @@ For some inexplicable reason, Firebase sometimes gives me [this error](https://c
 
 3. Fix Mapping problem of querying for chair locations when Google maps is showing and then toggling display then selecting then mapping selection.
 
+4. Have to update the google token after an hour (comes into play when uploading chairLoc geos).
+
 #### <ins>TODO Physical World</ins>
 
 1. Replace back of toilet in basement

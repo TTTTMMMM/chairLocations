@@ -32,7 +32,7 @@ import cellRendererDelete from "../../renderers/cellRendererDelete";
 import cellRendererDelete1 from "../../renderers/cellRendererDelete1";
 
 import { AuthContext } from "../../contexts/AuthContext";
-import { months } from "../../misc/months";
+// import { months } from "../../misc/months";
 import updateTaskCompletion from "../../fetches/updateTaskCompletion";
 
 interface MyState extends IDataTableProps {
@@ -41,6 +41,7 @@ interface MyState extends IDataTableProps {
    subscribed?: boolean;
    subscribedToTaskedAssets?: boolean;
    chairAssets?: Array<string>;
+   calVal: Date;
 }
 class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    tasksCollection: any;
@@ -53,8 +54,12 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    dataAdapter: null;
    detailsAdapter: any;
    modifyKey: string | undefined;
+   detailsMap: string[] = []; // index of array is the row number of the taskID;
+   detailsOpenIndex: number = 0;
+   calendarDateUponOpen: string | undefined;
    selectedRow: number | undefined;
    selectedRow1: number | undefined;
+   tasksTableRowSelected: number | undefined;
    chairAssets: any[] = [];
    private count: number = 0;
    private nestedTables: any[] = [];
@@ -82,12 +87,15 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
       this.onRowDoubleClickNested = this.onRowDoubleClickNested.bind(this);
       this.onCalendarChange = this.onCalendarChange.bind(this);
+      this.onCalendarClose = this.onCalendarClose.bind(this);
+      this.onCalendarOpen = this.onCalendarOpen.bind(this);
 
       this.state = {
          chairAssets: [],
          subscribed: false,
          tasksWatch: [],
          detailsWatch: [],
+         calVal: this.calendarValue,
          editSettings: {
             cancelOnEsc: true,
             editOnDoubleClick: true,
@@ -188,6 +196,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                // dateDone,
                taskID,
             });
+            this.detailsMap.push(taskID);
          }
       );
       this.setState({
@@ -229,6 +238,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.setState({
          detailsWatch,
       });
+
       this.numRows++;
       console.log(
          `%c detailsWatch<${this.numUpdates}>`,
@@ -379,34 +389,39 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                               max={moment().toDate()}
                               showCalendarButton={true}
                               onChange={this.onCalendarChange}
+                              onClose={this.onCalendarClose}
+                              onOpen={this.onCalendarOpen}
                               value={this.calendarValue}
                               formatString={"M/d/yyyy"}
                            />,
                            editor[0]
                         );
                      },
-                     initEditor: (
-                        row: any,
-                        cellvalue: any,
-                        editor: any,
-                        celltext: any,
-                        width: any,
-                        height: any
-                     ): void => {
-                        let doneDate = this.myAssetTable.current!.getCellValue(
-                           row,
-                           "dateDone"
-                        );
-                        if (doneDate) {
-                           let monthOrdinal =
-                              months.indexOf(doneDate.split("-")[0]) + 1;
-                           let theDay = doneDate.split("-")[1].split(",")[0];
-                           let theYear = doneDate.split("-")[2];
-                           this.myDateDoneInput.current!.val(
-                              monthOrdinal + "/" + theDay + "/" + theYear
-                           );
-                        }
-                     },
+                     // initEditor: (
+                     //    row: any,
+                     //    cellvalue: any,
+                     //    editor: any,
+                     //    celltext: any,
+                     //    width: any,
+                     //    height: any
+                     // ): void => {
+                     //    let doneDate = this.myAssetTable.current!.getCellValue(
+                     //       row,
+                     //       "dateDone"
+                     //    );
+                     //    this.props.myPanel.current!.append(
+                     //       `<p style="font-style: normal; color:blue; font-size:11px;">initEditor[${doneDate}]</p>`
+                     //    );
+                     //    if (doneDate) {
+                     //       let monthOrdinal =
+                     //          months.indexOf(doneDate.split("-")[0]) + 1;
+                     //       let theDay = doneDate.split("-")[1].split(",")[0];
+                     //       let theYear = doneDate.split("-")[2];
+                     //       this.myDateDoneInput.current!.val(
+                     //          monthOrdinal + "/" + theDay + "/" + theYear
+                     //       );
+                     //    }
+                     // },
                   },
                   {
                      text: "Task ID",
@@ -591,7 +606,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       }
    }
 
-   // this handler deletes one asset from the task
+   // this handler deletes one asset from the task or initializes the dateTimeinput widget
    private onRowDoubleClickNested(e: any): void {
       const { googleToken } = this.context;
       this.modifyKey = e.args.key;
@@ -609,17 +624,19 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                );
             });
       }
+      this.myDateDoneInput.current!.setDate(this.calendarValue);
    }
 
    private onRowSelect(e: any): void {
       let jsr = e.args.row;
+      // console.dir(jsr);
       this.modifyKey = e.args.key;
       this.selectedRow = e.args.index;
       this.selectedRow1 = e.args.boundIndex;
       let theKeys = Object.keys(jsr);
       theKeys.forEach((x) => {
          this.props.myPanel.current!.append(
-            `<p style="color:black ; font-size:11px;">${x}: "${jsr[x]}",</p>`
+            `<p style="color:black ; font-size:11px;">${x}-> "${jsr[x]}",</p>`
          );
 
          if (x === "dateDone") {
@@ -628,9 +645,13 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   ? moment(`${jsr[x]}`).toDate()
                   : moment().subtract(1, "days").toDate();
          }
+
+         if (x === "taskID") {
+            this.detailsOpenIndex = this.detailsMap.indexOf(jsr[x]);
+         }
       });
       this.props.myPanel.current!.append(
-         `<p style="color:#000000 ; font-size:11px;">------</p>`
+         `<p style="color:#000000 ; font-size:11px;">-----------------------------</p>`
       );
    }
 
@@ -677,6 +698,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
 
    // this handler updates the date of completion of a specific task for a specific asset
    private onCalendarChange(e: any): void {
+      // this.props.myPanel.current!.append(
+      //    `<p style="font-style: normal; color:blue; font-size:11px;">onCalendarChange()</p>`
+      // );
       const { googleToken } = this.context;
       let dunDt = this.myDateDoneInput.current!.val();
       let formDate = `${dunDt.split("/")[2]}-${parseInt(
@@ -685,9 +709,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          dunDt.split("/")[1]
       ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
       if (dunDt.length === 0) {
-         this.props.myPanel.current!.append(
-            `<p style="font-style: normal; color:blue; font-size:11px;">this.selectedRow[${this.selectedRow}]</p>`
-         );
+         // this.props.myPanel.current!.append(
+         //    `<p style="font-style: normal; color:blue; font-size:11px;">this.selectedRow[${this.selectedRow}]</p>`
+         // );
          this.myDateDoneInput.current!.close();
          this.myAssetTable.current!.clearSelection();
          this.myAssetTable.current!.unselectRow(this.selectedRow!);
@@ -698,7 +722,45 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          this.modifyKey,
          formDate,
          this.props.myPanel
-      );
+      ).then(() => {
+         setTimeout(() => {
+            this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
+         }, 1500); //
+      });
+   }
+
+   private onCalendarOpen(e: any): void {
+      this.calendarDateUponOpen = this.myDateDoneInput.current!.val();
+   }
+
+   private onCalendarClose(e: any): void {
+      const { googleToken } = this.context;
+      let dunDt = this.myDateDoneInput.current!.val();
+      let formDate = `${dunDt.split("/")[2]}-${parseInt(
+         dunDt.split("/")[0]
+      ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
+         dunDt.split("/")[1]
+      ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
+      let same = dunDt === this.calendarDateUponOpen;
+      if (same) {
+         updateTaskCompletion(
+            googleToken,
+            this.modifyKey,
+            "undefined-NaN-NaN",
+            this.props.myPanel
+         ).then(() => {
+            updateTaskCompletion(
+               googleToken,
+               this.modifyKey,
+               formDate,
+               this.props.myPanel
+            ).then(() => {
+               setTimeout(() => {
+                  this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
+               }, 1500); //
+            });
+         });
+      }
    }
 }
 
