@@ -55,10 +55,7 @@ const updateTaskCompletion = (
                      `<p style="color:green;font-size:9px;">${x.message}</p>`
                   );
                   myPanel.current!.append(
-                     `<p style="color:green;font-size:9px;"> </p>`
-                  );
-                  myPanel.current!.append(
-                     `<p style="color:green;font-size:9px;"> </p>`
+                     `<p style="color:green ; font-size:13px;">-----------------------------</p>`
                   );
                });
                resolve(true);

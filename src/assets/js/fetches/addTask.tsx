@@ -8,7 +8,8 @@ const addTask = (
    taskID: string,
    theTask: string,
    asset: string,
-   dateDone: string
+   dateDone: string,
+   yearTaskDefined: string
 ) => {
    let myHeaders = new Headers();
    let taskObj: TaskObj = {
@@ -17,6 +18,7 @@ const addTask = (
       task: theTask,
       asset: asset,
       dateDone: dateDone,
+      yearTaskDefined: yearTaskDefined,
    };
 
    myHeaders.append("googlecredential", id_token);

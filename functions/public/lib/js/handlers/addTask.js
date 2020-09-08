@@ -53,16 +53,26 @@ exports.addTask = async (req, res, admin) => {
             console.log(`asset's length was 0 for taskID ${valid_taskID[0]}`);
             valid_Asset.push("");
          }
+         // -- yearTaskDefined
+         let yearTaskDefined = escapeHTML(
+            theTask.yearTaskDefined.trim().substring(0, 4).toUpperCase()
+         );
+         const validYearTaskDefinedRegex = /^20[2-9][0-9]$/;
+         valid_YearTaskDefined = yearTaskDefined.match(
+            validYearTaskDefinedRegex
+         );
          if (
             valid_Task !== null &&
             valid_taskID !== null &&
             valid_docID !== null &&
-            valid_Asset !== null
+            valid_Asset !== null &&
+            valid_YearTaskDefined !== null
          ) {
             let docIDPart = valid_docID[0];
             let taskIDPart = valid_taskID[0];
             let taskPart = valid_Task[0];
             let assetPart = valid_Asset[0];
+            let yearTaskDefinedPart = valid_YearTaskDefined[0];
             let dateDonePart = val_dateDone;
             let docName = docIDPart;
 
@@ -72,6 +82,7 @@ exports.addTask = async (req, res, admin) => {
             taskObj.task = taskPart;
             taskObj.asset = assetPart;
             taskObj.dateDone = dateDonePart;
+            taskObj.yearTaskDefined = yearTaskDefinedPart;
             try {
                await admin
                   .firestore()
@@ -109,7 +120,10 @@ exports.addTask = async (req, res, admin) => {
                validtaskIDRegex
             )}] or docID[${theTask.docID}] [${docID.match(
                validDocIDRegex
-            )}] or asset[${theTask.asset}] [${asset.match(validChairRegex)}]`;
+            )}] or asset[${theTask.asset}] [${asset.match(validChairRegex)}] or
+            yearTaskDefined [${
+               theTask.yearTaskDefined
+            }] [${yearTaskDefined.match(validYearTaskDefinedRegex)}]`;
             console.log(`${firstLine}`);
             return res.status(400).json({
                message: `${firstLine}`,

@@ -115,7 +115,8 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.tasksCollection = firebase
          .firestore()
          .collection("tasks")
-         .where("docID", ">", "T");
+         .where("docID", ">", "T")
+         .where("yearTaskDefined", "==", "2020");
       this.unsubscribe = this.tasksCollection.onSnapshot(
          this.onCollectionUpdate
       );
@@ -134,7 +135,8 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.taskedAssetsCollection = firebase
          .firestore()
          .collection("tasks")
-         .where("docID", "<", "T");
+         .where("docID", "<", "T")
+         .where("yearTaskDefined", "==", "2020");
       this.unsubscribeFromTaskedAssets = this.taskedAssetsCollection.onSnapshot(
          this.onDetailsUpdate
       );
@@ -385,7 +387,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                               width={130}
                               height={40}
                               showFooter={true}
-                              min={moment("January 1, 2020").toDate()}
+                              min={moment("2020-01-01").toDate()}
                               max={moment().toDate()}
                               showCalendarButton={true}
                               onChange={this.onCalendarChange}
@@ -397,31 +399,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                            editor[0]
                         );
                      },
-                     // initEditor: (
-                     //    row: any,
-                     //    cellvalue: any,
-                     //    editor: any,
-                     //    celltext: any,
-                     //    width: any,
-                     //    height: any
-                     // ): void => {
-                     //    let doneDate = this.myAssetTable.current!.getCellValue(
-                     //       row,
-                     //       "dateDone"
-                     //    );
-                     //    this.props.myPanel.current!.append(
-                     //       `<p style="font-style: normal; color:blue; font-size:11px;">initEditor[${doneDate}]</p>`
-                     //    );
-                     //    if (doneDate) {
-                     //       let monthOrdinal =
-                     //          months.indexOf(doneDate.split("-")[0]) + 1;
-                     //       let theDay = doneDate.split("-")[1].split(",")[0];
-                     //       let theYear = doneDate.split("-")[2];
-                     //       this.myDateDoneInput.current!.val(
-                     //          monthOrdinal + "/" + theDay + "/" + theYear
-                     //       );
-                     //    }
-                     // },
                   },
                   {
                      text: "Task ID",
@@ -617,6 +594,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                this.props.myPanel.current!.append(
                   `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
                );
+               setTimeout(() => {
+                  this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
+               }, 2300); //
             })
             .catch((err: any) => {
                this.props.myPanel.current!.append(
@@ -633,6 +613,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.modifyKey = e.args.key;
       this.selectedRow = e.args.index;
       this.selectedRow1 = e.args.boundIndex;
+      this.props.myPanel.current!.append(
+         `<p style="color:#000000 ; font-size:13px;">-----------------------------</p>`
+      );
       let theKeys = Object.keys(jsr);
       theKeys.forEach((x) => {
          this.props.myPanel.current!.append(
@@ -650,9 +633,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             this.detailsOpenIndex = this.detailsMap.indexOf(jsr[x]);
          }
       });
-      this.props.myPanel.current!.append(
-         `<p style="color:#000000 ; font-size:11px;">-----------------------------</p>`
-      );
    }
 
    private addTaskButtonClicked() {
@@ -665,7 +645,15 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       let taskDefinition: boolean = true;
       const taskID = hashOfTask(task, taskDefinition);
 
-      addTask(googleToken, taskID, taskID, task, "", "")
+      addTask(
+         googleToken,
+         taskID,
+         taskID,
+         task,
+         "",
+         "",
+         moment().format("YYYY")
+      )
          .then((retVal: any) => {
             const msg = retVal.message;
             this.props.myPanel.current!.append(
@@ -681,7 +669,15 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.state.chairAssets!.forEach((chair: any) => {
          taskDefinition = false;
          const docID = hashOfTask(`${taskID}${chair}`, taskDefinition);
-         addTask(googleToken, docID, taskID, task, chair, "")
+         addTask(
+            googleToken,
+            docID,
+            taskID,
+            task,
+            chair,
+            "",
+            moment().format("YYYY")
+         )
             .then((retVal: any) => {
                const msg = retVal.message;
                this.props.myPanel.current!.append(
@@ -698,9 +694,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
 
    // this handler updates the date of completion of a specific task for a specific asset
    private onCalendarChange(e: any): void {
-      // this.props.myPanel.current!.append(
-      //    `<p style="font-style: normal; color:blue; font-size:11px;">onCalendarChange()</p>`
-      // );
       const { googleToken } = this.context;
       let dunDt = this.myDateDoneInput.current!.val();
       let formDate = `${dunDt.split("/")[2]}-${parseInt(
@@ -709,9 +702,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          dunDt.split("/")[1]
       ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
       if (dunDt.length === 0) {
-         // this.props.myPanel.current!.append(
-         //    `<p style="font-style: normal; color:blue; font-size:11px;">this.selectedRow[${this.selectedRow}]</p>`
-         // );
          this.myDateDoneInput.current!.close();
          this.myAssetTable.current!.clearSelection();
          this.myAssetTable.current!.unselectRow(this.selectedRow!);
@@ -725,7 +715,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       ).then(() => {
          setTimeout(() => {
             this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
-         }, 1500); //
+         }, 2300); //
       });
    }
 
@@ -733,6 +723,8 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.calendarDateUponOpen = this.myDateDoneInput.current!.val();
    }
 
+   // this handler takes care of the case when the user enters the same date that was already there
+   // i.e., you can think of this as onCalendar_NO_Change event
    private onCalendarClose(e: any): void {
       const { googleToken } = this.context;
       let dunDt = this.myDateDoneInput.current!.val();
@@ -757,7 +749,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             ).then(() => {
                setTimeout(() => {
                   this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
-               }, 1500); //
+               }, 2300); //
             });
          });
       }

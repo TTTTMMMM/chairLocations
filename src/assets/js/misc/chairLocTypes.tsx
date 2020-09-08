@@ -153,4 +153,5 @@ export interface TaskObj {
    task: string;
    asset: string;
    dateDone: string;
+   yearTaskDefined: string;
 }
