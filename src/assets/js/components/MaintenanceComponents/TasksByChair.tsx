@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-var escapeHTML = require("escape-html");
+// var escapeHTML = require("escape-html");
 import moment from "moment";
 
 // @ts-ignore
@@ -10,7 +10,7 @@ import JqxDataTable, {
    jqx,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
 import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
-import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
+// import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 import JqxDateTimeInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatetimeinput";
 
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
@@ -24,16 +24,16 @@ import "../../configs/firebaseInit";
 
 import * as rs from "../../../styles/reactStyling";
 
-import addTask from "../../fetches/addTask";
+// import addTask from "../../fetches/addTask";
 import removeTask from "../../fetches/removeTask";
-import hashOfTask from "./hashOfTask";
+// import hashOfTask from "./hashOfTask";
 
 import cellRendererDelete from "../../renderers/cellRendererDelete";
 import cellRendererDelete1 from "../../renderers/cellRendererDelete1";
 
 import { AuthContext } from "../../contexts/AuthContext";
 // import { months } from "../../misc/months";
-import updateTaskCompletion from "../../fetches/updateTaskCompletion";
+// import updateTaskCompletion from "../../fetches/updateTaskCompletion";
 
 interface MyState extends IDataTableProps {
    tasksWatch?: any;
@@ -43,10 +43,7 @@ interface MyState extends IDataTableProps {
    chairAssets?: Array<string>;
    calVal: Date;
 }
-class AddDropTasks extends React.PureComponent<
-   { myPanel: any; queryYear: number },
-   MyState
-> {
+class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    tasksCollection: any;
    taskedAssetsCollection: any;
    numUpdates: number | undefined;
@@ -73,11 +70,11 @@ class AddDropTasks extends React.PureComponent<
 
    private myTasksTable = React.createRef<JqxDataTable>();
    private myAssetTable = React.createRef<JqxDataTable>();
-   private addTaskButton = React.createRef<JqxButton>();
+   // private addTaskButton = React.createRef<JqxButton>();
    private taskInput = React.createRef<JqxInput>();
    private myDateDoneInput = React.createRef<JqxDateTimeInput>();
 
-   constructor(props: { myPanel: any; queryYear: number }) {
+   constructor(props: { myPanel: any }) {
       super(props);
       this.tasksCollection = "";
       this.numRows = 0;
@@ -89,9 +86,9 @@ class AddDropTasks extends React.PureComponent<
       this.onRowSelect = this.onRowSelect.bind(this);
       this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
       this.onRowDoubleClickNested = this.onRowDoubleClickNested.bind(this);
-      this.onCalendarChange = this.onCalendarChange.bind(this);
-      this.onCalendarClose = this.onCalendarClose.bind(this);
-      this.onCalendarOpen = this.onCalendarOpen.bind(this);
+      // this.onCalendarChange = this.onCalendarChange.bind(this);
+      // this.onCalendarClose = this.onCalendarClose.bind(this);
+      // this.onCalendarOpen = this.onCalendarOpen.bind(this);
 
       this.state = {
          chairAssets: [],
@@ -111,35 +108,35 @@ class AddDropTasks extends React.PureComponent<
          },
       };
       this.getTasksContent = this.getTasksContent.bind(this);
-      this.addTaskButtonClicked = this.addTaskButtonClicked.bind(this);
+      // this.addTaskButtonClicked = this.addTaskButtonClicked.bind(this);
    }
 
-   subscribeToTasks() {
-      this.tasksCollection = firebase
-         .firestore()
-         .collection("tasks")
-         .where("docID", ">", "T")
-         .where("yearTaskDefined", "==", this.props.queryYear.toString());
-      this.unsubscribe = this.tasksCollection.onSnapshot(
-         this.onCollectionUpdate
-      );
-      this.setState({ subscribed: true });
-   }
+   // subscribeToTasks() {
+   //    this.tasksCollection = firebase
+   //       .firestore()
+   //       .collection("tasks")
+   //       .where("docID", ">", "T")
+   //       .where("yearTaskDefined", "==", this.props.queryYear.toString());
+   //    this.unsubscribe = this.tasksCollection.onSnapshot(
+   //       this.onCollectionUpdate
+   //    );
+   //    this.setState({ subscribed: true });
+   // }
 
-   unsubscribeFromTasks() {
-      if (typeof this.unsubscribe != "undefined") {
-         this.unsubscribe();
-         this.setState({ subscribed: false });
-         this.numUpdates = 0;
-      }
-   }
+   // unsubscribeFromTasks() {
+   //    if (typeof this.unsubscribe != "undefined") {
+   //       this.unsubscribe();
+   //       this.setState({ subscribed: false });
+   //       this.numUpdates = 0;
+   //    }
+   // }
 
    subscribeToTaskedAssets() {
       this.taskedAssetsCollection = firebase
          .firestore()
          .collection("tasks")
-         .where("docID", "<", "T")
-         .where("yearTaskDefined", "==", this.props.queryYear.toString());
+         .where("docID", "<", "T");
+      // .where("yearTaskDefined", "==", this.props.queryYear.toString());
       this.unsubscribeFromTaskedAssets = this.taskedAssetsCollection.onSnapshot(
          this.onDetailsUpdate
       );
@@ -392,9 +389,6 @@ class AddDropTasks extends React.PureComponent<
                               min={moment("2020-01-01").toDate()}
                               max={moment().toDate()}
                               showCalendarButton={true}
-                              onChange={this.onCalendarChange}
-                              onClose={this.onCalendarClose}
-                              onOpen={this.onCalendarOpen}
                               value={this.calendarValue}
                               formatString={"M/d/yyyy"}
                            />,
@@ -470,7 +464,7 @@ class AddDropTasks extends React.PureComponent<
          ];
          return (
             <fieldset style={rs.fieldsetTaskStyle}>
-               <legend>Tasks</legend>
+               <legend>Assets</legend>
                <JqxDataTable
                   ref={this.myTasksTable}
                   width={598}
@@ -505,20 +499,7 @@ class AddDropTasks extends React.PureComponent<
                      placeHolder={"New Task"}
                   />
                </div>
-               <div style={rs.divFlexRowTask}>
-                  <JqxButton
-                     ref={this.addTaskButton}
-                     onClick={this.addTaskButtonClicked}
-                     width={130}
-                     height={40}
-                     theme={"fresh"}
-                     textImageRelation={"imageBeforeText"}
-                     imgSrc={"../images/work.png"}
-                     textPosition={"center"}
-                  >
-                     Add Task
-                  </JqxButton>
-               </div>
+               <div style={rs.divFlexRowTask}></div>
             </fieldset>
          );
       } else {
@@ -528,11 +509,11 @@ class AddDropTasks extends React.PureComponent<
    render() {
       const { isLoggedInToFirebase } = this.context;
       if (isLoggedInToFirebase && !this.state.subscribed) {
-         this.subscribeToTasks();
+         // this.subscribeToTasks();
          this.subscribeToTaskedAssets();
       }
       if (!isLoggedInToFirebase && this.state.subscribed) {
-         this.unsubscribeFromTasks();
+         // this.unsubscribeFromTasks();
          this.unsubscribeFromTaskedAssets();
       }
       return <div>{this.getTasksContent()}</div>;
@@ -636,125 +617,142 @@ class AddDropTasks extends React.PureComponent<
       });
    }
 
-   private addTaskButtonClicked() {
-      const { googleToken } = this.context;
+   // private addTaskButtonClicked() {
+   //    const { googleToken } = this.context;
 
-      let task = escapeHTML(
-         this.taskInput.current!.val().trim().substring(0, 59)
-      );
-      task = `${moment().format("YYYY")} - ${task}`;
-      let taskDefinition: boolean = true;
-      const taskID = hashOfTask(task, taskDefinition);
+   //    let task = escapeHTML(
+   //       this.taskInput.current!.val().trim().substring(0, 59)
+   //    );
+   //    task = `${moment().format("YYYY")} - ${task}`;
+   //    let taskDefinition: boolean = true;
+   //    const taskID = hashOfTask(task, taskDefinition);
 
-      addTask(
-         googleToken,
-         taskID,
-         taskID,
-         task,
-         "",
-         "",
-         moment().format("YYYY")
-      )
-         .then((retVal: any) => {
-            const msg = retVal.message;
-            this.props.myPanel.current!.append(
-               `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-            );
-         })
-         .catch((err: any) => {
-            this.props.myPanel.current!.append(
-               `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
-            );
-         });
+   //    addTask(
+   //       googleToken,
+   //       taskID,
+   //       taskID,
+   //       task,
+   //       "",
+   //       "",
+   //       moment().format("YYYY")
+   //    )
+   //       .then((retVal: any) => {
+   //          const msg = retVal.message;
+   //          this.props.myPanel.current!.append(
+   //             `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
+   //          );
+   //       })
+   //       .catch((err: any) => {
+   //          this.props.myPanel.current!.append(
+   //             `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
+   //          );
+   //       });
 
-      this.state.chairAssets!.forEach((chair: any) => {
-         taskDefinition = false;
-         const docID = hashOfTask(`${taskID}${chair}`, taskDefinition);
-         addTask(
-            googleToken,
-            docID,
-            taskID,
-            task,
-            chair,
-            "",
-            moment().format("YYYY")
-         )
-            .then((retVal: any) => {
-               const msg = retVal.message;
-               this.props.myPanel.current!.append(
-                  `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-               );
-            })
-            .catch((err: any) => {
-               this.props.myPanel.current!.append(
-                  `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
-               );
-            });
-      });
-   }
+   //    this.state.chairAssets!.forEach((chair: any) => {
+   //       taskDefinition = false;
+   //       const docID = hashOfTask(`${taskID}${chair}`, taskDefinition);
+   //       addTask(
+   //          googleToken,
+   //          docID,
+   //          taskID,
+   //          task,
+   //          chair,
+   //          "",
+   //          moment().format("YYYY")
+   //       )
+   //          .then((retVal: any) => {
+   //             const msg = retVal.message;
+   //             this.props.myPanel.current!.append(
+   //                `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
+   //             );
+   //          })
+   //          .catch((err: any) => {
+   //             this.props.myPanel.current!.append(
+   //                `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
+   //             );
+   //          });
+   //    });
+   // }
 
    // this handler updates the date of completion of a specific task for a specific asset
-   private onCalendarChange(e: any): void {
-      const { googleToken } = this.context;
-      let dunDt = this.myDateDoneInput.current!.val();
-      let formDate = `${dunDt.split("/")[2]}-${parseInt(
-         dunDt.split("/")[0]
-      ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
-         dunDt.split("/")[1]
-      ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
-      if (dunDt.length === 0) {
-         this.myDateDoneInput.current!.close();
-         this.myAssetTable.current!.clearSelection();
-         this.myAssetTable.current!.unselectRow(this.selectedRow!);
-         this.myAssetTable.current!.unselectRow(this.selectedRow1!);
-      }
-      updateTaskCompletion(
-         googleToken,
-         this.modifyKey,
-         formDate,
-         this.props.myPanel
-      ).then(() => {
-         setTimeout(() => {
-            this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
-         }, 2300); //
-      });
-   }
+   // private onCalendarChange(e: any): void {
+   //    const { googleToken } = this.context;
+   //    let dunDt = this.myDateDoneInput.current!.val();
+   //    let formDate = `${dunDt.split("/")[2]}-${parseInt(
+   //       dunDt.split("/")[0]
+   //    ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
+   //       dunDt.split("/")[1]
+   //    ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
+   //    if (dunDt.length === 0) {
+   //       this.myDateDoneInput.current!.close();
+   //       this.myAssetTable.current!.clearSelection();
+   //       this.myAssetTable.current!.unselectRow(this.selectedRow!);
+   //       this.myAssetTable.current!.unselectRow(this.selectedRow1!);
+   //    }
+   //    updateTaskCompletion(
+   //       googleToken,
+   //       this.modifyKey,
+   //       formDate,
+   //       this.props.myPanel
+   //    ).then(() => {
+   //       setTimeout(() => {
+   //          this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
+   //       }, 2300); //
+   //    });
+   // }
 
-   private onCalendarOpen(e: any): void {
-      this.calendarDateUponOpen = this.myDateDoneInput.current!.val();
-   }
+   // private onCalendarOpen(e: any): void {
+   //    this.calendarDateUponOpen = this.myDateDoneInput.current!.val();
+   // }
 
    // this handler takes care of the case when the user enters the same date that was already there
    // i.e., you can think of this as onCalendar_NO_Change event
-   private onCalendarClose(e: any): void {
-      const { googleToken } = this.context;
-      let dunDt = this.myDateDoneInput.current!.val();
-      let formDate = `${dunDt.split("/")[2]}-${parseInt(
-         dunDt.split("/")[0]
-      ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
-         dunDt.split("/")[1]
-      ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
-      let same = dunDt === this.calendarDateUponOpen;
-      if (same) {
-         updateTaskCompletion(
-            googleToken,
-            this.modifyKey,
-            "undefined-NaN-NaN",
-            this.props.myPanel
-         ).then(() => {
-            updateTaskCompletion(
-               googleToken,
-               this.modifyKey,
-               formDate,
-               this.props.myPanel
-            ).then(() => {
-               setTimeout(() => {
-                  this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
-               }, 2300); //
-            });
-         });
-      }
-   }
+   // private onCalendarClose(e: any): void {
+   //    const { googleToken } = this.context;
+   //    let dunDt = this.myDateDoneInput.current!.val();
+   //    let formDate = `${dunDt.split("/")[2]}-${parseInt(
+   //       dunDt.split("/")[0]
+   //    ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
+   //       dunDt.split("/")[1]
+   //    ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
+   //    let same = dunDt === this.calendarDateUponOpen;
+   //    if (same) {
+   //       updateTaskCompletion(
+   //          googleToken,
+   //          this.modifyKey,
+   //          "undefined-NaN-NaN",
+   //          this.props.myPanel
+   //       ).then(() => {
+   //          updateTaskCompletion(
+   //             googleToken,
+   //             this.modifyKey,
+   //             formDate,
+   //             this.props.myPanel
+   //          ).then(() => {
+   //             setTimeout(() => {
+   //                this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
+   //             }, 2300); //
+   //          });
+   //       });
+   //    }
+   // }
 }
 
 export default AddDropTasks;
+
+// onChange={this.onCalendarChange}
+// onClose={this.onCalendarClose}
+// onOpen={this.onCalendarOpen}
+
+// <JqxButton
+// ref={this.addTaskButton}
+// onClick={this.addTaskButtonClicked}
+// width={130}
+// height={40}
+// theme={"fresh"}
+// textImageRelation={"imageBeforeText"}
+// imgSrc={"../images/work.png"}
+// textPosition={"center"}
+// >
+// Add Task
+// </JqxButton>

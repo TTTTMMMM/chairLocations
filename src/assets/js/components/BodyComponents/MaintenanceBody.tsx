@@ -8,6 +8,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 import MaintenanceSubheader from "../MaintenanceComponents/MaintenanceSubheader";
 import TaskManagementComponent from "../MaintenanceComponents/TaskManagementComponent";
+import ChairManagementComponent from "../MaintenanceComponents/ChairManagementComponent";
 
 import firebase from "firebase/app";
 import "firebase/database";
@@ -91,6 +92,16 @@ class MaintenanceBody extends Component<{ match: any }, MyState> {
                         render={(props) =>
                            isSignedIn ? (
                               <TaskManagementComponent></TaskManagementComponent>
+                           ) : (
+                              <Redirect to="/" />
+                           )
+                        }
+                     />
+                     <Route
+                        path={`${this.props.match.path}/bychair`}
+                        render={(props) =>
+                           isSignedIn ? (
+                              <ChairManagementComponent></ChairManagementComponent>
                            ) : (
                               <Redirect to="/" />
                            )

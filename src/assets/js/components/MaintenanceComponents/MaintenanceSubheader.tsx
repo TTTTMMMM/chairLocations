@@ -31,6 +31,18 @@ class MaintenanceSubheader extends Component<{ match: any }, {}> {
                            By Task
                         </NavLink>
                      </li>
+                     <li>
+                        <NavLink
+                           to={`${this.props.match.url}/bychair`}
+                           activeStyle={{
+                              border: "solid hsla(12, 95%, 47%, 0.98) 2px ",
+                              paddingTop: "3px",
+                              paddingLeft: "3px",
+                           }}
+                        >
+                           By Chair
+                        </NavLink>
+                     </li>
                   </ul>
                </nav>
             </section>
