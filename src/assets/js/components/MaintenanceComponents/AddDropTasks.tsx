@@ -598,6 +598,9 @@ class AddDropTasks extends React.PureComponent<
                setTimeout(() => {
                   this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
                }, 2300); //
+               this.myTasksTable.current!.ensureRowVisible(
+                  this.detailsOpenIndex + 2
+               );
             })
             .catch((err: any) => {
                this.props.myPanel.current!.append(
@@ -716,6 +719,9 @@ class AddDropTasks extends React.PureComponent<
       ).then(() => {
          setTimeout(() => {
             this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
+            this.myTasksTable.current!.ensureRowVisible(
+               this.detailsOpenIndex + 2
+            );
          }, 2300); //
       });
    }
@@ -750,6 +756,9 @@ class AddDropTasks extends React.PureComponent<
             ).then(() => {
                setTimeout(() => {
                   this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
+                  this.myTasksTable.current!.ensureRowVisible(
+                     this.detailsOpenIndex + 2
+                  );
                }, 2300); //
             });
          });

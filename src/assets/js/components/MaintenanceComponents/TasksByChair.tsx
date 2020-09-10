@@ -447,7 +447,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                      this.detailsOpenIndex
                   );
                   this.myAssetsTable.current!.ensureRowVisible(
-                     this.detailsOpenIndex + 1
+                     this.detailsOpenIndex + 2
                   );
                }, 2300); //
             })
@@ -514,7 +514,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          setTimeout(() => {
             this.myAssetsTable.current!.showDetails(this.detailsOpenIndex);
             this.myAssetsTable.current!.ensureRowVisible(
-               this.detailsOpenIndex + 1
+               this.detailsOpenIndex + 2
             );
          }, 2300); //
       });
