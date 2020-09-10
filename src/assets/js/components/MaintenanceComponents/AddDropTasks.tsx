@@ -264,7 +264,6 @@ class AddDropTasks extends React.PureComponent<
             localData: () => {
                let data: any[] = [];
                let i = 0;
-
                this.state.tasksWatch.forEach((val: any) => {
                   data[i++] = {
                      key: val.key,
@@ -277,7 +276,7 @@ class AddDropTasks extends React.PureComponent<
             },
          };
          this.dataAdapter = new jqx.dataAdapter(source);
-         // --
+         // -- detailsSource ------------------------------------------------------------//
          const detailsSource = {
             datafields: [
                { name: "task", type: "string" },
@@ -315,6 +314,7 @@ class AddDropTasks extends React.PureComponent<
             element: any,
             rowinfo: any
          ): void => {
+            rowinfo.detailsHeight = 320;
             const container = document.createElement("div");
             container.style.margin = "10px";
             element[0].appendChild(container);
@@ -419,7 +419,7 @@ class AddDropTasks extends React.PureComponent<
                      columns={columns}
                      pageable={false}
                      altRows={true}
-                     height={180}
+                     height={300}
                      sortable={true}
                      columnsReorder={true}
                      columnsResize={true}

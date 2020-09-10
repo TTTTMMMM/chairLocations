@@ -9,7 +9,7 @@ import JqxDataTable, {
    IDataTableProps,
    jqx,
 } from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatatable";
-import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
+// import JqxInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxinput";
 // import JqxButton from "jqwidgets-scripts/jqwidgets-react-tsx/jqxbuttons";
 import JqxDateTimeInput from "jqwidgets-scripts/jqwidgets-react-tsx/jqxdatetimeinput";
 
@@ -28,7 +28,7 @@ import * as rs from "../../../styles/reactStyling";
 import removeTask from "../../fetches/removeTask";
 // import hashOfTask from "./hashOfTask";
 
-import cellRendererDelete from "../../renderers/cellRendererDelete";
+// import cellRendererDelete from "../../renderers/cellRendererDelete";
 import cellRendererDelete1 from "../../renderers/cellRendererDelete1";
 
 import { AuthContext } from "../../contexts/AuthContext";
@@ -36,7 +36,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 // import updateTaskCompletion from "../../fetches/updateTaskCompletion";
 
 interface MyState extends IDataTableProps {
-   tasksWatch?: any;
+   taskedAssetsWatch?: any;
    detailsWatch?: any;
    subscribed?: boolean;
    subscribedToTaskedAssets?: boolean;
@@ -51,7 +51,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    unsubscribe: any | undefined;
    numRows: number | undefined;
    columns: any[] | undefined;
-   dataAdapter: null;
+   assetsAdapter: null;
    detailsAdapter: any;
    modifyKey: string | undefined;
    detailsMap: string[] = []; // index of array is the row number of the taskID;
@@ -68,10 +68,8 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
 
    static contextType = AuthContext;
 
-   private myTasksTable = React.createRef<JqxDataTable>();
-   private myAssetTable = React.createRef<JqxDataTable>();
-   // private addTaskButton = React.createRef<JqxButton>();
-   private taskInput = React.createRef<JqxInput>();
+   private myAssetsTable = React.createRef<JqxDataTable>();
+   private myDetailsAssetsTable = React.createRef<JqxDataTable>();
    private myDateDoneInput = React.createRef<JqxDateTimeInput>();
 
    constructor(props: { myPanel: any }) {
@@ -81,10 +79,10 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.columns = [];
       this.modifyKey = "";
       this.numUpdates = 0;
-      this.dataAdapter = null;
+      this.assetsAdapter = null;
 
       this.onRowSelect = this.onRowSelect.bind(this);
-      this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
+      // this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
       this.onRowDoubleClickNested = this.onRowDoubleClickNested.bind(this);
       // this.onCalendarChange = this.onCalendarChange.bind(this);
       // this.onCalendarClose = this.onCalendarClose.bind(this);
@@ -93,7 +91,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.state = {
          chairAssets: [],
          subscribed: false,
-         tasksWatch: [],
+         taskedAssetsWatch: [],
          detailsWatch: [],
          calVal: this.calendarValue,
          editSettings: {
@@ -107,51 +105,10 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             saveOnSelectionChange: true,
          },
       };
-      this.getTasksContent = this.getTasksContent.bind(this);
-      // this.addTaskButtonClicked = this.addTaskButtonClicked.bind(this);
+      this.getAssetsTaskContent = this.getAssetsTaskContent.bind(this);
    }
 
-   // subscribeToTasks() {
-   //    this.tasksCollection = firebase
-   //       .firestore()
-   //       .collection("tasks")
-   //       .where("docID", ">", "T")
-   //       .where("yearTaskDefined", "==", this.props.queryYear.toString());
-   //    this.unsubscribe = this.tasksCollection.onSnapshot(
-   //       this.onCollectionUpdate
-   //    );
-   //    this.setState({ subscribed: true });
-   // }
-
-   // unsubscribeFromTasks() {
-   //    if (typeof this.unsubscribe != "undefined") {
-   //       this.unsubscribe();
-   //       this.setState({ subscribed: false });
-   //       this.numUpdates = 0;
-   //    }
-   // }
-
-   subscribeToTaskedAssets() {
-      this.taskedAssetsCollection = firebase
-         .firestore()
-         .collection("tasks")
-         .where("docID", "<", "T");
-      // .where("yearTaskDefined", "==", this.props.queryYear.toString());
-      this.unsubscribeFromTaskedAssets = this.taskedAssetsCollection.onSnapshot(
-         this.onDetailsUpdate
-      );
-      this.setState({ subscribedToTaskedAssets: true });
-   }
-
-   unsubscribeFromTaskedAssets() {
-      if (typeof this.unsubscribeFromTaskedAssets != "undefined") {
-         this.unsubscribe();
-         this.setState({ subscribedToTaskedAssets: false });
-         this.numTaskedAssetsUpdates = 0;
-      }
-   }
-
-   componentDidMount() {
+   getAllAssets() {
       let chairAssets: Array<string> = [];
       firebase
          .firestore()
@@ -173,113 +130,92 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
          });
    }
 
-   onCollectionUpdate = (querySnapshot: any) => {
+   subscribeToTaskedAssets() {
+      this.taskedAssetsCollection = firebase
+         .firestore()
+         .collection("tasks")
+         .where("docID", "<", "T");
+      this.unsubscribeFromTaskedAssets = this.taskedAssetsCollection.onSnapshot(
+         // this.onCollectionUpdate
+         this.onDetailsUpdate
+      );
+      this.setState({ subscribedToTaskedAssets: true });
+   }
+
+   unsubscribeFromTaskedAssets() {
+      if (typeof this.unsubscribeFromTaskedAssets != "undefined") {
+         this.unsubscribe();
+         this.setState({ subscribedToTaskedAssets: false });
+         this.numTaskedAssetsUpdates = 0;
+      }
+   }
+
+   componentDidMount() {}
+
+   onDetailsUpdate = (querySnapshot: any) => {
       this.numUpdates!++;
-      let tasksWatch: any[] = [];
+      let taskedAssetsWatch: any[] = [];
       this.numRows = 0;
       querySnapshot.forEach(
          (doc: {
             data: () => {
+               asset: string;
+               dateDone: string;
+               docID: string;
                task: string;
-               // asset: string;
-               // dateDone: string;
                taskID: string;
             };
             id: any;
          }) => {
-            let { task, taskID } = doc.data();
-            // let { task, asset, dateDone, taskID } = doc.data();
-            tasksWatch.push({
+            let { asset, dateDone, docID, task, taskID } = doc.data();
+            // console.log(`${asset}, ${docID}, ${taskID}, ${dateDone},`);
+            taskedAssetsWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
+               asset,
+               dateDone,
+               docID,
                task,
-               // asset,
-               // dateDone,
                taskID,
             });
-            this.detailsMap.push(taskID);
+            // this.detailsMap.push(docID);
          }
       );
       this.setState({
-         tasksWatch,
+         taskedAssetsWatch,
       });
       this.numRows++;
       console.log(
-         `%c tasksWatch<${this.numUpdates}>`,
+         `%c taskedAssetsWatch<${this.numUpdates}>`,
          "background:rgb(206, 197, 129); border: 3px solid hsla(113, 37%, 66%); margin: 2px; padding: 3px; color:hsla(23, 79%, 8%);"
       );
    };
 
-   onDetailsUpdate = (querySnapshot: any) => {
-      this.numUpdates!++;
-      let detailsWatch: any[] = [];
-      this.numRows = 0;
-      querySnapshot.forEach(
-         (doc: {
-            data: () => {
-               task: string;
-               asset: string;
-               dateDone: string;
-               taskID: string;
-            };
-            id: any;
-         }) => {
-            // let { task, taskID } = doc.data();
-            let { task, asset, dateDone, taskID } = doc.data();
-            detailsWatch.push({
-               key: doc.id,
-               doc, // DocumentSnapshot
-               task,
-               asset,
-               dateDone,
-               taskID,
-            });
-         }
-      );
-      this.setState({
-         detailsWatch,
-      });
-
-      this.numRows++;
-      console.log(
-         `%c detailsWatch<${this.numUpdates}>`,
-         "background:rgb(4, 191, 138); border: 3px solid hsla(355, 51%, 71%); margin: 2px; padding: 3px; color:hsla(23, 21%, 22%);"
-      );
-   };
-
-   getTasksContent() {
+   getAssetsTaskContent() {
       const { isLoggedInToFirebase } = this.context;
       if (isLoggedInToFirebase) {
-         const source = {
-            datafields: [
-               { name: "task", type: "string" },
-               { name: "key", type: "string" },
-               { name: "taskID", type: "string" },
-            ],
+         const assetsSource = {
+            datafields: [{ name: "ASSETLABEL", type: "string" }],
             id: "key",
             dataType: "json",
             localData: () => {
                let data: any[] = [];
                let i = 0;
-
-               this.state.tasksWatch.forEach((val: any) => {
+               this.state.chairAssets!.forEach((val: any) => {
                   data[i++] = {
-                     key: val.key,
-                     task: val.task,
-                     taskID: val.taskID,
+                     ASSETLABEL: val,
                   };
-                  this.numRows!++;
                });
                return data;
             },
          };
-         this.dataAdapter = new jqx.dataAdapter(source);
-         // --
+         this.assetsAdapter = new jqx.dataAdapter(assetsSource);
+         // --  detailsSource ------------------------------------------------------------//
          const detailsSource = {
             datafields: [
                { name: "task", type: "string" },
-               { name: "key", type: "string" },
                { name: "asset", type: "string" },
+               { name: "key", type: "string" },
                { name: "dateDone", type: "string" },
                { name: "taskID", type: "string" },
             ],
@@ -289,12 +225,13 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                let data: any[] = [];
                let i = 0;
 
-               this.state.detailsWatch.forEach((val: any) => {
+               this.state.taskedAssetsWatch.forEach((val: any) => {
                   data[i++] = {
                      key: val.key,
-                     task: val.task,
                      asset: val.asset,
                      dateDone: val.dateDone,
+                     docID: val.docID,
+                     task: val.task,
                      taskID: val.taskID,
                   };
                   this.numRows!++;
@@ -312,6 +249,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             element: any,
             rowinfo: any
          ): void => {
+            rowinfo.detailsHeight = 320;
             const container = document.createElement("div");
             container.style.margin = "10px";
             element[0].appendChild(container);
@@ -319,20 +257,24 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             const containerID = `nestedDataTable${this.count}`;
             nestedDataTable.id = containerID;
             const filterGroup = new jqx.filter();
-            const filterValue = id;
+            // const filterValue = id;
+            const filterValue = rowinfo.row.ASSETLABEL;
             const filterCondition = "equal";
             const filter = filterGroup.createfilter(
                "stringfilter",
                filterValue,
                filterCondition
             );
-            // fill the taskedAssets based on TaskID
+            // fill the details table, taskedAssets, based on asset
             const taskedAssets: any[] = this.detailsAdapter.records;
-            const taskedAssetsByTaskedID = [];
+            let numHits = 0;
+            const taskedAssetsByAsset = [];
             for (const tA of taskedAssets) {
-               const result = filter.evaluate(tA.taskID);
+               // const result = filter.evaluate(tA.taskID);
+               const result = filter.evaluate(tA.asset);
                if (result) {
-                  taskedAssetsByTaskedID.push(tA);
+                  taskedAssetsByAsset.push(tA);
+                  numHits++;
                }
             }
             const nestedOrdersSource = {
@@ -344,7 +286,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   { name: "taskID", type: "string" },
                ],
                id: "key",
-               localdata: taskedAssetsByTaskedID,
+               localdata: taskedAssetsByAsset,
             };
             if (nestedDataTable !== null) {
                const nestedDataTableAdapter = new jqx.dataAdapter(
@@ -361,13 +303,13 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   {
                      text: "Asset",
                      dataField: "asset",
-                     width: 130,
+                     width: 100,
                      editable: false,
                   },
                   {
                      text: "Date Done",
                      dataField: "dateDone",
-                     width: 130,
+                     width: 100,
                      align: "center",
                      cellsAlign: "center",
                      columnType: "template",
@@ -397,23 +339,23 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                      },
                   },
                   {
-                     text: "Task ID",
-                     dataField: "taskID",
-                     width: 130,
+                     text: "Task",
+                     dataField: "task",
+                     width: 340,
                      editable: false,
                   },
                ];
                // nested table
                ReactDOM.render(
                   <JqxDataTable
-                     ref={this.myAssetTable}
-                     width={438}
+                     ref={this.myDetailsAssetsTable}
+                     width={574}
                      theme={"fresh"}
                      source={nestedDataTableAdapter}
                      columns={columns}
                      pageable={false}
                      altRows={true}
-                     height={180}
+                     height={Math.min(numHits * 38, 300)}
                      sortable={true}
                      columnsReorder={true}
                      columnsResize={true}
@@ -427,38 +369,29 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                // store the nested Data Tables and use the docID as a key.
                this.nestedTables[id] = nestedDataTable;
                this.count++;
-               this.myAssetTable.current!.sortBy("dateDone", "desc");
+               this.myDetailsAssetsTable.current!.sortBy("dateDone", "desc");
             }
          };
          // --
          const columnWidths = [
             ["", 33] /* trash can */,
-            ["task", 443],
-            ["taskID", 100],
+            ["ASSETLABEL", 578],
          ];
          this.columns = [
+            // {
+            //    text: "2X",
+            //    datafield: "D",
+            //    width: columnWidths[0][1],
+            //    cellsrenderer: cellRendererDelete,
+            //    align: "center",
+            //    cellclassname: "trashcan",
+            // },
             {
-               text: "2X",
-               datafield: "D",
-               width: columnWidths[0][1],
-               cellsrenderer: cellRendererDelete,
-               align: "center",
-               cellclassname: "trashcan",
-            },
-            {
-               text: "Task",
+               text: "Asset",
                width: columnWidths[1][1],
-               datafield: "task",
+               datafield: "ASSETLABEL",
                align: "center",
-               cellclassname: "TaskClass",
-               editable: false,
-            },
-            {
-               text: "TaskID",
-               width: columnWidths[2][1],
-               datafield: "taskID",
-               align: "center",
-               cellclassname: "TaskIDClass",
+               cellclassname: "AssetClass",
                editable: false,
             },
          ];
@@ -466,10 +399,10 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             <fieldset style={rs.fieldsetTaskStyle}>
                <legend>Assets</legend>
                <JqxDataTable
-                  ref={this.myTasksTable}
-                  width={598}
+                  ref={this.myAssetsTable}
+                  width={620}
                   theme={"fresh"}
-                  source={this.dataAdapter}
+                  source={this.assetsAdapter}
                   columns={this.columns}
                   filterable={true}
                   pageable={true}
@@ -477,7 +410,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   autoRowHeight={true}
                   height={550}
                   sortable={true}
-                  onRowDoubleClick={this.onRowDoubleClick}
                   onRowSelect={this.onRowSelect}
                   columnsReorder={true}
                   columnsResize={true}
@@ -488,18 +420,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   rowDetails={true}
                   initRowDetails={this.initRowDetails}
                />
-               <div style={rs.divThick}>
-                  <label style={rs.labelStyleRental}>Task:</label>
-                  <JqxInput
-                     ref={this.taskInput}
-                     minLength={5}
-                     maxLength={79}
-                     theme={"fresh"}
-                     width={570}
-                     placeHolder={"New Task"}
-                  />
-               </div>
-               <div style={rs.divFlexRowTask}></div>
             </fieldset>
          );
       } else {
@@ -508,62 +428,62 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    }
    render() {
       const { isLoggedInToFirebase } = this.context;
-      if (isLoggedInToFirebase && !this.state.subscribed) {
-         // this.subscribeToTasks();
+      if (isLoggedInToFirebase && !this.state.subscribedToTaskedAssets) {
+         this.getAllAssets();
          this.subscribeToTaskedAssets();
       }
-      if (!isLoggedInToFirebase && this.state.subscribed) {
+      if (!isLoggedInToFirebase && this.state.subscribedToTaskedAssets) {
          // this.unsubscribeFromTasks();
          this.unsubscribeFromTaskedAssets();
       }
-      return <div>{this.getTasksContent()}</div>;
+      return <div>{this.getAssetsTaskContent()}</div>;
    }
 
-   private onRowDoubleClick(e: any): void {
-      const { googleToken } = this.context;
-      const theKey = e.args.key;
+   // private onRowDoubleClick(e: any): void {
+   //    const { googleToken } = this.context;
+   //    const theKey = e.args.key;
 
-      if (e.args.dataField.localeCompare("D") == 0) {
-         removeTask(googleToken, theKey)
-            .then((retVal: any) => {
-               const msg = retVal.message;
-               this.props.myPanel.current!.append(
-                  `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-               );
-            })
-            .catch((err: any) => {
-               this.props.myPanel.current!.append(
-                  `<p style="font-style: normal; color:red; font-size:11px;">C0228: ${err}</p>`
-               );
-            });
-         // remove all assets that had the taskID from above
-         if (theKey.startsWith("T")) {
-            const lengthOfTimeIn_mSec = 6000;
-            this.state.detailsWatch.forEach((val: any) => {
-               const randomTime = Math.floor(
-                  Math.random() * lengthOfTimeIn_mSec
-               );
-               let taskID = val.taskID;
-               if (taskID === theKey) {
-                  setTimeout(() => {
-                     removeTask(googleToken, val.key)
-                        .then((retVal: any) => {
-                           const msg = retVal.message;
-                           this.props.myPanel.current!.append(
-                              `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-                           );
-                        })
-                        .catch((err: any) => {
-                           this.props.myPanel.current!.append(
-                              `<p style="font-style: normal; color:red; font-size:11px;">C0328: ${err}</p>`
-                           );
-                        });
-                  }, randomTime);
-               }
-            });
-         }
-      }
-   }
+   //    if (e.args.dataField.localeCompare("D") == 0) {
+   //       removeTask(googleToken, theKey)
+   //          .then((retVal: any) => {
+   //             const msg = retVal.message;
+   //             this.props.myPanel.current!.append(
+   //                `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
+   //             );
+   //          })
+   //          .catch((err: any) => {
+   //             this.props.myPanel.current!.append(
+   //                `<p style="font-style: normal; color:red; font-size:11px;">C0228: ${err}</p>`
+   //             );
+   //          });
+   //       // remove all assets that had the taskID from above
+   //       if (theKey.startsWith("T")) {
+   //          const lengthOfTimeIn_mSec = 6000;
+   //          this.state.detailsWatch.forEach((val: any) => {
+   //             const randomTime = Math.floor(
+   //                Math.random() * lengthOfTimeIn_mSec
+   //             );
+   //             let taskID = val.taskID;
+   //             if (taskID === theKey) {
+   //                setTimeout(() => {
+   //                   removeTask(googleToken, val.key)
+   //                      .then((retVal: any) => {
+   //                         const msg = retVal.message;
+   //                         this.props.myPanel.current!.append(
+   //                            `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
+   //                         );
+   //                      })
+   //                      .catch((err: any) => {
+   //                         this.props.myPanel.current!.append(
+   //                            `<p style="font-style: normal; color:red; font-size:11px;">C0328: ${err}</p>`
+   //                         );
+   //                      });
+   //                }, randomTime);
+   //             }
+   //          });
+   //       }
+   //    }
+   // }
 
    // this handler deletes one asset from the task or initializes the dateTimeinput widget
    private onRowDoubleClickNested(e: any): void {
@@ -577,7 +497,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
                );
                setTimeout(() => {
-                  this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
+                  this.myAssetsTable.current!.showDetails(
+                     this.detailsOpenIndex
+                  );
                }, 2300); //
             })
             .catch((err: any) => {
@@ -756,3 +678,18 @@ export default AddDropTasks;
 // >
 // Add Task
 // </JqxButton>
+
+// <div style={rs.divThick}>
+// <label style={rs.labelStyleRental}>Task:</label>
+// <JqxInput
+//    ref={this.taskInput}
+//    minLength={5}
+//    maxLength={79}
+//    theme={"fresh"}
+//    width={570}
+//    placeHolder={"New Task"}
+// />
+// </div>
+// <div style={rs.divFlexRowTask}></div>
+
+// onRowDoubleClick={this.onRowDoubleClick}
