@@ -24,16 +24,13 @@ import "../../configs/firebaseInit";
 
 import * as rs from "../../../styles/reactStyling";
 
-// import addTask from "../../fetches/addTask";
 import removeTask from "../../fetches/removeTask";
-// import hashOfTask from "./hashOfTask";
 
-// import cellRendererDelete from "../../renderers/cellRendererDelete";
 import cellRendererDelete1 from "../../renderers/cellRendererDelete1";
 
 import { AuthContext } from "../../contexts/AuthContext";
 // import { months } from "../../misc/months";
-// import updateTaskCompletion from "../../fetches/updateTaskCompletion";
+import updateTaskCompletion from "../../fetches/updateTaskCompletion";
 
 interface MyState extends IDataTableProps {
    taskedAssetsWatch?: any;
@@ -54,7 +51,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    assetsAdapter: null;
    detailsAdapter: any;
    modifyKey: string | undefined;
-   detailsMap: string[] = []; // index of array is the row number of the taskID;
    detailsOpenIndex: number = 0;
    calendarDateUponOpen: string | undefined;
    selectedRow: number | undefined;
@@ -64,6 +60,7 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
    private count: number = 0;
    private nestedTables: any[] = [];
    initRowDetails: any;
+   numHits: number = 5;
    calendarValue: Date = moment().subtract(1, "days").toDate(); // initialize jqxDateTimeInput to yesterday if dateDone is not present
 
    static contextType = AuthContext;
@@ -82,11 +79,10 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       this.assetsAdapter = null;
 
       this.onRowSelect = this.onRowSelect.bind(this);
-      // this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
       this.onRowDoubleClickNested = this.onRowDoubleClickNested.bind(this);
-      // this.onCalendarChange = this.onCalendarChange.bind(this);
-      // this.onCalendarClose = this.onCalendarClose.bind(this);
-      // this.onCalendarOpen = this.onCalendarOpen.bind(this);
+      this.onCalendarChange = this.onCalendarChange.bind(this);
+      this.onCalendarClose = this.onCalendarClose.bind(this);
+      this.onCalendarOpen = this.onCalendarOpen.bind(this);
 
       this.state = {
          chairAssets: [],
@@ -168,7 +164,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             id: any;
          }) => {
             let { asset, dateDone, docID, task, taskID } = doc.data();
-            // console.log(`${asset}, ${docID}, ${taskID}, ${dateDone},`);
             taskedAssetsWatch.push({
                key: doc.id,
                doc, // DocumentSnapshot
@@ -178,7 +173,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                task,
                taskID,
             });
-            // this.detailsMap.push(docID);
          }
       );
       this.setState({
@@ -267,16 +261,19 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             );
             // fill the details table, taskedAssets, based on asset
             const taskedAssets: any[] = this.detailsAdapter.records;
-            let numHits = 0;
+            this.numHits = 0;
             const taskedAssetsByAsset = [];
             for (const tA of taskedAssets) {
                // const result = filter.evaluate(tA.taskID);
                const result = filter.evaluate(tA.asset);
                if (result) {
                   taskedAssetsByAsset.push(tA);
-                  numHits++;
+                  this.numHits++;
                }
             }
+            let detailsTableHeight = Math.min(this.numHits * 38, 300);
+            rowinfo.detailsHeight = detailsTableHeight + 25;
+
             const nestedOrdersSource = {
                dataFields: [
                   { name: "task", type: "string" },
@@ -325,12 +322,15 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                            <JqxDateTimeInput
                               ref={this.myDateDoneInput}
                               theme={"fresh"}
-                              width={130}
+                              width={100}
                               height={40}
                               showFooter={true}
                               min={moment("2020-01-01").toDate()}
                               max={moment().toDate()}
                               showCalendarButton={true}
+                              onChange={this.onCalendarChange}
+                              onClose={this.onCalendarClose}
+                              onOpen={this.onCalendarOpen}
                               value={this.calendarValue}
                               formatString={"M/d/yyyy"}
                            />,
@@ -349,13 +349,13 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                ReactDOM.render(
                   <JqxDataTable
                      ref={this.myDetailsAssetsTable}
-                     width={574}
+                     width={576}
                      theme={"fresh"}
                      source={nestedDataTableAdapter}
                      columns={columns}
                      pageable={false}
                      altRows={true}
-                     height={Math.min(numHits * 38, 300)}
+                     height={detailsTableHeight}
                      sortable={true}
                      columnsReorder={true}
                      columnsResize={true}
@@ -378,14 +378,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
             ["ASSETLABEL", 578],
          ];
          this.columns = [
-            // {
-            //    text: "2X",
-            //    datafield: "D",
-            //    width: columnWidths[0][1],
-            //    cellsrenderer: cellRendererDelete,
-            //    align: "center",
-            //    cellclassname: "trashcan",
-            // },
             {
                text: "Asset",
                width: columnWidths[1][1],
@@ -439,52 +431,6 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
       return <div>{this.getAssetsTaskContent()}</div>;
    }
 
-   // private onRowDoubleClick(e: any): void {
-   //    const { googleToken } = this.context;
-   //    const theKey = e.args.key;
-
-   //    if (e.args.dataField.localeCompare("D") == 0) {
-   //       removeTask(googleToken, theKey)
-   //          .then((retVal: any) => {
-   //             const msg = retVal.message;
-   //             this.props.myPanel.current!.append(
-   //                `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-   //             );
-   //          })
-   //          .catch((err: any) => {
-   //             this.props.myPanel.current!.append(
-   //                `<p style="font-style: normal; color:red; font-size:11px;">C0228: ${err}</p>`
-   //             );
-   //          });
-   //       // remove all assets that had the taskID from above
-   //       if (theKey.startsWith("T")) {
-   //          const lengthOfTimeIn_mSec = 6000;
-   //          this.state.detailsWatch.forEach((val: any) => {
-   //             const randomTime = Math.floor(
-   //                Math.random() * lengthOfTimeIn_mSec
-   //             );
-   //             let taskID = val.taskID;
-   //             if (taskID === theKey) {
-   //                setTimeout(() => {
-   //                   removeTask(googleToken, val.key)
-   //                      .then((retVal: any) => {
-   //                         const msg = retVal.message;
-   //                         this.props.myPanel.current!.append(
-   //                            `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-   //                         );
-   //                      })
-   //                      .catch((err: any) => {
-   //                         this.props.myPanel.current!.append(
-   //                            `<p style="font-style: normal; color:red; font-size:11px;">C0328: ${err}</p>`
-   //                         );
-   //                      });
-   //                }, randomTime);
-   //             }
-   //          });
-   //       }
-   //    }
-   // }
-
    // this handler deletes one asset from the task or initializes the dateTimeinput widget
    private onRowDoubleClickNested(e: any): void {
       const { googleToken } = this.context;
@@ -500,6 +446,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   this.myAssetsTable.current!.showDetails(
                      this.detailsOpenIndex
                   );
+                  this.myAssetsTable.current!.ensureRowVisible(
+                     this.detailsOpenIndex + 1
+                  );
                }, 2300); //
             })
             .catch((err: any) => {
@@ -508,7 +457,9 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                );
             });
       }
-      this.myDateDoneInput.current!.setDate(this.calendarValue);
+      this.myDateDoneInput.current != null
+         ? this.myDateDoneInput.current!.setDate(this.calendarValue)
+         : {};
    }
 
    private onRowSelect(e: any): void {
@@ -533,163 +484,82 @@ class AddDropTasks extends React.PureComponent<{ myPanel: any }, MyState> {
                   : moment().subtract(1, "days").toDate();
          }
 
-         if (x === "taskID") {
-            this.detailsOpenIndex = this.detailsMap.indexOf(jsr[x]);
+         if (x === "asset") {
+            this.detailsOpenIndex = this.state.chairAssets!.indexOf(jsr[x]);
          }
       });
    }
 
-   // private addTaskButtonClicked() {
-   //    const { googleToken } = this.context;
-
-   //    let task = escapeHTML(
-   //       this.taskInput.current!.val().trim().substring(0, 59)
-   //    );
-   //    task = `${moment().format("YYYY")} - ${task}`;
-   //    let taskDefinition: boolean = true;
-   //    const taskID = hashOfTask(task, taskDefinition);
-
-   //    addTask(
-   //       googleToken,
-   //       taskID,
-   //       taskID,
-   //       task,
-   //       "",
-   //       "",
-   //       moment().format("YYYY")
-   //    )
-   //       .then((retVal: any) => {
-   //          const msg = retVal.message;
-   //          this.props.myPanel.current!.append(
-   //             `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-   //          );
-   //       })
-   //       .catch((err: any) => {
-   //          this.props.myPanel.current!.append(
-   //             `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
-   //          );
-   //       });
-
-   //    this.state.chairAssets!.forEach((chair: any) => {
-   //       taskDefinition = false;
-   //       const docID = hashOfTask(`${taskID}${chair}`, taskDefinition);
-   //       addTask(
-   //          googleToken,
-   //          docID,
-   //          taskID,
-   //          task,
-   //          chair,
-   //          "",
-   //          moment().format("YYYY")
-   //       )
-   //          .then((retVal: any) => {
-   //             const msg = retVal.message;
-   //             this.props.myPanel.current!.append(
-   //                `<p style="font-style: normal; color:blue; font-size:11px;">${msg}</p>`
-   //             );
-   //          })
-   //          .catch((err: any) => {
-   //             this.props.myPanel.current!.append(
-   //                `<p style="font-style: normal; color:red; font-size:11px;">C0078: ${err}</p>`
-   //             );
-   //          });
-   //    });
-   // }
-
    // this handler updates the date of completion of a specific task for a specific asset
-   // private onCalendarChange(e: any): void {
-   //    const { googleToken } = this.context;
-   //    let dunDt = this.myDateDoneInput.current!.val();
-   //    let formDate = `${dunDt.split("/")[2]}-${parseInt(
-   //       dunDt.split("/")[0]
-   //    ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
-   //       dunDt.split("/")[1]
-   //    ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
-   //    if (dunDt.length === 0) {
-   //       this.myDateDoneInput.current!.close();
-   //       this.myAssetTable.current!.clearSelection();
-   //       this.myAssetTable.current!.unselectRow(this.selectedRow!);
-   //       this.myAssetTable.current!.unselectRow(this.selectedRow1!);
-   //    }
-   //    updateTaskCompletion(
-   //       googleToken,
-   //       this.modifyKey,
-   //       formDate,
-   //       this.props.myPanel
-   //    ).then(() => {
-   //       setTimeout(() => {
-   //          this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
-   //       }, 2300); //
-   //    });
-   // }
+   private onCalendarChange(e: any): void {
+      const { googleToken } = this.context;
+      let dunDt = this.myDateDoneInput.current!.val();
+      let formDate = `${dunDt.split("/")[2]}-${parseInt(
+         dunDt.split("/")[0]
+      ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
+         dunDt.split("/")[1]
+      ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
+      if (dunDt.length === 0) {
+         this.myDateDoneInput.current!.close();
+         this.myDetailsAssetsTable.current!.clearSelection();
+         this.myDetailsAssetsTable.current!.unselectRow(this.selectedRow!);
+         this.myDetailsAssetsTable.current!.unselectRow(this.selectedRow1!);
+      }
+      updateTaskCompletion(
+         googleToken,
+         this.modifyKey,
+         formDate,
+         this.props.myPanel
+      ).then(() => {
+         setTimeout(() => {
+            this.myAssetsTable.current!.showDetails(this.detailsOpenIndex);
+            this.myAssetsTable.current!.ensureRowVisible(
+               this.detailsOpenIndex + 1
+            );
+         }, 2300); //
+      });
+   }
 
-   // private onCalendarOpen(e: any): void {
-   //    this.calendarDateUponOpen = this.myDateDoneInput.current!.val();
-   // }
+   private onCalendarOpen(e: any): void {
+      this.calendarDateUponOpen = this.myDateDoneInput.current!.val();
+   }
 
    // this handler takes care of the case when the user enters the same date that was already there
    // i.e., you can think of this as onCalendar_NO_Change event
-   // private onCalendarClose(e: any): void {
-   //    const { googleToken } = this.context;
-   //    let dunDt = this.myDateDoneInput.current!.val();
-   //    let formDate = `${dunDt.split("/")[2]}-${parseInt(
-   //       dunDt.split("/")[0]
-   //    ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
-   //       dunDt.split("/")[1]
-   //    ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
-   //    let same = dunDt === this.calendarDateUponOpen;
-   //    if (same) {
-   //       updateTaskCompletion(
-   //          googleToken,
-   //          this.modifyKey,
-   //          "undefined-NaN-NaN",
-   //          this.props.myPanel
-   //       ).then(() => {
-   //          updateTaskCompletion(
-   //             googleToken,
-   //             this.modifyKey,
-   //             formDate,
-   //             this.props.myPanel
-   //          ).then(() => {
-   //             setTimeout(() => {
-   //                this.myTasksTable.current!.showDetails(this.detailsOpenIndex);
-   //             }, 2300); //
-   //          });
-   //       });
-   //    }
-   // }
+   private onCalendarClose(e: any): void {
+      const { googleToken } = this.context;
+      let dunDt = this.myDateDoneInput.current!.val();
+      let formDate = `${dunDt.split("/")[2]}-${parseInt(
+         dunDt.split("/")[0]
+      ).toLocaleString("en", { minimumIntegerDigits: 2 })}-${parseInt(
+         dunDt.split("/")[1]
+      ).toLocaleString("en", { minimumIntegerDigits: 2 })}`;
+      let same = dunDt === this.calendarDateUponOpen;
+      if (same) {
+         updateTaskCompletion(
+            googleToken,
+            this.modifyKey,
+            "undefined-NaN-NaN",
+            this.props.myPanel
+         ).then(() => {
+            updateTaskCompletion(
+               googleToken,
+               this.modifyKey,
+               formDate,
+               this.props.myPanel
+            ).then(() => {
+               setTimeout(() => {
+                  this.myAssetsTable.current!.showDetails(
+                     this.detailsOpenIndex
+                  );
+                  this.myAssetsTable.current!.ensureRowVisible(
+                     this.detailsOpenIndex + 2
+                  );
+               }, 2300); //
+            });
+         });
+      }
+   }
 }
 
 export default AddDropTasks;
-
-// onChange={this.onCalendarChange}
-// onClose={this.onCalendarClose}
-// onOpen={this.onCalendarOpen}
-
-// <JqxButton
-// ref={this.addTaskButton}
-// onClick={this.addTaskButtonClicked}
-// width={130}
-// height={40}
-// theme={"fresh"}
-// textImageRelation={"imageBeforeText"}
-// imgSrc={"../images/work.png"}
-// textPosition={"center"}
-// >
-// Add Task
-// </JqxButton>
-
-// <div style={rs.divThick}>
-// <label style={rs.labelStyleRental}>Task:</label>
-// <JqxInput
-//    ref={this.taskInput}
-//    minLength={5}
-//    maxLength={79}
-//    theme={"fresh"}
-//    width={570}
-//    placeHolder={"New Task"}
-// />
-// </div>
-// <div style={rs.divFlexRowTask}></div>
-
-// onRowDoubleClick={this.onRowDoubleClick}
