@@ -469,13 +469,23 @@ Answer: [No, you can't use Hooks inside a class component...](https://reactjs.or
 ### [Moving on to React-native, the React platform for iOS and Android](https://www.youtube.com/watch?v=_Wq1ZPhL3ic)
 
 1. Install react-native (as superuser)
+
    npm install -g create-react-native-app
+
    create-react-native-app appName
+
    cd appName
+
    open VS Code
+
    exp start
+
 2. [Integrate Firebase into app](https://www.youtube.com/watch?v=Di607bTqhPc&t=1058)
+
    At firbase console>pick project>add firebase to web app (since you're using react-native, you do not want to choose iOS or Android)
+
    copy config into source code of your app
+
    [import firebase](https://www.youtube.com/watch?v=Di607bTqhPc&t=1175)
+
    [in terminal, install firebase](https://www.youtube.com/watch?v=Di607bTqhPc&t=1210)
