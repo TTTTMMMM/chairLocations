@@ -501,3 +501,7 @@ Answer: [No, you can't use Hooks inside a class component...](https://reactjs.or
 [React Native Firebase](https://rnfirebase.io/)
 
 [React Native Directory of Components](https://reactnative.directory/)
+
+---
+
+[Academind React Native Tutorial](https://www.youtube.com/watch?v=6ZnfsJ6mM5c)
