@@ -510,6 +510,8 @@ Answer: [No, you can't use Hooks inside a class component...](https://reactjs.or
 
 [Setting up the development environment](https://reactnative.dev/docs/environment-setup)
 
+...the easiest way to get started is with Expo CLI. Expo is a set of tools built around React Native ... that can get you writing a React Native app within minutes.
+
 1. Use nvm to install latest version of node:
 
 ```
