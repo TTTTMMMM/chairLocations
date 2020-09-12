@@ -539,5 +539,11 @@ v12.18.3
 524~ 🐰 >which node
 /Users/tm/.nvm/versions/node/v12.18.3/bin/node
 525~ 🐰 >npm install -g expo-cli
+.
+.
+.
++ expo-cli@3.27.4
+added 1887 packages from 840 contributors in 1038.052s
+
 
 ```
