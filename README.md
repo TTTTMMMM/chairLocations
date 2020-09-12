@@ -573,8 +573,13 @@ default -> 12.18.3 (-> v12.18.3)
 
 ⠦ Installing JavaScript dependencies.
 ⠦ CocoaPods CLI not found in your PATH, installing it now.Your password might be needed to install CocoaPods CLI: https://guides.cocoapods.org/using/getting-started.html#installation
-⠦ CocoaPods CLI not found in your PATH, installing it now.
+⠦ CocoaPods CLI not found in your PATH, installing it now. [never finished loading -> Cntrl-C]
 
+534~/devDir 🐰 >cd AwesomeProject/
+535~/devDir/AwesomeProject 🐰 >npm start
+
+> @ start /Users/tm/devDir/AwesomeProject
+> react-native start
 
 
 ```
