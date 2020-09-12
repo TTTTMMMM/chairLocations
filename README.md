@@ -583,3 +583,7 @@ default -> 12.18.3 (-> v12.18.3)
 
 
 ```
+
+The steps taken above start a development server.
+At this point, since I don't have a phone, I downloaded Xcode from the App Store, because it supposedly has an iOS simulator, which I can use to connect to the development server.
+Install the [Expo](https://expo.io/) client app on your iOS or Android phone and connect to the same wireless network as your computer. On Android, use the Expo app to scan the QR code from your terminal to open your project. On iOS, use the built-in QR code scanner of the Camera app.
