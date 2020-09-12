@@ -544,6 +544,19 @@ v12.18.3
 .
 + expo-cli@3.27.4
 added 1887 packages from 840 contributors in 1038.052s
-
+528~ 🐰 >nvm ls
+       v10.16.3
+       v12.10.0
+->     v12.18.3
+default -> 10 (-> v10.16.3)
+node -> stable (-> v12.18.3) (default)
+stable -> 12.18 (-> v12.18.3) (default)
+iojs -> N/A (default)
+lts/* -> lts/erbium (-> v12.18.3)
+lts/argon -> v4.9.1 (-> N/A)
+lts/boron -> v6.17.1 (-> N/A)
+lts/carbon -> v8.17.0 (-> N/A)
+lts/dubnium -> v10.22.0 (-> N/A)
+lts/erbium -> v12.18.3
 
 ```
