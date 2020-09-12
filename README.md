@@ -528,5 +528,5 @@ Now using node v12.18.3 (npm v6.14.6)
 nvm_ensure_default_set: a version is required
 518~ 🐰 >node -v
 v12.18.3
-519~ 🐰 >
+519~ 🐰 >npm install -g expo-cli
 ```
