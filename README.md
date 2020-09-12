@@ -572,6 +572,8 @@ default -> 12.18.3 (-> v12.18.3)
 📦 Using npm to install packages.
 
 ⠦ Installing JavaScript dependencies.
+⠦ CocoaPods CLI not found in your PATH, installing it now.Your password might be needed to install CocoaPods CLI: https://guides.cocoapods.org/using/getting-started.html#installation
+⠦ CocoaPods CLI not found in your PATH, installing it now.
 
 
 
