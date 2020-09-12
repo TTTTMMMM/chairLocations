@@ -564,7 +564,15 @@ default -> 12.18.3 (-> v12.18.3)
 .
 .
 .
-531~ 🐰 >
+531~ 🐰 >cd devDir/
+533~/devDir 🐰 >expo init AwesomeProject
+? Choose a template: expo-template-bare-typescript
+✔ Downloaded and extracted project files.
+
+📦 Using npm to install packages.
+
+⠦ Installing JavaScript dependencies.
+
 
 
 ```
