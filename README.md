@@ -508,6 +508,8 @@ Answer: [No, you can't use Hooks inside a class component...](https://reactjs.or
 
 ---
 
+[Setting up the development environment](https://reactnative.dev/docs/environment-setup)
+
 1. Use nvm to install latest version of node:
 
 ```
