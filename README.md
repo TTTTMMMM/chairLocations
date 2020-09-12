@@ -528,5 +528,16 @@ Now using node v12.18.3 (npm v6.14.6)
 nvm_ensure_default_set: a version is required
 518~ 🐰 >node -v
 v12.18.3
-519~ 🐰 >npm install -g expo-cli
+521~ 🐰 >node -v
+v10.16.3
+522~ 🐰 >nvm install --lts
+Installing latest LTS version.
+v12.18.3 is already installed.
+Now using node v12.18.3 (npm v6.14.6)
+523~ 🐰 >node -v
+v12.18.3
+524~ 🐰 >which node
+/Users/tm/.nvm/versions/node/v12.18.3/bin/node
+525~ 🐰 >npm install -g expo-cli
+
 ```
