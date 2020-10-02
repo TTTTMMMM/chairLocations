@@ -506,6 +506,8 @@ Answer: [No, you can't use Hooks inside a class component...](https://reactjs.or
 
 [Academind React Native Tutorial](https://www.youtube.com/watch?v=6ZnfsJ6mM5c)
 
+[5-Hour Academind React-native tutorial](https://www.youtube.com/watch?v=qSRrxpdMpVc&t=1603s)
+
 ---
 
 [Setting up the development environment](https://reactnative.dev/docs/environment-setup)
@@ -588,4 +590,4 @@ The steps taken above start a development server.
 
 At this point, since I don't have a phone, I downloaded Xcode from the App Store, because it supposedly has an iOS simulator, which I can use to connect to the development server.
 
-The instruction in the tutorial direct the installation of the [Expo](https://expo.io/) client app.
+The instructions in the tutorial direct the installation of the [Expo](https://expo.io/) client app.
