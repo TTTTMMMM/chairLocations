@@ -129,7 +129,7 @@ export const fieldsetStyle: CSSProperties = {
    height: "110px",
    marginLeft: " 5px",
    borderRadius: "5px",
-   border: "2px hsla(12, 95%, 47%, 0.93) solid",
+   border: "2px solid",
    background: "rgb(250, 245, 198)",
    color: "black",
    fontFamily: "Josefin Sans",
@@ -139,7 +139,7 @@ export const fieldsetBeachStyle: CSSProperties = {
    height: "500px",
    marginLeft: " 5px",
    borderRadius: "5px",
-   border: "2px hsla(12, 95%, 47%, 0.93) solid",
+   border: "2px  solid",
    background: "rgb(250, 245, 198)",
    color: "black",
    fontFamily: "Josefin Sans",
@@ -149,7 +149,7 @@ export const fieldsetTaskStyle: CSSProperties = {
    height: "610px",
    marginLeft: " 5px",
    borderRadius: "5px",
-   border: "2px hsla(12, 95%, 47%, 0.93) solid",
+   border: "2px  solid",
    background: "rgb(250, 245, 198)",
    color: "black",
    fontFamily: "Josefin Sans",
@@ -237,3 +237,5 @@ export const canvasStyling: CSSProperties = {
    padding: "3px",
    boxShadow: "0 0 3px #4285f4",
 };
+
+// border: "2px hsla(12, 95%, 47%, 0.93) solid",
