@@ -12,7 +12,7 @@
       "firebase": "^7.19.0",
       "jqwidgets-scripts": "^7.0.0",
       "jspdf": "^1.5.3",
-      "moment": "^2.27.0",
+      "moment": "^2.29.2",
       "react": "^16.13.1",
       "react-dom": "^16.13.1",
       "react-google-login": "^5.1.21",
